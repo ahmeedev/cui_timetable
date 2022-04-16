@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "663627456598",
+    "project_id": "cui-timetable",
+    "storage_bucket": "cui-timetable.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663627456598:android:e6a0f2b3f7763ba6ea9bf7",
+        "android_client_info": {
+          "package_name": "com.rise4solution.cui_timetable"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663627456598-urs4qlqmoe8co5rrmieccil5bar5huv7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSMQKX7E4tmETXoKH72urG3tW8bYuDB1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663627456598-urs4qlqmoe8co5rrmieccil5bar5huv7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
