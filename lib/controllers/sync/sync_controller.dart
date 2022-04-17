@@ -1,10 +1,12 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:developer' as devlog;
+import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -12,9 +14,12 @@ class SyncController extends GetxController {
   final logger = Logger();
 
   var data = [].obs;
+  var stillSync = false.obs;
 
   syncData() async {
+    stillSync.value = true;
     await _downloadFile();
+    print(Jiffy().yMMMMEEEEdjm);
   }
 
   _downloadFile() async {
@@ -38,7 +43,9 @@ class SyncController extends GetxController {
               name: "SYNC_DOWN");
           break;
         case TaskState.success:
-          _getDownloadedContent();
+          final status = _createDatabase();
+          status.then((value) => stillSync.value = false); // for loading status
+          // _getDownloadedContent(port);
           devlog.log("File Downloaded Successfully...", name: "SYNC_DOWN");
           break;
         case TaskState.canceled:
@@ -50,22 +57,36 @@ class SyncController extends GetxController {
       }
     });
   }
+}
 
-  _getDownloadedContent() async {
-    try {
-      final Directory directory = await getApplicationDocumentsDirectory();
-      final File file = File('${directory.path}/timetable.csv');
-      final input = file.openRead();
-      final fields = await input
-          .transform(utf8.decoder)
-          .transform(const CsvToListConverter())
-          .toList();
-      data.value = fields;
-      devlog.log("File Read Successfully With Records Count: ${fields.length}",
-          name: "SYNC_READ");
-    } catch (e) {
-      devlog.log("Error!, While file Reading...", name: "SYNC_READ");
-    }
-    return Future<int>.value(1);
+/// For compute
+Future<bool> _createDatabase() async {
+  final Directory directory = await getApplicationDocumentsDirectory();
+  final fields = await compute(_getDownloadedContent, directory.path);
+  print('end of execution');
+  return Future.value(false);
+  // print(fields);
+}
+
+Future<dynamic> _getDownloadedContent(String location) async {
+  var fields;
+  var result;
+  try {
+    final File file = File('$location/timetable.csv');
+    final input = file.openRead();
+    fields = await input
+        .transform(utf8.decoder)
+        .transform(const CsvToListConverter())
+        .toList();
+
+    devlog.log("File Read Successfully With Records Count: ${fields.length}",
+        name: "SYNC_READ");
+  } catch (e) {
+    print(e);
+    devlog.log("Error!, While file Reading... ", name: "SYNC_READ");
+  } finally {
+    result = Future<dynamic>.value(fields);
+    // Isolate.exit(port, map);
   }
+  return result;
 }

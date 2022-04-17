@@ -6,6 +6,7 @@ import 'package:cui_timetable/controllers/sync/sync_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Sync extends StatelessWidget {
@@ -31,21 +32,27 @@ class SyncBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SyncTile(
-          title: 'Timetable',
-          lastUpdate: lastUpdate,
-          icon: Icons.sync,
-        ),
-        SyncTile(
-          title: 'Datesheet',
-          lastUpdate: lastUpdate,
-          icon: Icons.sync,
-        ),
-        SyncTile(
-          title: 'Free Rooms',
-          lastUpdate: lastUpdate,
-          icon: Icons.sync,
-        ),
+        Obx(() => SyncTile(
+              title: 'Timetable',
+              lastUpdate: lastUpdate,
+              icon: syncController.stillSync.value
+                  ? const GFLoader(
+                      loaderColorOne: Colors.red,
+                      loaderColorTwo: Colors.blue,
+                      loaderColorThree: Colors.yellow,
+                    )
+                  : const Icon(Icons.cloud),
+            )),
+        // SyncTile(
+        //   title: 'Datesheet',
+        //   lastUpdate: lastUpdate,
+        //   icon: Icons.sync,
+        // ),
+        // SyncTile(
+        //   title: 'Free Rooms',
+        //   lastUpdate: lastUpdate,
+        //   icon: Icons.sync,
+        // ),
         ElevatedButton(
             onPressed: () async {
               await syncController.syncData();
@@ -57,15 +64,15 @@ class SyncBody extends StatelessWidget {
                   messageText: Text('This is message')));
             },
             child: const Text('Sync')),
-        Expanded(
-          child: ListView(
-            children: [
-              Obx(
-                () => Text(syncController.data.toString()),
-              ),
-            ],
-          ),
-        )
+        // Expanded(
+        //   child: ListView(
+        //     children: [
+        //       Obx(
+        //         () => Text(syncController.data.toString()),
+        //       ),
+        //     ],
+        //   ),
+        // )
       ],
     );
   }
@@ -90,7 +97,7 @@ class SyncTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(title),
-            Row(children: [Text("Last Update: $lastUpdate"), Icon(icon)])
+            Row(children: [Text("Last Update: $lastUpdate"), icon])
           ],
         ),
       ),

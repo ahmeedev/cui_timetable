@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:jiffy/jiffy.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   print(message.data.toString());
@@ -53,6 +54,7 @@ Future<void> _initialized() async {
   //* ============================================ //
 
   // startUpController.fetchSections();
+  // print(DateFormat.yMMMd]().format(DateTime.now()));
 }
 
 /// Root Widget of the application.
