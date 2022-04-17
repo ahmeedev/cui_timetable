@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         // showPerformanceOverlay: true,
         theme: lightTheme(),
-        title: 'Flutter Demo',
+        title: 'CUI TIMETABLE',
         debugShowCheckedModeBanner: false,
         home: Home());
   }

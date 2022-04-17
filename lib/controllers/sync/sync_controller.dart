@@ -6,6 +6,7 @@ import 'package:csv/csv.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
@@ -15,6 +16,11 @@ class SyncController extends GetxController {
 
   var data = [].obs;
   var stillSync = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
 
   syncData() async {
     stillSync.value = true;
@@ -43,8 +49,17 @@ class SyncController extends GetxController {
               name: "SYNC_DOWN");
           break;
         case TaskState.success:
-          final status = _createDatabase();
-          status.then((value) => stillSync.value = false); // for loading status
+          Hive.close();
+          test() async {
+            final status = await _createDatabase().then((value) async {
+              if (value) {
+                stillSync.value = false;
+                print('execute');
+              }
+            }); // for loading status
+            // stillSync.value = false;
+          }
+          test();
           // _getDownloadedContent(port);
           devlog.log("File Downloaded Successfully...", name: "SYNC_DOWN");
           break;
@@ -62,15 +77,20 @@ class SyncController extends GetxController {
 /// For compute
 Future<bool> _createDatabase() async {
   final Directory directory = await getApplicationDocumentsDirectory();
-  final fields = await compute(_getDownloadedContent, directory.path);
+  final fields =
+      await compute(_getDownloadedContent, directory.path).then((value) async {
+    if (value) {
+      await _updateStatus();
+    }
+  });
+
   print('end of execution');
-  return Future.value(false);
+  return Future.value(true);
   // print(fields);
 }
 
-Future<dynamic> _getDownloadedContent(String location) async {
+Future<bool> _getDownloadedContent(String location) async {
   var fields;
-  var result;
   try {
     final File file = File('$location/timetable.csv');
     final input = file.openRead();
@@ -85,8 +105,42 @@ Future<dynamic> _getDownloadedContent(String location) async {
     print(e);
     devlog.log("Error!, While file Reading... ", name: "SYNC_READ");
   } finally {
-    result = Future<dynamic>.value(fields);
+    await _creatingDatabase(fields, location);
     // Isolate.exit(port, map);
   }
-  return result;
+  return Future<bool>.value(true);
+}
+
+Future<bool> _creatingDatabase(result, String location) async {
+  Hive.init(location);
+  // Deleting the existing database
+  await _truncateDatabase();
+
+  devlog.log("New Database Created", name: "HIVE[SYNC]");
+  return Future<bool>.value(true);
+}
+
+Future<bool> _truncateDatabase() async {
+  // final box = await Hive.openBox("info");
+  // print(sections.get('sections'));
+  // final sections = box.get("sections");
+  // for (var i in sections) {
+  //   Hive.deleteBoxFromDisk(i);
+  // }
+  // Hive.deleteBoxFromDisk("info")
+  // Hive.deleteFromDisk();
+  Hive.openBox("info");
+  Hive.deleteFromDisk();
+  devlog.log("Database Truncated", name: "HIVE[SYNC]");
+  return Future<bool>.value(true);
+}
+
+/// Setting last data and sync button off.
+Future<bool> _updateStatus() async {
+  final box = await Hive.openBox("info");
+  box.put("last_update", Jiffy().yMMMMd.toString());
+  box.put('test', 'na ker');
+  Hive.close();
+  devlog.log('Values Updated', name: 'SYNC');
+  return Future<bool>.value(true);
 }

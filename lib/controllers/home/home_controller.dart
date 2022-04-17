@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -55,6 +56,8 @@ class HomeController extends GetxController {
         }
       },
     );
+
+    FlutterNativeSplash.remove();
   }
 
   _update() async {

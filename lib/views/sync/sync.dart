@@ -64,15 +64,15 @@ class SyncBody extends StatelessWidget {
                   messageText: Text('This is message')));
             },
             child: const Text('Sync')),
-        // Expanded(
-        //   child: ListView(
-        //     children: [
-        //       Obx(
-        //         () => Text(syncController.data.toString()),
-        //       ),
-        //     ],
-        //   ),
-        // )
+        Expanded(
+          child: ListView(
+            children: [
+              Obx(
+                () => Text(syncController.data.toString()),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }
