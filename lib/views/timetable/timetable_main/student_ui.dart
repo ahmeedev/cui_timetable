@@ -1,4 +1,4 @@
-import 'package:cui_timetable/controllers/startup/startup_controller.dart';
+import 'package:cui_timetable/controllers/timetable/student_ui_controller.dart';
 import 'package:cui_timetable/controllers/timetable/timetable_main_controller.dart';
 import 'package:cui_timetable/views/timetable/student_timetable.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +8,11 @@ import 'package:hive/hive.dart';
 class StudentUI extends StatelessWidget {
   late final TextEditingController _textController;
   final timetableController = TimetableController();
-  final startUpController = Get.find<StartUpController>();
+  final controller = StudentUIController();
 
   StudentUI() {
+    controller.fetchSections();
+    print('done');
     var string = '';
     Future<void> test() async {
       final box = await Hive.openBox('info');
@@ -102,8 +104,7 @@ class StudentUI extends StatelessWidget {
             TextFormField(
                 controller: _textController,
                 onChanged: (value) {
-                  timetableController.filteredList.value = startUpController
-                      .sections
+                  timetableController.filteredList.value = controller.sections
                       .where((element) => element
                           .toString()
                           .toLowerCase()
@@ -175,18 +176,18 @@ class StudentUI extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              if (startUpController.sections
-                  .contains(_textController.text.toString())) {
-                /// Storing the information for state persistency
-                final box = await Hive.openBox('info');
-                box.put('search_section', _textController.text.toString());
-                Get.to(StudentTimetable(), arguments: [_textController.text]);
-              } else {
-                Get.snackbar(
-                    "Invalid Section", "Please! Enter the Valid Section",
-                    snackPosition: SnackPosition.BOTTOM,
-                    snackStyle: SnackStyle.GROUNDED);
-              }
+              // if (startUpController.sections
+              //     .contains(_textController.text.toString())) {
+              /// Storing the information for state persistency
+              // final box = await Hive.openBox('info');
+              // box.put('search_section', _textController.text.toString());
+              Get.to(StudentTimetable(), arguments: [_textController.text]);
+              // } else {
+              //   Get.snackbar(
+              //       "Invalid Section", "Please! Enter the Valid Section",
+              //       snackPosition: SnackPosition.BOTTOM,
+              //       snackStyle: SnackStyle.GROUNDED);
+              // }
             },
             child: const Padding(
               padding: EdgeInsets.all(10.0),

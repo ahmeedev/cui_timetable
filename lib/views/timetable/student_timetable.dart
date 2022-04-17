@@ -31,6 +31,7 @@ class StudentTimetable extends StatelessWidget {
           children: [
             Flexible(
               flex: 1,
+              fit: FlexFit.tight,
               child: FractionallySizedBox(
                 widthFactor: 1,
                 heightFactor: 1,
@@ -39,7 +40,7 @@ class StudentTimetable extends StatelessWidget {
                         section: arguments[0]),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return GFLoader();
+                        return const GFLoader();
                       } else {
                         return Row(children: [
                           ...List.generate(5, (index) {
@@ -104,7 +105,12 @@ class DayTile extends StatelessWidget {
     Colors.amber,
     Colors.red,
     Colors.black,
-    Colors.orange
+    Colors.orange,
+    Colors.purple,
+    Colors.amber,
+    Colors.red,
+    Colors.black,
+    Colors.orange,
   ];
 
   @override
@@ -113,7 +119,7 @@ class DayTile extends StatelessWidget {
         child: FractionallySizedBox(
       alignment: Alignment.centerLeft,
       heightFactor: 0.8,
-      widthFactor: 0.8,
+      widthFactor: 1,
       child: Padding(
           padding: const EdgeInsets.only(left: 4.0, right: 4.0),
           child: Card(
@@ -138,37 +144,29 @@ class DayTile extends StatelessWidget {
                         children: [
                           Text(day),
                           controller.lecturesCount[dayKey] == "null"
-                              ? GFLoader()
+                              ? const GFLoader()
                               : Text(
                                   controller.lecturesCount[dayKey].toString()),
-                          controller.lecturesCount[dayKey] == "null"
-                              ? SizedBox()
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ...List.generate(
-                                        int.parse(controller
-                                                    .lecturesCount[dayKey]
-                                                    .toString()) >
-                                                5
-                                            ? 0
-                                            : int.parse(controller
-                                                .lecturesCount[dayKey]
-                                                .toString()),
-                                        (index) => Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 1),
-                                              child: Container(
-                                                width: 6,
-                                                height: 6,
-                                                decoration: BoxDecoration(
-                                                    color: colorList[index],
-                                                    shape: BoxShape.circle),
-                                              ),
-                                            ))
-                                  ],
-                                )
+                          Wrap(
+                            alignment: WrapAlignment.center,
+                            children: [
+                              ...List.generate(
+                                  int.parse(controller
+                                      .lecturesCount[dayKey.toString()]
+                                      .toString()),
+                                  (index) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 1),
+                                        child: Container(
+                                          width: 6,
+                                          height: 6,
+                                          decoration: BoxDecoration(
+                                              color: colorList[index],
+                                              shape: BoxShape.circle),
+                                        ),
+                                      ))
+                            ],
+                          ),
                         ],
                       ),
                     ),

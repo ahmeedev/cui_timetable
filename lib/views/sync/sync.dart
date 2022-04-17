@@ -25,7 +25,7 @@ class Sync extends StatelessWidget {
 
 class SyncBody extends StatelessWidget {
   SyncBody({Key? key}) : super(key: key);
-  final syncController = SyncController();
+  final syncController = Get.put(SyncController());
 
   final lastUpdate = '15-apr-2022';
   @override
@@ -55,13 +55,15 @@ class SyncBody extends StatelessWidget {
         // ),
         ElevatedButton(
             onPressed: () async {
-              await syncController.syncData();
-
-              Get.showSnackbar(const GetSnackBar(
-                  duration: Duration(seconds: 2),
-                  backgroundColor: Colors.green,
-                  title: 'Sync in progress',
-                  messageText: Text('This is message')));
+              if (!syncController.updated) {
+                await syncController.syncData();
+              } else {
+                Get.showSnackbar(const GetSnackBar(
+                    duration: Duration(seconds: 2),
+                    backgroundColor: Colors.green,
+                    title: 'Sync',
+                    messageText: Text('Data is already Syncrhonzied')));
+              }
             },
             child: const Text('Sync')),
         Expanded(

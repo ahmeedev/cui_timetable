@@ -1,10 +1,5 @@
-import 'package:cui_timetable/controllers/startup/startup_controller.dart';
-import 'package:cui_timetable/controllers/timetable/timetable_main_controller.dart';
-import 'package:cui_timetable/views/timetable/student_timetable.dart';
 import 'package:cui_timetable/views/timetable/timetable_main/student_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 // ignore: use_key_in_widget_constructors
 class Timetable extends StatelessWidget {

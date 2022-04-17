@@ -17,6 +17,9 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // resizeToAvoidBottomInset: false,
+        // extendBody: true,
+
         // extendBodyBehindAppBar: true,
         // appBar: buildAppBar(context),
         drawer: Drawer(
@@ -25,6 +28,7 @@ class Home extends StatelessWidget {
           ),
         ),
         body: Stack(
+          fit: StackFit.expand,
           children: const [
             CustomScrollView(
               slivers: [
@@ -147,7 +151,7 @@ class HomeBottomWidget extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     Text('Sign in to view details'),
                   ]),
-              ElevatedButton(onPressed: () {}, child: const Text('Sign in'))
+              ElevatedButton(onPressed: () {}, child: const Text('Sign in')),
             ],
           ),
         ));

@@ -1,12 +1,13 @@
 import 'package:cui_timetable/controllers/database/database_controller.dart';
 import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class Developer extends StatelessWidget {
   final developerController = Get.find<DeveloperController>();
-  final databaseController = Get.find<DatabaseController>();
+  // final databaseController = Get.find<DatabaseController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +23,7 @@ class Developer extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      databaseController.insertData();
+                      developerController.insertData();
                       Get.snackbar('HIVE', 'Boxes Inserted into Disk',
                           snackPosition: SnackPosition.BOTTOM,
                           snackStyle: SnackStyle.GROUNDED,
@@ -34,7 +35,7 @@ class Developer extends StatelessWidget {
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: Colors.green),
                       onPressed: () {
-                        developerController.retreive();
+                        developerController.retreiveData();
                         Get.snackbar('HIVE', 'Boxes Retrieved from Disk',
                             snackPosition: SnackPosition.BOTTOM,
                             snackStyle: SnackStyle.GROUNDED,
@@ -42,18 +43,18 @@ class Developer extends StatelessWidget {
                             colorText: Colors.white);
                       },
                       child: const Text('Retreived Data')),
-                  // ElevatedButton(
-                  //   style: ElevatedButton.styleFrom(primary: Colors.red),
-                  //   onPressed: () {
-                  //     databaseController.deleteBoxes();
-                  //     Get.snackbar('HIVE', 'Boxes Deleted from Disk',
-                  //         snackPosition: SnackPosition.BOTTOM,
-                  //         snackStyle: SnackStyle.GROUNDED,
-                  //         backgroundColor: Colors.black,
-                  //         colorText: Colors.white);
-                  //   },
-                  //   child: const Text('Delete Data'),
-                  // ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.red),
+                    onPressed: () {
+                      developerController.deleteData();
+                      // Get.snackbar('HIVE', 'Boxes Deleted from Disk',
+                      //     snackPosition: SnackPosition.BOTTOM,
+                      //     snackStyle: SnackStyle.GROUNDED,
+                      //     backgroundColor: Colors.black,
+                      //     colorText: Colors.white);
+                    },
+                    child: const Text('Delete Data'),
+                  ),
                 ],
               ),
               const SizedBox(
@@ -61,12 +62,12 @@ class Developer extends StatelessWidget {
               ),
               Flexible(
                   child: Obx(() => ListView.builder(
-                        itemCount: developerController.sections.length,
+                        itemCount: developerController.data.length,
                         itemBuilder: (context, index) {
                           return ListTile(
                             leading: Text(index.toString()),
                             title: Text(
-                                developerController.sections[index].toString()),
+                                developerController.data[index].toString()),
                           );
                         },
                       )))

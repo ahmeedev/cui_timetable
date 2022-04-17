@@ -16,9 +16,16 @@ class SyncController extends GetxController {
 
   var data = [].obs;
   var stillSync = false.obs;
+  late final bool updated;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
+    final box = await Hive.openBox('info');
+    try {
+      updated = box.get('updated');
+    } catch (e) {
+      updated = false;
+    }
     super.onInit();
   }
 
@@ -49,7 +56,7 @@ class SyncController extends GetxController {
               name: "SYNC_DOWN");
           break;
         case TaskState.success:
-          Hive.close();
+          Hive.deleteFromDisk(); // Delete all the existing databases.
           test() async {
             final status = await _createDatabase().then((value) async {
               if (value) {
@@ -78,10 +85,9 @@ class SyncController extends GetxController {
 Future<bool> _createDatabase() async {
   final Directory directory = await getApplicationDocumentsDirectory();
   final fields =
-      await compute(_getDownloadedContent, directory.path).then((value) async {
-    if (value) {
-      await _updateStatus();
-    }
+      await compute(_getDownloadedContent, directory.path).then((data) async {
+    await updateLectures(data);
+    await _updateStatus();
   });
 
   print('end of execution');
@@ -89,7 +95,7 @@ Future<bool> _createDatabase() async {
   // print(fields);
 }
 
-Future<bool> _getDownloadedContent(String location) async {
+Future<List<dynamic>> _getDownloadedContent(String location) async {
   var fields;
   try {
     final File file = File('$location/timetable.csv');
@@ -105,42 +111,54 @@ Future<bool> _getDownloadedContent(String location) async {
     print(e);
     devlog.log("Error!, While file Reading... ", name: "SYNC_READ");
   } finally {
-    await _creatingDatabase(fields, location);
     // Isolate.exit(port, map);
   }
-  return Future<bool>.value(true);
+  return Future<List<dynamic>>.value(fields);
 }
 
-Future<bool> _creatingDatabase(result, String location) async {
-  Hive.init(location);
-  // Deleting the existing database
-  await _truncateDatabase();
+/// Update the timetable in firebase.
+Future<void> updateLectures(List<dynamic> data) async {
+  // Fetching sections from the list.
+  final sections = <String>{};
+  for (var item in data) {
+    sections.add(item[0]);
+  }
+  print(sections);
 
-  devlog.log("New Database Created", name: "HIVE[SYNC]");
-  return Future<bool>.value(true);
-}
+  final box = await Hive.openBox("info");
+  box.put("sections", sections.toList());
 
-Future<bool> _truncateDatabase() async {
-  // final box = await Hive.openBox("info");
-  // print(sections.get('sections'));
-  // final sections = box.get("sections");
-  // for (var i in sections) {
-  //   Hive.deleteBoxFromDisk(i);
-  // }
-  // Hive.deleteBoxFromDisk("info")
-  // Hive.deleteFromDisk();
-  Hive.openBox("info");
-  Hive.deleteFromDisk();
-  devlog.log("Database Truncated", name: "HIVE[SYNC]");
-  return Future<bool>.value(true);
+  int counter = 0;
+  for (var i in sections) {
+    final storage = await Hive.openBox('$i');
+    print('$i created ${counter}');
+    counter++;
+  }
+
+  counter = 0;
+  for (var i in data) {
+    final storage = Hive.box(i[0].toString());
+    storage.put('lec$counter', [
+      i[1].toString(),
+      i[2].toString(),
+      i[3].toString(),
+      i[4].toString(),
+      i[5].toString()
+    ]);
+    print(i);
+    counter++;
+  }
+
+  Hive.close();
+  devlog.log('Data inserted Successfully...', name: "HIVE[SYNC]");
 }
 
 /// Setting last data and sync button off.
 Future<bool> _updateStatus() async {
   final box = await Hive.openBox("info");
   box.put("last_update", Jiffy().yMMMMd.toString());
-  box.put('test', 'na ker');
-  Hive.close();
+  box.put('updated', true);
+  box.close();
   devlog.log('Values Updated', name: 'SYNC');
   return Future<bool>.value(true);
 }
