@@ -10,16 +10,16 @@ class DeveloperController extends GetxController {
   Future<void> onInit() async {
     // Get a location using getDatabasesPath
     var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'demo.db');
+    String path = join(databasesPath, 'cui.db');
 // open the database
     Database database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
       await db.execute(
-          'CREATE TABLE Test (id INTEGER, name TEXT, value INTEGER, num REAL)');
+          'CREATE TABLE timetable (section text,subject text,slot text,day text,teacher text,room text )');
     });
     this.database = database;
-    print('done');
+    print('Database created');
     super.onInit();
   }
 
@@ -27,23 +27,19 @@ class DeveloperController extends GetxController {
     // Insert some records in a transaction
     await database.transaction((txn) async {
       int id1 = await txn.rawInsert(
-          'INSERT INTO Test(name, value, num) VALUES("some name", 1234, 456.789)');
-      print('inserted1: $id1');
-      int id2 = await txn.rawInsert(
-          'INSERT INTO Test(name, value, num) VALUES(?, ?, ?)',
-          ['another name', 12345678, 3.1416]);
-      print('inserted2: $id2');
+          "INSERT INTO timetable VALUES('some name','2','3','4','5','6')");
+      print('Row Inserted: $id1');
     });
   }
 
   Future<void> retreiveData() async {
     // Get the records
-    List<Map> list = await database.rawQuery('SELECT * FROM Test');
+    List<Map> list = await database.rawQuery('SELECT * FROM testing');
     data.value = list;
   }
 
   deleteData() async {
-    int count = await database.rawDelete('DELETE FROM Test');
+    int count = await database.rawDelete('DELETE FROM testing');
     Get.showSnackbar(GetSnackBar(
       duration: const Duration(seconds: 1),
       title: 'Databae',

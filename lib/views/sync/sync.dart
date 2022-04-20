@@ -1,16 +1,10 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:csv/csv.dart';
 import 'package:cui_timetable/controllers/sync/sync_controller.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:path_provider/path_provider.dart';
 
 class Sync extends StatelessWidget {
-  Sync({Key? key}) : super(key: key);
+  const Sync({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,15 +49,15 @@ class SyncBody extends StatelessWidget {
         // ),
         ElevatedButton(
             onPressed: () async {
-              if (!syncController.updated) {
-                await syncController.syncData();
-              } else {
-                Get.showSnackbar(const GetSnackBar(
-                    duration: Duration(seconds: 2),
-                    backgroundColor: Colors.green,
-                    title: 'Sync',
-                    messageText: Text('Data is already Syncrhonzied')));
-              }
+              // if (!syncController.updated) {
+              await syncController.syncData();
+              // } else {
+              //   Get.showSnackbar(const GetSnackBar(
+              //       duration: Duration(seconds: 2),
+              //       backgroundColor: Colors.green,
+              //       title: 'Sync',
+              //       messageText: Text('Data is already Syncrhonzied')));
+              // }
             },
             child: const Text('Sync')),
         Expanded(

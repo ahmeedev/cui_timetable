@@ -15,7 +15,7 @@ class HomeController extends GetxController {
         print("FirebaseMessaging.instance.getInitialMessage");
         if (message != null) {
           print('terminated state');
-          _update();
+
           // if (message.data['_id'] != null) {
           //   Navigator.of(context).push(
           //     MaterialPageRoute(
@@ -41,7 +41,6 @@ class HomeController extends GetxController {
                 onCancel: () {},
                 onConfirm: () {},
                 textConfirm: "Synchronized");
-            _update();
           }
         }
       },
@@ -52,17 +51,10 @@ class HomeController extends GetxController {
       (message) {
         if (message.notification != null) {
           print('background');
-          _update();
         }
       },
     );
 
     FlutterNativeSplash.remove();
-  }
-
-  _update() async {
-    final box = await Hive.openBox('update');
-    box.put("status", "true");
-    print('update set');
   }
 }

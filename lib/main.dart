@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   print(message.data.toString());
@@ -25,48 +26,42 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   await _initialized();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 Future<void> _initialized() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   devlog.log("Firebase Initialized...", name: 'FIREBASE');
-  // final loc = await getApplicationDocumentsDirectory();
-  // Hive.init(loc.path.toString());
-  Hive.initFlutter();
+
+  final loc = await getApplicationDocumentsDirectory();
+  Hive.init(loc.path.toString());
   devlog.log("Hive Initialized...", name: 'HIVE');
 
   // Initialize the important Controllers
   //* ============================================ //
   Get.put(FirebaseController()); //! Criticial to load first
+  Get.put(DatabaseController()); // ! 2
+  Get.put(HomeController());
+  Get.put(FreeRoomsController());
   // final startUpController = Get.put(StartUpController()); // *2
   // Get.put(StartUpController()); // *2
   Get.put(DeveloperController()); // *3
-  Get.put(CsvController());
-  Get.put(DatabaseController());
-  Get.put(FreeRoomsController());
-  Get.put(HomeController());
+  // Get.put(CsvController());
   //* ============================================ //
 
-  // startUpController.fetchSections();
   // print(DateFormat.yMMMd]().format(DateTime.now()));
 }
 
 /// Root Widget of the application.
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
-  // This widget is the root of your application.
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // devlog.log('Sections fected...', name: 'HIVE');
     return GetMaterialApp(
-        // showSemanticsDebugger: true,
-        // showPerformanceOverlay: true,
         theme: lightTheme(),
         title: 'CUI TIMETABLE',
         debugShowCheckedModeBanner: false,
