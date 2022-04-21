@@ -11,20 +11,17 @@ class HomeController extends GetxController {
     super.onInit();
 
     FirebaseMessaging.instance.getInitialMessage().then(
-      (message) {
+      (message) async {
         print("FirebaseMessaging.instance.getInitialMessage");
         if (message != null) {
+          Get.dialog(const Text('hello'));
+
           print('terminated state');
 
-          // if (message.data['_id'] != null) {
-          //   Navigator.of(context).push(
-          //     MaterialPageRoute(
-          //       builder: (context) => DemoScreen(
-          //         id: message.data['_id'],
-          //       ),
-          //     ),
-          //   );
-          // }
+          if (message.data['update'] != null) {
+            final box = await Hive.openBox('info');
+            box.put('info', false);
+          }
         }
       },
     );
@@ -33,8 +30,11 @@ class HomeController extends GetxController {
     FirebaseMessaging.onMessage.listen(
       (message) async {
         if (message.notification != null) {
-          if (message.data["update"] == "true") {
-            print('Hello there');
+          Get.dialog(const Text('hello'));
+
+          if (message.data["update"]) {
+            final box = await Hive.openBox('info');
+            box.put('info', false);
             Get.defaultDialog(
                 title: 'Update Available',
                 middleText: 'Synchronized to get latest updates',
@@ -48,9 +48,11 @@ class HomeController extends GetxController {
 
     // 3. This method only call when App in background and not terminated(not closed)
     FirebaseMessaging.onMessageOpenedApp.listen(
-      (message) {
+      (message) async {
         if (message.notification != null) {
-          print('background');
+          Get.dialog(const Text('hello'));
+          final box = await Hive.openBox('info');
+          box.put('info', false);
         }
       },
     );

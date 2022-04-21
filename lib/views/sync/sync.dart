@@ -1,7 +1,10 @@
+import 'package:cui_timetable/controllers/database/database_controller.dart';
 import 'package:cui_timetable/controllers/sync/sync_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class Sync extends StatelessWidget {
   const Sync({Key? key}) : super(key: key);
@@ -20,6 +23,7 @@ class Sync extends StatelessWidget {
 class SyncBody extends StatelessWidget {
   SyncBody({Key? key}) : super(key: key);
   final syncController = Get.put(SyncController());
+  final databaseController = DatabaseController();
 
   final lastUpdate = '15-apr-2022';
   @override
@@ -49,7 +53,14 @@ class SyncBody extends StatelessWidget {
         // ),
         ElevatedButton(
             onPressed: () async {
-              // if (!syncController.updated) {
+              // var updated = false;
+              // var box = await Hive.openBox('info');
+              // try {
+              //   updated = box.get('updated');
+              // } catch (e) {
+              //   updated = false;
+              // }
+              // if (!updated) {
               await syncController.syncData();
               // } else {
               //   Get.showSnackbar(const GetSnackBar(
@@ -62,11 +73,7 @@ class SyncBody extends StatelessWidget {
             child: const Text('Sync')),
         Expanded(
           child: ListView(
-            children: [
-              Obx(
-                () => Text(syncController.data.toString()),
-              ),
-            ],
+            children: [],
           ),
         )
       ],

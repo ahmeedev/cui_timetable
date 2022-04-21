@@ -6,6 +6,7 @@ import 'package:cui_timetable/views/timetable/timetable_main/timetable_main.dart
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getwidget/components/loader/gf_loader.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -203,7 +204,7 @@ class HomeOverlay extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.to(() => FreeRooms());
+                    Get.to(() => FreeRooms(), transition: Transition.zoom);
                   },
                   child: Column(
                     children: const [
@@ -253,15 +254,18 @@ class HomeTestingWidget extends StatelessWidget {
       sliver: SliverList(
           delegate: SliverChildListDelegate([
         FutureBuilder(
-          future: updateStatus(),
-          builder: (context, snapshot) => Text("${snapshot.data}"),
-        )
+            future: updateStatus(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) return Text("${snapshot.data}");
+
+              return const GFLoader();
+            })
       ])),
     );
   }
 
   Future<String> updateStatus() async {
-    final box = await Hive.openBox("update");
-    return box.get("status").toString();
+    final box = await Hive.openBox("info");
+    return box.get("updated").toString();
   }
 }

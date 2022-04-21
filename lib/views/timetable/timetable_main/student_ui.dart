@@ -6,25 +6,8 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class StudentUI extends StatelessWidget {
-  late final TextEditingController _textController;
   final timetableController = TimetableController();
-  final controller = StudentUIController();
-
-  StudentUI() {
-    controller.fetchSections();
-    print('done');
-    var string = '';
-    Future<void> test() async {
-      final box = await Hive.openBox('info');
-      var value = box.get("search_section").toString();
-      if (value != "null") {
-        string = value;
-      }
-    }
-
-    test();
-    _textController = TextEditingController(text: string);
-  }
+  final controller = Get.put(StudentUIController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +18,7 @@ class StudentUI extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildTextField(),
+              _buildTextField(context),
               const SizedBox(
                 height: 20,
               ),
@@ -46,7 +29,8 @@ class StudentUI extends StatelessWidget {
   }
 
 // Build the textfield portion.
-  Card _buildTextField() {
+  Card _buildTextField(context) {
+    var height = MediaQuery.of(context).size.height / 4;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -102,7 +86,7 @@ class StudentUI extends StatelessWidget {
             //   },
             // ),
             TextFormField(
-                controller: _textController,
+                controller: controller.textController,
                 onChanged: (value) {
                   timetableController.filteredList.value = controller.sections
                       .where((element) => element
@@ -110,11 +94,18 @@ class StudentUI extends StatelessWidget {
                           .toLowerCase()
                           .contains(value.toLowerCase()))
                       .toList();
+
+                  if (timetableController.filteredList.contains(value) &&
+                      timetableController.filteredList.length == 1) {
+                    timetableController.listVisible.value = false;
+                  } else {
+                    timetableController.listVisible.value = true;
+                  }
                 },
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                       onPressed: () {
-                        _textController.clear();
+                        controller.textController.clear();
                         timetableController.filteredList.value = [];
                       },
                       icon: const Icon(
@@ -132,17 +123,26 @@ class StudentUI extends StatelessWidget {
             //   height: 10,
             // ),
             Obx(() => timetableController.filteredList.isEmpty
-                ? SizedBox()
-                : SizedBox(
-                    width: double.infinity,
-                    height: 200,
+                ? const SizedBox()
+                : ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: double.infinity,
+                      maxHeight:
+                          timetableController.listVisible.value ? height : 0,
+                    ),
                     child: ListView.separated(
+                      shrinkWrap: true,
                       itemCount: timetableController.filteredList.length,
                       itemBuilder: (context, index) {
                         return ListTile(
                           onTap: () {
-                            _textController.text =
+                            controller.textController.text =
                                 timetableController.filteredList[index];
+                            controller.textController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset:
+                                        controller.textController.text.length));
+                            timetableController.listVisible.value = false;
                           },
                           dense: true,
                           contentPadding: EdgeInsets.zero,
@@ -176,18 +176,22 @@ class StudentUI extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              // if (startUpController.sections
-              //     .contains(_textController.text.toString())) {
-              /// Storing the information for state persistency
-              // final box = await Hive.openBox('info');
-              // box.put('search_section', _textController.text.toString());
-              Get.to(StudentTimetable(), arguments: [_textController.text]);
-              // } else {
-              //   Get.snackbar(
-              //       "Invalid Section", "Please! Enter the Valid Section",
-              //       snackPosition: SnackPosition.BOTTOM,
-              //       snackStyle: SnackStyle.GROUNDED);
-              // }
+              if (timetableController.filteredList
+                  .contains(controller.textController.text.toString())) {
+                // Storing the information for state persistency
+                final box = await Hive.openBox('info');
+                box.put('search_section',
+                    controller.textController.text.toString());
+
+                Get.to(StudentTimetable(),
+                    transition: Transition.cupertino,
+                    arguments: [controller.textController.text]);
+              } else {
+                Get.snackbar(
+                    "Invalid Section", "Please! Enter the Valid Section",
+                    snackPosition: SnackPosition.BOTTOM,
+                    snackStyle: SnackStyle.GROUNDED);
+              }
             },
             child: const Padding(
               padding: EdgeInsets.all(10.0),

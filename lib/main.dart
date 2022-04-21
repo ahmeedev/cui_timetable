@@ -11,21 +11,29 @@ import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
-  print(message.data.toString());
-  print(message.notification!.title);
+  final loc = await getApplicationDocumentsDirectory();
+  Hive.init(loc.path.toString());
+
+  final box = await Hive.openBox('info');
+  box.put('updated', false);
+  print(box.get('updated'));
 }
 
 Future<void> main() async {
   await _initialized();
-  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+
   runApp(const MyApp());
 }
 
@@ -39,6 +47,9 @@ Future<void> _initialized() async {
 
   final loc = await getApplicationDocumentsDirectory();
   Hive.init(loc.path.toString());
+  // final box = await Hive.openBox('info');
+  // box.put('version', 1);
+
   devlog.log("Hive Initialized...", name: 'HIVE');
 
   // Initialize the important Controllers
