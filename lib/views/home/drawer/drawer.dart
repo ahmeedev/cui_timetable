@@ -75,12 +75,12 @@ class ButtonList extends StatelessWidget {
             onTap: () {
               print('Sign In');
             }),
-        buildButton(
-            icon: Icons.info,
-            title: 'For Developer',
-            onTap: () {
-              Get.to(() => Developer());
-            }),
+        // buildButton(
+        //     icon: Icons.info,
+        //     title: 'For Developer',
+        //     onTap: () {
+        //       Get.to(() => Developer());
+        //     }),
         buildButton(
             icon: Icons.info,
             title: 'Firebase',
@@ -96,6 +96,7 @@ class ButtonList extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: ListTile(
+        minVerticalPadding: 1,
         leading: Icon(icon),
         title: Text(title),
       ),

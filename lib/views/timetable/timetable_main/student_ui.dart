@@ -95,7 +95,9 @@ class StudentUI extends StatelessWidget {
                           .contains(value.toLowerCase()))
                       .toList();
 
-                  if (timetableController.filteredList.contains(value) &&
+                  if (value.isEmpty) {
+                    timetableController.listVisible.value = false;
+                  } else if (timetableController.filteredList.contains(value) &&
                       timetableController.filteredList.length == 1) {
                     timetableController.listVisible.value = false;
                   } else {
@@ -176,21 +178,24 @@ class StudentUI extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              if (timetableController.filteredList
+              if (controller.sections
                   .contains(controller.textController.text.toString())) {
                 // Storing the information for state persistency
                 final box = await Hive.openBox('info');
                 box.put('search_section',
                     controller.textController.text.toString());
 
-                Get.to(StudentTimetable(),
+                Get.to(() => StudentTimetable(),
                     transition: Transition.cupertino,
                     arguments: [controller.textController.text]);
+                print(controller.textController.text);
               } else {
-                Get.snackbar(
-                    "Invalid Section", "Please! Enter the Valid Section",
-                    snackPosition: SnackPosition.BOTTOM,
-                    snackStyle: SnackStyle.GROUNDED);
+                Get.showSnackbar(const GetSnackBar(
+                  duration: Duration(seconds: 1),
+                  title: 'Not Found',
+                  message: 'Section Not Found',
+                  backgroundColor: Colors.red,
+                ));
               }
             },
             child: const Padding(

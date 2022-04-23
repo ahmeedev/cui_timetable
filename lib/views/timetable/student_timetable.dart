@@ -5,17 +5,9 @@ import 'package:getwidget/getwidget.dart';
 
 class StudentTimetable extends StatelessWidget {
   StudentTimetable({Key? key}) : super(key: key);
-  final studentTimetableController = StudentTimetableController();
+  final studentTimetableController = Get.put(StudentTimetableController());
   final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   final keys = ['10000', '1000', '100', '10', '1'];
-  final timeMap = {
-    '1': ["08:30AM", "10:00AM"],
-    '2': ["10:00AM", "11:30AM"],
-    '3': ["11:30AM", "01:00PM"],
-    '4': ["01:30PM", "03:00PM"],
-    '5': ["03:00PM", "04:30PM"]
-  };
-  // final nODays = [3, 2, 1, 4, 3]; //* Testing list
   @override
   Widget build(BuildContext context) {
     final arguments = Get.arguments;
@@ -73,9 +65,8 @@ class StudentTimetable extends StatelessWidget {
                               .daywiseLectures[index][3],
                           room: studentTimetableController
                               .daywiseLectures[index][4],
-                          time: timeMap[studentTimetableController
-                              .daywiseLectures[index][1]
-                              .toString()],
+                          time: studentTimetableController.timeMap[
+                              "${studentTimetableController.daywiseLectures[index][1]}"],
                         );
                       },
                     )),
@@ -101,6 +92,11 @@ class DayTile extends StatelessWidget {
   late final callback;
   late Rx<bool> obs;
   final colorList = [
+    Colors.purple,
+    Colors.amber,
+    Colors.red,
+    Colors.black,
+    Colors.orange,
     Colors.purple,
     Colors.amber,
     Colors.red,

@@ -53,22 +53,8 @@ class SyncBody extends StatelessWidget {
         // ),
         ElevatedButton(
             onPressed: () async {
-              // var updated = false;
-              // var box = await Hive.openBox('info');
-              // try {
-              //   updated = box.get('updated');
-              // } catch (e) {
-              //   updated = false;
-              // }
-              // if (!updated) {
               await syncController.syncData();
-              // } else {
-              //   Get.showSnackbar(const GetSnackBar(
-              //       duration: Duration(seconds: 2),
-              //       backgroundColor: Colors.green,
-              //       title: 'Sync',
-              //       messageText: Text('Data is already Syncrhonzied')));
-              // }
+              // await databaseController.insertTime();
             },
             child: const Text('Sync')),
         Expanded(

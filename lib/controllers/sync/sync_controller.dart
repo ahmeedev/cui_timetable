@@ -72,9 +72,12 @@ class SyncController extends GetxController {
             await compute(_getDownloadedContent, directory.path)
                 .then((data) async {
               final controller = Get.find<DatabaseController>();
-              await controller
-                  .insertData(data, remoteVersion)
-                  .then((value) => Hive.close());
+              await controller.deleteData().then((value) async => {
+                    await controller
+                        .insertData(data, remoteVersion)
+                        .then((value) => Hive.close())
+                  });
+
               stillSync.value = false;
             });
           }

@@ -2,6 +2,23 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class StudentTimetableController extends GetxController {
+  // var timeMap = {
+  //   '1': ["08:30AM", "10:00AM"],
+  //   '2': ["10:00AM", "11:30AM"],
+  //   '3': ["11:30AM", "01:00PM"],
+  //   '4': ["01:30PM", "03:00PM"],
+  //   '5': ["03:00PM", "04:30PM"]
+  // };
+  var timeMap;
+  @override
+  Future<void> onInit() async {
+    final box = await Hive.openBox('info');
+    print("timemap is: $timeMap");
+    timeMap = box.get('time');
+    print("timemap is: $timeMap");
+    super.onInit();
+  }
+
   late final box;
   var mon = true.obs; // mon is selected by default
   var tue = false.obs;
