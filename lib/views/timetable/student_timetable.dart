@@ -223,7 +223,6 @@ class LectureDetailsTile extends StatelessWidget {
                             child: Text(
                               subject.toString(),
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
                         ),

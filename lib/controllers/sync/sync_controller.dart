@@ -29,7 +29,7 @@ class SyncController extends GetxController {
     super.onInit();
   }
 
-  syncData() async {
+  syncData(context) async {
     final remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(minutes: 1),
@@ -50,9 +50,10 @@ class SyncController extends GetxController {
       await _downloadFile(remoteVersion);
     } else {
       Get.showSnackbar(const GetSnackBar(
-          duration: Duration(seconds: 2),
-          title: 'Sync',
-          backgroundColor: Colors.green,
+          duration: const Duration(seconds: 2),
+          // title: 'Sync',
+          titleText: Text('Sync'),
+          // backgroundColor: Theme.of(context).snackBarTheme.backgroundColor!,
           messageText: const Text('Data is already Syncrhonzied')));
     }
   }

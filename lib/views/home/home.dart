@@ -1,5 +1,7 @@
 import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:cui_timetable/controllers/firebase/firebase_controller.dart';
+import 'package:cui_timetable/controllers/home/home_controller.dart';
+import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/freerooms/freerooms.dart';
 import 'package:cui_timetable/views/home/drawer/drawer.dart';
 import 'package:cui_timetable/views/timetable/timetable_main/timetable_main.dart';
@@ -30,15 +32,12 @@ class Home extends StatelessWidget {
         ),
         body: Stack(
           fit: StackFit.expand,
-          children: const [
+          children: [
             CustomScrollView(
               slivers: [
                 HomeAppBar(),
-                HomeBody(),
-                // // * For Testing purpose  //
-                HomeTestingWidget(),
-                // // * ==================== //
-                HomeBottomWidget(),
+                const HomeBody(),
+                const HomeBottomWidget(),
               ],
             ),
             HomeOverlay()
@@ -49,7 +48,8 @@ class Home extends StatelessWidget {
 
 /// AppBar for the Home Screen.
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({Key? key}) : super(key: key);
+  HomeAppBar({Key? key}) : super(key: key);
+  final homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,16 +57,43 @@ class HomeAppBar extends StatelessWidget {
       expandedHeight: MediaQuery.of(context).size.height / 4,
       backgroundColor: Colors.transparent,
       centerTitle: true,
-      title: const Text('CUI_TIMETABLE'),
+      // title: const Text('CUI_TIMETABLE'),
       flexibleSpace: ClipRRect(
         borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.blue.shade400,
-              image: const DecorationImage(
-                  image: AssetImage('assets/home/home.jpg'), fit: BoxFit.fill)),
-        ),
+        child: Stack(
+            fit: StackFit.expand,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            alignment: Alignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade400,
+                  gradient: const LinearGradient(
+                    colors: [primaryColor, secondaryColor],
+                  ),
+                  // image: const DecorationImage(
+                  //     image: AssetImage('assets/home/art.png'),
+                  //     scale: 10,
+                  //     fit: BoxFit.fitWidth)
+                ),
+                height: double.infinity,
+                child: Center(
+                    child: Text(
+                  'CUI TIMETABLE',
+                  style: Theme.of(context).textTheme.titleLarge,
+                )),
+              ),
+              Positioned(
+                right: 20,
+                top: 50,
+                height: 15,
+                width: 15,
+                child: Container(
+                    decoration: const BoxDecoration(
+                        color: Colors.orange, shape: BoxShape.circle)),
+              ),
+            ]),
       ),
     );
   }
@@ -79,7 +106,7 @@ class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.only(top: 90, right: 8.0, left: 8.0, bottom: 0),
+      padding: const EdgeInsets.only(top: 65, right: 8.0, left: 8.0, bottom: 0),
       sliver: SliverList(
           delegate: SliverChildListDelegate([
         /// Building News row
@@ -116,12 +143,14 @@ class HomeBody extends StatelessWidget {
                 horizontalTitleGap: 16,
                 title: Text(
                   'Tilte',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  // style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 subtitle: Padding(
                   padding: EdgeInsets.only(top: 8.0),
                   child: Text(
-                      'hello gy zasdfasdf asdf as df asd f sadf sad fas df asd f asdf;asdfjals;k jflk;as djkl;jasiwejrlikaj'),
+                    'hello gy zasdfasdf asdf as df asd f sadf sad fas df asd f asdf;asdfjals;k jflk;as djkl;jasiwejrlikaj',
+                    // style: Theme.of(context).textTheme.subtitle2,
+                  ),
                 ),
               ),
             )),
@@ -166,9 +195,9 @@ class HomeOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: MediaQuery.of(context).size.height / 4.2,
-        right: 20,
-        left: 20,
+        top: MediaQuery.of(context).size.height / 4.5,
+        right: 10,
+        left: 10,
         child: Container(
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -182,41 +211,58 @@ class HomeOverlay extends StatelessWidget {
             color: Colors.white,
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(
+                horizontal: defaultPadding, vertical: defaultPadding * 2),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
                   onTap: () {
                     Get.to(() => Timetable());
                   },
                   child: Column(
-                    children: const [
-                      Icon(
-                        Icons.calendar_month_outlined,
-                        size: 30,
-                        color: Colors.blue,
+                    children: [
+                      const ImageIcon(
+                        AssetImage('assets/home/timetable.png'),
+                        size: iconSize,
+                        color: primaryColor,
                       ),
-                      SizedBox(height: 10),
-                      Text('Timetable')
+                      const SizedBox(height: 10),
+                      Text(
+                        'Timetable',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      )
                     ],
                   ),
+                ),
+                Container(
+                  height: 40,
+                  width: 2,
+                  color: Colors.grey,
                 ),
                 InkWell(
                   onTap: () {
                     Get.to(() => FreeRooms(), transition: Transition.zoom);
                   },
                   child: Column(
-                    children: const [
-                      Icon(
-                        Icons.room,
-                        size: 30,
-                        color: Colors.blue,
+                    children: [
+                      const ImageIcon(
+                        AssetImage('assets/home/room.png'),
+                        size: iconSize,
+                        color: primaryColor,
                       ),
-                      SizedBox(height: 10),
-                      Text('Free rooms')
+                      const SizedBox(height: 10),
+                      Text(
+                        'Free rooms',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      )
                     ],
                   ),
+                ),
+                Container(
+                  height: 40,
+                  width: 2,
+                  color: Colors.grey,
                 ),
                 InkWell(
                   onTap: () {
@@ -225,14 +271,17 @@ class HomeOverlay extends StatelessWidget {
                         snackPosition: SnackPosition.BOTTOM);
                   },
                   child: Column(
-                    children: const [
-                      Icon(
-                        Icons.date_range,
-                        size: 30,
-                        color: Colors.blue,
+                    children: [
+                      const ImageIcon(
+                        AssetImage('assets/home/datesheet.png'),
+                        size: iconSize,
+                        color: primaryColor,
                       ),
-                      SizedBox(height: 10),
-                      Text('Datesheet')
+                      const SizedBox(height: 6),
+                      Text(
+                        'Datesheet',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      )
                     ],
                   ),
                 ),
@@ -240,32 +289,5 @@ class HomeOverlay extends StatelessWidget {
             ),
           ),
         ));
-  }
-}
-
-//* Testing widget for the home screen.
-class HomeTestingWidget extends StatelessWidget {
-  const HomeTestingWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.all(8.0),
-      sliver: SliverList(
-          delegate: SliverChildListDelegate([
-        FutureBuilder(
-            future: updateStatus(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) return Text("${snapshot.data}");
-
-              return const GFLoader();
-            })
-      ])),
-    );
-  }
-
-  Future<String> updateStatus() async {
-    final box = await Hive.openBox("info");
-    return box.get("updated").toString();
   }
 }

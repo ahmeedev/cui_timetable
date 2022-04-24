@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        theme: lightTheme(),
+        theme: lightTheme(context),
         title: 'CUI TIMETABLE',
         debugShowCheckedModeBanner: false,
         home: SafeArea(top: false, child: Home()));

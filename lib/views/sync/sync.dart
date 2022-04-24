@@ -53,15 +53,10 @@ class SyncBody extends StatelessWidget {
         // ),
         ElevatedButton(
             onPressed: () async {
-              await syncController.syncData();
+              await syncController.syncData(context);
               // await databaseController.insertTime();
             },
             child: const Text('Sync')),
-        Expanded(
-          child: ListView(
-            children: [],
-          ),
-        )
       ],
     );
   }
