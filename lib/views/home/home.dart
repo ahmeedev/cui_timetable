@@ -24,7 +24,6 @@ class Home extends StatelessWidget {
         // extendBody: true,
 
         // extendBodyBehindAppBar: true,
-        // appBar: buildAppBar(context),
         drawer: Drawer(
           child: ListView(
             children: const [Header(), ButtonList()],
@@ -60,7 +59,8 @@ class HomeAppBar extends StatelessWidget {
       // title: const Text('CUI_TIMETABLE'),
       flexibleSpace: ClipRRect(
         borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+            bottomLeft: Radius.circular(defaultRadius * 2),
+            bottomRight: Radius.circular(defaultRadius * 2)),
         child: Stack(
             fit: StackFit.expand,
             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -91,7 +91,7 @@ class HomeAppBar extends StatelessWidget {
                 width: 15,
                 child: Container(
                     decoration: const BoxDecoration(
-                        color: Colors.orange, shape: BoxShape.circle)),
+                        color: Colors.green, shape: BoxShape.circle)),
               ),
             ]),
       ),
@@ -113,12 +113,18 @@ class HomeBody extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Latest News',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('Latest News',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontWeight: FontWeight.w900)),
             RichText(
                 text: TextSpan(children: [
               TextSpan(
-                  style: const TextStyle(color: Colors.blue),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(color: primaryColor),
                   text: "More>",
                   recognizer: TapGestureRecognizer()
                     ..onTap = () async {
@@ -135,21 +141,25 @@ class HomeBody extends StatelessWidget {
 
         /// Building Card for news
 
-        const Padding(
-            padding: EdgeInsets.only(top: 10.0),
+        Padding(
+            padding: const EdgeInsets.only(top: 10.0),
             child: Card(
-              elevation: 4,
+              shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(defaultRadius))),
+              elevation: 8,
               child: ListTile(
-                horizontalTitleGap: 16,
+                // horizontalTitleGap: 8,
+                minVerticalPadding: 14,
                 title: Text(
-                  'Tilte',
-                  // style: TextStyle(fontWeight: FontWeight.bold),
+                  'Students Week Spring 2022',
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 subtitle: Padding(
-                  padding: EdgeInsets.only(top: 8.0),
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    'hello gy zasdfasdf asdf as df asd f sadf sad fas df asd f asdf;asdfjals;k jflk;as djkl;jasiwejrlikaj',
-                    // style: Theme.of(context).textTheme.subtitle2,
+                    'Students Week Spring 2022 will be held at CUI, Sahiwal Campus.The dates of the week are March 21st, 2022 till March 25th, 2022',
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
               ),
@@ -176,10 +186,11 @@ class HomeBottomWidget extends StatelessWidget {
               Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text('CU Online Portal',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text('Sign in to view details'),
+                        style: Theme.of(context).textTheme.titleMedium),
+                    Text('Sign in to view details',
+                        style: Theme.of(context).textTheme.bodyMedium),
                   ]),
               ElevatedButton(onPressed: () {}, child: const Text('Sign in')),
             ],
@@ -200,7 +211,7 @@ class HomeOverlay extends StatelessWidget {
         left: 10,
         child: Container(
           decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: BorderRadius.all(Radius.circular(defaultRadius)),
             boxShadow: [
               BoxShadow(
                   color: Colors.grey,
