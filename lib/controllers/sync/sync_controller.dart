@@ -14,7 +14,20 @@ import 'package:path_provider/path_provider.dart';
 
 class SyncController extends GetxController {
   var data = [].obs;
+  var last_update = ''.obs;
   var stillSync = false.obs;
+
+  @override
+  Future<void> onInit() async {
+    final box = await Hive.openBox('info');
+    try {
+      last_update.value = box.get('last_update');
+      print(last_update.value);
+    } catch (e) {
+      print(e);
+    }
+    super.onInit();
+  }
 
   syncData() async {
     final remoteConfig = FirebaseRemoteConfig.instance;
@@ -79,6 +92,8 @@ class SyncController extends GetxController {
                   });
 
               stillSync.value = false;
+              final box = await Hive.openBox('info');
+              last_update.value = box.get('last_update');
             });
           }
           inner();

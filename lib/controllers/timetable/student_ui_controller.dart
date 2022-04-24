@@ -11,12 +11,15 @@ class StudentUIController extends GetxController {
     var string = '';
 
     final box = await Hive.openBox('info');
-    var value = box.get("search_section");
-    if (value.isNotEmpty) {
-      string = value.toString();
+    try {
+      var value = box.get("search_section");
+      if (value.isNotEmpty) {
+        string = value.toString();
+      }
+      print('Search_Section Added: $value');
+    } catch (e) {
+      print(e);
     }
-    print(string);
-    print('value added');
 
     textController.text = string;
 

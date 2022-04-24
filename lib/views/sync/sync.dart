@@ -25,14 +25,14 @@ class SyncBody extends StatelessWidget {
   final syncController = Get.put(SyncController());
   final databaseController = DatabaseController();
 
-  final lastUpdate = '15-apr-2022';
+  // final lastUpdate = '15-apr-2022';
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Obx(() => SyncTile(
               title: 'Timetable',
-              lastUpdate: lastUpdate,
+              lastUpdate: syncController.last_update.value,
               icon: syncController.stillSync.value
                   ? const GFLoader(
                       loaderColorOne: Colors.red,

@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseController extends GetxController {
+  String search_section = '';
+
   Future<Future<int>> insertData(List<dynamic> data, remoteVersion) async {
     final sections = <String>{};
     for (var item in data) {
@@ -74,23 +77,32 @@ class DatabaseController extends GetxController {
 
   Future<void> deleteData() async {
     var box = await Hive.openBox('info');
-    var sections = box.get('sections');
     try {
+      search_section = box.get('search_section');
+      print('here is $search_section');
+      var sections = box.get('sections');
       for (var i in sections) {
-        await Hive.openBox(i);
+        // final box = await Hive.openBox(i);
+        Hive.deleteBoxFromDisk(i);
       }
     } catch (e) {
       print(e);
     } finally {
-      Hive.deleteFromDisk();
+      // Hive.deleteFromDisk();
+      box.deleteAll([
+        'sections',
+      ]);
+      await Future.delayed(const Duration(seconds: 1));
     }
-    await Future.delayed(const Duration(seconds: 1));
-    print('Data deleted From Disk Succue');
+    print('Data deleted From Disk Succuessfully');
+    // preserve the values
   }
 
   Future<void> _updateStatuses(remoteVersion) async {
     final box = await Hive.openBox('info');
     box.put('version', remoteVersion);
+    box.put('last_update', Jiffy().format("MMMM do yyyy"));
+    // box.put('search_section', search_section);
     print('box with value $remoteVersion');
 
     print('Server:  $remoteVersion');
