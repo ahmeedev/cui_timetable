@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:cui_timetable/controllers/database/database_controller.dart';
+import 'package:cui_timetable/models/utilities/get_utilities.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -49,12 +50,8 @@ class SyncController extends GetxController {
       stillSync.value = true;
       await _downloadFile(remoteVersion);
     } else {
-      Get.showSnackbar(const GetSnackBar(
-          duration: const Duration(seconds: 2),
-          // title: 'Sync',
-          titleText: Text('Sync'),
-          // backgroundColor: Theme.of(context).snackBarTheme.backgroundColor!,
-          messageText: const Text('Data is already Syncrhonzied')));
+      GetXUtilities.snackbar(context,
+          title: 'Sync', message: 'Data is Already Synchronized');
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:cui_timetable/controllers/firebase/firebase_controller.dart';
 import 'package:cui_timetable/controllers/home/home_controller.dart';
+import 'package:cui_timetable/models/utilities/get_utilities.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/freerooms/freerooms.dart';
 import 'package:cui_timetable/views/home/drawer/drawer.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:getwidget/components/loader/gf_loader.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class Home extends StatelessWidget {
         // extendBody: true,
 
         // extendBodyBehindAppBar: true,
+        backgroundColor: scaffoldColor,
         drawer: Drawer(
           child: ListView(
             children: const [Header(), ButtonList()],
@@ -39,7 +42,7 @@ class Home extends StatelessWidget {
                 const HomeBottomWidget(),
               ],
             ),
-            HomeOverlay()
+            const HomeOverlay()
           ],
         ));
   }
@@ -49,7 +52,7 @@ class Home extends StatelessWidget {
 class HomeAppBar extends StatelessWidget {
   HomeAppBar({Key? key}) : super(key: key);
   final homeController = Get.find<HomeController>();
-
+  int counter = 0;
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -70,7 +73,12 @@ class HomeAppBar extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.blue.shade400,
                   gradient: const LinearGradient(
-                    colors: [primaryColor, secondaryColor],
+                    end: Alignment.bottomRight,
+                    colors: [
+                      // secondaryColor,
+                      primaryColor,
+                      forGradient,
+                    ],
                   ),
                   // image: const DecorationImage(
                   //     image: AssetImage('assets/home/art.png'),
@@ -79,20 +87,94 @@ class HomeAppBar extends StatelessWidget {
                 ),
                 height: double.infinity,
                 child: Center(
-                    child: Text(
-                  'CUI TIMETABLE',
-                  style: Theme.of(context).textTheme.titleLarge,
-                )),
+                  child: Text(
+                    'CUI TIMETABLE',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+
+                  // child: DefaultTextStyle(
+                  //   style: Theme.of(context).textTheme.titleLarge!,
+                  //   child: AnimatedTextKit(
+                  //     repeatForever: true,
+                  //     animatedTexts: [
+                  //       // TypewriterAnimatedText('CUI'),
+                  //       // TypewriterAnimatedText('TIMETABLE'),
+                  //       TypewriterAnimatedText('CUI TIMETABLE'),
+                  //     ],
+                  //     onTap: () {
+                  //       print("Tap Event");
+                  //     },
+                  //     pause: const Duration(milliseconds: 5000),
+                  //     // displayFullTextOnTap: true,
+                  //   ),
+                  // ),
+                ),
               ),
-              Positioned(
-                right: 20,
-                top: 50,
-                height: 15,
-                width: 15,
-                child: Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.green, shape: BoxShape.circle)),
-              ),
+
+              Align(
+                alignment: Alignment.center + const Alignment(0.60, -0.60),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    DefaultTextStyle(
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: shadowColor, fontStyle: FontStyle.italic),
+                      child: AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText('BE AWESOME'),
+                          TypewriterAnimatedText('BE OPTIMISTIC'),
+                          TypewriterAnimatedText('BE DIFFERENT'),
+                          TypewriterAnimatedText('BE CONSISTENT'),
+                          TypewriterAnimatedText('YOU MATTER'),
+                          TypewriterAnimatedText('YOU CAN'),
+                          TypewriterAnimatedText('TAKE RISK'),
+                          TypewriterAnimatedText('ACCEPT YOURSELF'),
+                          TypewriterAnimatedText('TRUST YOURSELF'),
+                          TypewriterAnimatedText('STAY FOCUSED'),
+                          TypewriterAnimatedText('STAY POSITIVE'),
+                          TypewriterAnimatedText('STAY CURIOUS'),
+                          TypewriterAnimatedText('MOVE FORWARD'),
+                          TypewriterAnimatedText('TRY AGAIN'),
+                          TypewriterAnimatedText('ENJOY LIFE'),
+                        ],
+                        onTap: () {
+                          print("Tap Event");
+                        },
+                        repeatForever: true,
+                        pause: const Duration(milliseconds: 2000),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    )
+                  ],
+                ),
+              )
+
+              // Align(
+              //   // duration: const Duration(seconds: 1),
+              //   // top: homeController.first.value,
+              //   // right: homeController.second.value,
+              //   // top: MediaQuery.of(context).size.height / 5,
+              //   alignment: Alignment.center + Alignment(0.50, -0.30),
+              //   // alignment: Alignment.centerRight,
+              //   child: AnimatedBuilder(
+              //     animation: homeController.controller,
+              //     builder: (_, child) {
+              //       return Transform.rotate(
+              //         angle: homeController.controller.value * 2 * 3.1415,
+              //         child: Container(
+              //             width: 20,
+              //             height: 20,
+              //             decoration: const BoxDecoration(
+              //                 color: shadowColor, shape: BoxShape.rectangle)),
+              //       );
+              //     },
+              //     // duration: Duration(seconds: 1),
+              //     // turns: homeController.first.value,
+              //     // child:
+              //   ),
+              // ),
             ]),
       ),
     );
@@ -144,13 +226,14 @@ class HomeBody extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Card(
-              shape: RoundedRectangleBorder(
+              color: widgetColor,
+              shape: const RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.all(Radius.circular(defaultRadius))),
-              elevation: 8,
+              elevation: defaultElevation,
               child: ListTile(
                 // horizontalTitleGap: 8,
-                minVerticalPadding: 14,
+                minVerticalPadding: defaultPadding + 4,
                 title: Text(
                   'Students Week Spring 2022',
                   style: Theme.of(context).textTheme.titleMedium!,
@@ -192,7 +275,12 @@ class HomeBottomWidget extends StatelessWidget {
                     Text('Sign in to view details',
                         style: Theme.of(context).textTheme.bodyMedium),
                   ]),
-              ElevatedButton(onPressed: () {}, child: const Text('Sign in')),
+              ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Sign in',
+                    style: Theme.of(context).textTheme.labelLarge,
+                  )),
             ],
           ),
         ));
@@ -209,18 +297,11 @@ class HomeOverlay extends StatelessWidget {
         top: MediaQuery.of(context).size.height / 4.5,
         right: 10,
         left: 10,
-        child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(defaultRadius)),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 15.0,
-                  // spreadRadius: 1,
-                  blurStyle: BlurStyle.outer)
-            ],
-            color: Colors.white,
-          ),
+        child: Card(
+          color: widgetColor,
+          elevation: defaultElevation,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
           child: Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding, vertical: defaultPadding * 2),
@@ -253,7 +334,10 @@ class HomeOverlay extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.to(() => FreeRooms(), transition: Transition.zoom);
+                    // Get.to(() => FreeRooms(), transition: Transition.zoom);
+                    GetXUtilities.snackbar(context,
+                        title: 'In Development',
+                        message: 'This Module is still in Developement Phase');
                   },
                   child: Column(
                     children: [
@@ -278,8 +362,9 @@ class HomeOverlay extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     // Get.to(FreeRooms());
-                    Get.snackbar("No availabled", "in development phase",
-                        snackPosition: SnackPosition.BOTTOM);
+                    GetXUtilities.snackbar(context,
+                        title: 'In Developement',
+                        message: 'This Module is still in Development Phase');
                   },
                   child: Column(
                     children: [

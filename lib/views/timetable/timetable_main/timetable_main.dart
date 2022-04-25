@@ -1,3 +1,4 @@
+import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/timetable/timetable_main/student_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class Timetable extends StatelessWidget {
         body: CustomScrollView(
           physics: const NeverScrollableScrollPhysics(),
           slivers: [
-            buildAppBar(),
+            buildAppBar(context),
             SliverFillRemaining(
               child: TabBarView(
                 children: [
@@ -21,7 +22,7 @@ class Timetable extends StatelessWidget {
                   // main container
 
                   const Icon(Icons.directions_transit),
-                  Icon(Icons.directions_bike),
+                  const Icon(Icons.directions_bike),
                 ],
               ),
             )
@@ -31,17 +32,38 @@ class Timetable extends StatelessWidget {
     );
   }
 
-  SliverAppBar buildAppBar() {
-    return const SliverAppBar(
-        title: Text('Timetable'),
+  SliverAppBar buildAppBar(context) {
+    return SliverAppBar(
+        title: const Text('Timetable'),
         centerTitle: true,
-        actions: [Icon(Icons.search)],
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: defaultPadding),
+            child: Icon(
+              Icons.search,
+            ),
+          )
+        ],
         bottom: TabBar(
-          indicatorColor: Colors.red,
+          indicatorPadding: const EdgeInsets.all(defaultPadding / 3),
+          indicatorWeight: 4,
+          indicatorColor: shadowColor,
           tabs: [
-            Tab(child: Text('Student')),
-            Tab(child: Text('Teacher')),
-            Tab(child: Text('Compare')),
+            Tab(
+                child: Text(
+              'Student',
+              style: Theme.of(context).textTheme.labelLarge,
+            )),
+            Tab(
+                child: Text(
+              'Teacher',
+              style: Theme.of(context).textTheme.labelLarge,
+            )),
+            Tab(
+                child: Text(
+              'Compare',
+              style: Theme.of(context).textTheme.labelLarge,
+            )),
           ],
         ));
   }

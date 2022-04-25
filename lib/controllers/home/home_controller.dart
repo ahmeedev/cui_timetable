@@ -1,16 +1,37 @@
+import 'dart:async';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class HomeController extends GetxController {
+class HomeController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   var status = false.obs;
+  var first = 10.0.obs;
+  var second = 10.0.obs;
+  late Timer timer;
+  late AnimationController controller;
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
+
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 2000,
+      ),
+    )..repeat();
+    // timer = Timer.periodic(
+    //   const Duration(milliseconds: 1000),
+    //   (timer) {
+    //     first.value += 10;
+    //     second.value += 10;
+    //     print('ma hu khalayak');
+    //   },
+    // );
 
     FirebaseMessaging.instance.getInitialMessage().then(
       (message) async {

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const primaryColor = Color(0xFF265FA4);
 const secondaryColor = Color(0xFF482369);
+const forGradient = Color(0XFF1b4373);
+const shadowColor = Color(0Xffd4dfed);
+const scaffoldColor = Color(0xffd4dfed);
+const widgetColor = Color(0xffe9eff6);
+const textFieldColor = Color(0xffbecfe4);
+const selectionColor = Color(0xff93afd2);
 const defaultPadding = 10.0;
 const defaultRadius = 10.0;
+const defaultElevation = 10.0;
 const iconSize = 25.0;
 
 const swatch = MaterialColor(
@@ -24,21 +32,30 @@ const swatch = MaterialColor(
 );
 
 ThemeData lightTheme(context) {
+  final base = ThemeData.light();
   return ThemeData(
       brightness: Brightness.light,
       // primaryColor: swatch,
       // drawerTheme: DrawerThemeData(backgroundColor: Colors.red),
+      colorScheme: base.colorScheme.copyWith(secondary: primaryColor),
       fontFamily: 'Lato',
-      appBarTheme: const AppBarTheme(color: primaryColor),
-      textTheme: const TextTheme(
-        titleLarge: TextStyle(
-            fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
-        titleMedium:
-            TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
-        titleSmall: TextStyle(fontWeight: FontWeight.bold),
-        bodyMedium: TextStyle(color: Colors.black),
+      appBarTheme: const AppBarTheme(
+        color: primaryColor,
+        systemOverlayStyle:
+            SystemUiOverlayStyle(statusBarColor: Color(0xff173962)),
       ),
-      snackBarTheme: const SnackBarThemeData(backgroundColor: Colors.red),
+      textTheme: const TextTheme(
+          labelLarge: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w900,
+          ),
+          titleLarge: TextStyle(
+              fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+          titleMedium:
+              TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
+          titleSmall: TextStyle(fontWeight: FontWeight.bold),
+          bodyMedium: TextStyle(color: Colors.black),
+          headlineMedium: TextStyle(color: Colors.white)),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(primary: primaryColor)));
 }

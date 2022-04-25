@@ -1,4 +1,6 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cui_timetable/controllers/timetable/student_timetable_controller.dart';
+import 'package:cui_timetable/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
@@ -12,6 +14,7 @@ class StudentTimetable extends StatelessWidget {
   Widget build(BuildContext context) {
     final arguments = Get.arguments;
     return Scaffold(
+        backgroundColor: scaffoldColor,
         appBar: AppBar(
           centerTitle: true,
           title: Text(Get.arguments[0]),
@@ -51,26 +54,54 @@ class StudentTimetable extends StatelessWidget {
             ),
             Flexible(
               flex: 6,
-              child: FractionallySizedBox(
-                widthFactor: 1,
-                heightFactor: 1,
-                child: Obx(() => ListView.builder(
-                      itemCount:
-                          studentTimetableController.daywiseLectures.length,
-                      itemBuilder: (context, index) {
-                        return LectureDetailsTile(
-                          subject: studentTimetableController
-                              .daywiseLectures[index][0],
-                          teacher: studentTimetableController
-                              .daywiseLectures[index][3],
-                          room: studentTimetableController
-                              .daywiseLectures[index][4],
-                          time: studentTimetableController.timeMap[
-                              "${studentTimetableController.daywiseLectures[index][1]}"],
-                        );
-                      },
-                    )),
-              ),
+              child: Obx(() => FractionallySizedBox(
+                    widthFactor: 1,
+                    heightFactor: 1,
+                    child: studentTimetableController.daywiseLectures.isEmpty
+                        ? Center(
+                            child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const ImageIcon(
+                                AssetImage(
+                                    'assets/timetable/free_lectures.png'),
+                                size: 150,
+                                color: primaryColor,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'No Lecture Today',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall!
+                                    .copyWith(
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w900,
+                                      // fontSize:
+                                    ),
+                              )
+                            ],
+                          ))
+                        : ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: studentTimetableController
+                                .daywiseLectures.length,
+                            itemBuilder: (context, index) {
+                              return LectureDetailsTile(
+                                subject: studentTimetableController
+                                    .daywiseLectures[index][0],
+                                teacher: studentTimetableController
+                                    .daywiseLectures[index][3],
+                                room: studentTimetableController
+                                    .daywiseLectures[index][4],
+                                time: studentTimetableController.timeMap[
+                                    "${studentTimetableController.daywiseLectures[index][1]}"],
+                              );
+                            },
+                          ),
+                  )),
             ),
           ],
         ));
@@ -112,24 +143,28 @@ class DayTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Flexible(
-        child: FractionallySizedBox(
-      alignment: Alignment.centerLeft,
-      heightFactor: 0.8,
-      widthFactor: 1,
-      child: Padding(
-          padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-          child: Card(
-            elevation: 5,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: Obx(() => AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
+      child: FractionallySizedBox(
+          alignment: Alignment.centerLeft,
+          heightFactor: 0.8,
+          widthFactor: 1,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+            child: Obx(() => Card(
+                // color: widgetColor,
+
+                shadowColor: shadowColor,
+                elevation: obs.value ? defaultElevation : defaultElevation / 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(defaultRadius)),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
                   decoration: BoxDecoration(
-                      color: obs.value ? Colors.grey.shade300 : Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
+                      color: obs.value ? selectionColor : widgetColor,
+                      borderRadius: BorderRadius.circular(defaultRadius)),
                   child: Material(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(defaultRadius),
                     child: InkWell(
+                      borderRadius: BorderRadius.circular(defaultRadius),
                       onTap: () {
                         callback();
                         controller.getLectures(key: dayKey.toString());
@@ -168,9 +203,9 @@ class DayTile extends StatelessWidget {
                     ),
                     color: Colors.transparent,
                   ),
-                )),
+                ))),
           )),
-    ));
+    );
   }
 }
 
@@ -192,8 +227,13 @@ class LectureDetailsTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 4),
       child: Card(
+        color: widgetColor,
+        elevation: defaultElevation,
+        shadowColor: shadowColor,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(defaultPadding),
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -201,11 +241,27 @@ class LectureDetailsTile extends StatelessWidget {
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Text(time[0]), const Text('|'), Text(time[1])],
+                  children: [
+                    Text(
+                      time[0],
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          // fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const Text('|'),
+                    const Text('|'),
+                    Text(
+                      time[1],
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          // fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
                 ),
                 const VerticalDivider(
-                  color: Colors.grey,
+                  color: primaryColor,
                   thickness: 2.0,
+                  // indent: 4,
                 ),
                 Expanded(
                   child: Padding(
@@ -216,24 +272,38 @@ class LectureDetailsTile extends StatelessWidget {
                         Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(8)),
+                              color: textFieldColor,
+                              borderRadius:
+                                  BorderRadius.circular(defaultRadius)),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(defaultPadding),
                             child: Text(
                               subject.toString(),
                               textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontStyle: FontStyle.italic),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          height: 5,
+                          height: 8,
                         ),
                         Row(
                           children: [
-                            const Icon(Icons.place),
+                            const ImageIcon(
+                              AssetImage('assets/home/room.png'),
+                              color: primaryColor,
+                            ),
                             const SizedBox(width: 5),
-                            Text(room.toString()),
+                            Text(
+                              room.toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -241,9 +311,18 @@ class LectureDetailsTile extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            const Icon(Icons.school),
+                            const ImageIcon(
+                              AssetImage('assets/timetable/professor.png'),
+                              color: primaryColor,
+                            ),
                             const SizedBox(width: 5),
-                            Text(teacher.toString()),
+                            Text(
+                              teacher.toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
                           ],
                         ),
                       ],

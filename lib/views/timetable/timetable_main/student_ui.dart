@@ -1,5 +1,7 @@
 import 'package:cui_timetable/controllers/timetable/student_ui_controller.dart';
 import 'package:cui_timetable/controllers/timetable/timetable_main_controller.dart';
+import 'package:cui_timetable/models/utilities/get_utilities.dart';
+import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/timetable/student_timetable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,8 +15,10 @@ class StudentUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
+        backgroundColor: scaffoldColor,
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 16, 10, 10),
+          padding: const EdgeInsets.fromLTRB(
+              defaultPadding, defaultPadding, defaultPadding, defaultPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -22,7 +26,7 @@ class StudentUI extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              _buildButton()
+              _buildButton(context)
             ],
           ),
         ));
@@ -32,19 +36,24 @@ class StudentUI extends StatelessWidget {
   Card _buildTextField(context) {
     var height = MediaQuery.of(context).size.height / 4;
     return Card(
+      color: widgetColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(defaultRadius),
       ),
-      elevation: 8,
+      elevation: defaultElevation,
+      shadowColor: shadowColor,
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 10,
             ),
-            const Text('Section'),
+            Text(
+              'Section',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -86,6 +95,10 @@ class StudentUI extends StatelessWidget {
             //   },
             // ),
             TextFormField(
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontWeight: FontWeight.bold),
                 controller: controller.textController,
                 onChanged: (value) {
                   timetableController.filteredList.value = controller.sections
@@ -110,15 +123,12 @@ class StudentUI extends StatelessWidget {
                         controller.textController.clear();
                         timetableController.filteredList.value = [];
                       },
-                      icon: const Icon(
-                        Icons.cancel,
-                        color: Colors.blue,
-                      )),
-                  fillColor: Colors.grey.shade200,
+                      icon: const Icon(Icons.cancel, color: primaryColor)),
+                  fillColor: textFieldColor,
                   filled: true,
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.grey.shade200)),
+                      borderRadius: BorderRadius.circular(defaultRadius),
+                      borderSide: const BorderSide(color: primaryColor)),
                 )),
 
             // const SizedBox(
@@ -133,6 +143,7 @@ class StudentUI extends StatelessWidget {
                           timetableController.listVisible.value ? height : 0,
                     ),
                     child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: timetableController.filteredList.length,
                       itemBuilder: (context, index) {
@@ -148,13 +159,19 @@ class StudentUI extends StatelessWidget {
                           },
                           dense: true,
                           contentPadding: EdgeInsets.zero,
-                          leading:
-                              Text(timetableController.filteredList[index]),
+                          leading: Text(
+                            timetableController.filteredList[index],
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
                         );
                       },
                       separatorBuilder: (context, index) {
                         return const Divider(
-                          height: 2,
+                          color: primaryColor,
+                          height: 3,
                           // indent: 15,
                           // endIndent: 15,
                         );
@@ -168,7 +185,7 @@ class StudentUI extends StatelessWidget {
   }
 
 // Build the button portion.
-  Padding _buildButton() {
+  Padding _buildButton(context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
       child: IntrinsicWidth(
@@ -188,19 +205,20 @@ class StudentUI extends StatelessWidget {
                 Get.to(() => StudentTimetable(),
                     transition: Transition.cupertino,
                     arguments: [controller.textController.text]);
-                print(controller.textController.text);
               } else {
-                Get.showSnackbar(const GetSnackBar(
-                  duration: Duration(seconds: 1),
-                  title: 'Not Found',
-                  message: 'Section Not Found',
-                  backgroundColor: Colors.red,
-                ));
+                GetXUtilities.snackbar(context,
+                    title: 'Not Found', message: 'Enter Valid Section');
               }
             },
-            child: const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text('Find Now'),
+            child: Padding(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Padding(
+                padding: const EdgeInsets.all(defaultPadding),
+                child: Text('Find Now',
+                    style: Theme.of(context).textTheme.labelLarge
+                    // .copyWith(fontSize: 16),
+                    ),
+              ),
             )),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
@@ -9,7 +10,9 @@ class StudentTimetableController extends GetxController {
   //   '4': ["01:30PM", "03:00PM"],
   //   '5': ["03:00PM", "04:30PM"]
   // };
+
   var timeMap;
+
   @override
   Future<void> onInit() async {
     final box = await Hive.openBox('info');
