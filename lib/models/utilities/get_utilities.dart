@@ -28,4 +28,30 @@ class GetXUtilities {
       ),
     ));
   }
+
+  static void successSnackbar(context,
+      {required String title, required String message}) {
+    Get.showSnackbar(GetSnackBar(
+      // backgroundColor: primaryColor,
+      backgroundGradient: const LinearGradient(
+        end: Alignment.bottomRight,
+        colors: [successColor, successColor2],
+      ),
+      duration: const Duration(seconds: 2),
+      titleText: Text(
+        title,
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium!
+            .copyWith(color: Colors.white, fontSize: 18),
+      ),
+      messageText: Text(
+        message,
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium!
+            .copyWith(color: Colors.white),
+      ),
+    ));
+  }
 }

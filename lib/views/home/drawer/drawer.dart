@@ -10,62 +10,60 @@ class Header extends StatelessWidget {
   const Header({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   // color: secondaryColor,
-    //   child: UserAccountsDrawerHeader(
-    //     accountName: const Text(""),
-    //     accountEmail: Text(
-    //       "No details available",
-    //       style: Theme.of(context).textTheme.titleMedium,
-    //     ),
-    //     currentAccountPicture: CircleAvatar(
-    //       backgroundColor: Theme.of(context).secondaryHeaderColor,
-    //       child: const Text(
-    //         "A",
-    //         style: TextStyle(fontSize: 40.0),
-    //       ),
-    //     ),
-    //   ),
-    // );
-
-    return Container(
-      height: MediaQuery.of(context).size.height / 5.1,
-      decoration: const BoxDecoration(
-          // gradient: const LinearGradient(
-          //   colors: [
-          //     primaryColor,
-          //     secondaryColor,
-          //   ],
-          // ),
-          color: primaryColor),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-              padding: const EdgeInsets.fromLTRB(defaultPadding * 1.5,
-                  defaultPadding * 2, defaultPadding, defaultPadding),
-              child: Container(
-                padding: const EdgeInsets.all(30),
-                decoration: const BoxDecoration(
-                    color: Colors.white60, shape: BoxShape.circle),
-                child: Text(
-                  'A',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-              )),
-          Padding(
-            padding: const EdgeInsets.only(left: defaultPadding * 1.5),
-            child: Text(
-              'No Details Available',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(color: Colors.white),
-            ),
-          )
-        ],
+    return UserAccountsDrawerHeader(
+      decoration: const BoxDecoration(color: primaryColor),
+      accountName: const Text(""),
+      accountEmail: Text(
+        "No details available",
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
+      currentAccountPicture: CircleAvatar(
+        backgroundColor: Theme.of(context).secondaryHeaderColor,
+        child: const Text(
+          "A",
+          style: TextStyle(fontSize: 40.0),
+        ),
       ),
     );
+
+    // return Container(
+    //   height: MediaQuery.of(context).size.height / 5.1,
+    //   decoration: const BoxDecoration(
+    //       // gradient: const LinearGradient(
+    //       //   colors: [
+    //       //     primaryColor,
+    //       //     secondaryColor,
+    //       //   ],
+    //       // ),
+    //       color: primaryColor),
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       Padding(
+    //           padding: const EdgeInsets.fromLTRB(defaultPadding * 1.5,
+    //               defaultPadding * 2, defaultPadding, defaultPadding),
+    //           child: Container(
+    //             padding: const EdgeInsets.all(30),
+    //             decoration: const BoxDecoration(
+    //                 color: Colors.white60, shape: BoxShape.circle),
+    //             child: Text(
+    //               'A',
+    //               style: Theme.of(context).textTheme.headlineMedium,
+    //             ),
+    //           )),
+    //       Padding(
+    //         padding: const EdgeInsets.only(left: defaultPadding * 1.5),
+    //         child: Text(
+    //           'No Details Available',
+    //           style: Theme.of(context)
+    //               .textTheme
+    //               .titleMedium!
+    //               .copyWith(color: Colors.white),
+    //         ),
+    //       )
+    //     ],
+    //   ),
+    // );
   }
 }
 
@@ -105,16 +103,16 @@ class ButtonList extends StatelessWidget {
             icon: const AssetImage('assets/drawer/sign_in.png'),
             title: 'Sign In',
             onTap: () {}),
-        buildButton(context,
-            icon: const AssetImage('assets/drawer/developer.png'),
-            title: 'For Developer', onTap: () {
-          Get.to(() => Developer());
-        }),
-        buildButton(context,
-            icon: const AssetImage('assets/drawer/firebase.png'),
-            title: 'Firebase', onTap: () {
-          Get.to(FirebaseUI());
-        }),
+        // buildButton(context,
+        //     icon: const AssetImage('assets/drawer/developer.png'),
+        //     title: 'For Developer', onTap: () {
+        //   Get.to(() => Developer());
+        // }),
+        // buildButton(context,
+        //     icon: const AssetImage('assets/drawer/firebase.png'),
+        //     title: 'Firebase', onTap: () {
+        //   Get.to(FirebaseUI());
+        // }),
       ],
     );
   }

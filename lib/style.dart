@@ -10,6 +10,9 @@ const scaffoldColor = Color(0xffd4dfed);
 const widgetColor = Color(0xffe9eff6);
 const textFieldColor = Color(0xffbecfe4);
 const selectionColor = Color(0xff93afd2);
+const successColor = Color(0xff028c5a);
+const successColor2 = Color(0xff02734a);
+
 const defaultPadding = 10.0;
 const defaultRadius = 10.0;
 const defaultElevation = 10.0;

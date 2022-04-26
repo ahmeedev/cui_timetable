@@ -50,7 +50,7 @@ class SyncController extends GetxController {
       stillSync.value = true;
       await _downloadFile(remoteVersion);
     } else {
-      GetXUtilities.snackbar(context,
+      GetXUtilities.successSnackbar(context,
           title: 'Sync', message: 'Data is Already Synchronized');
     }
   }

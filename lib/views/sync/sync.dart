@@ -43,7 +43,7 @@ class SyncBody extends StatelessWidget {
                     : const Icon(
                         Icons.cloud_done,
                         size: 30,
-                        color: Colors.green,
+                        color: successColor,
                       ),
               )),
           // SyncTile(
@@ -114,10 +114,15 @@ class SyncTile extends StatelessWidget {
               const SizedBox(
                 width: 4,
               ),
-              Text(
-                "$lastUpdate",
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
+              lastUpdate == ''
+                  ? Text(
+                      "No Records",
+                      style: Theme.of(context).textTheme.labelMedium,
+                    )
+                  : Text(
+                      "$lastUpdate",
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
               Padding(
                 padding: const EdgeInsets.only(
                     left: defaultPadding * 2, right: defaultPadding),
