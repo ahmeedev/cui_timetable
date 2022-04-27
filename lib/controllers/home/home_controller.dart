@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cui_timetable/controllers/sync/sync_controller.dart';
+import 'package:cui_timetable/models/utilities/get_utilities.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -15,7 +17,7 @@ class HomeController extends GetxController
   late AnimationController controller;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
 
     controller = AnimationController(
@@ -24,6 +26,17 @@ class HomeController extends GetxController
         milliseconds: 2000,
       ),
     )..repeat();
+
+    final box = await Hive.openBox('info');
+    var value = box.get('new_user').toString();
+    // box.delete('new_user');
+    print(value);
+    if (value == '' || value == 'null') {
+      GetXUtilities.dialog();
+      await _syncData();
+    }
+    // print(box.put('last_update', ''));
+
     // timer = Timer.periodic(
     //   const Duration(milliseconds: 1000),
     //   (timer) {
@@ -81,5 +94,11 @@ class HomeController extends GetxController
     // );
 
     FlutterNativeSplash.remove();
+  }
+
+  Future<bool> _syncData() {
+    final controller = SyncController();
+    controller.syncData(dialogPop: true);
+    return Future.value(true);
   }
 }

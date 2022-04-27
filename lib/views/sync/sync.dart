@@ -58,7 +58,7 @@ class SyncBody extends StatelessWidget {
           // ),
           ElevatedButton(
               onPressed: () async {
-                await syncController.syncData(context);
+                await syncController.syncData();
                 // await databaseController.insertTime();
               },
               child: Padding(

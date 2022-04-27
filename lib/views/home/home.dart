@@ -2,17 +2,20 @@ import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:cui_timetable/controllers/firebase/firebase_controller.dart';
 import 'package:cui_timetable/controllers/home/home_controller.dart';
 import 'package:cui_timetable/models/utilities/get_utilities.dart';
+import 'package:cui_timetable/models/utilities/home_utilities.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/freerooms/freerooms.dart';
 import 'package:cui_timetable/views/home/drawer/drawer.dart';
 import 'package:cui_timetable/views/timetable/timetable_main/timetable_main.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/components/loader/gf_loader.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -36,10 +39,11 @@ class Home extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             CustomScrollView(
+              physics: NeverScrollableScrollPhysics(),
               slivers: [
                 HomeAppBar(),
                 const HomeBody(),
-                const HomeBottomWidget(),
+                // const HomeBottomWidget(),
               ],
             ),
             const HomeOverlay()
@@ -188,67 +192,71 @@ class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.only(top: 65, right: 8.0, left: 8.0, bottom: 0),
-      sliver: SliverList(
-          delegate: SliverChildListDelegate([
-        /// Building News row
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Latest News',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontWeight: FontWeight.w900)),
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .copyWith(color: primaryColor),
-                  text: "More>",
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () async {
-                      var url = "http://sahiwal.comsats.edu.pk/";
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    }),
-            ]))
-          ],
-        ),
-
-        /// Building Card for news
-
-        Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Card(
-              color: widgetColor,
-              shape: const RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(defaultRadius))),
-              elevation: defaultElevation,
-              child: ListTile(
-                // horizontalTitleGap: 8,
-                minVerticalPadding: defaultPadding + 4,
-                title: Text(
-                  'Students Week Spring 2022',
-                  style: Theme.of(context).textTheme.titleMedium!,
-                ),
-                subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    'Students Week Spring 2022 will be held at CUI, Sahiwal Campus.The dates of the week are March 21st, 2022 till March 25th, 2022',
-                    style: Theme.of(context).textTheme.bodyMedium,
+        padding:
+            const EdgeInsets.only(top: 65, right: 8.0, left: 8.0, bottom: 0),
+        sliver: SliverFillRemaining(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: defaultPadding),
+                    child: Text('Latest News',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.w900)),
                   ),
-                ),
+                  // RichText(
+                  //     text: TextSpan(children: [
+                  //   TextSpan(
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .titleSmall!
+                  //           .copyWith(color: primaryColor),
+                  //       text: "More>",
+                  //       recognizer: TapGestureRecognizer()
+                  //         ..onTap = () async {
+                  //           var url = "http://sahiwal.comsats.edu.pk/";
+                  //           if (await canLaunch(url)) {
+                  //             await launch(url);
+                  //           } else {
+                  //             throw 'Could not launch $url';
+                  //           }
+                  //         }),
+                  // ]))
+                ],
               ),
-            )),
-      ])),
-    );
+              Flexible(
+                fit: FlexFit.loose,
+                child: ListView(
+                    padding: EdgeInsets.zero,
+                    physics: const BouncingScrollPhysics(),
+                    // shrinkWrap: true,
+                    children: [
+                      buildNews(
+                        context,
+                        title: 'Student Week 2022',
+                        description:
+                            'Students Week Spring 2022 will be held at CUI, Sahiwal Campus.The dates of the week are March 21st, 2022 till March 25th, 2022',
+                      ),
+                      buildNews(
+                        context,
+                        title: 'FEE Notification - Spring 2022',
+                        description: '''Dear Students,
+The second installment of the fee is due on March 25, 2022.
+After the due date Rs. 100 per day fine will be charged and the fee defaulters cannot appear in mid-term exam. The fee vouchers have been generated on the CU-online portals. Please follow the due dates to avoid fine and absence in the Mid-term exam.''',
+                      ),
+                    ]),
+              ),
+
+              const HomeBottomWidget()
+
+              /// Building Card for news
+            ],
+          ),
+        ));
   }
 }
 
@@ -258,32 +266,32 @@ class HomeBottomWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverFillRemaining(
-        hasScrollBody: false,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('CU Online Portal',
-                        style: Theme.of(context).textTheme.titleMedium),
-                    Text('Sign in to view details',
-                        style: Theme.of(context).textTheme.bodyMedium),
-                  ]),
-              ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Sign in',
-                    style: Theme.of(context).textTheme.labelLarge,
-                  )),
-            ],
-          ),
-        ));
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('CU Online Portal',
+                    style: Theme.of(context).textTheme.titleMedium),
+                Text('Sign in to view details',
+                    style: Theme.of(context).textTheme.bodyMedium),
+              ]),
+          ElevatedButton(
+              onPressed: () {
+                GetXUtilities.dialog();
+              },
+              child: Text(
+                'Sign in',
+                style: Theme.of(context).textTheme.labelLarge,
+              )),
+        ],
+      ),
+    );
   }
 }
 
@@ -335,9 +343,10 @@ class HomeOverlay extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     // Get.to(() => FreeRooms(), transition: Transition.zoom);
-                    GetXUtilities.snackbar(context,
+                    GetXUtilities.snackbar(
                         title: 'In Development',
-                        message: 'This Module is still in Developement Phase');
+                        message: 'This Module is still in Developement Phase',
+                        gradient: primaryGradient);
                   },
                   child: Column(
                     children: [
@@ -362,9 +371,10 @@ class HomeOverlay extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     // Get.to(FreeRooms());
-                    GetXUtilities.snackbar(context,
+                    GetXUtilities.snackbar(
                         title: 'In Developement',
-                        message: 'This Module is still in Development Phase');
+                        message: 'This Module is still in Development Phase',
+                        gradient: primaryGradient);
                   },
                   child: Column(
                     children: [

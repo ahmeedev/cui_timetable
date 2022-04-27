@@ -13,6 +13,10 @@ const selectionColor = Color(0xff93afd2);
 const successColor = Color(0xff028c5a);
 const successColor2 = Color(0xff02734a);
 
+const primaryGradient = [primaryColor, forGradient];
+const successGradient = [successColor, successColor2];
+const errorGradient = [Color(0xff800000), Color(0xff990000)];
+
 const defaultPadding = 10.0;
 const defaultRadius = 10.0;
 const defaultElevation = 10.0;

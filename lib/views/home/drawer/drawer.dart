@@ -1,6 +1,5 @@
 import 'package:cui_timetable/style.dart';
-import 'package:cui_timetable/views/developers/developer.dart';
-import 'package:cui_timetable/views/firebase/firebase.dart';
+import 'package:cui_timetable/views/director/director_vision.dart';
 import 'package:cui_timetable/views/sync/sync.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +14,10 @@ class Header extends StatelessWidget {
       accountName: const Text(""),
       accountEmail: Text(
         "No details available",
-        style: Theme.of(context).textTheme.titleMedium,
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium!
+            .copyWith(color: Colors.white),
       ),
       currentAccountPicture: CircleAvatar(
         backgroundColor: Theme.of(context).secondaryHeaderColor,
@@ -76,8 +78,10 @@ class ButtonList extends StatelessWidget {
       children: [
         buildButton(context,
             icon: const AssetImage('assets/drawer/vision.png'),
-            title: 'Director Vision',
-            onTap: () {}),
+            title: 'Director Vision', onTap: () {
+          Get.to(() => const DirectorVision(),
+              transition: Transition.cupertino);
+        }),
         buildButton(context,
             icon: const AssetImage('assets/drawer/about_us.png'),
             title: 'About Us',

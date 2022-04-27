@@ -206,8 +206,10 @@ class StudentUI extends StatelessWidget {
                     transition: Transition.cupertino,
                     arguments: [controller.textController.text]);
               } else {
-                GetXUtilities.snackbar(context,
-                    title: 'Not Found', message: 'Enter Valid Section');
+                GetXUtilities.snackbar(
+                    title: 'Not Found',
+                    message: 'Enter Valid Section',
+                    gradient: primaryGradient);
               }
             },
             child: Padding(

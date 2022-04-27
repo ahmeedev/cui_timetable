@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:csv/csv.dart';
 import 'package:cui_timetable/controllers/database/database_controller.dart';
 import 'package:cui_timetable/models/utilities/get_utilities.dart';
+import 'package:cui_timetable/style.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class SyncController extends GetxController {
   var data = [].obs;
@@ -30,32 +32,52 @@ class SyncController extends GetxController {
     super.onInit();
   }
 
-  syncData(context) async {
-    final remoteConfig = FirebaseRemoteConfig.instance;
-    await remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(minutes: 1),
-      minimumFetchInterval: const Duration(minutes: 1),
-    ));
+  syncData({dialogPop = false}) async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      final remoteConfig = FirebaseRemoteConfig.instance;
+      await remoteConfig.setConfigSettings(RemoteConfigSettings(
+        fetchTimeout: const Duration(minutes: 1),
+        minimumFetchInterval: const Duration(minutes: 1),
+      ));
 
-    await remoteConfig.setDefaults(const {
-      "version": 0,
-    });
+      await remoteConfig.setDefaults(const {
+        "version": 0,
+      });
 
-    await remoteConfig.fetchAndActivate();
+      await remoteConfig.fetchAndActivate();
 
-    final remoteVersion = remoteConfig.getInt('version');
-    final box = await Hive.openBox('info');
+      final remoteVersion = remoteConfig.getInt('version');
+      final box = await Hive.openBox('info');
 
-    if (box.get('version') != remoteVersion) {
-      stillSync.value = true;
-      await _downloadFile(remoteVersion);
+      if (box.get('version') != remoteVersion) {
+        stillSync.value = true;
+        if (dialogPop) {
+          await _downloadFile(remoteVersion, dialogPop: true);
+        } else {
+          await _downloadFile(remoteVersion);
+        }
+      } else {
+        // Execute when the user is new and already synchronized
+        if (dialogPop) {
+          Get.back();
+        }
+        GetXUtilities.snackbar(
+            title: 'Sync',
+            message: 'Data is Already Synchronized',
+            gradient: successGradient);
+      }
     } else {
-      GetXUtilities.successSnackbar(context,
-          title: 'Sync', message: 'Data is Already Synchronized');
+      print('check your internet');
+      GetXUtilities.snackbar(
+          title: 'Sync',
+          message: 'Make sure you have a connection',
+          gradient: errorGradient);
     }
   }
 
-  Future<void> _downloadFile(remoteVersion) async {
+  Future<void> _downloadFile(remoteVersion, {dialogPop = false}) async {
     // Create a storage reference from our app
     final storageRef = FirebaseStorage.instance.ref();
 
@@ -89,9 +111,19 @@ class SyncController extends GetxController {
                         .then((value) => Hive.close())
                   });
 
+              if (dialogPop) {
+                Get.back();
+                final box = await Hive.openBox('info');
+                box.put('new_user', false);
+              }
               stillSync.value = false;
               final box = await Hive.openBox('info');
               last_update.value = box.get('last_update');
+
+              GetXUtilities.snackbar(
+                  title: 'Sync',
+                  message: 'Data Synchronized Successfully',
+                  gradient: successGradient);
             });
           }
           inner();
@@ -101,6 +133,10 @@ class SyncController extends GetxController {
           devlog.log("File Downloading Cancelled...", name: "SYNC_DOWN");
           break;
         case TaskState.error:
+          GetXUtilities.snackbar(
+              title: 'Sync',
+              message: 'Make Sure You Have a Internet Connection',
+              gradient: errorGradient);
           devlog.log("Error Occured While Downloading", name: "SYNC_DOWN");
           break;
       }
