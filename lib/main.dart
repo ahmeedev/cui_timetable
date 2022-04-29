@@ -1,7 +1,5 @@
 import 'dart:developer' as devlog;
-import 'dart:io';
 
-import 'package:cui_timetable/controllers/csv/csv_controller.dart';
 import 'package:cui_timetable/controllers/database/database_controller.dart';
 import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:cui_timetable/controllers/firebase/firebase_controller.dart';
@@ -12,15 +10,11 @@ import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   final loc = await getApplicationDocumentsDirectory();
@@ -68,15 +62,6 @@ Future<void> _initialized() async {
   // print(DateFormat.yMMMd]().format(DateTime.now()));
   // final box = await Hive.openBox('CS Mr. Ahmad Shaf');
   // print(box.values.toList().where((element) => element[2] == "2"));
-
-  try {
-    final result = await InternetAddress.lookup('example.com');
-    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-      print('connected');
-    }
-  } on SocketException catch (_) {
-    print('not connected');
-  }
 }
 
 /// Root Widget of the application.

@@ -1,4 +1,5 @@
 import 'package:cui_timetable/controllers/freerooms/freerooms_controller.dart';
+import 'package:cui_timetable/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ class FreeRooms extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: scaffoldColor,
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Rooms'),
@@ -68,16 +70,47 @@ class FreeRooms extends StatelessWidget {
               child: FractionallySizedBox(
                 widthFactor: 1,
                 heightFactor: 1,
-                child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return LectureDetailsTile(
-                      slot: index < 5 ? slots[index] : slots[2],
-                      room: "A1.1",
-                      img: svg,
-                    );
-                  },
-                ),
+                child: ExpansionTile(title: Text('Classrooms'), children: [
+                  Column(
+                    children: [
+                      LectureDetailsTile(
+                        slot: slots[2],
+                        room: "A1.1",
+                        img: svg,
+                      ),
+                      LectureDetailsTile(
+                        slot: slots[2],
+                        room: "A1.1",
+                        img: svg,
+                      ),
+                      LectureDetailsTile(
+                        slot: slots[2],
+                        room: "A1.1",
+                        img: svg,
+                      ),
+                      LectureDetailsTile(
+                        slot: slots[2],
+                        room: "A1.1",
+                        img: svg,
+                      ),
+                      LectureDetailsTile(
+                        slot: slots[2],
+                        room: "A1.1",
+                        img: svg,
+                      ),
+                      // ListView.builder(
+                      //   itemCount: 10,
+                      //   itemBuilder: (context, index) {
+                      //     return LectureDetailsTile(
+                      //       slot: index < 5 ? slots[index] : slots[2],
+                      //       room: "A1.1",
+                      //       img: svg,
+                      //     );
+                      //   },
+                      // ),
+                    ],
+                  ),
+                ]),
               ),
             ),
           ],
@@ -152,34 +185,44 @@ class LectureDetailsTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 4),
       child: Card(
-        elevation: 8,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
+        color: widgetColor,
+        elevation: defaultElevation,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(defaultPadding),
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                img,
                 Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
+                  padding: const EdgeInsets.only(right: defaultPadding),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
                         room.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                fontWeight: FontWeight.bold, fontSize: 18),
                       ),
-                      Icon(
-                        Icons.timer,
-                        size: 30,
-                        color: Colors.blue,
+                      const ImageIcon(
+                        AssetImage('assets/freerooms/timer.png'),
+                        size: iconSize + 10,
+                        color: primaryColor,
                       ),
-                      Text(slot.toString())
+                      Text(slot.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(fontWeight: FontWeight.normal))
                     ],
                   ),
-                )
+                ),
+                img
               ],
             ),
           ),

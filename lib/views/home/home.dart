@@ -5,10 +5,12 @@ import 'package:cui_timetable/controllers/home/home_controller.dart';
 import 'package:cui_timetable/models/utilities/get_utilities.dart';
 import 'package:cui_timetable/models/utilities/home_utilities.dart';
 import 'package:cui_timetable/style.dart';
+import 'package:cui_timetable/views/freerooms/freerooms.dart';
 import 'package:cui_timetable/views/home/drawer/drawer.dart';
 import 'package:cui_timetable/views/timetable/timetable_main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -146,7 +148,7 @@ class HomeAppBar extends StatelessWidget {
                     ),
                     const SizedBox(
                       width: 10,
-                    )
+                    ),
                   ],
                 ),
               )
@@ -338,11 +340,11 @@ class HomeOverlay extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    // Get.to(() => FreeRooms(), transition: Transition.zoom);
-                    GetXUtilities.snackbar(
-                        title: 'In Development',
-                        message: 'This Module is still in Developement Phase',
-                        gradient: primaryGradient);
+                    Get.to(() => FreeRooms(), transition: Transition.cupertino);
+                    // GetXUtilities.snackbar(
+                    //     title: 'In Development',
+                    //     message: 'This Module is still in Developement Phase',
+                    //     gradient: primaryGradient);
                   },
                   child: Column(
                     children: [
@@ -366,7 +368,6 @@ class HomeOverlay extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    // Get.to(FreeRooms());
                     GetXUtilities.snackbar(
                         title: 'In Developement',
                         message: 'This Module is still in Development Phase',

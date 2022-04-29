@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/timetable/timetable_ui/student/student_ui.dart';
 import 'package:cui_timetable/views/timetable/timetable_ui/teacher/teacher_ui.dart';
@@ -22,7 +23,21 @@ class Timetable extends StatelessWidget {
                   TeacherUI(),
 
                   // main container
-                  const Icon(Icons.directions_bike),
+                  AvatarGlow(
+                    endRadius: 190.0,
+                    duration: const Duration(milliseconds: 2000),
+                    repeat: true,
+                    showTwoGlows: true,
+                    repeatPauseDuration: const Duration(milliseconds: 100),
+                    glowColor: primaryColor,
+                    child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: const BoxDecoration(
+                          color: successColor,
+                          shape: BoxShape.circle,
+                        )),
+                  ),
                 ],
               ),
             )

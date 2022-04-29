@@ -10,26 +10,25 @@ Card buildNews(context, {required String title, required String description}) {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+
             // backgroundColor: widgetColor,
             iconColor: primaryColor,
+
             // trailing: const Icon(Icons.motion_photos_on_rounded),
 
             // tilePadding: EdgeInsets.all(0),
             childrenPadding: const EdgeInsets.fromLTRB(
-                defaultPadding, 0, defaultPadding, defaultPadding + 5),
+                defaultPadding, 0, defaultPadding, defaultPadding + 15),
             title: Text(
               title,
               style: Theme.of(context).textTheme.titleMedium!,
             ),
             children: [
-              ListTile(
-                  // horizontalTitleGap: 8,
-                  // minVerticalPadding: defaultPadding + 4,
-                  title: Text(
+              Text(
                 description,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(),
                 textAlign: TextAlign.justify,
-              ))
+              )
             ]),
       ));
 }

@@ -1,6 +1,5 @@
 import 'package:cui_timetable/style.dart';
 import 'package:flutter/material.dart';
-import 'package:avatar_glow/avatar_glow.dart';
 
 class AboutUs extends StatelessWidget {
   const AboutUs({Key? key}) : super(key: key);
@@ -116,7 +115,7 @@ class AboutUsTile extends StatelessWidget {
         Align(
           alignment: Alignment.topRight,
           child: Padding(
-            padding: const EdgeInsets.only(right: defaultPadding / 2),
+            padding: const EdgeInsets.only(right: defaultPadding / 2, top: 2),
             child: Container(
               alignment: Alignment.center,
               width: 120,
