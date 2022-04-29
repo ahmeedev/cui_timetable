@@ -51,29 +51,32 @@ class SyncController extends GetxController {
       final remoteVersion = remoteConfig.getInt('version');
       final box = await Hive.openBox('info');
 
-      if (box.get('version') != remoteVersion) {
-        stillSync.value = true;
-        if (dialogPop) {
-          await _downloadFile(remoteVersion, dialogPop: true);
-        } else {
-          await _downloadFile(remoteVersion);
-        }
-      } else {
-        // Execute when the user is new and already synchronized
-        if (dialogPop) {
-          Get.back();
-        }
-        GetXUtilities.snackbar(
-            title: 'Sync',
-            message: 'Data is Already Synchronized',
-            gradient: successGradient);
-      }
-    } else {
-      print('check your internet');
-      GetXUtilities.snackbar(
-          title: 'Sync',
-          message: 'Make sure you have a connection',
-          gradient: errorGradient);
+      await _downloadFile(
+          remoteVersion); // remove this and uncommet the below code
+
+      //   if (box.get('version') != remoteVersion) {
+      //     stillSync.value = true;
+      //     if (dialogPop) {
+      //       await _downloadFile(remoteVersion, dialogPop: true);
+      //     } else {
+      //       await _downloadFile(remoteVersion);
+      //     }
+      //   } else {
+      //     // Execute when the user is new and already synchronized
+      //     if (dialogPop) {
+      //       Get.back();
+      //     }
+      //     GetXUtilities.snackbar(
+      //         title: 'Sync',
+      //         message: 'Data is Already Synchronized',
+      //         gradient: successGradient);
+      //   }
+      // } else {
+      //   print('check your internet');
+      //   GetXUtilities.snackbar(
+      //       title: 'Sync',
+      //       message: 'Make sure you have a connection',
+      //       gradient: errorGradient);
     }
   }
 

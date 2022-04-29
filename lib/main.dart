@@ -65,6 +65,8 @@ Future<void> _initialized() async {
   //* ============================================ //
 
   // print(DateFormat.yMMMd]().format(DateTime.now()));
+  final box = await Hive.openBox('CS Mr. Ahmad Shaf');
+  print(box.values.toList().where((element) => element[2] == "2"));
 }
 
 /// Root Widget of the application.

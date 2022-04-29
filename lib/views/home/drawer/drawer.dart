@@ -1,4 +1,5 @@
 import 'package:cui_timetable/style.dart';
+import 'package:cui_timetable/views/aboutUs/about_us.dart';
 import 'package:cui_timetable/views/director/director_vision.dart';
 import 'package:cui_timetable/views/sync/sync.dart';
 import 'package:flutter/material.dart';
@@ -84,8 +85,9 @@ class ButtonList extends StatelessWidget {
         }),
         buildButton(context,
             icon: const AssetImage('assets/drawer/about_us.png'),
-            title: 'About Us',
-            onTap: () {}),
+            title: 'About Us', onTap: () {
+          Get.to(() => const AboutUs(), transition: Transition.cupertino);
+        }),
         buildButton(context,
             icon: const AssetImage('assets/drawer/remainder.png'),
             title: 'Remainder',

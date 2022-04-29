@@ -1,15 +1,15 @@
-import 'package:cui_timetable/controllers/timetable/student_ui_controller.dart';
-import 'package:cui_timetable/controllers/timetable/timetable_main_controller.dart';
+import 'package:cui_timetable/controllers/timetable/student/student_ui_controller.dart';
 import 'package:cui_timetable/models/utilities/get_utilities.dart';
 import 'package:cui_timetable/style.dart';
-import 'package:cui_timetable/views/timetable/student_timetable.dart';
+import 'package:cui_timetable/views/timetable/timetable_ui/student/student_timetable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class StudentUI extends StatelessWidget {
-  final timetableController = TimetableController();
   final controller = Get.put(StudentUIController());
+
+  StudentUI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,49 +51,13 @@ class StudentUI extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'Section',
+              'Section Name',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(
               height: 10,
             ),
-            // TypeAheadField(
-            //   textFieldConfiguration:
-            //       TextFieldConfiguration(
-            //           controller: _textController,
-            //           decoration: InputDecoration(
-            //             suffixIcon: IconButton(
-            //                 onPressed: () {
-            //                   _textController.clear();
-            //                 },
-            //                 icon: const Icon(
-            //                   Icons.cancel,
-            //                   color: Colors.blue,
-            //                 )),
-            //             fillColor: Colors.grey.shade200,
-            //             filled: true,
-            //             border: OutlineInputBorder(
-            //                 borderRadius:
-            //                     BorderRadius.circular(10.0),
-            //                 borderSide: BorderSide(
-            //                     color:
-            //                         Colors.grey.shade200)),
-            //           )),
-            //   suggestionsCallback: (pattern) =>
-            //       startUpController.sections.where(
-            //           (element) => element
-            //               .toString()
-            //               .toLowerCase()
-            //               .contains(pattern.toLowerCase())),
-            //   itemBuilder: (_, suggestion) {
-            //     return ListTile(
-            //         title: Text(suggestion.toString()));
-            //   },
-            //   onSuggestionSelected: (suggestion) {
-            //     _textController.text =
-            //         suggestion.toString();
-            //   },
-            // ),
+
             TextFormField(
                 style: Theme.of(context)
                     .textTheme
@@ -101,7 +65,7 @@ class StudentUI extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.bold),
                 controller: controller.textController,
                 onChanged: (value) {
-                  timetableController.filteredList.value = controller.sections
+                  controller.filteredList.value = controller.sections
                       .where((element) => element
                           .toString()
                           .toLowerCase()
@@ -109,19 +73,19 @@ class StudentUI extends StatelessWidget {
                       .toList();
 
                   if (value.isEmpty) {
-                    timetableController.listVisible.value = false;
-                  } else if (timetableController.filteredList.contains(value) &&
-                      timetableController.filteredList.length == 1) {
-                    timetableController.listVisible.value = false;
+                    controller.listVisible.value = false;
+                  } else if (controller.filteredList.contains(value) &&
+                      controller.filteredList.length == 1) {
+                    controller.listVisible.value = false;
                   } else {
-                    timetableController.listVisible.value = true;
+                    controller.listVisible.value = true;
                   }
                 },
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                       onPressed: () {
                         controller.textController.clear();
-                        timetableController.filteredList.value = [];
+                        controller.filteredList.value = [];
                       },
                       icon: const Icon(Icons.cancel, color: primaryColor)),
                   fillColor: textFieldColor,
@@ -134,33 +98,32 @@ class StudentUI extends StatelessWidget {
             // const SizedBox(
             //   height: 10,
             // ),
-            Obx(() => timetableController.filteredList.isEmpty
+            Obx(() => controller.filteredList.isEmpty
                 ? const SizedBox()
                 : ConstrainedBox(
                     constraints: BoxConstraints(
                       minWidth: double.infinity,
-                      maxHeight:
-                          timetableController.listVisible.value ? height : 0,
+                      maxHeight: controller.listVisible.value ? height : 0,
                     ),
                     child: ListView.separated(
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: timetableController.filteredList.length,
+                      itemCount: controller.filteredList.length,
                       itemBuilder: (context, index) {
                         return ListTile(
                           onTap: () {
                             controller.textController.text =
-                                timetableController.filteredList[index];
+                                controller.filteredList[index];
                             controller.textController.selection =
                                 TextSelection.fromPosition(TextPosition(
                                     offset:
                                         controller.textController.text.length));
-                            timetableController.listVisible.value = false;
+                            controller.listVisible.value = false;
                           },
                           dense: true,
                           contentPadding: EdgeInsets.zero,
                           leading: Text(
-                            timetableController.filteredList[index],
+                            controller.filteredList[index],
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!

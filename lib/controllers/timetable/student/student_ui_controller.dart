@@ -4,7 +4,9 @@ import 'package:hive/hive.dart';
 
 class StudentUIController extends GetxController {
   var sections;
-  late final TextEditingController textController = TextEditingController();
+  final TextEditingController textController = TextEditingController();
+  var filteredList = [].obs;
+  var listVisible = true.obs;
   @override
   Future<void> onInit() async {
     await fetchSections();

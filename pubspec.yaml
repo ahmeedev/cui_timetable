@@ -93,6 +93,7 @@ flutter:
   assets:
     - assets/
     - assets/drawer/
+    - assets/about_us/
     - assets/timetable/
     - assets/csv/
     - assets/home/

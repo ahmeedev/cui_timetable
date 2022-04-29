@@ -1,5 +1,4 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:cui_timetable/controllers/timetable/student_timetable_controller.dart';
+import 'package:cui_timetable/controllers/timetable/student/student_timetable_controller.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -109,19 +108,12 @@ class StudentTimetable extends StatelessWidget {
 }
 
 class DayTile extends StatelessWidget {
-  DayTile(
-      {required this.day,
-      required this.dayKey,
-      required this.callback,
-      required this.obs,
-      Key? key,
-      required this.controller})
-      : super(key: key);
-  late StudentTimetableController controller;
+  late final StudentTimetableController controller;
   late final day;
   late final dayKey;
   late final callback;
-  late Rx<bool> obs;
+
+  late final Rx<bool> obs;
   final colorList = [
     Colors.purple,
     Colors.amber,
@@ -140,6 +132,15 @@ class DayTile extends StatelessWidget {
     Colors.orange,
   ];
 
+  DayTile(
+      {required this.day,
+      required this.dayKey,
+      required this.callback,
+      required this.obs,
+      Key? key,
+      required this.controller})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -150,8 +151,7 @@ class DayTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 4.0, right: 4.0),
             child: Obx(() => Card(
-                // color: widgetColor,
-
+                color: widgetColor,
                 shadowColor: shadowColor,
                 elevation: obs.value ? defaultElevation : defaultElevation / 2,
                 shape: RoundedRectangleBorder(
@@ -222,6 +222,7 @@ class LectureDetailsTile extends StatelessWidget {
       required this.room,
       this.time})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(

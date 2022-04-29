@@ -7,6 +7,7 @@ class DirectorVision extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: scaffoldColor,
       appBar: AppBar(
         title: const Text('Director Vision'),
         centerTitle: true,

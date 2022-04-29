@@ -1,21 +1,14 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:cui_timetable/controllers/firebase/firebase_controller.dart';
 import 'package:cui_timetable/controllers/home/home_controller.dart';
 import 'package:cui_timetable/models/utilities/get_utilities.dart';
 import 'package:cui_timetable/models/utilities/home_utilities.dart';
 import 'package:cui_timetable/style.dart';
-import 'package:cui_timetable/views/freerooms/freerooms.dart';
 import 'package:cui_timetable/views/home/drawer/drawer.dart';
-import 'package:cui_timetable/views/timetable/timetable_main/timetable_main.dart';
-import 'package:flutter/gestures.dart';
+import 'package:cui_timetable/views/timetable/timetable_main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/components/loader/gf_loader.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -31,15 +24,18 @@ class Home extends StatelessWidget {
         // extendBodyBehindAppBar: true,
         backgroundColor: scaffoldColor,
         drawer: Drawer(
-          child: ListView(
-            children: const [Header(), ButtonList()],
+          child: Container(
+            color: widgetColor,
+            child: ListView(
+              children: const [Header(), ButtonList()],
+            ),
           ),
         ),
         body: Stack(
           fit: StackFit.expand,
           children: [
             CustomScrollView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               slivers: [
                 HomeAppBar(),
                 const HomeBody(),

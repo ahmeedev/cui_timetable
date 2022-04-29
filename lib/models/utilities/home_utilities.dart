@@ -12,10 +12,11 @@ Card buildNews(context, {required String title, required String description}) {
         child: ExpansionTile(
             // backgroundColor: widgetColor,
             iconColor: primaryColor,
-            trailing: Icon(Icons.motion_photos_on_rounded),
+            // trailing: const Icon(Icons.motion_photos_on_rounded),
 
             // tilePadding: EdgeInsets.all(0),
-
+            childrenPadding: const EdgeInsets.fromLTRB(
+                defaultPadding, 0, defaultPadding, defaultPadding + 5),
             title: Text(
               title,
               style: Theme.of(context).textTheme.titleMedium!,
@@ -24,13 +25,10 @@ Card buildNews(context, {required String title, required String description}) {
               ListTile(
                   // horizontalTitleGap: 8,
                   // minVerticalPadding: defaultPadding + 4,
-                  subtitle: Padding(
-                padding: const EdgeInsets.all(defaultPadding / 2),
-                child: Text(
-                  description,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(),
-                  textAlign: TextAlign.justify,
-                ),
+                  title: Text(
+                description,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(),
+                textAlign: TextAlign.justify,
               ))
             ]),
       ));

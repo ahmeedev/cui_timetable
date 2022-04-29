@@ -9,41 +9,59 @@ class DatabaseController extends GetxController {
   String search_section = '';
 
   Future<Future<int>> insertData(List<dynamic> data, remoteVersion) async {
+    // fetch sections as well as teachers.
     final sections = <String>{};
+    final teachers = <String>{};
+
     for (var item in data) {
       sections.add(item[0]);
+      teachers.add(item[4]);
     }
 
-    late final box;
-    // try {
-    box = await Hive.openBox("info");
-    // } catch (e) {
-    //   box = Hive.box('info');
-    // }
+    final box = await Hive.openBox("info");
     box.put("sections", sections.toList());
+    box.put("teachers", teachers.toList());
 
-    print(box.get('sections'));
-
+    // opening all the boxes for students and teachers.
     int counter = 0;
     for (var i in sections) {
       await Hive.openBox(i);
       print('$i created $counter');
       counter++;
     }
+    counter = 0;
+    for (var i in teachers) {
+      await Hive.openBox(i);
+      print('$i created $counter');
+      counter++;
+    }
 
+    // insert data for students as well as for students.
     counter = 0;
     for (var i in data) {
-      final storage = Hive.box(i[0].toString());
-      storage.put('lec$counter', [
+      final student = Hive.box(i[0].toString());
+      final teacher = Hive.box(i[4].toString());
+      student.put('lec$counter', [
         i[1].toString(),
         i[2].toString(),
         i[3].toString(),
         i[4].toString(),
         i[5].toString()
       ]);
-      print(i);
+
+      teacher.put('lec$counter', [
+        i[0].toString(),
+        i[1].toString(),
+        i[2].toString(),
+        i[3].toString(),
+        i[5].toString()
+      ]);
+
       counter++;
     }
+
+    print('Sections Length: ${sections.length}');
+    print('Teachers Length: ${teachers.length}');
 
     await _insertTime();
     await _updateStatuses(remoteVersion);
