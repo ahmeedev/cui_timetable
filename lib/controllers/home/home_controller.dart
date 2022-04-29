@@ -30,6 +30,7 @@ class HomeController extends GetxController
     final box = await Hive.openBox('info');
     var value = box.get('new_user').toString();
     // box.delete('new_user');
+
     print(value);
     if (value == '' || value == 'null') {
       GetXUtilities.dialog();

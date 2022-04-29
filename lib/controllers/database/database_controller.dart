@@ -96,21 +96,21 @@ class DatabaseController extends GetxController {
   Future<void> deleteData() async {
     var box = await Hive.openBox('info');
     try {
-      search_section = box.get('search_section');
-      print('here is $search_section');
       var sections = box.get('sections');
       for (var i in sections) {
         // final box = await Hive.openBox(i);
+        Hive.deleteBoxFromDisk(i);
+      }
+      var teachers = box.get('teachers');
+      for (var i in teachers) {
         Hive.deleteBoxFromDisk(i);
       }
     } catch (e) {
       print(e);
     } finally {
       // Hive.deleteFromDisk();
-      box.deleteAll([
-        'sections',
-      ]);
-      await Future.delayed(const Duration(seconds: 1));
+      box.deleteAll(['sections', 'teachers']);
+      await Future.delayed(const Duration(milliseconds: 1500));
     }
     print('Data deleted From Disk Succuessfully');
     // preserve the values

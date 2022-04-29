@@ -34,7 +34,7 @@ class SyncBody extends StatelessWidget {
         children: [
           Obx(() => SyncTile(
                 title: 'Timetable',
-                lastUpdate: syncController.last_update.value,
+                lastUpdate: syncController.lastUpdate.value,
                 icon: syncController.stillSync.value
                     ? const SpinKitChasingDots(
                         color: primaryColor,

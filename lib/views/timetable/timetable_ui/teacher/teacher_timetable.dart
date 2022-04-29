@@ -51,6 +51,9 @@ class TeacherTimetable extends StatelessWidget {
                     }),
               ),
             ),
+            const SizedBox(
+              height: defaultPadding / 2,
+            ),
             Flexible(
               flex: 6,
               child: Obx(() => FractionallySizedBox(
@@ -146,10 +149,11 @@ class DayTile extends StatelessWidget {
     return Flexible(
       child: FractionallySizedBox(
           alignment: Alignment.centerLeft,
-          heightFactor: 0.8,
+          heightFactor: 1,
           widthFactor: 1,
           child: Padding(
-            padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+            padding: const EdgeInsets.only(
+                left: defaultPadding / 2, right: defaultPadding / 2),
             child: Obx(() => Card(
                 color: widgetColor,
                 shadowColor: shadowColor,

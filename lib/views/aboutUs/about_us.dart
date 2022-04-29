@@ -1,5 +1,6 @@
 import 'package:cui_timetable/style.dart';
 import 'package:flutter/material.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 class AboutUs extends StatelessWidget {
   const AboutUs({Key? key}) : super(key: key);
@@ -57,13 +58,15 @@ class AboutUsTile extends StatelessWidget {
         Positioned(
           left: 30,
           right: 0,
+          top: 5,
           child: Card(
+            color: widgetColor,
             shadowColor: shadowColor,
             elevation: defaultElevation,
             child: Row(
               children: [
                 Container(
-                  width: 90,
+                  width: 100,
                   height: 100,
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle, color: Colors.transparent),
@@ -93,12 +96,21 @@ class AboutUsTile extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: Container(
-            width: 110,
-            height: 110,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                image:
-                    DecorationImage(image: AssetImage('assets/about_us/$pic'))),
+                border: Border.all(width: 3, color: primaryColor)),
+            child: Padding(
+              padding: const EdgeInsets.all(defaultPadding / 3),
+              child: Container(
+                width: 110,
+                height: 110,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage('assets/about_us/$pic'),
+                    )),
+              ),
+            ),
           ),
         ),
         Align(

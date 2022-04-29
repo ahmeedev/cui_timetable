@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer' as devlog;
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:csv/csv.dart';
 import 'package:cui_timetable/controllers/database/database_controller.dart';
 import 'package:cui_timetable/models/utilities/get_utilities.dart';
@@ -9,23 +10,21 @@ import 'package:cui_timetable/style.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 class SyncController extends GetxController {
   var data = [].obs;
-  var last_update = ''.obs;
+  var lastUpdate = ''.obs;
   var stillSync = false.obs;
 
   @override
   Future<void> onInit() async {
     final box = await Hive.openBox('info');
     try {
-      last_update.value = box.get('last_update');
-      print(last_update.value);
+      lastUpdate.value = box.get('last_update');
+      print(lastUpdate.value);
     } catch (e) {
       print(e);
     }
@@ -51,32 +50,33 @@ class SyncController extends GetxController {
       final remoteVersion = remoteConfig.getInt('version');
       final box = await Hive.openBox('info');
 
-      await _downloadFile(
-          remoteVersion); // remove this and uncommet the below code
+      // commit this for the without condition synchronization.
+      // await _downloadFile(
+      //     remoteVersion);
 
-      //   if (box.get('version') != remoteVersion) {
-      //     stillSync.value = true;
-      //     if (dialogPop) {
-      //       await _downloadFile(remoteVersion, dialogPop: true);
-      //     } else {
-      //       await _downloadFile(remoteVersion);
-      //     }
-      //   } else {
-      //     // Execute when the user is new and already synchronized
-      //     if (dialogPop) {
-      //       Get.back();
-      //     }
-      //     GetXUtilities.snackbar(
-      //         title: 'Sync',
-      //         message: 'Data is Already Synchronized',
-      //         gradient: successGradient);
-      //   }
-      // } else {
-      //   print('check your internet');
-      //   GetXUtilities.snackbar(
-      //       title: 'Sync',
-      //       message: 'Make sure you have a connection',
-      //       gradient: errorGradient);
+      if (box.get('version') != remoteVersion) {
+        stillSync.value = true;
+        if (dialogPop) {
+          await _downloadFile(remoteVersion, dialogPop: true);
+        } else {
+          await _downloadFile(remoteVersion);
+        }
+      } else {
+        // Execute when the user is new and already synchronized
+        if (dialogPop) {
+          Get.back();
+        }
+        GetXUtilities.snackbar(
+            title: 'Sync',
+            message: 'Data is Already Synchronized',
+            gradient: successGradient);
+      }
+    } else {
+      print('check your internet');
+      GetXUtilities.snackbar(
+          title: 'Sync',
+          message: 'Make sure you have a connection',
+          gradient: errorGradient);
     }
   }
 
@@ -115,13 +115,13 @@ class SyncController extends GetxController {
                   });
 
               if (dialogPop) {
-                Get.back();
                 final box = await Hive.openBox('info');
                 box.put('new_user', false);
+                Get.back();
               }
               stillSync.value = false;
               final box = await Hive.openBox('info');
-              last_update.value = box.get('last_update');
+              lastUpdate.value = box.get('last_update');
 
               GetXUtilities.snackbar(
                   title: 'Sync',

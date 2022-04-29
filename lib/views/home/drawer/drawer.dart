@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/aboutUs/about_us.dart';
 import 'package:cui_timetable/views/director/director_vision.dart';

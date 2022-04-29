@@ -1,4 +1,5 @@
 import 'dart:developer' as devlog;
+import 'dart:io';
 
 import 'package:cui_timetable/controllers/csv/csv_controller.dart';
 import 'package:cui_timetable/controllers/database/database_controller.dart';
@@ -65,8 +66,17 @@ Future<void> _initialized() async {
   //* ============================================ //
 
   // print(DateFormat.yMMMd]().format(DateTime.now()));
-  final box = await Hive.openBox('CS Mr. Ahmad Shaf');
-  print(box.values.toList().where((element) => element[2] == "2"));
+  // final box = await Hive.openBox('CS Mr. Ahmad Shaf');
+  // print(box.values.toList().where((element) => element[2] == "2"));
+
+  try {
+    final result = await InternetAddress.lookup('example.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      print('connected');
+    }
+  } on SocketException catch (_) {
+    print('not connected');
+  }
 }
 
 /// Root Widget of the application.
