@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:csv/csv.dart';
-import 'package:cui_timetable/controllers/database/database_controller.dart';
+import 'package:cui_timetable/controllers/database/timetable_database_controller.dart';
 import 'package:cui_timetable/models/utilities/get_utilities.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -107,7 +107,7 @@ class SyncController extends GetxController {
 
             await compute(_getDownloadedContent, directory.path)
                 .then((data) async {
-              final controller = Get.find<DatabaseController>();
+              final controller = Get.find<TimetableDatabaseController>();
               await controller.deleteData().then((value) async => {
                     await controller
                         .insertData(data, remoteVersion)

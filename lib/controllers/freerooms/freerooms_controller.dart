@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
 class FreeRoomsController extends GetxController {
-  var mon = false.obs;
-  var tue = true.obs;
+  var mon = true.obs;
+  var tue = false.obs;
   var wed = false.obs;
   var thu = false.obs;
   var fri = false.obs;

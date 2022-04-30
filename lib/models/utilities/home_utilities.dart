@@ -1,16 +1,20 @@
 import 'package:cui_timetable/style.dart';
 import 'package:flutter/material.dart';
 
-Card buildNews(context, {required String title, required String description}) {
+Card buildNews(context,
+    {required String title,
+    required String description,
+    required bool expanded}) {
   return Card(
-      elevation: defaultElevation,
       color: widgetColor,
+      elevation: defaultElevation,
+      shadowColor: shadowColor,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
-
+            initiallyExpanded: expanded,
             // backgroundColor: widgetColor,
             iconColor: primaryColor,
 

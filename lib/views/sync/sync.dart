@@ -1,4 +1,4 @@
-import 'package:cui_timetable/controllers/database/database_controller.dart';
+import 'package:cui_timetable/controllers/database/timetable_database_controller.dart';
 import 'package:cui_timetable/controllers/sync/sync_controller.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:flutter/material.dart';
@@ -23,13 +23,13 @@ class Sync extends StatelessWidget {
 class SyncBody extends StatelessWidget {
   SyncBody({Key? key}) : super(key: key);
   final syncController = Get.put(SyncController());
-  final databaseController = DatabaseController();
+  final databaseController = TimetableDatabaseController();
 
   // final lastUpdate = '15-apr-2022';
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+      padding: const EdgeInsets.symmetric(vertical: defaultPadding * 1.5),
       child: Column(
         children: [
           Obx(() => SyncTile(
@@ -46,23 +46,31 @@ class SyncBody extends StatelessWidget {
                         color: successColor,
                       ),
               )),
-          // SyncTile(
-          //   title: 'Datesheet',
-          //   lastUpdate: lastUpdate,
-          //   icon: Icons.sync,
-          // ),
-          // SyncTile(
-          //   title: 'Free Rooms',
-          //   lastUpdate: lastUpdate,
-          //   icon: Icons.sync,
-          // ),
+          Obx(() => SyncTile(
+                title: 'Free Rooms',
+                lastUpdate: syncController.lastUpdate.value,
+                icon: syncController.stillSync.value
+                    ? const SpinKitChasingDots(
+                        color: primaryColor,
+                        size: 30.0,
+                      )
+                    : const Icon(
+                        Icons.cloud_done,
+                        size: 30,
+                        color: successColor,
+                      ),
+              )),
+          const SizedBox(
+            height: defaultPadding,
+          ),
           ElevatedButton(
               onPressed: () async {
                 await syncController.syncData();
                 // await databaseController.insertTime();
               },
               child: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: const EdgeInsets.symmetric(
+                    vertical: defaultPadding, horizontal: defaultPadding * 2),
                 child: Text(
                   'Sync',
                   style: Theme.of(context).textTheme.labelLarge,

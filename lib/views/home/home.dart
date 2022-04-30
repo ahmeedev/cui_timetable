@@ -27,8 +27,8 @@ class Home extends StatelessWidget {
         backgroundColor: scaffoldColor,
         drawer: Drawer(
           child: Container(
-            color: widgetColor,
-            child: ListView(
+            color: scaffoldColor,
+            child: Column(
               children: const [Header(), ButtonList()],
             ),
           ),
@@ -235,12 +235,14 @@ class HomeBody extends StatelessWidget {
                     children: [
                       buildNews(
                         context,
+                        expanded: true,
                         title: 'Student Week 2022',
                         description:
                             'Students Week Spring 2022 will be held at CUI, Sahiwal Campus.The dates of the week are March 21st, 2022 till March 25th, 2022',
                       ),
                       buildNews(
                         context,
+                        expanded: false,
                         title: 'FEE Notification - Spring 2022',
                         description: '''Dear Students,
 The second installment of the fee is due on March 25, 2022.

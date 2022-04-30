@@ -2,6 +2,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/aboutUs/about_us.dart';
 import 'package:cui_timetable/views/director/director_vision.dart';
+import 'package:cui_timetable/views/settings/settings.dart';
 import 'package:cui_timetable/views/sync/sync.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return UserAccountsDrawerHeader(
       decoration: const BoxDecoration(color: primaryColor),
+      currentAccountPictureSize: const Size.square(80),
       accountName: const Text(""),
       accountEmail: Text(
         "No details available",
@@ -111,6 +113,11 @@ class ButtonList extends StatelessWidget {
             title: 'Sign In',
             onTap: () {}),
         // buildButton(context,
+        //     icon: const AssetImage('assets/drawer/settings.png'),
+        //     title: 'Settings', onTap: () {
+        //   Get.to(() => const Settings(), transition: Transition.cupertino);
+        // }),
+        // buildButton(context,
         //     icon: const AssetImage('assets/drawer/developer.png'),
         //     title: 'For Developer', onTap: () {
         //   Get.to(() => Developer());
@@ -125,19 +132,24 @@ class ButtonList extends StatelessWidget {
   }
 
   /// Drawer button Template.
-  InkWell buildButton(context,
+  Material buildButton(context,
       {required onTap, required title, required icon}) {
-    return InkWell(
-      onTap: onTap,
-      child: ListTile(
-          // dense: true,
-          // contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
-          // visualDensity: VisualDensity(horizontal: 0, vertical: 0),
-          leading: ImageIcon(
-            icon,
-            color: primaryColor,
-          ),
-          title: Text(title, style: Theme.of(context).textTheme.titleSmall)),
+    return Material(
+      color: scaffoldColor,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: primaryColor,
+        child: ListTile(
+            // dense: true,
+            // contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+            // visualDensity: VisualDensity(horizontal: 0, vertical: 0),
+            // onTap: onTap,
+            leading: ImageIcon(
+              icon,
+              color: primaryColor,
+            ),
+            title: Text(title, style: Theme.of(context).textTheme.titleSmall)),
+      ),
     );
   }
 }

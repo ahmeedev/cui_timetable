@@ -5,7 +5,7 @@ import 'package:jiffy/jiffy.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseController extends GetxController {
+class TimetableDatabaseController extends GetxController {
   String search_section = '';
 
   Future<Future<int>> insertData(List<dynamic> data, remoteVersion) async {

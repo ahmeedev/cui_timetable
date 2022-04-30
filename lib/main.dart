@@ -1,6 +1,6 @@
 import 'dart:developer' as devlog;
 
-import 'package:cui_timetable/controllers/database/database_controller.dart';
+import 'package:cui_timetable/controllers/database/timetable_database_controller.dart';
 import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:cui_timetable/controllers/firebase/firebase_controller.dart';
 import 'package:cui_timetable/controllers/freerooms/freerooms_controller.dart';
@@ -50,7 +50,7 @@ Future<void> _initialized() async {
   // Initialize the important Controllers
   //* ============================================ //
   Get.put(FirebaseController()); //! Criticial to load first
-  Get.put(DatabaseController()); // ! 2
+  Get.put(TimetableDatabaseController()); // ! 2
   Get.put(HomeController());
   Get.put(FreeRoomsController());
   // final startUpController = Get.put(StartUpController()); // *2

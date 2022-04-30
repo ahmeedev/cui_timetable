@@ -1,4 +1,4 @@
-import 'package:cui_timetable/controllers/database/database_controller.dart';
+import 'package:cui_timetable/controllers/database/timetable_database_controller.dart';
 import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';

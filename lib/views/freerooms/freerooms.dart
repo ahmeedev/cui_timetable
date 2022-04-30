@@ -1,8 +1,6 @@
 import 'package:cui_timetable/controllers/freerooms/freerooms_controller.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class FreeRooms extends StatelessWidget {
@@ -26,7 +24,7 @@ class FreeRooms extends StatelessWidget {
         backgroundColor: scaffoldColor,
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('Rooms'),
+          title: const Text('Free Rooms'),
         ),
         body: Column(
           children: [
@@ -55,21 +53,21 @@ class FreeRooms extends StatelessWidget {
               child: FractionallySizedBox(
                   widthFactor: 1,
                   heightFactor: 1,
-                  child: Obx(() => ListView(
-                          padding: const EdgeInsets.all(defaultPadding / 2),
-                          physics: const BouncingScrollPhysics(),
-                          children: [
-                            FreeRoomsMainExpansionTile(
-                                slot: '10:00AM - 11:00AM', expanded: true),
-                            FreeRoomsMainExpansionTile(
-                                slot: '11:00AM - 12:00PM', expanded: false),
-                            FreeRoomsMainExpansionTile(
-                                slot: '02:00PM - 03:00PM', expanded: false),
-                            FreeRoomsMainExpansionTile(
-                                slot: '03:00PM - 04:00PM', expanded: false),
-                            FreeRoomsMainExpansionTile(
-                                slot: '12:00PM - 01:00PM', expanded: false),
-                          ]))),
+                  child: ListView(
+                      padding: const EdgeInsets.all(defaultPadding / 2),
+                      physics: const BouncingScrollPhysics(),
+                      children: const [
+                        FreeRoomsMainExpansionTile(
+                            slot: '10:00AM - 11:00AM', expanded: true),
+                        FreeRoomsMainExpansionTile(
+                            slot: '11:00AM - 12:00PM', expanded: false),
+                        FreeRoomsMainExpansionTile(
+                            slot: '02:00PM - 03:00PM', expanded: false),
+                        FreeRoomsMainExpansionTile(
+                            slot: '03:00PM - 04:00PM', expanded: false),
+                        FreeRoomsMainExpansionTile(
+                            slot: '12:00PM - 01:00PM', expanded: false),
+                      ])),
             ),
           ],
         ));
@@ -77,9 +75,10 @@ class FreeRooms extends StatelessWidget {
 }
 
 class FreeRoomsMainExpansionTile extends StatelessWidget {
-  String slot;
-  bool expanded;
-  FreeRoomsMainExpansionTile(
+  final String slot;
+  final bool expanded;
+
+  const FreeRoomsMainExpansionTile(
       {Key? key, required this.slot, required this.expanded})
       : super(key: key);
 
@@ -92,7 +91,7 @@ class FreeRoomsMainExpansionTile extends StatelessWidget {
 
       child: ExpansionTile(
         initiallyExpanded: expanded,
-        onExpansionChanged: (value) {},
+        maintainState: true,
         leading: const ImageIcon(
           AssetImage('assets/freerooms/timer.png'),
           size: iconSize,
@@ -128,10 +127,22 @@ class FreeRoomsClassesExpensionTile extends StatelessWidget {
         collapsedBackgroundColor: widgetColor,
         backgroundColor: scaffoldColor,
         onExpansionChanged: (value) {},
-        title: const Text('Classes'),
-        leading: const Text(
-          '12',
-          style: TextStyle(fontSize: 20),
+        title: Text(
+          'Classes',
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.only(top: defaultPadding / 3),
+          child: Text(
+            '12',
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 16,
+                ),
+          ),
         ),
         children: [
           GridView.count(
@@ -165,10 +176,22 @@ class FreeRoomsLabsExpensionTile extends StatelessWidget {
         collapsedBackgroundColor: widgetColor,
         backgroundColor: scaffoldColor,
         onExpansionChanged: (value) {},
-        title: const Text('Labs'),
-        leading: const Text(
-          '8',
-          style: TextStyle(fontSize: 20),
+        title: Text(
+          'Labs',
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.only(top: defaultPadding / 3),
+          child: Text(
+            '12',
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 16,
+                ),
+          ),
         ),
         children: [
           GridView.count(
@@ -194,8 +217,8 @@ class DayTile extends StatelessWidget {
   final day;
   final nOfRooms;
   final callback;
-  late Rx<bool> obs;
-  DayTile(
+  final Rx<bool> obs;
+  const DayTile(
       {required this.day,
       required this.nOfRooms,
       required this.callback,
