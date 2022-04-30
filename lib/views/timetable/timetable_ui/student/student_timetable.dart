@@ -173,7 +173,8 @@ class DayTile extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(day),
+                          Text(day,
+                              style: Theme.of(context).textTheme.titleSmall),
                           controller.lecturesCount[dayKey] == "null"
                               ? const GFLoader()
                               : Text(

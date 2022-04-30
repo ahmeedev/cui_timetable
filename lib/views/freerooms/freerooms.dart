@@ -1,12 +1,13 @@
 import 'package:cui_timetable/controllers/freerooms/freerooms_controller.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class FreeRooms extends StatelessWidget {
   FreeRooms({Key? key}) : super(key: key);
-  final freeRoomsController = Get.find<FreeRoomsController>();
+  final controller = Get.find<FreeRoomsController>();
   final daysList = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   final slots = [
     "08:00AM - 10:00AM",
@@ -18,15 +19,6 @@ class FreeRooms extends StatelessWidget {
 
   //* Testing list
   final nORooms = [3, 2, 1, 4, 3];
-
-  final Widget svg = Padding(
-    padding: const EdgeInsets.only(left: 10.0),
-    child: SvgPicture.asset(
-      'assets/freerooms/classroom.svg',
-      width: 100,
-      height: 100,
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -56,54 +48,156 @@ class FreeRooms extends StatelessWidget {
                     return DayTile(
                       daysList[index],
                       nORooms[index],
-                      freeRoomsController.allFalse,
-                      freeRoomsController.giveValue(index),
+                      controller.allFalse,
+                      controller.giveValue(index),
                     );
                   })
                 ]),
               ),
+            ),
+            const SizedBox(
+              height: defaultPadding,
             ),
             Flexible(
               flex: 6,
               child: FractionallySizedBox(
                 widthFactor: 1,
                 heightFactor: 1,
-                child: ListView(children: [
-                  Card(
-                    color: scaffoldColor,
-                    child: ExpansionTile(
-                      title: Text('10:00AM - 11:00AM'),
-                      children: [
-                        Flexible(
-                          flex: 4,
-                          child: ListView(children: [
-                            LectureDetailsTile(
-                              slot: slots[2],
-                              room: "A1.1",
-                              img: svg,
-                            ),
-                          ]),
-                        ),
-                      ],
-                    ),
-                  )
-
-                  // ListView.builder(
-                  //   itemCount: 10,
-                  //   itemBuilder: (context, index) {
-                  //     return LectureDetailsTile(
-                  //       slot: index < 5 ? slots[index] : slots[2],
-                  //       room: "A1.1",
-                  //       img: sv
-                  // g,
-                  //     );
-                  //   },
-                  // ),
-                ]),
+                child: ListView(
+                    padding: const EdgeInsets.all(defaultPadding / 2),
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      FreeRoomsMainExpansionTile(slot: '10:00AM - 11:00AM'),
+                      FreeRoomsMainExpansionTile(slot: '11:00AM - 12:00PM'),
+                      FreeRoomsMainExpansionTile(slot: '12:00PM - 01:00PM'),
+                      FreeRoomsMainExpansionTile(slot: '02:00PM - 03:00PM'),
+                      FreeRoomsMainExpansionTile(slot: '03:00PM - 04:00PM'),
+                      // ListView.builder(
+                      //   itemCount: 10,
+                      //   itemBuilder: (context, index) {
+                      //     return LectureDetailsTile(
+                      //       slot: index < 5 ? slots[index] : slots[2],
+                      //       room: "A1.1",
+                      //       img: sv
+                      // g,
+                      //     );
+                      //   },
+                      // ),
+                    ]),
               ),
             ),
           ],
         ));
+  }
+}
+
+class FreeRoomsMainExpansionTile extends StatelessWidget {
+  String slot;
+  FreeRoomsMainExpansionTile({Key? key, required this.slot}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      // color: widgetColor,
+      shadowColor: shadowColor,
+      elevation: defaultElevation,
+
+      child: ExpansionTile(
+        leading: const ImageIcon(
+          AssetImage('assets/freerooms/timer.png'),
+          size: iconSize,
+          // color: primaryColor,
+        ),
+        childrenPadding: const EdgeInsets.all(defaultPadding / 2),
+        collapsedBackgroundColor: widgetColor,
+        backgroundColor: scaffoldColor,
+        iconColor: primaryColor,
+        onExpansionChanged: (value) {},
+        title: Text(
+          slot,
+          style:
+              Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
+        ),
+        children: const [
+          FreeRoomsClassesExpensionTile(),
+          FreeRoomsLabsExpensionTile(),
+        ],
+      ),
+    );
+  }
+}
+
+class FreeRoomsClassesExpensionTile extends StatelessWidget {
+  const FreeRoomsClassesExpensionTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shadowColor: shadowColor,
+      elevation: defaultElevation,
+      child: ExpansionTile(
+        collapsedBackgroundColor: widgetColor,
+        backgroundColor: scaffoldColor,
+        onExpansionChanged: (value) {},
+        title: const Text('Classes'),
+        leading: const Text(
+          '12',
+          style: TextStyle(fontSize: 20),
+        ),
+        children: [
+          GridView.count(
+            physics: const ScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 3,
+            scrollDirection: Axis.vertical,
+            children: [
+              ...List.generate(
+                  12,
+                  (index) => LectureDetailsTile(
+                        room: "A1.1",
+                      ))
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FreeRoomsLabsExpensionTile extends StatelessWidget {
+  const FreeRoomsLabsExpensionTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shadowColor: shadowColor,
+      elevation: defaultElevation,
+      child: ExpansionTile(
+        collapsedBackgroundColor: widgetColor,
+        backgroundColor: scaffoldColor,
+        onExpansionChanged: (value) {},
+        title: const Text('Labs'),
+        leading: const Text(
+          '12',
+          style: TextStyle(fontSize: 20),
+        ),
+        children: [
+          GridView.count(
+            physics: const ScrollPhysics(),
+            shrinkWrap: true,
+            crossAxisCount: 3,
+            scrollDirection: Axis.vertical,
+            children: [
+              ...List.generate(
+                  12,
+                  (index) => LectureDetailsTile(
+                        room: "A1.1",
+                      ))
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -126,13 +220,14 @@ class DayTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 4.0, right: 4.0),
             child: Card(
-              elevation: 5,
+              color: widgetColor,
+              elevation: defaultElevation / 2,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: Obx(() => AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     decoration: BoxDecoration(
-                        color: obs.value ? Colors.grey.shade200 : Colors.white,
+                        color: obs.value ? selectionColor : widgetColor,
                         borderRadius: BorderRadius.circular(10)),
                     child: Material(
                       borderRadius: BorderRadius.circular(10),
@@ -144,7 +239,8 @@ class DayTile extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text(day),
+                            Text(day,
+                                style: Theme.of(context).textTheme.titleSmall),
                             Text(nOfRooms.toString()),
                           ],
                         ),
@@ -159,12 +255,10 @@ class DayTile extends StatelessWidget {
 }
 
 class LectureDetailsTile extends StatelessWidget {
-  LectureDetailsTile(
-      {Key? key,
-      required this.slot,
-      required this.room,
-      required Widget this.img})
-      : super(key: key);
+  LectureDetailsTile({
+    Key? key,
+    required this.room,
+  }) : super(key: key);
   late final slot;
   late final room;
   late final Widget img;
@@ -172,48 +266,20 @@ class LectureDetailsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 4),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: Card(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
         color: widgetColor,
-        elevation: defaultElevation,
-        child: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: defaultPadding),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        room.toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                      const ImageIcon(
-                        AssetImage('assets/freerooms/timer.png'),
-                        size: iconSize + 10,
-                        color: primaryColor,
-                      ),
-                      Text(slot.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(fontWeight: FontWeight.normal))
-                    ],
-                  ),
-                ),
-                img
-              ],
-            ),
+        elevation: defaultElevation / 2,
+        shadowColor: shadowColor,
+        child: Center(
+          child: Text(
+            room.toString(),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .copyWith(fontWeight: FontWeight.bold),
           ),
         ),
       ),
