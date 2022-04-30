@@ -27,14 +27,6 @@ class FreeRooms extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Rooms'),
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.search,
-                  // size: 28,
-                ))
-          ],
         ),
         body: Column(
           children: [
@@ -46,10 +38,10 @@ class FreeRooms extends StatelessWidget {
                 child: Row(children: [
                   ...List.generate(5, (index) {
                     return DayTile(
-                      daysList[index],
-                      nORooms[index],
-                      controller.allFalse,
-                      controller.giveValue(index),
+                      day: daysList[index],
+                      nOfRooms: nORooms[index],
+                      callback: controller.allFalse,
+                      obs: controller.giveValue(index),
                     );
                   })
                 ]),
@@ -61,30 +53,23 @@ class FreeRooms extends StatelessWidget {
             Flexible(
               flex: 6,
               child: FractionallySizedBox(
-                widthFactor: 1,
-                heightFactor: 1,
-                child: ListView(
-                    padding: const EdgeInsets.all(defaultPadding / 2),
-                    physics: const BouncingScrollPhysics(),
-                    children: [
-                      FreeRoomsMainExpansionTile(slot: '10:00AM - 11:00AM'),
-                      FreeRoomsMainExpansionTile(slot: '11:00AM - 12:00PM'),
-                      FreeRoomsMainExpansionTile(slot: '12:00PM - 01:00PM'),
-                      FreeRoomsMainExpansionTile(slot: '02:00PM - 03:00PM'),
-                      FreeRoomsMainExpansionTile(slot: '03:00PM - 04:00PM'),
-                      // ListView.builder(
-                      //   itemCount: 10,
-                      //   itemBuilder: (context, index) {
-                      //     return LectureDetailsTile(
-                      //       slot: index < 5 ? slots[index] : slots[2],
-                      //       room: "A1.1",
-                      //       img: sv
-                      // g,
-                      //     );
-                      //   },
-                      // ),
-                    ]),
-              ),
+                  widthFactor: 1,
+                  heightFactor: 1,
+                  child: Obx(() => ListView(
+                          padding: const EdgeInsets.all(defaultPadding / 2),
+                          physics: const BouncingScrollPhysics(),
+                          children: [
+                            FreeRoomsMainExpansionTile(
+                                slot: '10:00AM - 11:00AM', expanded: true),
+                            FreeRoomsMainExpansionTile(
+                                slot: '11:00AM - 12:00PM', expanded: false),
+                            FreeRoomsMainExpansionTile(
+                                slot: '02:00PM - 03:00PM', expanded: false),
+                            FreeRoomsMainExpansionTile(
+                                slot: '03:00PM - 04:00PM', expanded: false),
+                            FreeRoomsMainExpansionTile(
+                                slot: '12:00PM - 01:00PM', expanded: false),
+                          ]))),
             ),
           ],
         ));
@@ -93,7 +78,10 @@ class FreeRooms extends StatelessWidget {
 
 class FreeRoomsMainExpansionTile extends StatelessWidget {
   String slot;
-  FreeRoomsMainExpansionTile({Key? key, required this.slot}) : super(key: key);
+  bool expanded;
+  FreeRoomsMainExpansionTile(
+      {Key? key, required this.slot, required this.expanded})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +91,8 @@ class FreeRoomsMainExpansionTile extends StatelessWidget {
       elevation: defaultElevation,
 
       child: ExpansionTile(
+        initiallyExpanded: expanded,
+        onExpansionChanged: (value) {},
         leading: const ImageIcon(
           AssetImage('assets/freerooms/timer.png'),
           size: iconSize,
@@ -112,7 +102,6 @@ class FreeRoomsMainExpansionTile extends StatelessWidget {
         collapsedBackgroundColor: widgetColor,
         backgroundColor: scaffoldColor,
         iconColor: primaryColor,
-        onExpansionChanged: (value) {},
         title: Text(
           slot,
           style:
@@ -178,7 +167,7 @@ class FreeRoomsLabsExpensionTile extends StatelessWidget {
         onExpansionChanged: (value) {},
         title: const Text('Labs'),
         leading: const Text(
-          '12',
+          '8',
           style: TextStyle(fontSize: 20),
         ),
         children: [
@@ -202,13 +191,17 @@ class FreeRoomsLabsExpensionTile extends StatelessWidget {
 }
 
 class DayTile extends StatelessWidget {
-  DayTile(this.day, this.nOfRooms, this.callback, this.obs, {Key? key})
-      : super(key: key);
-
-  late final day;
-  late final nOfRooms;
-  late final callback;
+  final day;
+  final nOfRooms;
+  final callback;
   late Rx<bool> obs;
+  DayTile(
+      {required this.day,
+      required this.nOfRooms,
+      required this.callback,
+      required this.obs,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
