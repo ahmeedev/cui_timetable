@@ -51,18 +51,16 @@ class FreeRooms extends StatelessWidget {
               child: FractionallySizedBox(
                 widthFactor: 1,
                 heightFactor: 1,
-                child: Container(
-                  child: Row(children: [
-                    ...List.generate(5, (index) {
-                      return DayTile(
-                        daysList[index],
-                        nORooms[index],
-                        freeRoomsController.allFalse,
-                        freeRoomsController.giveValue(index),
-                      );
-                    })
-                  ]),
-                ),
+                child: Row(children: [
+                  ...List.generate(5, (index) {
+                    return DayTile(
+                      daysList[index],
+                      nORooms[index],
+                      freeRoomsController.allFalse,
+                      freeRoomsController.giveValue(index),
+                    );
+                  })
+                ]),
               ),
             ),
             Flexible(
@@ -70,46 +68,37 @@ class FreeRooms extends StatelessWidget {
               child: FractionallySizedBox(
                 widthFactor: 1,
                 heightFactor: 1,
-                child: ExpansionTile(title: Text('Classrooms'), children: [
-                  Column(
-                    children: [
-                      LectureDetailsTile(
-                        slot: slots[2],
-                        room: "A1.1",
-                        img: svg,
-                      ),
-                      LectureDetailsTile(
-                        slot: slots[2],
-                        room: "A1.1",
-                        img: svg,
-                      ),
-                      LectureDetailsTile(
-                        slot: slots[2],
-                        room: "A1.1",
-                        img: svg,
-                      ),
-                      LectureDetailsTile(
-                        slot: slots[2],
-                        room: "A1.1",
-                        img: svg,
-                      ),
-                      LectureDetailsTile(
-                        slot: slots[2],
-                        room: "A1.1",
-                        img: svg,
-                      ),
-                      // ListView.builder(
-                      //   itemCount: 10,
-                      //   itemBuilder: (context, index) {
-                      //     return LectureDetailsTile(
-                      //       slot: index < 5 ? slots[index] : slots[2],
-                      //       room: "A1.1",
-                      //       img: svg,
-                      //     );
-                      //   },
-                      // ),
-                    ],
-                  ),
+                child: ListView(children: [
+                  Card(
+                    color: scaffoldColor,
+                    child: ExpansionTile(
+                      title: Text('10:00AM - 11:00AM'),
+                      children: [
+                        Flexible(
+                          flex: 4,
+                          child: ListView(children: [
+                            LectureDetailsTile(
+                              slot: slots[2],
+                              room: "A1.1",
+                              img: svg,
+                            ),
+                          ]),
+                        ),
+                      ],
+                    ),
+                  )
+
+                  // ListView.builder(
+                  //   itemCount: 10,
+                  //   itemBuilder: (context, index) {
+                  //     return LectureDetailsTile(
+                  //       slot: index < 5 ? slots[index] : slots[2],
+                  //       room: "A1.1",
+                  //       img: sv
+                  // g,
+                  //     );
+                  //   },
+                  // ),
                 ]),
               ),
             ),
@@ -132,8 +121,8 @@ class DayTile extends StatelessWidget {
     return Flexible(
       child: FractionallySizedBox(
           alignment: Alignment.centerLeft,
-          heightFactor: 0.8,
-          widthFactor: 0.8,
+          heightFactor: 1,
+          widthFactor: 1,
           child: Padding(
             padding: const EdgeInsets.only(left: 4.0, right: 4.0),
             child: Card(

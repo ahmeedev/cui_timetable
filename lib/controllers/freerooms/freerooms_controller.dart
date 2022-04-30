@@ -13,7 +13,6 @@ class FreeRoomsController extends GetxController {
     wed.value = false;
     thu.value = false;
     fri.value = false;
-    print('executed');
   }
 
   giveValue(index) {

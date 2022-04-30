@@ -226,7 +226,7 @@ class LectureDetailsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 4),
+      padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
       child: Card(
         color: widgetColor,
         elevation: defaultElevation,
