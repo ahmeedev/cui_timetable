@@ -1,14 +1,15 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:cui_timetable/controllers/database/download_utilities.dart';
+import 'package:cui_timetable/controllers/database/database_utilities.dart';
+import 'package:cui_timetable/controllers/database/timetable_database_controller.dart';
 import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:cui_timetable/controllers/firebase/firebase_controller.dart';
 import 'package:cui_timetable/controllers/home/home_controller.dart';
-import 'package:cui_timetable/models/utilities/get_utilities.dart';
-import 'package:cui_timetable/models/utilities/home_utilities.dart';
+import 'package:cui_timetable/views/home/home_utilities.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/freerooms/freerooms.dart';
 import 'package:cui_timetable/views/home/drawer/drawer.dart';
 import 'package:cui_timetable/views/timetable/timetable_main.dart';
+import 'package:cui_timetable/views/utilities/get_utilities.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -287,12 +288,9 @@ class HomeBottomWidget extends StatelessWidget {
           ElevatedButton(
               onPressed: () async {
                 // GetXUtilities.dialog();
-                final loc = await getApplicationDocumentsDirectory();
-
-                compute(downloadFile, {
-                  "defaultLocalLocation": loc.path,
-                  "remoteFileName": 'timetable.csv'
-                }).then((value) => print(value));
+                // downloadFile('timetable.csv');
+                final controller = TimetableDatabaseController();
+                controller.createDatabase();
               },
               child: Text(
                 'Sign in',

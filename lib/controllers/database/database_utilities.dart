@@ -1,54 +1,77 @@
+import 'dart:convert';
 import 'dart:developer' as devlog;
 import 'dart:io';
 
-import 'package:cui_timetable/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:csv/csv.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
-downloadFile(map) async {
-  await Firebase.initializeApp();
-
-  // Create a storage reference from our app
+Future<void> downloadFile({required String fileName, required callback}) async {
+  final loc = await getApplicationDocumentsDirectory();
 
   final storageRef = FirebaseStorage.instance.ref();
-  final islandRef = storageRef.child(map['remoteFileName']);
-  final filePath = "${map['defaultLocalLocation']}/${map['remoteFileName']}";
+  final islandRef = storageRef.child(fileName);
+  final filePath = "${loc.path}/$fileName";
   final file = File(filePath);
 
   final downloadTask = islandRef.writeToFile(file);
   downloadTask.snapshotEvents.listen((taskSnapshot) async {
     switch (taskSnapshot.state) {
       case TaskState.running:
-        devlog.log("Start Downloading...",
-            name: map['remoteFileName'].toUpperCase());
+        devlog.log("Start Downloading...", name: fileName.toUpperCase());
         break;
       case TaskState.paused:
         devlog.log("File Downloading Paused Unexpectedly...",
-            name: map['remoteFileName'].toUpperCase());
+            name: fileName.toUpperCase());
         break;
       case TaskState.success:
-        // final controller = Get.find<TimetableDatabaseController>();
-        // await controller.deleteData();
-
-        // insertTimetable(controller, remoteVersion, dialogPop);
-
         devlog.log("File Downloaded Successfully...",
-            name: map['remoteFileName'].toUpperCase());
+            name: fileName.toUpperCase());
+        compute(_backgroundTask, {"location": loc.path});
         break;
       case TaskState.canceled:
         devlog.log("File Downloading Cancelled...",
-            name: map['remoteFileName'].toUpperCase());
+            name: fileName.toUpperCase());
         break;
       case TaskState.error:
         devlog.log("File Downloading Cancelled...",
-            name: map['remoteFileName'].toUpperCase());
+            name: fileName.toUpperCase());
         break;
     }
   });
 }
+
+_backgroundTask(map) {
+  print('start $map');
+  _getFileContent(map["location"]).then((value) => print(value));
+  print('end');
+  // callback(location);
+}
+
+Future<List<dynamic>> _getFileContent(String location) async {
+  var fields;
+  try {
+    final File file = File('$location/timetable.csv');
+    final input = file.openRead();
+    fields = await input
+        .transform(utf8.decoder)
+        .transform(const CsvToListConverter())
+        .toList();
+    print(fields);
+    devlog.log("File Read Successfully With Records Count: ${fields.length}",
+        name: "SYNC_READ");
+  } catch (e) {
+    print(e);
+    devlog.log("Error!, While file Reading... ", name: "SYNC_READ");
+  } finally {
+    // Isolate.exit(port, map);
+  }
+  return Future<List<dynamic>>.value(fields);
+}
+
+
+
 
 
 

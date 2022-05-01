@@ -1,7 +1,8 @@
 import 'package:cui_timetable/controllers/timetable/student/student_ui_controller.dart';
-import 'package:cui_timetable/models/utilities/get_utilities.dart';
+
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/timetable/timetable_ui/student/student_timetable.dart';
+import 'package:cui_timetable/views/utilities/get_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';

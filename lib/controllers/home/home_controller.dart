@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cui_timetable/controllers/sync/sync_controller.dart';
-import 'package:cui_timetable/models/utilities/get_utilities.dart';
+import 'package:cui_timetable/views/utilities/get_utilities.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';

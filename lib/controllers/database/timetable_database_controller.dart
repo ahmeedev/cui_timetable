@@ -1,10 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cui_timetable/controllers/database/database_utilities.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:jiffy/jiffy.dart';
 
 class TimetableDatabaseController extends GetxController {
   // String search_section = '';
+
+  createDatabase() async {
+    await downloadFile(fileName: 'timetable.csv', callback: test);
+  }
+
+  test(String location) async {
+    Hive.init(location);
+    final box = await Hive.openBox('my-box');
+    print(box.values);
+    print('after success $location');
+  }
 
   Future<Future<int>> insertDataOfTimetable(
       List<dynamic> data, remoteVersion) async {
