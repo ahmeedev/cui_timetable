@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cui_timetable/controllers/database/download_utilities.dart';
 import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:cui_timetable/controllers/firebase/firebase_controller.dart';
 import 'package:cui_timetable/controllers/home/home_controller.dart';
@@ -8,9 +9,11 @@ import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/freerooms/freerooms.dart';
 import 'package:cui_timetable/views/home/drawer/drawer.dart';
 import 'package:cui_timetable/views/timetable/timetable_main.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -282,8 +285,14 @@ class HomeBottomWidget extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium),
               ]),
           ElevatedButton(
-              onPressed: () {
-                GetXUtilities.dialog();
+              onPressed: () async {
+                // GetXUtilities.dialog();
+                final loc = await getApplicationDocumentsDirectory();
+
+                compute(downloadFile, {
+                  "defaultLocalLocation": loc.path,
+                  "remoteFileName": 'timetable.csv'
+                }).then((value) => print(value));
               },
               child: Text(
                 'Sign in',

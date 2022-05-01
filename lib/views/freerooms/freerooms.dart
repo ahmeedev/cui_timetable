@@ -88,6 +88,8 @@ class FreeRoomsMainExpansionTile extends StatelessWidget {
       // color: widgetColor,
       shadowColor: shadowColor,
       elevation: defaultElevation,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
 
       child: ExpansionTile(
         initiallyExpanded: expanded,

@@ -7,6 +7,7 @@ import 'package:csv/csv.dart';
 import 'package:cui_timetable/controllers/database/timetable_database_controller.dart';
 import 'package:cui_timetable/models/utilities/get_utilities.dart';
 import 'package:cui_timetable/style.dart';
+import 'package:cui_timetable/views/timetable/timetable_main.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -72,7 +73,6 @@ class SyncController extends GetxController {
             gradient: successGradient);
       }
     } else {
-      print('check your internet');
       GetXUtilities.snackbar(
           title: 'Sync',
           message: 'Make sure you have a connection',
@@ -91,7 +91,7 @@ class SyncController extends GetxController {
     final file = File(filePath);
 
     final downloadTask = islandRef.writeToFile(file);
-    downloadTask.snapshotEvents.listen((taskSnapshot) {
+    downloadTask.snapshotEvents.listen((taskSnapshot) async {
       switch (taskSnapshot.state) {
         case TaskState.running:
           devlog.log("Start Downloading...", name: "SYNC_DOWN");
@@ -101,35 +101,11 @@ class SyncController extends GetxController {
               name: "SYNC_DOWN");
           break;
         case TaskState.success:
-          inner() async {
-            final Directory directory =
-                await getApplicationDocumentsDirectory();
+          final controller = Get.find<TimetableDatabaseController>();
+          await controller.deleteData();
 
-            await compute(_getDownloadedContent, directory.path)
-                .then((data) async {
-              final controller = Get.find<TimetableDatabaseController>();
-              await controller.deleteData().then((value) async => {
-                    await controller
-                        .insertData(data, remoteVersion)
-                        .then((value) => Hive.close())
-                  });
+          insertTimetable(controller, remoteVersion, dialogPop);
 
-              if (dialogPop) {
-                final box = await Hive.openBox('info');
-                box.put('new_user', false);
-                Get.back();
-              }
-              stillSync.value = false;
-              final box = await Hive.openBox('info');
-              lastUpdate.value = box.get('last_update');
-
-              GetXUtilities.snackbar(
-                  title: 'Sync',
-                  message: 'Data Synchronized Successfully',
-                  gradient: successGradient);
-            });
-          }
-          inner();
           devlog.log("File Downloaded Successfully...", name: "SYNC_DOWN");
           break;
         case TaskState.canceled:
@@ -143,6 +119,27 @@ class SyncController extends GetxController {
           devlog.log("Error Occured While Downloading", name: "SYNC_DOWN");
           break;
       }
+    });
+  }
+
+  insertTimetable(controller, remoteVersion, dialogPop) async {
+    final Directory directory = await getApplicationDocumentsDirectory();
+    await compute(_getDownloadedContent, directory.path).then((data) async {
+      await controller.insertDataOfTimetable(data, remoteVersion);
+
+      if (dialogPop) {
+        final box = await Hive.openBox('info');
+        box.put('new_user', false);
+        Get.back();
+      }
+      stillSync.value = false;
+      final box = await Hive.openBox('info');
+      lastUpdate.value = box.get('last_update');
+
+      GetXUtilities.snackbar(
+          title: 'Sync',
+          message: 'Data Synchronized Successfully',
+          gradient: successGradient);
     });
   }
 }

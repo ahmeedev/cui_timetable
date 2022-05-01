@@ -2,13 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 
 class TimetableDatabaseController extends GetxController {
-  String search_section = '';
+  // String search_section = '';
 
-  Future<Future<int>> insertData(List<dynamic> data, remoteVersion) async {
+  Future<Future<int>> insertDataOfTimetable(
+      List<dynamic> data, remoteVersion) async {
     // fetch sections as well as teachers.
     final sections = <String>{};
     final teachers = <String>{};
@@ -26,14 +25,14 @@ class TimetableDatabaseController extends GetxController {
     int counter = 0;
     for (var i in sections) {
       await Hive.openBox(i);
-      print('$i created $counter');
-      counter++;
+      // print('$i created $counter');
+      // counter++;
     }
     counter = 0;
     for (var i in teachers) {
       await Hive.openBox(i);
-      print('$i created $counter');
-      counter++;
+      // print('$i created $counter');
+      // counter++;
     }
 
     // insert data for students as well as for students.
@@ -60,8 +59,8 @@ class TimetableDatabaseController extends GetxController {
       counter++;
     }
 
-    print('Sections Length: ${sections.length}');
-    print('Teachers Length: ${teachers.length}');
+    // print('Sections Length: ${sections.length}');
+    // print('Teachers Length: ${teachers.length}');
 
     await _insertTime();
     await _updateStatuses(remoteVersion);
@@ -90,7 +89,7 @@ class TimetableDatabaseController extends GetxController {
       box.put('time', time);
     }
 
-    print(box.get('time'));
+    // print(box.get('time'));
   }
 
   Future<void> deleteData() async {
@@ -112,7 +111,7 @@ class TimetableDatabaseController extends GetxController {
       box.deleteAll(['sections', 'teachers']);
       await Future.delayed(const Duration(milliseconds: 1500));
     }
-    print('Data deleted From Disk Succuessfully');
+    // print('Data deleted From Disk Succuessfully');
     // preserve the values
   }
 
@@ -121,9 +120,9 @@ class TimetableDatabaseController extends GetxController {
     box.put('version', remoteVersion);
     box.put('last_update', Jiffy().format("MMMM do yyyy"));
     // box.put('search_section', search_section);
-    print('box with value $remoteVersion');
+    // print('box with value $remoteVersion');
 
-    print('Server:  $remoteVersion');
-    print('Box: ${box.get('version')}');
+    // print('Server:  $remoteVersion');
+    // print('Box: ${box.get('version')}');
   }
 }
