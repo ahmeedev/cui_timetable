@@ -8,6 +8,7 @@ import 'package:cui_timetable/controllers/home/home_controller.dart';
 import 'package:cui_timetable/firebase_options.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/home/home.dart';
+import 'package:cui_timetable/views/utilities/loc_utilities.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,14 +37,16 @@ Future<void> main() async {
 
 Future<void> _initialized() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LocationUtilities.initialize();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   devlog.log("Firebase Initialized...", name: 'FIREBASE');
 
-  final loc = await getApplicationDocumentsDirectory();
-  Hive.init(loc.path.toString());
+  // final loc = await getApplicationDocumentsDirectory();
+  // Hive.init(loc.path.toString());
+  Hive.init(LocationUtilities.defaultpath);
   // final box = await Hive.openBox('info');
   // box.put('version', 1);
 

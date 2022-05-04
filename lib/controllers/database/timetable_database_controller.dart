@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/controllers/database/database_utilities.dart';
+import 'package:cui_timetable/views/utilities/loc_utilities.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:jiffy/jiffy.dart';
@@ -8,18 +9,16 @@ class TimetableDatabaseController extends GetxController {
   // String search_section = '';
 
   createDatabase() async {
-    await downloadFile(fileName: 'timetable.csv', callback: test);
+    await downloadFile(
+        fileName: 'timetable.csv', callback: insertTimetableData);
   }
 
-  test(String location) async {
-    Hive.init(location);
-    final box = await Hive.openBox('my-box');
-    print(box.values);
-    print('after success $location');
-  }
+  //! All the code run in working Isolate, Be aware
 
-  Future<Future<int>> insertDataOfTimetable(
-      List<dynamic> data, remoteVersion) async {
+  Future<Future<int>> insertTimetableData(
+      String filePath, List<dynamic> data) async {
+    Hive.init(filePath); // initialize the data, bcz of their separate isolate.
+
     // fetch sections as well as teachers.
     final sections = <String>{};
     final teachers = <String>{};
@@ -29,55 +28,41 @@ class TimetableDatabaseController extends GetxController {
       teachers.add(item[4]);
     }
 
-    final box = await Hive.openBox("info");
-    box.put("sections", sections.toList());
-    box.put("teachers", teachers.toList());
+    //  =====  creating students database  ===== //
+    final box1 = await Hive.openBox("studentsDB");
 
-    // opening all the boxes for students and teachers.
-    int counter = 0;
     for (var i in sections) {
-      await Hive.openBox(i);
-      // print('$i created $counter');
-      // counter++;
+      var lectures = data
+          .toList()
+          .where((element) =>
+              element[0].toString().toLowerCase() == i.toLowerCase())
+          .toList();
+      box1.put(i.toLowerCase(), lectures);
     }
-    counter = 0;
+    await box1.close();
+
+    //  =====  creating teachers database  ===== //
+    final box2 = await Hive.openBox("teachersDB");
+
     for (var i in teachers) {
-      await Hive.openBox(i);
-      // print('$i created $counter');
-      // counter++;
+      var lectures = data
+          .toList()
+          .where((element) =>
+              element[4].toString().toLowerCase() == i.toLowerCase())
+          .toList();
+      box2.put(i.toLowerCase(), lectures);
     }
+    await box2.close();
 
-    // insert data for students as well as for students.
-    counter = 0;
-    for (var i in data) {
-      final student = Hive.box(i[0].toString());
-      final teacher = Hive.box(i[4].toString());
-      student.put('lec$counter', [
-        i[1].toString(),
-        i[2].toString(),
-        i[3].toString(),
-        i[4].toString(),
-        i[5].toString()
-      ]);
+    //  =====  storing  students and teachers list  ===== //
+    final box3 = await Hive.openBox("info");
+    box3.put("sections", sections.toList());
+    box3.put("teachers", teachers.toList());
 
-      teacher.put('lec$counter', [
-        i[0].toString(),
-        i[1].toString(),
-        i[2].toString(),
-        i[3].toString(),
-        i[5].toString()
-      ]);
-
-      counter++;
-    }
-
-    // print('Sections Length: ${sections.length}');
-    // print('Teachers Length: ${teachers.length}');
-
-    await _insertTime();
-    await _updateStatuses(remoteVersion);
-    await Future.delayed(const Duration(seconds: 1));
-    Hive.close();
+    // await _insertTime();
+    // await _updateStatuses(remoteVersion);
+    // await Future.delayed(const Duration(seconds: 1));
+    // Hive.close();
     return Future<int>.value(1);
   }
 

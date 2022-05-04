@@ -3,16 +3,14 @@ import 'dart:developer' as devlog;
 import 'dart:io';
 
 import 'package:csv/csv.dart';
+import 'package:cui_timetable/views/utilities/loc_utilities.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
 
 Future<void> downloadFile({required String fileName, required callback}) async {
-  final loc = await getApplicationDocumentsDirectory();
-
   final storageRef = FirebaseStorage.instance.ref();
   final islandRef = storageRef.child(fileName);
-  final filePath = "${loc.path}/$fileName";
+  final filePath = "${LocationUtilities.defaultpath}/$fileName";
   final file = File(filePath);
 
   final downloadTask = islandRef.writeToFile(file);
@@ -28,7 +26,11 @@ Future<void> downloadFile({required String fileName, required callback}) async {
       case TaskState.success:
         devlog.log("File Downloaded Successfully...",
             name: fileName.toUpperCase());
-        compute(_backgroundTask, {"location": loc.path});
+        compute(_backgroundTask, {
+          "filePath": LocationUtilities.defaultpath,
+          "fileName": fileName,
+          "callback": callback
+        });
         break;
       case TaskState.canceled:
         devlog.log("File Downloading Cancelled...",
@@ -42,23 +44,22 @@ Future<void> downloadFile({required String fileName, required callback}) async {
   });
 }
 
-_backgroundTask(map) {
-  print('start $map');
-  _getFileContent(map["location"]).then((value) => print(value));
-  print('end');
-  // callback(location);
+_backgroundTask(map) async {
+  await _getFileContent(
+          fileLocation: map["filePath"], fileName: map["fileName"])
+      .then((data) => map["callback"](map['filePath'], data));
 }
 
-Future<List<dynamic>> _getFileContent(String location) async {
+Future<List<dynamic>> _getFileContent(
+    {required String fileLocation, required String fileName}) async {
   var fields;
   try {
-    final File file = File('$location/timetable.csv');
+    final File file = File('$fileLocation/$fileName');
     final input = file.openRead();
     fields = await input
         .transform(utf8.decoder)
         .transform(const CsvToListConverter())
         .toList();
-    print(fields);
     devlog.log("File Read Successfully With Records Count: ${fields.length}",
         name: "SYNC_READ");
   } catch (e) {
@@ -66,6 +67,7 @@ Future<List<dynamic>> _getFileContent(String location) async {
     devlog.log("Error!, While file Reading... ", name: "SYNC_READ");
   } finally {
     // Isolate.exit(port, map);
+
   }
   return Future<List<dynamic>>.value(fields);
 }

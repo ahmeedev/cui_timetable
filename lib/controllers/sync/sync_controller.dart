@@ -125,7 +125,7 @@ class SyncController extends GetxController {
   insertTimetable(controller, remoteVersion, dialogPop) async {
     final Directory directory = await getApplicationDocumentsDirectory();
     await compute(_getDownloadedContent, directory.path).then((data) async {
-      await controller.insertDataOfTimetable(data, remoteVersion);
+      await controller.insertTimetableData(data, remoteVersion);
 
       if (dialogPop) {
         final box = await Hive.openBox('info');
