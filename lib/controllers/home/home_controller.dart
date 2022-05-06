@@ -32,10 +32,10 @@ class HomeController extends GetxController
     // box.delete('new_user');
 
     print(value);
-    if (value == '' || value == 'null') {
-      GetXUtilities.dialog();
-      await _syncData();
-    }
+    // if (value == '' || value == 'null') {
+    //   GetXUtilities.dialog();
+    //   await _syncData();
+    // }
     // print(box.put('last_update', ''));
 
     // timer = Timer.periodic(

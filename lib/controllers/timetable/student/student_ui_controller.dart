@@ -29,8 +29,9 @@ class StudentUIController extends GetxController {
   }
 
   Future<void> fetchSections() async {
-    final box = await Hive.openBox('info');
+    final box = await Hive.openBox("info");
     final list = box.get('sections');
     sections = list;
+    print('list are ${box.values}}');
   }
 }

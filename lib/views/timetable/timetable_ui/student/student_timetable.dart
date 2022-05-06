@@ -90,13 +90,13 @@ class StudentTimetable extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return LectureDetailsTile(
                                 subject: studentTimetableController
-                                    .daywiseLectures[index][0],
+                                    .daywiseLectures[index][1],
                                 teacher: studentTimetableController
-                                    .daywiseLectures[index][3],
-                                room: studentTimetableController
                                     .daywiseLectures[index][4],
+                                room: studentTimetableController
+                                    .daywiseLectures[index][5],
                                 time: studentTimetableController.timeMap[
-                                    "${studentTimetableController.daywiseLectures[index][1]}"],
+                                    "${studentTimetableController.daywiseLectures[index][2]}"],
                               );
                             },
                           ),

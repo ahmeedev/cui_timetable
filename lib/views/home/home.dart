@@ -14,6 +14,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Home extends StatelessWidget {
@@ -291,6 +292,7 @@ class HomeBottomWidget extends StatelessWidget {
                 // downloadFile('timetable.csv');
                 final controller = TimetableDatabaseController();
                 controller.createDatabase();
+                // controller.insertTime();
               },
               child: Text(
                 'Sign in',

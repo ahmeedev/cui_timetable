@@ -47,6 +47,7 @@ Future<void> _initialized() async {
   // final loc = await getApplicationDocumentsDirectory();
   // Hive.init(loc.path.toString());
   Hive.init(LocationUtilities.defaultpath);
+
   // final box = await Hive.openBox('info');
   // box.put('version', 1);
 

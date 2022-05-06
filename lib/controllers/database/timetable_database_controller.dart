@@ -16,9 +16,9 @@ class TimetableDatabaseController extends GetxController {
   //! All the code run in working Isolate, Be aware
 
   Future<Future<int>> insertTimetableData(
-      String filePath, List<dynamic> data) async {
+      {required String filePath, required List<dynamic> data}) async {
     Hive.init(filePath); // initialize the data, bcz of their separate isolate.
-
+    print('Filepath is:   $filePath');
     // fetch sections as well as teachers.
     final sections = <String>{};
     final teachers = <String>{};
@@ -39,7 +39,8 @@ class TimetableDatabaseController extends GetxController {
           .toList();
       box1.put(i.toLowerCase(), lectures);
     }
-    await box1.close();
+    // await Future.delayed(const Duration(milliseconds:500));
+    // await box1.close();
 
     //  =====  creating teachers database  ===== //
     final box2 = await Hive.openBox("teachersDB");
@@ -52,41 +53,46 @@ class TimetableDatabaseController extends GetxController {
           .toList();
       box2.put(i.toLowerCase(), lectures);
     }
-    await box2.close();
+    // await Future.delayed(const Duration(milliseconds:500));
+
+    // await box2.close();
 
     //  =====  storing  students and teachers list  ===== //
     final box3 = await Hive.openBox("info");
     box3.put("sections", sections.toList());
     box3.put("teachers", teachers.toList());
-
+    print(box3.values);
     // await _insertTime();
     // await _updateStatuses(remoteVersion);
-    // await Future.delayed(const Duration(seconds: 1));
-    // Hive.close();
+    await Future.delayed(const Duration(seconds: 1));
+    Hive.close();
     return Future<int>.value(1);
   }
 
-  Future<void> _insertTime() async {
-    final box = await Hive.openBox('info');
+  Future<void> insertTime() async {
+    final box = await Hive.openBox('timeSlots');
 
     var collection = FirebaseFirestore.instance.collection('info');
     var docSnapshot = await collection.doc('time').get();
     if (docSnapshot.exists) {
       Map<String, dynamic>? data = docSnapshot.data();
-      final time = data?['all'];
-      box.put('time', time);
+      final time1 = data?['monToThur'];
+      final time2 = data?['fri'];
+      box.put('monToThur', time1);
+      box.put('fri', time2);
     } else {
       final time = {
         "1": "08:00AM - 10:00AM",
         "2": "10:00AM - 11:30AM",
         "3": "11:30AM - 01:00PM",
-        "4": "01:30PM - 3:00PM",
-        "5": "03:00PM - 04:30PM"
+        "4": "01:30PM - 03:00PM",
+        "5": "03:00PM - 04:30PM",
       };
       box.put('time', time);
     }
 
-    // print(box.get('time'));
+    print(box.get('monToThur'));
+    print(box.get('fri'));
   }
 
   Future<void> deleteData() async {

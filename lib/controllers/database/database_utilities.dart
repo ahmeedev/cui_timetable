@@ -47,7 +47,7 @@ Future<void> downloadFile({required String fileName, required callback}) async {
 _backgroundTask(map) async {
   await _getFileContent(
           fileLocation: map["filePath"], fileName: map["fileName"])
-      .then((data) => map["callback"](map['filePath'], data));
+      .then((data) => map["callback"](filePath: map['filePath'], data: data));
 }
 
 Future<List<dynamic>> _getFileContent(
