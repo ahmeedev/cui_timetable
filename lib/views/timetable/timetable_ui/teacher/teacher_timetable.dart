@@ -97,7 +97,7 @@ class TeacherTimetable extends StatelessWidget {
                                 subject: teacherTimetableController
                                     .daywiseLectures[index][1],
                                 room: teacherTimetableController
-                                    .daywiseLectures[index][4],
+                                    .daywiseLectures[index][5],
                                 time: teacherTimetableController.timeMap[
                                     "${teacherTimetableController.daywiseLectures[index][2]}"],
                               );

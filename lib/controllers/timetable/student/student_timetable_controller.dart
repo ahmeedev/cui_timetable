@@ -13,22 +13,25 @@ class StudentTimetableController extends GetxController {
 
   // var timeMap;
   final timeMap = {
-    "1": ["08:00AM", "10:00AM"],
+    "1": ["08:30AM", "10:00AM"],
     "2": ["10:00AM", "11:30AM"],
     "3": ["11:30AM", "01:00PM"],
     "4": ["01:30PM", "03:00PM"],
     "5": ["03:00PM", "04:30PM"],
   };
+
+  late final box;
   @override
   Future<void> onInit() async {
     // final box = await Hive.openBox('info');
     // print("timemap is: $timeMap");
     // timeMap = box.get('time');
     // print("timemap is: $timeMap");
+    box = await Hive.openBox('studentsDB');
+
     super.onInit();
   }
 
-  late final box;
   var mon = true.obs; // mon is selected by default
   var tue = false.obs;
   var wed = false.obs;
@@ -45,8 +48,6 @@ class StudentTimetableController extends GetxController {
   var lecturesCount = <String, String>{}.obs;
 
   openBox({required section}) async* {
-    box = await Hive.openBox('studentsDB');
-
     final list = box.get(section.toString().toLowerCase());
     print(list);
     await _setLectures(list: list, key: "10000");

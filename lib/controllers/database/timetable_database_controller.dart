@@ -61,38 +61,11 @@ class TimetableDatabaseController extends GetxController {
     final box3 = await Hive.openBox("info");
     box3.put("sections", sections.toList());
     box3.put("teachers", teachers.toList());
-    print(box3.values);
-    // await _insertTime();
+    // print(box3.values);
     // await _updateStatuses(remoteVersion);
     await Future.delayed(const Duration(seconds: 1));
     Hive.close();
     return Future<int>.value(1);
-  }
-
-  Future<void> insertTime() async {
-    final box = await Hive.openBox('timeSlots');
-
-    var collection = FirebaseFirestore.instance.collection('info');
-    var docSnapshot = await collection.doc('time').get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      final time1 = data?['monToThur'];
-      final time2 = data?['fri'];
-      box.put('monToThur', time1);
-      box.put('fri', time2);
-    } else {
-      final time = {
-        "1": "08:00AM - 10:00AM",
-        "2": "10:00AM - 11:30AM",
-        "3": "11:30AM - 01:00PM",
-        "4": "01:30PM - 03:00PM",
-        "5": "03:00PM - 04:30PM",
-      };
-      box.put('time', time);
-    }
-
-    print(box.get('monToThur'));
-    print(box.get('fri'));
   }
 
   Future<void> deleteData() async {

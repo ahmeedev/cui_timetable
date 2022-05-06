@@ -8,7 +8,7 @@ class FreeRooms extends StatelessWidget {
   final controller = Get.find<FreeRoomsController>();
   final daysList = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   final slots = [
-    "08:00AM - 10:00AM",
+    "08:30AM - 10:00AM",
     "10:00AM - 11:30AM",
     "11:30AM - 01:00PM",
     "01:30PM - 3:00PM",
@@ -88,6 +88,7 @@ class FreeRoomsMainExpansionTile extends StatelessWidget {
       // color: widgetColor,
       shadowColor: shadowColor,
       elevation: defaultElevation,
+
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
 

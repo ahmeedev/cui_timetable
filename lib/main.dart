@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         theme: lightTheme(context),
         title: 'CUI TIMETABLE',
-        debugShowCheckedModeBanner: false,
+        // debugShowCheckedModeBanner: false,
         home: SafeArea(top: false, child: Home()));
   }
 }

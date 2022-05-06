@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer' as devlog;
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:csv/csv.dart';
 import 'package:cui_timetable/controllers/database/timetable_database_controller.dart';
@@ -36,42 +37,29 @@ class SyncController extends GetxController {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
-      final remoteConfig = FirebaseRemoteConfig.instance;
-      await remoteConfig.setConfigSettings(RemoteConfigSettings(
-        fetchTimeout: const Duration(minutes: 1),
-        minimumFetchInterval: const Duration(minutes: 1),
-      ));
-
-      await remoteConfig.setDefaults(const {
-        "version": 0,
-      });
-
-      await remoteConfig.fetchAndActivate();
-
-      final remoteVersion = remoteConfig.getInt('version');
-      final box = await Hive.openBox('info');
+      _insertTime();
 
       // commit this for the without condition synchronization.
       // await _downloadFile(
       //     remoteVersion);
 
-      if (box.get('version') != remoteVersion) {
-        stillSync.value = true;
-        if (dialogPop) {
-          await _downloadFile(remoteVersion, dialogPop: true);
-        } else {
-          await _downloadFile(remoteVersion);
-        }
-      } else {
-        // Execute when the user is new and already synchronized
-        if (dialogPop) {
-          Get.back();
-        }
-        GetXUtilities.snackbar(
-            title: 'Sync',
-            message: 'Data is Already Synchronized',
-            gradient: successGradient);
-      }
+      // if (box.get('version') != remoteVersion) {
+      //   stillSync.value = true;
+      //   if (dialogPop) {
+      //     await _downloadFile(remoteVersion, dialogPop: true);
+      //   } else {
+      //     // await _downloadFile(remoteVersion);
+      //   }
+      // } else {
+      //   // Execute when the user is new and already synchronized
+      //   if (dialogPop) {
+      //     Get.back();
+      //   }
+      //   GetXUtilities.snackbar(
+      //       title: 'Sync',
+      //       message: 'Data is Already Synchronized',
+      //       gradient: successGradient);
+      // }
     } else {
       GetXUtilities.snackbar(
           title: 'Sync',
@@ -80,87 +68,67 @@ class SyncController extends GetxController {
     }
   }
 
-  Future<void> _downloadFile(remoteVersion, {dialogPop = false}) async {
-    // Create a storage reference from our app
-    final storageRef = FirebaseStorage.instance.ref();
+  Future<void> _insertTime() async {
+    final box = await Hive.openBox('timeSlots');
 
-    final islandRef = storageRef.child("timetable.csv");
+    var collection = FirebaseFirestore.instance.collection('info');
+    var docSnapshot = await collection.doc('time').get();
+    if (docSnapshot.exists) {
+      Map<String, dynamic>? data = docSnapshot.data();
+      final time1 = data?['monToThur'];
+      final time2 = data?['fri'];
+      box.put('monToThur', time1);
+      box.put('fri', time2);
+    } else {
+      final time = {
+        "1": "08:30AM - 10:00AM",
+        "2": "10:00AM - 11:30AM",
+        "3": "11:30AM - 01:00PM",
+        "4": "01:30PM - 03:00PM",
+        "5": "03:00PM - 04:30PM",
+      };
+      box.put('defaultTime', time);
+    }
 
-    final appDocDir = await getApplicationDocumentsDirectory();
-    final filePath = "${appDocDir.path}/timetable.csv";
-    final file = File(filePath);
+    print(box.get('monToThur'));
+    print(box.get('fri'));
+  }
 
-    final downloadTask = islandRef.writeToFile(file);
-    downloadTask.snapshotEvents.listen((taskSnapshot) async {
-      switch (taskSnapshot.state) {
-        case TaskState.running:
-          devlog.log("Start Downloading...", name: "SYNC_DOWN");
-          break;
-        case TaskState.paused:
-          devlog.log("File Downloading Paused Unexpectedly...",
-              name: "SYNC_DOWN");
-          break;
-        case TaskState.success:
-          final controller = Get.find<TimetableDatabaseController>();
-          await controller.deleteData();
+  Future<String> getRemoteVersion() async {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(minutes: 1),
+      minimumFetchInterval: const Duration(minutes: 1),
+    ));
 
-          insertTimetable(controller, remoteVersion, dialogPop);
-
-          devlog.log("File Downloaded Successfully...", name: "SYNC_DOWN");
-          break;
-        case TaskState.canceled:
-          devlog.log("File Downloading Cancelled...", name: "SYNC_DOWN");
-          break;
-        case TaskState.error:
-          GetXUtilities.snackbar(
-              title: 'Sync',
-              message: 'Make Sure You Have a Internet Connection',
-              gradient: errorGradient);
-          devlog.log("Error Occured While Downloading", name: "SYNC_DOWN");
-          break;
-      }
+    await remoteConfig.setDefaults(const {
+      "version": 0,
     });
+
+    await remoteConfig.fetchAndActivate();
+
+    final remoteVersion = remoteConfig.getInt('version').toString();
+    return Future.value(remoteVersion);
   }
 
-  insertTimetable(controller, remoteVersion, dialogPop) async {
-    final Directory directory = await getApplicationDocumentsDirectory();
-    await compute(_getDownloadedContent, directory.path).then((data) async {
-      await controller.insertTimetableData(data, remoteVersion);
+  // insertTimetable(controller, remoteVersion, dialogPop) async {
+  //   final Directory directory = await getApplicationDocumentsDirectory();
+  //   await compute(_getDownloadedContent, directory.path).then((data) async {
+  //     await controller.insertTimetableData(data, remoteVersion);
 
-      if (dialogPop) {
-        final box = await Hive.openBox('info');
-        box.put('new_user', false);
-        Get.back();
-      }
-      stillSync.value = false;
-      final box = await Hive.openBox('info');
-      lastUpdate.value = box.get('last_update');
+  //     if (dialogPop) {
+  //       final box = await Hive.openBox('info');
+  //       box.put('new_user', false);
+  //       Get.back();
+  //     }
+  //     stillSync.value = false;
+  //     final box = await Hive.openBox('info');
+  //     lastUpdate.value = box.get('last_update');
 
-      GetXUtilities.snackbar(
-          title: 'Sync',
-          message: 'Data Synchronized Successfully',
-          gradient: successGradient);
-    });
-  }
-}
-
-Future<List<dynamic>> _getDownloadedContent(String location) async {
-  var fields;
-  try {
-    final File file = File('$location/timetable.csv');
-    final input = file.openRead();
-    fields = await input
-        .transform(utf8.decoder)
-        .transform(const CsvToListConverter())
-        .toList();
-
-    devlog.log("File Read Successfully With Records Count: ${fields.length}",
-        name: "SYNC_READ");
-  } catch (e) {
-    print(e);
-    devlog.log("Error!, While file Reading... ", name: "SYNC_READ");
-  } finally {
-    // Isolate.exit(port, map);
-  }
-  return Future<List<dynamic>>.value(fields);
+  //     GetXUtilities.snackbar(
+  //         title: 'Sync',
+  //         message: 'Data Synchronized Successfully',
+  //         gradient: successGradient);
+  //   });
+  // }
 }

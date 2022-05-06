@@ -1,3 +1,4 @@
+import 'package:cui_timetable/db_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -11,14 +12,21 @@ class TeacherTimetableController extends GetxController {
   //   '5': ["03:00PM", "04:30PM"]
   // };
 
-  var timeMap;
+  // var timeMap;
+  final timeMap = {
+    "1": ["08:30AM", "10:00AM"],
+    "2": ["10:00AM", "11:30AM"],
+    "3": ["11:30AM", "01:00PM"],
+    "4": ["01:30PM", "03:00PM"],
+    "5": ["03:00PM", "04:30PM"],
+  };
 
   @override
   Future<void> onInit() async {
-    final box = await Hive.openBox('info');
-    print("timemap is: $timeMap");
-    timeMap = box.get('time');
-    print("timemap is: $timeMap");
+    // final box = await Hive.openBox('info');
+    // print("timemap is: $timeMap");
+    // timeMap = box.get('time');
+    // print("timemap is: $timeMap");
     super.onInit();
   }
 
@@ -39,9 +47,9 @@ class TeacherTimetableController extends GetxController {
   var lecturesCount = <String, String>{}.obs;
 
   openBox({required teacher}) async* {
-    box = await Hive.openBox(teacher);
-    final list = box.values;
-    print('lecture are $list');
+    box = await Hive.openBox(DBConstants.teachersDB);
+    final list = box.get(teacher.toString().toLowerCase());
+    print(list);
     await _setLectures(list: list, key: "10000");
     await _setLectures(list: list, key: "1000");
     await _setLectures(list: list, key: "100");
@@ -77,23 +85,28 @@ class TeacherTimetableController extends GetxController {
 
   _setLectures({required list, required String key}) {
     if (key == "10000") {
-      monLectures = list.where((element) => element[3] == key).toList();
+      monLectures =
+          list.where((element) => element[3].toString() == key).toList();
       monLectures.sort((a, b) => a[2].compareTo(b[2]));
       lecturesCount[key] = monLectures.length.toString();
     } else if (key == "1000") {
-      tueLectures = list.where((element) => element[3] == key).toList();
+      tueLectures =
+          list.where((element) => element[3].toString() == key).toList();
       tueLectures.sort((a, b) => a[2].compareTo(b[2]));
       lecturesCount[key] = tueLectures.length.toString();
     } else if (key == "100") {
-      wedLectures = list.where((element) => element[3] == key).toList();
+      wedLectures =
+          list.where((element) => element[3].toString() == key).toList();
       wedLectures.sort((a, b) => a[2].compareTo(b[2]));
       lecturesCount[key] = wedLectures.length.toString();
     } else if (key == "10") {
-      thuLectures = list.where((element) => element[3] == key).toList();
+      thuLectures =
+          list.where((element) => element[3].toString() == key).toList();
       thuLectures.sort((a, b) => a[2].compareTo(b[2]));
       lecturesCount[key] = thuLectures.length.toString();
     } else if (key == "1") {
-      friLectures = list.where((element) => element[3] == key).toList();
+      friLectures =
+          list.where((element) => element[3].toString() == key).toList();
       friLectures.sort((a, b) => a[2].compareTo(b[2]));
       lecturesCount[key] = friLectures.length.toString();
     }
