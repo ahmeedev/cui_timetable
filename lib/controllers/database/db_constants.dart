@@ -1,0 +1,20 @@
+class DBNames {
+  static const info = "info";
+  static const timeSlots = "timeSlots";
+
+  static const studentsDB = "studentsDB";
+  static const teachersDB = "teachersDB";
+}
+
+class DBInfo {
+  static const lastUpdate = "lastUpdate";
+  static const sections = 'sections';
+  static const searchSection = 'searchSection';
+  static const searchTeacher = 'searchTeacher';
+  static const newUser = 'newUser';
+}
+
+class DBTimeSlots {
+  static const monToThur = 'monToThur';
+  static const fri = 'fri';
+}

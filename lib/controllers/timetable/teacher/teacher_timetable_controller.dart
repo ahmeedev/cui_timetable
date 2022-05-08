@@ -1,4 +1,4 @@
-import 'package:cui_timetable/db_constants.dart';
+import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -47,7 +47,7 @@ class TeacherTimetableController extends GetxController {
   var lecturesCount = <String, String>{}.obs;
 
   openBox({required teacher}) async* {
-    box = await Hive.openBox(DBConstants.teachersDB);
+    box = await Hive.openBox(DBNames.teachersDB);
     final list = box.get(teacher.toString().toLowerCase());
     print(list);
     await _setLectures(list: list, key: "10000");

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/controllers/database/database_utilities.dart';
+import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:cui_timetable/views/utilities/loc_utilities.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -8,9 +9,10 @@ import 'package:jiffy/jiffy.dart';
 class TimetableDatabaseController extends GetxController {
   // String search_section = '';
 
-  createDatabase() async {
+  Future<bool> createDatabase() async {
     await downloadFile(
         fileName: 'timetable.csv', callback: insertTimetableData);
+    return Future.value(true);
   }
 
   //! All the code run in working Isolate, Be aware
@@ -18,7 +20,7 @@ class TimetableDatabaseController extends GetxController {
   Future<Future<int>> insertTimetableData(
       {required String filePath, required List<dynamic> data}) async {
     Hive.init(filePath); // initialize the data, bcz of their separate isolate.
-    print('Filepath is:   $filePath');
+
     // fetch sections as well as teachers.
     final sections = <String>{};
     final teachers = <String>{};
@@ -65,6 +67,7 @@ class TimetableDatabaseController extends GetxController {
     // await _updateStatuses(remoteVersion);
     await Future.delayed(const Duration(seconds: 1));
     Hive.close();
+    print('hello gyyz');
     return Future<int>.value(1);
   }
 
@@ -83,22 +86,8 @@ class TimetableDatabaseController extends GetxController {
     } catch (e) {
       print(e);
     } finally {
-      // Hive.deleteFromDisk();
       box.deleteAll(['sections', 'teachers']);
-      await Future.delayed(const Duration(milliseconds: 1500));
+      await Future.delayed(const Duration(milliseconds: 1000));
     }
-    // print('Data deleted From Disk Succuessfully');
-    // preserve the values
-  }
-
-  Future<void> _updateStatuses(remoteVersion) async {
-    final box = await Hive.openBox('info');
-    box.put('version', remoteVersion);
-    box.put('last_update', Jiffy().format("MMMM do yyyy"));
-    // box.put('search_section', search_section);
-    // print('box with value $remoteVersion');
-
-    // print('Server:  $remoteVersion');
-    // print('Box: ${box.get('version')}');
   }
 }

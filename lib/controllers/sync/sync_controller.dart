@@ -5,7 +5,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:csv/csv.dart';
+import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:cui_timetable/controllers/database/timetable_database_controller.dart';
+import 'package:cui_timetable/controllers/timetable/student/student_timetable_controller.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/timetable/timetable_main.dart';
 import 'package:cui_timetable/views/utilities/get_utilities.dart';
@@ -14,22 +16,18 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:path_provider/path_provider.dart';
 
 class SyncController extends GetxController {
-  var data = [].obs;
   var lastUpdate = ''.obs;
   var stillSync = false.obs;
+  late final box;
 
   @override
   Future<void> onInit() async {
-    final box = await Hive.openBox('info');
-    try {
-      lastUpdate.value = box.get('last_update');
-      print(lastUpdate.value);
-    } catch (e) {
-      print(e);
-    }
+    box = await Hive.openBox(DBNames.info);
+    lastUpdate.value = box.get(DBInfo.lastUpdate) ?? 'No Record';
     super.onInit();
   }
 
@@ -37,29 +35,29 @@ class SyncController extends GetxController {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
-      _insertTime();
-
-      // commit this for the without condition synchronization.
-      // await _downloadFile(
-      //     remoteVersion);
-
-      // if (box.get('version') != remoteVersion) {
-      //   stillSync.value = true;
-      //   if (dialogPop) {
-      //     await _downloadFile(remoteVersion, dialogPop: true);
-      //   } else {
-      //     // await _downloadFile(remoteVersion);
-      //   }
-      // } else {
-      //   // Execute when the user is new and already synchronized
-      //   if (dialogPop) {
-      //     Get.back();
-      //   }
-      //   GetXUtilities.snackbar(
-      //       title: 'Sync',
-      //       message: 'Data is Already Synchronized',
-      //       gradient: successGradient);
-      // }
+      await getRemoteVersion().then((remoteVersion) async {
+        if (box.get(DBInfo.lastUpdate) != remoteVersion) {
+          await _insertTime();
+          stillSync.value = true;
+          if (dialogPop) {
+            GetXUtilities.dialog();
+            await _syncAllFiles();
+          } else {
+            // await _downloadFile(remoteVersion);
+          }
+        } else {
+          // Execute when the user is new and already synchronized
+          if (dialogPop) {
+            final box = await Hive.openBox(DBNames.info);
+            box.put(DBInfo.newUser, false);
+            Get.back();
+          }
+          GetXUtilities.snackbar(
+              title: 'Sync',
+              message: 'Data is Already Synchronized',
+              gradient: successGradient);
+        }
+      });
     } else {
       GetXUtilities.snackbar(
           title: 'Sync',
@@ -68,8 +66,15 @@ class SyncController extends GetxController {
     }
   }
 
+  Future<bool> _syncAllFiles() async {
+    final timetableDB = TimetableDatabaseController();
+    await timetableDB.createDatabase();
+
+    return Future.value(true);
+  }
+
   Future<void> _insertTime() async {
-    final box = await Hive.openBox('timeSlots');
+    final box = await Hive.openBox(DBNames.timeSlots);
 
     var collection = FirebaseFirestore.instance.collection('info');
     var docSnapshot = await collection.doc('time').get();
@@ -111,24 +116,14 @@ class SyncController extends GetxController {
     return Future.value(remoteVersion);
   }
 
-  // insertTimetable(controller, remoteVersion, dialogPop) async {
-  //   final Directory directory = await getApplicationDocumentsDirectory();
-  //   await compute(_getDownloadedContent, directory.path).then((data) async {
-  //     await controller.insertTimetableData(data, remoteVersion);
+  Future<void> _updateStatuses(remoteVersion) async {
+    final box = await Hive.openBox('info');
+    box.put('version', remoteVersion);
+    box.put('last_update', Jiffy().format("MMMM do yyyy"));
+    // box.put('search_section', search_section);
+    // print('box with value $remoteVersion');
 
-  //     if (dialogPop) {
-  //       final box = await Hive.openBox('info');
-  //       box.put('new_user', false);
-  //       Get.back();
-  //     }
-  //     stillSync.value = false;
-  //     final box = await Hive.openBox('info');
-  //     lastUpdate.value = box.get('last_update');
-
-  //     GetXUtilities.snackbar(
-  //         title: 'Sync',
-  //         message: 'Data Synchronized Successfully',
-  //         gradient: successGradient);
-  //   });
-  // }
+    // print('Server:  $remoteVersion');
+    // print('Box: ${box.get('version')}');
+  }
 }

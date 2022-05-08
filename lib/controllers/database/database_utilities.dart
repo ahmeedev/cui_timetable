@@ -3,9 +3,12 @@ import 'dart:developer' as devlog;
 import 'dart:io';
 
 import 'package:csv/csv.dart';
+import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:cui_timetable/views/utilities/loc_utilities.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 Future<void> downloadFile({required String fileName, required callback}) async {
   final storageRef = FirebaseStorage.instance.ref();
@@ -30,7 +33,7 @@ Future<void> downloadFile({required String fileName, required callback}) async {
           "filePath": LocationUtilities.defaultpath,
           "fileName": fileName,
           "callback": callback
-        });
+        }).then((value) => _popUpSyncDialog());
         break;
       case TaskState.canceled:
         devlog.log("File Downloading Cancelled...",
@@ -72,28 +75,12 @@ Future<List<dynamic>> _getFileContent(
   return Future<List<dynamic>>.value(fields);
 }
 
-
-
-
-
-
-  // insertTimetable(controller, remoteVersion, dialogPop) async {
-  //   final Directory directory = await getApplicationDocumentsDirectory();
-  //   await compute(_getDownloadedContent, directory.path).then((data) async {
-  //     await controller.insertDataOfTimetable(data, remoteVersion);
-
-  //     if (dialogPop) {
-  //       final box = await Hive.openBox('info');
-  //       box.put('new_user', false);
-  //       Get.back();
-  //     }
-  //     stillSync.value = false;
-  //     final box = await Hive.openBox('info');
-  //     lastUpdate.value = box.get('last_update');
-
-  //     GetXUtilities.snackbar(
-  //         title: 'Sync',
-  //         message: 'Data Synchronized Successfully',
-  //         gradient: successGradient);
-  //   });
-  // }
+_popUpSyncDialog() async {
+  final box = await Hive.openBox(DBNames.info);
+  bool newUser = box.get(DBInfo.newUser, defaultValue: true);
+  print(newUser);
+  if (newUser) {
+    print('get uti');
+    Get.back();
+  }
+}

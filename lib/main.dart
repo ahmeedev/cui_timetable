@@ -5,6 +5,7 @@ import 'package:cui_timetable/controllers/developer/developer_controller.dart';
 import 'package:cui_timetable/controllers/firebase/firebase_controller.dart';
 import 'package:cui_timetable/controllers/freerooms/freerooms_controller.dart';
 import 'package:cui_timetable/controllers/home/home_controller.dart';
+import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:cui_timetable/firebase_options.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/home/home.dart';
@@ -32,6 +33,8 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   await _initialized();
   // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  final box = await Hive.openBox(DBNames.info);
+  print(box.get('sections'));
   runApp(const MyApp());
 }
 
