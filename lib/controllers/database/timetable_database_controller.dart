@@ -22,7 +22,7 @@ class TimetableDatabaseController extends GetxController {
   Future<Future<int>> insertTimetableData(
       {required String filePath, required List<dynamic> data}) async {
     Hive.init(filePath); // initialize the data, bcz of their separate isolate.
-
+    await deleteData();
     // fetch sections as well as teachers.
     final sections = <String>{};
     final teachers = <String>{};
@@ -33,7 +33,7 @@ class TimetableDatabaseController extends GetxController {
     }
 
     //  =====  creating students database  ===== //
-    final box1 = await Hive.openBox("studentsDB");
+    final box1 = await Hive.openBox(DBNames.studentsDB);
 
     for (var i in sections) {
       var lectures = data
@@ -41,13 +41,13 @@ class TimetableDatabaseController extends GetxController {
           .where((element) =>
               element[0].toString().toLowerCase() == i.toLowerCase())
           .toList();
-      box1.put(i.toLowerCase(), lectures);
+      await box1.put(i.toLowerCase(), lectures);
     }
     // await Future.delayed(const Duration(milliseconds:500));
     // await box1.close();
 
     //  =====  creating teachers database  ===== //
-    final box2 = await Hive.openBox("teachersDB");
+    final box2 = await Hive.openBox(DBNames.teachersDB);
 
     for (var i in teachers) {
       var lectures = data
@@ -55,17 +55,17 @@ class TimetableDatabaseController extends GetxController {
           .where((element) =>
               element[4].toString().toLowerCase() == i.toLowerCase())
           .toList();
-      box2.put(i.toLowerCase(), lectures);
+      await box2.put(i.toLowerCase(), lectures);
     }
     // await Future.delayed(const Duration(milliseconds:500));
 
     // await box2.close();
 
     //  =====  storing  students and teachers list  ===== //
-    final box3 = await Hive.openBox("info");
-    box3.put("sections", sections.toList());
-    box3.put("teachers", teachers.toList());
-    // print(box3.values);
+    final box3 = await Hive.openBox(DBNames.info);
+    await box3.put(DBInfo.sections, sections.toList());
+    await box3.put(DBInfo.teachers, teachers.toList());
+    print(box3.values);
     // await _updateStatuses(remoteVersion);
     await Future.delayed(const Duration(seconds: 1));
     Hive.close();
@@ -90,6 +90,8 @@ class TimetableDatabaseController extends GetxController {
     } finally {
       box.deleteAll([DBInfo.sections, DBInfo.teachers]);
       await Future.delayed(const Duration(milliseconds: 1000));
+
+      print('deletion success');
     }
   }
 }

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class TeacherUIController extends GetxController {
-  var teachers;
+  var teachers = [];
   final TextEditingController textController = TextEditingController();
   var filteredList = [].obs;
   var listVisible = true.obs;
@@ -13,9 +13,9 @@ class TeacherUIController extends GetxController {
     await fetchTeachers();
     var string = '';
 
-    final box = await Hive.openBox('info');
+    final box = await Hive.openBox(DBNames.info);
     try {
-      var value = box.get("search_teacher");
+      String value = box.get(DBInfo.searchTeacher, defaultValue: '');
       if (value.isNotEmpty) {
         string = value.toString();
       }
@@ -31,6 +31,7 @@ class TeacherUIController extends GetxController {
   Future<void> fetchTeachers() async {
     final box = await Hive.openBox(DBNames.info);
     final list = box.get(DBInfo.teachers);
+    print('list are $list');
     teachers = list;
   }
 }

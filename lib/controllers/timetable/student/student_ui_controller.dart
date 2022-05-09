@@ -1,9 +1,10 @@
+import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class StudentUIController extends GetxController {
-  var sections;
+  var sections = [];
   final TextEditingController textController = TextEditingController();
   var filteredList = [].obs;
   var listVisible = true.obs;
@@ -12,9 +13,9 @@ class StudentUIController extends GetxController {
     await fetchSections();
     var string = '';
 
-    final box = await Hive.openBox('info');
+    final box = await Hive.openBox(DBNames.info);
     try {
-      var value = box.get("search_section");
+      String value = box.get(DBInfo.searchSection, defaultValue: "");
       if (value.isNotEmpty) {
         string = value.toString();
       }
@@ -28,8 +29,8 @@ class StudentUIController extends GetxController {
   }
 
   Future<void> fetchSections() async {
-    final box = await Hive.openBox("info");
-    final list = box.get('sections');
+    final box = await Hive.openBox(DBNames.info);
+    final list = box.get(DBInfo.sections);
     sections = list;
   }
 }

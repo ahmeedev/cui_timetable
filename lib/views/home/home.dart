@@ -291,7 +291,6 @@ class HomeBottomWidget extends StatelessWidget {
               onPressed: () async {
                 // GetXUtilities.dialog();
                 // downloadFile('timetable.csv');
-
                 // controller.insertTime();
               },
               child: Text(

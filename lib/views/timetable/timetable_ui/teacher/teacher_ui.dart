@@ -1,3 +1,4 @@
+import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:cui_timetable/controllers/timetable/teacher/teacher_ui_controller.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/timetable/timetable_ui/teacher/teacher_timetable.dart';
@@ -161,8 +162,8 @@ class TeacherUI extends StatelessWidget {
               if (controller.teachers
                   .contains(controller.textController.text.toString())) {
                 // Storing the information for state persistency
-                final box = await Hive.openBox('info');
-                box.put('search_teacher',
+                final box = await Hive.openBox(DBNames.info);
+                box.put(DBInfo.searchTeacher,
                     controller.textController.text.toString());
 
                 Get.to(() => TeacherTimetable(),
