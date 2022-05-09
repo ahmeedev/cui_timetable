@@ -11,7 +11,9 @@ class TimetableDatabaseController extends GetxController {
 
   Future<bool> createDatabase() async {
     await downloadFile(
-        fileName: 'timetable.csv', callback: insertTimetableData);
+      fileName: 'timetable.csv',
+      callback: insertTimetableData,
+    );
     return Future.value(true);
   }
 
@@ -67,26 +69,26 @@ class TimetableDatabaseController extends GetxController {
     // await _updateStatuses(remoteVersion);
     await Future.delayed(const Duration(seconds: 1));
     Hive.close();
-    print('hello gyyz');
+
     return Future<int>.value(1);
   }
 
   Future<void> deleteData() async {
-    var box = await Hive.openBox('info');
+    var box = await Hive.openBox(DBNames.info);
     try {
-      var sections = box.get('sections');
+      var sections = box.get(DBInfo.sections);
       for (var i in sections) {
         // final box = await Hive.openBox(i);
         Hive.deleteBoxFromDisk(i);
       }
-      var teachers = box.get('teachers');
+      var teachers = box.get(DBInfo.teachers);
       for (var i in teachers) {
         Hive.deleteBoxFromDisk(i);
       }
     } catch (e) {
       print(e);
     } finally {
-      box.deleteAll(['sections', 'teachers']);
+      box.deleteAll([DBInfo.sections, DBInfo.teachers]);
       await Future.delayed(const Duration(milliseconds: 1000));
     }
   }

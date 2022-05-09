@@ -4,13 +4,20 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:cui_timetable/controllers/database/db_constants.dart';
+import 'package:cui_timetable/controllers/sync/sync_controller.dart';
+import 'package:cui_timetable/controllers/timetable/student/student_timetable_controller.dart';
+import 'package:cui_timetable/controllers/timetable/teacher/teacher_timetable_controller.dart';
 import 'package:cui_timetable/views/utilities/loc_utilities.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:jiffy/jiffy.dart';
 
-Future<void> downloadFile({required String fileName, required callback}) async {
+Future<void> downloadFile({
+  required String fileName,
+  required callback,
+}) async {
   final storageRef = FirebaseStorage.instance.ref();
   final islandRef = storageRef.child(fileName);
   final filePath = "${LocationUtilities.defaultpath}/$fileName";
@@ -33,7 +40,7 @@ Future<void> downloadFile({required String fileName, required callback}) async {
           "filePath": LocationUtilities.defaultpath,
           "fileName": fileName,
           "callback": callback
-        }).then((value) => _popUpSyncDialog());
+        }).then((value) => _updateStatuses());
         break;
       case TaskState.canceled:
         devlog.log("File Downloading Cancelled...",
@@ -75,12 +82,23 @@ Future<List<dynamic>> _getFileContent(
   return Future<List<dynamic>>.value(fields);
 }
 
-_popUpSyncDialog() async {
-  final box = await Hive.openBox(DBNames.info);
-  bool newUser = box.get(DBInfo.newUser, defaultValue: true);
-  print(newUser);
+_updateStatuses() async {
+  final box1 = await Hive.openBox(DBNames.info);
+  bool newUser = box1.get(DBInfo.newUser, defaultValue: true);
   if (newUser) {
-    print('get uti');
+    box1.put(DBInfo.newUser, false);
     Get.back();
   }
+
+  box1.put(DBInfo.lastUpdate, Jiffy().format("MMMM do yyyy"));
+
+  await getRemoteVersion().then((value) {
+    box1.put(DBInfo.version, value);
+  });
+
+  Get.find<SyncController>().timetableSyncStatus.value = false;
+  Get.find<SyncController>().clickable = true;
+
+  // Get.delete<StudentTimetableController>();
+  // Get.delete<TeacherTimetableController>();
 }

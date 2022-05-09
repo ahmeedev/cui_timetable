@@ -1,3 +1,4 @@
+import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -20,14 +21,13 @@ class StudentTimetableController extends GetxController {
     "5": ["03:00PM", "04:30PM"],
   };
 
-  late final box;
+  // late final box;
   @override
   Future<void> onInit() async {
     // final box = await Hive.openBox('info');
     // print("timemap is: $timeMap");
     // timeMap = box.get('time');
     // print("timemap is: $timeMap");
-    box = await Hive.openBox('studentsDB');
 
     super.onInit();
   }
@@ -47,9 +47,10 @@ class StudentTimetableController extends GetxController {
   var friLectures = [];
   var lecturesCount = <String, String>{}.obs;
 
-  openBox({required section}) async* {
-    final list = box.get(section.toString().toLowerCase());
-    print(list);
+  openBox({required String section}) async* {
+    final box = await Hive.openBox(DBNames.studentsDB);
+
+    final list = box.get(section.toLowerCase());
     await _setLectures(list: list, key: "10000");
     await _setLectures(list: list, key: "1000");
     await _setLectures(list: list, key: "100");

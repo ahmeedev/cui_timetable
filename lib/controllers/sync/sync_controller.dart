@@ -1,27 +1,19 @@
-import 'dart:convert';
-import 'dart:developer' as devlog;
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:csv/csv.dart';
 import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:cui_timetable/controllers/database/timetable_database_controller.dart';
-import 'package:cui_timetable/controllers/timetable/student/student_timetable_controller.dart';
 import 'package:cui_timetable/style.dart';
-import 'package:cui_timetable/views/timetable/timetable_main.dart';
 import 'package:cui_timetable/views/utilities/get_utilities.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:path_provider/path_provider.dart';
 
 class SyncController extends GetxController {
+  var clickable = true;
   var lastUpdate = ''.obs;
-  var stillSync = false.obs;
+  var timetableSyncStatus = false.obs;
+  var freeroomsSyncStatus = false.obs;
   late final box;
 
   @override
@@ -36,20 +28,20 @@ class SyncController extends GetxController {
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
       await getRemoteVersion().then((remoteVersion) async {
-        if (box.get(DBInfo.lastUpdate) != remoteVersion) {
+        if (box.get(DBInfo.version).toString() != remoteVersion) {
+          // insert time in main isolate
+          clickable = false;
           await _insertTime();
-          stillSync.value = true;
+          // update the sync statuses.
+          timetableSyncStatus.value = true;
+
           if (dialogPop) {
             GetXUtilities.dialog();
-            await _syncAllFiles();
-          } else {
-            // await _downloadFile(remoteVersion);
           }
+          await _syncAllFiles();
         } else {
           // Execute when the user is new and already synchronized
           if (dialogPop) {
-            final box = await Hive.openBox(DBNames.info);
-            box.put(DBInfo.newUser, false);
             Get.back();
           }
           GetXUtilities.snackbar(
@@ -98,32 +90,23 @@ class SyncController extends GetxController {
     print(box.get('monToThur'));
     print(box.get('fri'));
   }
+}
 
-  Future<String> getRemoteVersion() async {
-    final remoteConfig = FirebaseRemoteConfig.instance;
-    await remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(minutes: 1),
-      minimumFetchInterval: const Duration(minutes: 1),
-    ));
+// Function
 
-    await remoteConfig.setDefaults(const {
-      "version": 0,
-    });
+Future<String> getRemoteVersion() async {
+  final remoteConfig = FirebaseRemoteConfig.instance;
+  await remoteConfig.setConfigSettings(RemoteConfigSettings(
+    fetchTimeout: const Duration(minutes: 1),
+    minimumFetchInterval: const Duration(minutes: 1),
+  ));
 
-    await remoteConfig.fetchAndActivate();
+  await remoteConfig.setDefaults(const {
+    "version": 0,
+  });
 
-    final remoteVersion = remoteConfig.getInt('version').toString();
-    return Future.value(remoteVersion);
-  }
+  await remoteConfig.fetchAndActivate();
 
-  Future<void> _updateStatuses(remoteVersion) async {
-    final box = await Hive.openBox('info');
-    box.put('version', remoteVersion);
-    box.put('last_update', Jiffy().format("MMMM do yyyy"));
-    // box.put('search_section', search_section);
-    // print('box with value $remoteVersion');
-
-    // print('Server:  $remoteVersion');
-    // print('Box: ${box.get('version')}');
-  }
+  final remoteVersion = remoteConfig.getInt('version').toString();
+  return Future.value(remoteVersion);
 }

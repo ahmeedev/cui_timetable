@@ -1,3 +1,4 @@
+import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -18,7 +19,6 @@ class TeacherUIController extends GetxController {
       if (value.isNotEmpty) {
         string = value.toString();
       }
-      print('Search_Teacher Added: $value');
     } catch (e) {
       print(e);
     }
@@ -29,9 +29,8 @@ class TeacherUIController extends GetxController {
   }
 
   Future<void> fetchTeachers() async {
-    final box = await Hive.openBox('info');
-    final list = box.get('teachers');
+    final box = await Hive.openBox(DBNames.info);
+    final list = box.get(DBInfo.teachers);
     teachers = list;
-    print('teachers are $teachers');
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cui_timetable/controllers/database/db_constants.dart';
 import 'package:cui_timetable/controllers/sync/sync_controller.dart';
 import 'package:cui_timetable/views/utilities/get_utilities.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -27,15 +28,12 @@ class HomeController extends GetxController
       ),
     )..repeat();
 
-    final box = await Hive.openBox('info');
-    var value = box.get('new_user').toString();
-    // box.delete('new_user');
-
-    print(value);
-    // if (value == '' || value == 'null') {
-    //   GetXUtilities.dialog();
-    //   await _syncData();
-    // }
+    final box1 = await Hive.openBox(DBNames.info);
+    bool newUser = box1.get(DBInfo.newUser, defaultValue: true);
+    if (newUser) {
+      final syncController = Get.find<SyncController>();
+      syncController.syncData(dialogPop: true);
+    }
     // print(box.put('last_update', ''));
 
     // timer = Timer.periodic(
@@ -95,11 +93,5 @@ class HomeController extends GetxController
     // );
 
     FlutterNativeSplash.remove();
-  }
-
-  Future<bool> _syncData() {
-    final controller = SyncController();
-    controller.syncData(dialogPop: true);
-    return Future.value(true);
   }
 }

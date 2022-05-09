@@ -9,9 +9,9 @@ class StudentTimetable extends StatelessWidget {
   final studentTimetableController = Get.put(StudentTimetableController());
   final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   final keys = ['10000', '1000', '100', '10', '1'];
+
   @override
   Widget build(BuildContext context) {
-    final arguments = Get.arguments;
     return Scaffold(
         backgroundColor: scaffoldColor,
         appBar: AppBar(
@@ -31,7 +31,7 @@ class StudentTimetable extends StatelessWidget {
                 heightFactor: 1,
                 child: StreamBuilder(
                     stream: studentTimetableController.openBox(
-                        section: arguments[0]),
+                        section: Get.arguments[0].toString()),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const GFLoader();
@@ -40,8 +40,8 @@ class StudentTimetable extends StatelessWidget {
                           ...List.generate(5, (index) {
                             return DayTile(
                               controller: studentTimetableController,
-                              day: days[index],
-                              dayKey: keys[index],
+                              day: days[index].toString(),
+                              dayKey: keys[index].toString(),
                               callback: studentTimetableController.allFalse,
                               obs: studentTimetableController.giveValue(index),
                             );
@@ -109,8 +109,8 @@ class StudentTimetable extends StatelessWidget {
 
 class DayTile extends StatelessWidget {
   late final StudentTimetableController controller;
-  late final day;
-  late final dayKey;
+  late final String day;
+  late final String dayKey;
   late final callback;
 
   late final Rx<bool> obs;
@@ -167,7 +167,7 @@ class DayTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(defaultRadius),
                       onTap: () {
                         callback();
-                        controller.getLectures(key: dayKey.toString());
+                        controller.getLectures(key: dayKey);
                         obs.value = true;
                       },
                       child: Column(
@@ -183,8 +183,7 @@ class DayTile extends StatelessWidget {
                             alignment: WrapAlignment.center,
                             children: [
                               ...List.generate(
-                                  int.parse(controller
-                                      .lecturesCount[dayKey.toString()]
+                                  int.parse(controller.lecturesCount[dayKey]
                                       .toString()),
                                   (index) => Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -211,9 +210,9 @@ class DayTile extends StatelessWidget {
 }
 
 class LectureDetailsTile extends StatelessWidget {
-  late final subject;
-  late final teacher;
-  late final room;
+  late final String subject;
+  late final String teacher;
+  late final String room;
   late final time;
 
   LectureDetailsTile(
@@ -221,7 +220,7 @@ class LectureDetailsTile extends StatelessWidget {
       required this.subject,
       required this.teacher,
       required this.room,
-      this.time})
+      required this.time})
       : super(key: key);
 
   @override

@@ -18,7 +18,6 @@ class StudentUIController extends GetxController {
       if (value.isNotEmpty) {
         string = value.toString();
       }
-      print('Search_Section Added: $value');
     } catch (e) {
       print(e);
     }
@@ -32,6 +31,5 @@ class StudentUIController extends GetxController {
     final box = await Hive.openBox("info");
     final list = box.get('sections');
     sections = list;
-    print('list are ${box.values}}');
   }
 }

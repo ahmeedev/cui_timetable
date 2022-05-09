@@ -6,6 +6,7 @@ import 'package:cui_timetable/controllers/firebase/firebase_controller.dart';
 import 'package:cui_timetable/controllers/freerooms/freerooms_controller.dart';
 import 'package:cui_timetable/controllers/home/home_controller.dart';
 import 'package:cui_timetable/controllers/database/db_constants.dart';
+import 'package:cui_timetable/controllers/sync/sync_controller.dart';
 import 'package:cui_timetable/firebase_options.dart';
 import 'package:cui_timetable/style.dart';
 import 'package:cui_timetable/views/home/home.dart';
@@ -27,14 +28,11 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 
   final box = await Hive.openBox('info');
   box.put('updated', false);
-  print(box.get('updated'));
 }
 
 Future<void> main() async {
   await _initialized();
   // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  final box = await Hive.openBox(DBNames.info);
-  print(box.get('sections'));
   runApp(const MyApp());
 }
 
@@ -59,13 +57,12 @@ Future<void> _initialized() async {
   // Initialize the important Controllers
   //* ============================================ //
   Get.put(FirebaseController()); //! Criticial to load first
-  Get.put(TimetableDatabaseController()); // ! 2
+  // Get.put(TimetableDatabaseController()); // ! 2
   Get.put(HomeController());
   Get.put(FreeRoomsController());
-  // final startUpController = Get.put(StartUpController()); // *2
-  // Get.put(StartUpController()); // *2
+  Get.put(SyncController());
+
   Get.put(DeveloperController()); // *3
-  // Get.put(CsvController());
   //* ============================================ //
 
   // print(DateFormat.yMMMd]().format(DateTime.now()));

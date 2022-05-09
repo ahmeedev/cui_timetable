@@ -7,8 +7,10 @@ class DBNames {
 }
 
 class DBInfo {
+  static const version = "version";
   static const lastUpdate = "lastUpdate";
   static const sections = 'sections';
+  static const teachers = 'teachers';
   static const searchSection = 'searchSection';
   static const searchTeacher = 'searchTeacher';
   static const newUser = 'newUser';

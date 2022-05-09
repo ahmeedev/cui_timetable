@@ -1,6 +1,7 @@
 import 'package:cui_timetable/controllers/database/timetable_database_controller.dart';
 import 'package:cui_timetable/controllers/sync/sync_controller.dart';
 import 'package:cui_timetable/style.dart';
+import 'package:cui_timetable/views/utilities/get_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,8 @@ class Sync extends StatelessWidget {
 
 class SyncBody extends StatelessWidget {
   SyncBody({Key? key}) : super(key: key);
-  final syncController = Get.put(SyncController());
+
+  final syncController = Get.find<SyncController>();
   final databaseController = TimetableDatabaseController();
 
   // final lastUpdate = '15-apr-2022';
@@ -35,7 +37,7 @@ class SyncBody extends StatelessWidget {
           Obx(() => SyncTile(
                 title: 'Timetable',
                 lastUpdate: syncController.lastUpdate.value,
-                icon: syncController.stillSync.value
+                icon: syncController.timetableSyncStatus.value
                     ? const SpinKitChasingDots(
                         color: primaryColor,
                         size: 30.0,
@@ -49,7 +51,7 @@ class SyncBody extends StatelessWidget {
           Obx(() => SyncTile(
                 title: 'Free Rooms',
                 lastUpdate: syncController.lastUpdate.value,
-                icon: syncController.stillSync.value
+                icon: syncController.freeroomsSyncStatus.value
                     ? const SpinKitChasingDots(
                         color: primaryColor,
                         size: 30.0,
@@ -65,7 +67,15 @@ class SyncBody extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () async {
-                await syncController.syncData();
+                if (syncController.clickable) {
+                  syncController.syncData();
+                } else {
+                  GetXUtilities.snackbar(
+                      title: 'In Progress',
+                      message: 'Synchornization in processing',
+                      gradient: primaryGradient);
+                }
+
                 // await databaseController.insertTime();
               },
               child: Padding(

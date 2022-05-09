@@ -29,6 +29,12 @@ class AboutUs extends StatelessWidget {
               position: 'Developer',
               description: 'CUI Computer Science Student',
             ),
+            AboutUsTile(
+              pic: 'shah.jpeg',
+              name: 'Nawaz Shah',
+              position: 'Developer',
+              description: 'CUI Computer Science Student',
+            ),
           ],
         ),
       ),

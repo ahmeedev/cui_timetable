@@ -46,10 +46,9 @@ class TeacherTimetableController extends GetxController {
   var friLectures = [];
   var lecturesCount = <String, String>{}.obs;
 
-  openBox({required teacher}) async* {
+  openBox({required String teacher}) async* {
     box = await Hive.openBox(DBNames.teachersDB);
-    final list = box.get(teacher.toString().toLowerCase());
-    print(list);
+    final list = box.get(teacher.toLowerCase());
     await _setLectures(list: list, key: "10000");
     await _setLectures(list: list, key: "1000");
     await _setLectures(list: list, key: "100");

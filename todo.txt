@@ -2,6 +2,7 @@
             WORKING QUEUE
 =======================================
 
-
-
+1. Delete the CSV file after updating all the databases.
+2. make a catalog for all the print statements.
+3. make a deme message which show you the current release of app.
 
