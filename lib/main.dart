@@ -49,8 +49,8 @@ Future<void> _initialized() async {
   // Hive.init(loc.path.toString());
   Hive.init(LocationUtilities.defaultpath);
 
-  // final box = await Hive.openBox('info');
-  // box.put('version', 1);
+  final box = await Hive.openBox(DBNames.info);
+  print(box.values);
 
   devlog.log("Hive Initialized...", name: 'HIVE');
 

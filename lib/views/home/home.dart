@@ -326,7 +326,7 @@ class HomeOverlay extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    Get.to(() => Timetable());
+                    Get.to(() => Timetable(), transition: Transition.cupertino);
                   },
                   child: Column(
                     children: [

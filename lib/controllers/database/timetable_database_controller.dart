@@ -10,6 +10,7 @@ class TimetableDatabaseController extends GetxController {
   // String search_section = '';
 
   Future<bool> createDatabase() async {
+    Hive.close();
     await downloadFile(
       fileName: 'timetable.csv',
       callback: insertTimetableData,
@@ -43,8 +44,8 @@ class TimetableDatabaseController extends GetxController {
           .toList();
       await box1.put(i.toLowerCase(), lectures);
     }
-    // await Future.delayed(const Duration(milliseconds:500));
-    // await box1.close();
+    await Future.delayed(const Duration(milliseconds: 500));
+    await box1.close();
 
     //  =====  creating teachers database  ===== //
     final box2 = await Hive.openBox(DBNames.teachersDB);
@@ -57,18 +58,19 @@ class TimetableDatabaseController extends GetxController {
           .toList();
       await box2.put(i.toLowerCase(), lectures);
     }
-    // await Future.delayed(const Duration(milliseconds:500));
-
-    // await box2.close();
+    await Future.delayed(const Duration(milliseconds: 500));
+    await box2.close();
 
     //  =====  storing  students and teachers list  ===== //
+    print('file Fetched Sections: ${sections.toList()}');
     final box3 = await Hive.openBox(DBNames.info);
     await box3.put(DBInfo.sections, sections.toList());
     await box3.put(DBInfo.teachers, teachers.toList());
-    print(box3.values);
-    // await _updateStatuses(remoteVersion);
-    await Future.delayed(const Duration(seconds: 1));
-    Hive.close();
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    await box3.close();
+
+    // Hive.close();
 
     return Future<int>.value(1);
   }
