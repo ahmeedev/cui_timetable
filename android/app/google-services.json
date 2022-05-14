@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "663627456598",
+    "firebase_url": "https://cui-timetable-default-rtdb.firebaseio.com",
     "project_id": "cui-timetable",
     "storage_bucket": "cui-timetable.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:663627456598:android:e6a0f2b3f7763ba6ea9bf7",
+        "mobilesdk_app_id": "1:663627456598:android:3fe44ae09df5ad42ea9bf7",
         "android_client_info": {
           "package_name": "com.rise4solution.cui_timetable"
         }
@@ -29,6 +30,13 @@
             {
               "client_id": "663627456598-urs4qlqmoe8co5rrmieccil5bar5huv7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "663627456598-ctp0e6r0qg2d0q2djttrbl2flkle2thc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rise4solution.cui"
+              }
             }
           ]
         }
