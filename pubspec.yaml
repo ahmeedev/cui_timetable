@@ -1,7 +1,7 @@
 name: cui_timetable
 version: 1.0.0+1
 publish_to: none
-description: A new Flutter project.
+description: Build with ❤ for specially IOS Platform.
 environment: 
   sdk: '>=2.16.1 <3.0.0'
 
@@ -33,8 +33,9 @@ dependencies:
   connectivity_plus: ^2.3.0
   avatar_glow: ^2.0.2
   get: 4.6.3
-  flutter: 
-    sdk: flutter
+
+
+  
 
 dev_dependencies: 
   flutter_lints: ^1.0.0
@@ -49,6 +50,8 @@ flutter_icons:
   ios: true
 
 flutter: 
+  uses-material-design: true
+
   assets: 
     - assets/
     - assets/drawer/
@@ -68,10 +71,10 @@ flutter:
 style: normal
 weight: 500
 
+
 flutter_native_splash: 
   color: '#d4dfed'
   image: assets/splash.png
   android_12: 
     image: assets/splash.png
 
-uses-material-design: true
