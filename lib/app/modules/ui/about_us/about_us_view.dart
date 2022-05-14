@@ -1,4 +1,4 @@
-import 'package:cui_timetable/app/modules/about_us/views/widgets/about_us_tile.dart';
+import 'package:cui_timetable/app/modules/ui/about_us/widgets/about_us_tile.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +18,9 @@ class AboutUsView extends StatelessWidget {
         padding: const EdgeInsets.all(defaultPadding),
         child: ListView(
           physics: const BouncingScrollPhysics(),
-          children: [
+          children: const [
             AboutUsTile(
-              pic: 'ahmad.jpg',
+              pic: 'ahmad_shaf.jpg',
               name: 'Ahmad Shaf',
               position: 'Team Manager',
               description: 'CUI Software House Coordinator',

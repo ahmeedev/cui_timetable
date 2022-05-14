@@ -1,4 +1,3 @@
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 
@@ -81,15 +80,12 @@ class ButtonList extends StatelessWidget {
         buildButton(context,
             icon: const AssetImage('assets/drawer/vision.png'),
             title: 'Director Vision', onTap: () {
-          // Get.to(() => const DirectorVision(),
-          //     transition: Transition.cupertino);
+          Get.toNamed(Routes.DIRECTOR_VISION);
         }),
         buildButton(context,
             icon: const AssetImage('assets/drawer/about_us.png'),
             title: 'About Us', onTap: () {
           Get.toNamed(Routes.ABOUT_US);
-
-          // Get.to(() => const AboutUs(), transition: Transition.cupertino);
         }),
         buildButton(context,
             icon: const AssetImage('assets/drawer/remainder.png'),

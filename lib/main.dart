@@ -1,6 +1,5 @@
 import 'dart:developer' as devlog;
 
-import 'package:cui_timetable/app/modules/home/views/home_view.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/light_theme.dart';
 import 'package:cui_timetable/app/utilities/loc_utilities.dart';
@@ -12,6 +11,7 @@ import 'package:hive/hive.dart';
 
 Future<void> main() async {
   await _initialized();
+
   runApp(const MyApp());
 }
 
@@ -47,12 +47,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        theme: lightTheme(context),
-        defaultTransition: Transition.cupertino,
-        title: 'CUI TIMETABLE',
-        initialRoute: AppPages.INITIAL,
-        getPages: AppPages.routes,
-        // debugShowCheckedModeBanner: false,
-        home: SafeArea(top: false, child: HomeView()));
+      theme: lightTheme(context),
+      defaultTransition: Transition.cupertino,
+      title: 'CUI TIMETABLE',
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
+      // debugShowCheckedModeBanner: false,
+      // home: SafeArea(top: false, child: HomeView())
+    );
   }
 }

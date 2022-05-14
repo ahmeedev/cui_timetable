@@ -1,16 +1,17 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_drawer.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_widgets.dart';
-import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:cui_timetable/app/widgets/get_utilities.dart';
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({Key? key}) : super(key: key);
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +31,16 @@ class HomeView extends StatelessWidget {
         ),
         body: Stack(
           fit: StackFit.expand,
-          children: [
+          children: const [
             CustomScrollView(
-              physics: const NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               slivers: [
                 HomeAppBar(),
-                const HomeBody(),
+                HomeBody(),
                 // const HomeBottomWidget(),
               ],
             ),
-            const HomeOverlay()
+            HomeOverlay()
           ],
         ));
   }
@@ -47,8 +48,8 @@ class HomeView extends StatelessWidget {
 
 /// AppBar for the Home Screen.
 class HomeAppBar extends StatelessWidget {
-  HomeAppBar({Key? key}) : super(key: key);
-  final textHeight = 0.20;
+  const HomeAppBar({Key? key}) : super(key: key);
+  final textHeight = 0.50;
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -108,8 +109,7 @@ class HomeAppBar extends StatelessWidget {
               Align(
                 alignment: kIsWeb
                     ? Alignment.topCenter + Alignment(textHeight, textHeight)
-                    : Alignment.topCenter +
-                        Alignment(textHeight * 2, textHeight * 2),
+                    : Alignment.topCenter + Alignment(textHeight, textHeight),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -151,7 +151,7 @@ class HomeAppBar extends StatelessWidget {
 }
 
 /// Body of Home Screen.
-class HomeBody extends StatelessWidget {
+class HomeBody extends GetView<HomeController> {
   const HomeBody({Key? key}) : super(key: key);
 
   @override
@@ -197,24 +197,33 @@ class HomeBody extends StatelessWidget {
                 ],
               ),
               Flexible(
-                fit: FlexFit.loose,
-                child: ListView(
-                    padding: EdgeInsets.zero,
-                    physics: const BouncingScrollPhysics(),
-                    // shrinkWrap: true,
-                    children: [
-                      ...List.generate(
-                          8,
-                          (index) => buildNews(
-                                context,
+                fit: FlexFit.tight,
+                child: StreamBuilder(
+                  stream: controller.getStream(),
+                  // initialData: initialData,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            child: buildNews(context,
                                 expanded: index == 0 ? true : false,
-                                title: 'FEE Notification - Spring 2022',
-                                description:
-                                    '''Dear Students,
-The second installment of the fee is due on March 25, 2022.
-After the due date Rs. 100 per day fine will be charged and the fee defaulters cannot appear in mid-term exam. The fee vouchers have been generated on the CU-online portals. Please follow the due dates to avoid fine and absence in the Mid-term exam.''',
-                              ))
-                    ]),
+                                title: snapshot.data[index]['title'],
+                                description: snapshot.data[index]
+                                    ['description']),
+                          );
+                        },
+                      );
+                    }
+                    return const SpinKitFadingCircle(
+                      color: primaryColor,
+                    );
+                  },
+                ),
               ),
 
               const HomeBottomWidget()

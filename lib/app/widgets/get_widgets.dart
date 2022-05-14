@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 class GetXUtilities {
   static void snackbar(
       {required String title, required String message, required gradient}) {
+    Get.closeAllSnackbars();
     Get.showSnackbar(GetSnackBar(
       // backgroundColor: primaryColor,
       backgroundGradient:

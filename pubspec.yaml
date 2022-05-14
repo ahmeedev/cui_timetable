@@ -33,6 +33,8 @@ dependencies:
   connectivity_plus: ^2.3.0
   avatar_glow: ^2.0.2
   get: 4.6.3
+  http: ^0.13.4
+  html: ^0.15.0
 
 
   

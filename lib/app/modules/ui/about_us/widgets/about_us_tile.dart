@@ -3,11 +3,11 @@ import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class AboutUsTile extends StatelessWidget {
-  String pic;
-  String name;
-  String position;
-  String description;
-  AboutUsTile(
+  final String pic;
+  final String name;
+  final String position;
+  final String description;
+  const AboutUsTile(
       {Key? key,
       required this.pic,
       required this.name,
