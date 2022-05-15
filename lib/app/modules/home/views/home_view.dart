@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_drawer.dart';
@@ -16,40 +18,42 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        // resizeToAvoidBottomInset: false,
-        // extendBody: true,
+    return SafeArea(
+      child: Scaffold(
+          // resizeToAvoidBottomInset: false,
+          // extendBody: true,
 
-        // extendBodyBehindAppBar: true,
-        drawer: Drawer(
-          child: Container(
-            color: scaffoldColor,
-            child: Column(
-              children: const [Header(), ButtonList()],
+          // extendBodyBehindAppBar: true,
+          drawer: Drawer(
+            child: Container(
+              color: scaffoldColor,
+              child: Column(
+                children: const [Header(), ButtonList()],
+              ),
             ),
           ),
-        ),
-        body: Stack(
-          fit: StackFit.expand,
-          children: const [
-            CustomScrollView(
-              physics: NeverScrollableScrollPhysics(),
-              slivers: [
-                HomeAppBar(),
-                HomeBody(),
-                // const HomeBottomWidget(),
-              ],
-            ),
-            HomeOverlay()
-          ],
-        ));
+          body: Stack(
+            fit: StackFit.expand,
+            children: const [
+              CustomScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                slivers: [
+                  HomeAppBar(),
+                  HomeBody(),
+                  // const HomeBottomWidget(),
+                ],
+              ),
+              HomeOverlay()
+            ],
+          )),
+    );
   }
 }
 
 /// AppBar for the Home Screen.
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({Key? key}) : super(key: key);
-  final textHeight = 0.30;
+  final textHeight = 0.20;
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -85,7 +89,8 @@ class HomeAppBar extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'CUI TIMETABLE',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
 
                   // child: DefaultTextStyle(
@@ -166,6 +171,7 @@ class HomeBody extends GetView<HomeController> {
           child: Column(
             children: [
               Flexible(
+                fit: FlexFit.tight,
                 child: Column(
                   children: [
                     Row(
@@ -190,20 +196,27 @@ class HomeBody extends GetView<HomeController> {
                       // initialData: initialData,
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (snapshot.hasData) {
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                child: buildNews(context,
-                                    expanded: index == 0 ? true : false,
-                                    title: snapshot.data[index]['title'],
-                                    description: snapshot.data[index]
-                                        ['description']),
-                              );
-                            },
+                          if (snapshot.data.length == 0) {
+                            return const Text(
+                                'Connect to the Internet to fetch News...');
+                          }
+
+                          return Expanded(
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  child: buildNews(context,
+                                      expanded: index == 0 ? true : false,
+                                      title: snapshot.data[index]['title'],
+                                      description: snapshot.data[index]
+                                          ['description']),
+                                );
+                              },
+                            ),
                           );
                         }
                         return Obx(() => Column(
@@ -232,7 +245,7 @@ class HomeBody extends GetView<HomeController> {
                 ),
               ),
 
-              const Flexible(fit: FlexFit.loose, child: HomeBottomWidget())
+              const HomeBottomWidget()
 
               /// Building Card for news
             ],
@@ -248,7 +261,7 @@ class HomeBottomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(defaultPadding / 2),
+      padding: const EdgeInsets.all(defaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -268,9 +281,12 @@ class HomeBottomWidget extends StatelessWidget {
                 // downloadFile('timetable.csv');
                 // controller.insertTime();
               },
-              child: Text(
-                'Sign in',
-                style: Theme.of(context).textTheme.labelLarge,
+              child: Padding(
+                padding: const EdgeInsets.all(defaultPadding),
+                child: Text(
+                  'Sign in',
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
               )),
         ],
       ),
@@ -285,7 +301,7 @@ class HomeOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: MediaQuery.of(context).size.height / 4 - 30,
+        top: MediaQuery.of(context).size.height / 4 - 50,
         right: 10,
         left: 10,
         child: Card(
@@ -300,23 +316,28 @@ class HomeOverlay extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
+                  highlightColor: Colors.transparent,
+                  splashColor: shadowColor,
                   onTap: () {
                     Get.toNamed(Routes.TIMETABLE);
-                    // Get.to(() => Timetable(), transition: Transition.cupertino);
                   },
-                  child: Column(
-                    children: [
-                      const ImageIcon(
-                        AssetImage('assets/home/timetable.png'),
-                        size: iconSize,
-                        color: primaryColor,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        'Timetable',
-                        style: Theme.of(context).textTheme.labelMedium,
-                      )
-                    ],
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: defaultPadding),
+                    child: Column(
+                      children: [
+                        const ImageIcon(
+                          AssetImage('assets/home/timetable.png'),
+                          size: iconSize,
+                          color: primaryColor,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Timetable',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -325,6 +346,8 @@ class HomeOverlay extends StatelessWidget {
                   color: Colors.grey,
                 ),
                 InkWell(
+                  highlightColor: Colors.transparent,
+                  splashColor: shadowColor,
                   onTap: () {
                     // Get.to(() => FreeRooms(), transition: Transition.cupertino);
                     // GetXUtilities.snackbar(
@@ -332,19 +355,23 @@ class HomeOverlay extends StatelessWidget {
                     //     message: 'This Module is still in Developement Phase',
                     //     gradient: primaryGradient);
                   },
-                  child: Column(
-                    children: [
-                      const ImageIcon(
-                        AssetImage('assets/home/room.png'),
-                        size: iconSize,
-                        color: primaryColor,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        'Free rooms',
-                        style: Theme.of(context).textTheme.labelMedium,
-                      )
-                    ],
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: defaultPadding),
+                    child: Column(
+                      children: [
+                        const ImageIcon(
+                          AssetImage('assets/home/room.png'),
+                          size: iconSize,
+                          color: primaryColor,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Free rooms',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -353,25 +380,31 @@ class HomeOverlay extends StatelessWidget {
                   color: Colors.grey,
                 ),
                 InkWell(
+                  highlightColor: Colors.transparent,
+                  splashColor: shadowColor,
                   onTap: () {
                     GetXUtilities.snackbar(
                         title: 'In Developement',
                         message: 'This Module is still in Development Phase',
                         gradient: primaryGradient);
                   },
-                  child: Column(
-                    children: [
-                      const ImageIcon(
-                        AssetImage('assets/home/datesheet.png'),
-                        size: iconSize,
-                        color: primaryColor,
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        'Datesheet',
-                        style: Theme.of(context).textTheme.labelMedium,
-                      )
-                    ],
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: defaultPadding),
+                    child: Column(
+                      children: [
+                        const ImageIcon(
+                          AssetImage('assets/home/datesheet.png'),
+                          size: iconSize,
+                          color: primaryColor,
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          'Datesheet',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],

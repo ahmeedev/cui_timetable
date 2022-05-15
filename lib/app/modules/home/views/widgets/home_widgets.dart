@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/routes/circular_reveal_clipper.dart';
 
 Card buildNews(context,
     {required String title,
@@ -12,30 +15,27 @@ Card buildNews(context,
       shadowColor: shadowColor,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
-      child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ExpansionTile(
-            expandedAlignment: Alignment.centerLeft,
-            initiallyExpanded: expanded,
-            // backgroundColor: widgetColor,
-            iconColor: primaryColor,
+      child: ExpansionTile(
+          expandedAlignment: Alignment.centerLeft,
+          initiallyExpanded: expanded,
+          // backgroundColor: widgetColor,
+          iconColor: primaryColor,
 
-            // trailing: const Icon(Icons.motion_photos_on_rounded),
+          // trailing: const Icon(Icons.motion_photos_on_rounded),
 
-            // tilePadding: EdgeInsets.all(0),
-            childrenPadding: const EdgeInsets.fromLTRB(
-                defaultPadding, 0, defaultPadding, defaultPadding + 15),
-            title: Text(
-              title,
-              style: Theme.of(context).textTheme.titleMedium!,
-            ),
-            children: [
-              Text(
-                description,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(),
-                textAlign: TextAlign.justify,
-                textDirection: TextDirection.ltr,
-              )
-            ]),
-      ));
+          tilePadding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+          childrenPadding: const EdgeInsets.fromLTRB(
+              defaultPadding, 0, defaultPadding, defaultPadding + 15),
+          title: Text(
+            title,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          children: [
+            Text(
+              description,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.justify,
+              textDirection: TextDirection.ltr,
+            )
+          ]));
 }

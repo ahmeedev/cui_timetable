@@ -2,7 +2,7 @@ import 'dart:developer' as devlog;
 
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/light_theme.dart';
-import 'package:cui_timetable/app/utilities/loc_utilities.dart';
+import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 import 'package:cui_timetable/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

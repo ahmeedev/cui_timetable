@@ -5,12 +5,9 @@ class LocationUtilities {
   static late String defaultpath = '';
 
   static Future<void> initialize() async {
-    late final Object loc;
-    if (kIsWeb) {
-      loc = '';
-    } else {
-      loc = await getApplicationDocumentsDirectory();
-      defaultpath = loc.toString();
+    if (!kIsWeb) {
+      final location = await getApplicationDocumentsDirectory();
+      defaultpath = location.path;
     }
   }
 }
