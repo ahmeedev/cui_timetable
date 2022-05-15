@@ -49,7 +49,7 @@ class HomeView extends StatelessWidget {
 /// AppBar for the Home Screen.
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({Key? key}) : super(key: key);
-  final textHeight = 0.50;
+  final textHeight = 0.30;
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -157,84 +157,82 @@ class HomeBody extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-        padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height / 10,
-            right: 8.0,
-            left: 8.0,
+        padding: const EdgeInsets.only(
+            top: defaultPadding * 6.5,
+            right: defaultPadding,
+            left: defaultPadding,
             bottom: 0),
         sliver: SliverFillRemaining(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: defaultPadding),
-                    child: Text('Latest News',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(fontWeight: FontWeight.w900)),
-                  ),
-                  // RichText(
-                  //     text: TextSpan(children: [
-                  //   TextSpan(
-                  //       style: Theme.of(context)
-                  //           .textTheme
-                  //           .titleSmall!
-                  //           .copyWith(color: primaryColor),
-                  //       text: "More>",
-                  //       recognizer: TapGestureRecognizer()
-                  //         ..onTap = () async {
-                  //           var url = "http://sahiwal.comsats.edu.pk/";
-                  //           if (await canLaunch(url)) {
-                  //             await launch(url);
-                  //           } else {
-                  //             throw 'Could not launch $url';
-                  //           }
-                  //         }),
-                  // ]))
-                ],
-              ),
               Flexible(
-                fit: FlexFit.tight,
-                child: StreamBuilder(
-                  stream: controller.getStream(),
-                  // initialData: initialData,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            child: buildNews(context,
-                                expanded: index == 0 ? true : false,
-                                title: snapshot.data[index]['title'],
-                                description: snapshot.data[index]
-                                    ['description']),
+                child: Column(
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: defaultPadding),
+                            child: Row(
+                              children: [
+                                Text('Latest News',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(fontWeight: FontWeight.w900)),
+                              ],
+                            ),
+                          ),
+                        ]),
+                    StreamBuilder(
+                      stream: controller.getStream(),
+                      // initialData: initialData,
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                child: buildNews(context,
+                                    expanded: index == 0 ? true : false,
+                                    title: snapshot.data[index]['title'],
+                                    description: snapshot.data[index]
+                                        ['description']),
+                              );
+                            },
                           );
-                        },
-                      );
-                    }
-                    return Column(
-                      children: [
-                        const SpinKitFadingCircle(
-                          color: primaryColor,
-                        ),
-                        Text(
-                          'Fetching News From Internet',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        )
-                      ],
-                    );
-                  },
+                        }
+                        return Obx(() => Column(
+                              children: [
+                                const SpinKitFadingCircle(
+                                  color: primaryColor,
+                                ),
+                                controller.internet.value
+                                    ? Text(
+                                        'Fetching News From Internet',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium,
+                                      )
+                                    : Text(
+                                        'Fetching News From Cache',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium,
+                                      )
+                              ],
+                            ));
+                      },
+                    ),
+                  ],
                 ),
               ),
 
-              const HomeBottomWidget()
+              const Flexible(fit: FlexFit.loose, child: HomeBottomWidget())
 
               /// Building Card for news
             ],
@@ -287,7 +285,7 @@ class HomeOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: MediaQuery.of(context).size.height / 4.8,
+        top: MediaQuery.of(context).size.height / 4 - 30,
         right: 10,
         left: 10,
         child: Card(
