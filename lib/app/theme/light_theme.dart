@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 ThemeData lightTheme(context) {
   final base = ThemeData.light();
   return ThemeData(
+      scaffoldBackgroundColor: scaffoldColor,
       brightness: Brightness.light,
       // primaryColor: swatch,
       // drawerTheme: DrawerThemeData(backgroundColor: Colors.red),

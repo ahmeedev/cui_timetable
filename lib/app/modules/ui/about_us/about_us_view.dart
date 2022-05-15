@@ -1,5 +1,4 @@
 import 'package:cui_timetable/app/modules/ui/about_us/widgets/about_us_tile.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +8,6 @@ class AboutUsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: scaffoldColor,
       appBar: AppBar(
         title: const Text('About Us'),
         centerTitle: true,

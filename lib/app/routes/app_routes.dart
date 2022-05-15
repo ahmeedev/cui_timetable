@@ -8,6 +8,7 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const ABOUT_US = _Paths.ABOUT_US;
   static const DIRECTOR_VISION = _Paths.DIRECTOR_VISION;
+  static const TIMETABLE = _Paths.TIMETABLE;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const HOME = '/home';
   static const ABOUT_US = '/about-us';
   static const DIRECTOR_VISION = '/director-vision';
+  static const TIMETABLE = '/timetable';
 }

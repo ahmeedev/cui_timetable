@@ -21,6 +21,7 @@ Future<void> _initialized() async {
   await LocationUtilities.initialize();
 
   await Firebase.initializeApp(
+    name: 'cui-timetable',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -28,17 +29,6 @@ Future<void> _initialized() async {
 
   Hive.init(LocationUtilities.defaultpath);
   devlog.log("Hive Initialized...", name: 'HIVE');
-
-  // Initialize the important Controllers
-  //* ============================================ //
-  // Get.put(FirebaseController()); //! Criticial to load first
-  // // Get.put(TimetableDatabaseController()); // ! 2
-  // Get.put(HomeController());
-  // Get.put(FreeRoomsController());
-  // Get.put(SyncController());
-
-  // Get.put(DeveloperController()); // *3
-  //* ============================================ //
 }
 
 /// Root Widget of the application.
@@ -52,8 +42,6 @@ class MyApp extends StatelessWidget {
       title: 'CUI TIMETABLE',
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      // debugShowCheckedModeBanner: false,
-      // home: SafeArea(top: false, child: HomeView())
     );
   }
 }

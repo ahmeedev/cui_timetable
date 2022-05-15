@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_drawer.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_widgets.dart';
+import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
@@ -20,7 +21,6 @@ class HomeView extends StatelessWidget {
         // extendBody: true,
 
         // extendBodyBehindAppBar: true,
-        backgroundColor: scaffoldColor,
         drawer: Drawer(
           child: Container(
             color: scaffoldColor,
@@ -219,8 +219,16 @@ class HomeBody extends GetView<HomeController> {
                         },
                       );
                     }
-                    return const SpinKitFadingCircle(
-                      color: primaryColor,
+                    return Column(
+                      children: [
+                        const SpinKitFadingCircle(
+                          color: primaryColor,
+                        ),
+                        Text(
+                          'Fetching News From Internet',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        )
+                      ],
                     );
                   },
                 ),
@@ -295,6 +303,7 @@ class HomeOverlay extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
+                    Get.toNamed(Routes.TIMETABLE);
                     // Get.to(() => Timetable(), transition: Transition.cupertino);
                   },
                   child: Column(
