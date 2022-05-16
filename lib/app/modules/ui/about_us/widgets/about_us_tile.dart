@@ -25,7 +25,7 @@ class AboutUsTile extends StatelessWidget {
       padding: const EdgeInsets.all(defaultPadding / 2),
       child: Stack(children: [
         Positioned(
-          left: 30,
+          left: 40,
           right: 0,
           top: 5,
           child: Card(
@@ -76,8 +76,8 @@ class AboutUsTile extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(defaultPadding / 3),
               child: Container(
-                width: 110,
-                height: 110,
+                width: 120,
+                height: 120,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
