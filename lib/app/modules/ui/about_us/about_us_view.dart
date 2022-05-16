@@ -19,7 +19,8 @@ class AboutUsView extends StatelessWidget {
           children: const [
             AboutUsTile(
               pic: 'ahmad_shaf.jpg',
-              name: 'Ahmad Shaf',
+              name: 'Mr.',
+              subName: 'Ahmad Shaf',
               position: 'Team Manager',
               description: 'CUI Software House Coordinator',
             ),
@@ -31,7 +32,8 @@ class AboutUsView extends StatelessWidget {
             ),
             AboutUsTile(
               pic: 'shah.jpeg',
-              name: 'Nawaz Shah',
+              name: 'Syed',
+              subName: 'Muhammad Nawaz Shah',
               position: 'Developer',
               description: 'CUI Computer Science Student',
             ),

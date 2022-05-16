@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -5,12 +7,14 @@ import 'package:flutter/material.dart';
 class AboutUsTile extends StatelessWidget {
   final String pic;
   final String name;
+  final String subName;
   final String position;
   final String description;
   const AboutUsTile(
       {Key? key,
       required this.pic,
       required this.name,
+      this.subName = '',
       required this.position,
       required this.description})
       : super(key: key);
@@ -46,12 +50,17 @@ class AboutUsTile extends StatelessWidget {
                             .textTheme
                             .titleMedium!
                             .copyWith(color: primaryColor, fontSize: 18)),
+                    subName.isNotEmpty
+                        ? Text(subName,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(color: primaryColor, fontSize: 18))
+                        : const SizedBox(),
                     const SizedBox(height: 10),
                     Text(description,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(color: Colors.black)),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.black, fontWeight: FontWeight.bold)),
                   ],
                 ),
               ],
