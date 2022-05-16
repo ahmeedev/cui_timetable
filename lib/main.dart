@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       theme: lightTheme(context),
       defaultTransition: Transition.cupertino,
+      transitionDuration: const Duration(milliseconds: 300),
       title: 'CUI TIMETABLE',
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,

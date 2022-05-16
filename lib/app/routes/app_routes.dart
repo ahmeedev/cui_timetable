@@ -9,6 +9,8 @@ abstract class Routes {
   static const ABOUT_US = _Paths.ABOUT_US;
   static const DIRECTOR_VISION = _Paths.DIRECTOR_VISION;
   static const TIMETABLE = _Paths.TIMETABLE;
+  static const STUDENT_TIMETABLE = _Paths.TIMETABLE + _Paths.STUDENT_TIMETABLE;
+  static const TEACHER_TIMETABLE = _Paths.TIMETABLE + _Paths.TEACHER_TIMETABLE;
 }
 
 abstract class _Paths {
@@ -17,4 +19,6 @@ abstract class _Paths {
   static const ABOUT_US = '/about-us';
   static const DIRECTOR_VISION = '/director-vision';
   static const TIMETABLE = '/timetable';
+  static const STUDENT_TIMETABLE = '/student-timetable';
+  static const TEACHER_TIMETABLE = '/teacher-timetable';
 }
