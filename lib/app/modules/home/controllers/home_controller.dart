@@ -12,6 +12,7 @@ class HomeController extends GetxController {
   // @override
   // Future<void> onInit() async {}
 
+  /// Stream for the News.
   Stream<dynamic> getStream() async* {
     final ConnectivityResult result = await Connectivity().checkConnectivity();
     if (result == ConnectivityResult.none) {

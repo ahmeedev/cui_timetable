@@ -80,6 +80,7 @@ Future<List<dynamic>> _getFileContent(
   return Future<List<dynamic>>.value(fields);
 }
 
+//! run in main thread.
 _updateStatuses() async {
   final box1 = await Hive.openBox(DBNames.info);
   bool newUser = box1.get(DBInfo.newUser, defaultValue: true);
@@ -87,8 +88,8 @@ _updateStatuses() async {
     box1.put(DBInfo.newUser, false);
     Get.back();
   }
-
-  box1.put(DBInfo.lastUpdate, Jiffy().format("MMMM do yyyy"));
+  final String lastUpdate = Jiffy().format("MMMM do yyyy");
+  box1.put(DBInfo.lastUpdate, lastUpdate);
 
   await getRemoteVersion().then((value) {
     box1.put(DBInfo.version, value);
@@ -96,6 +97,7 @@ _updateStatuses() async {
 
   Get.find<SyncController>().timetableSyncStatus.value = false;
   Get.find<SyncController>().clickable = true;
+  Get.find<SyncController>().lastUpdate.value = lastUpdate;
 
   // Get.delete<StudentTimetableController>();
   // Get.delete<TeacherTimetableController>();

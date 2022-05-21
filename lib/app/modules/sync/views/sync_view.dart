@@ -1,12 +1,10 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
-import 'package:cui_timetable/app/data/database/timetable_database.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/sync_controller.dart';
@@ -18,10 +16,10 @@ class SyncView extends GetView<SyncController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('sync'),
+        title: const Text('Sync'),
         centerTitle: true,
       ),
-      body: SyncBody(),
+      body: const SyncBody(),
     );
   }
 }
@@ -73,16 +71,15 @@ class SyncBody extends GetView<SyncController> {
                   controller.syncData();
                 } else {
                   GetXUtilities.snackbar(
-                      title: 'In Progress',
+                      title: 'Working!',
                       message: 'Synchornization in processing',
                       gradient: primaryGradient);
                 }
-
-                // await databaseController.insertTime();
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                    vertical: defaultPadding, horizontal: defaultPadding * 2),
+                    vertical: defaultPadding * 1.2,
+                    horizontal: defaultPadding * 2),
                 child: Text(
                   'Sync',
                   style: Theme.of(context).textTheme.labelLarge,
@@ -106,20 +103,21 @@ class SyncTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: defaultElevation,
-      shadowColor: shadowColor,
       color: widgetColor,
+      shadowColor: shadowColor,
+      elevation: defaultElevation,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(
+            horizontal: defaultPadding, vertical: defaultPadding + 2),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(title,
                 style: Theme.of(context)
                     .textTheme
-                    .titleSmall!
+                    .titleMedium!
                     .copyWith(fontWeight: FontWeight.w900)
                 // .copyWith(fontWeight: FontWeight.bold),
                 ),
@@ -129,7 +127,7 @@ class SyncTile extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
-                    .copyWith(fontWeight: FontWeight.w400),
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 width: 4,
@@ -137,11 +135,11 @@ class SyncTile extends StatelessWidget {
               lastUpdate == ''
                   ? Text(
                       "No Records",
-                      style: Theme.of(context).textTheme.labelMedium,
+                      style: Theme.of(context).textTheme.bodySmall,
                     )
                   : Text(
                       "$lastUpdate",
-                      style: Theme.of(context).textTheme.labelMedium,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
               Padding(
                 padding: const EdgeInsets.only(

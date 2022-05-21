@@ -2,6 +2,7 @@ import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:flutter/material.dart';
 
 class TimetableDatabase extends GetxController {
   // String search_section = '';
@@ -59,7 +60,6 @@ class TimetableDatabase extends GetxController {
     await box2.close();
 
     //  =====  storing  students and teachers list  ===== //
-    print('file Fetched Sections: ${sections.toList()}');
     final box3 = await Hive.openBox(DBNames.info);
     await box3.put(DBInfo.sections, sections.toList());
     await box3.put(DBInfo.teachers, teachers.toList());
@@ -85,12 +85,10 @@ class TimetableDatabase extends GetxController {
         Hive.deleteBoxFromDisk(i);
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     } finally {
       box.deleteAll([DBInfo.sections, DBInfo.teachers]);
       await Future.delayed(const Duration(milliseconds: 1000));
-
-      print('deletion success');
     }
   }
 }

@@ -7,13 +7,13 @@ import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:jiffy/jiffy.dart';
 
 class SyncController extends GetxController {
   var clickable = true;
   var lastUpdate = ''.obs;
   var timetableSyncStatus = false.obs;
   var freeroomsSyncStatus = false.obs;
+  // ignore: prefer_typing_uninitialized_variables
   late final box;
 
   @override
@@ -28,27 +28,27 @@ class SyncController extends GetxController {
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
       await getRemoteVersion().then((remoteVersion) async {
-        // if (box.get(DBInfo.version).toString() != remoteVersion) {
-        // insert time in main isolate
-        clickable = false;
-        await _insertTime();
-        // update the sync statuses.
-        timetableSyncStatus.value = true;
+        if (box.get(DBInfo.version).toString() != remoteVersion) {
+          // insert time in main isolate
+          clickable = false;
+          await _insertTime();
+          // update the sync statuses.
+          timetableSyncStatus.value = true;
 
-        if (dialogPop) {
-          GetXUtilities.dialog();
+          if (dialogPop) {
+            GetXUtilities.dialog();
+          }
+          await _syncAllFiles();
+        } else {
+          // Execute when the user is new and already synchronized
+          if (dialogPop) {
+            Get.back();
+          }
+          GetXUtilities.snackbar(
+              title: 'Congratulation!',
+              message: 'Data is Already Synchronized',
+              gradient: successGradient);
         }
-        // await _syncAllFiles();
-        // } else {
-        //   // Execute when the user is new and already synchronized
-        //   if (dialogPop) {
-        //     Get.back();
-        //   }
-        //   GetXUtilities.snackbar(
-        //       title: 'Congratulation!',
-        //       message: 'Data is Already Synchronized',
-        //       gradient: successGradient);
-        // }
       });
     } else {
       GetXUtilities.snackbar(
@@ -92,35 +92,22 @@ class SyncController extends GetxController {
   }
 }
 
-// Function
+/// .
+/// [FUNCTION]
 
 Future<String> getRemoteVersion() async {
-  // final remoteConfig = FirebaseRemoteConfig.instance;
-  // await remoteConfig.setConfigSettings(RemoteConfigSettings(
-  //   fetchTimeout: const Duration(minutes: 1),
-  //   minimumFetchInterval: const Duration(minutes: 1),
-  // ));
+  final remoteConfig = FirebaseRemoteConfig.instance;
+  await remoteConfig.setConfigSettings(RemoteConfigSettings(
+    fetchTimeout: const Duration(minutes: 1),
+    minimumFetchInterval: const Duration(minutes: 1),
+  ));
 
-  // await remoteConfig.setDefaults(const {
-  //   "version": 0,
-  // });
+  await remoteConfig.setDefaults(const {
+    "version": 0,
+  });
 
-  // await remoteConfig.fetchAndActivate();
+  await remoteConfig.fetchAndActivate();
 
-  // final remoteVersion = remoteConfig.getInt('version').toString();
-  // return Future.value(remoteVersion);
-
-  // final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
-  // await remoteConfig.setConfigSettings(RemoteConfigSettings(
-  //   fetchTimeout: const Duration(seconds: 10),
-  //   minimumFetchInterval: const Duration(hours: 1),
-  // ));
-  // await remoteConfig.setDefaults(<String, dynamic>{
-  //   "version": 0,
-  // });
-  // // await remoteConfig.fetch();
-  // final version = remoteConfig.getInt('version');
-  // print(version);
-
-  return Future.value(0.toString());
+  final remoteVersion = remoteConfig.getInt('version').toString();
+  return Future.value(remoteVersion);
 }
