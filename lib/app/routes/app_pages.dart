@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/sync/bindings/sync_binding.dart';
+import '../modules/sync/views/sync_view.dart';
 import '../modules/timetable/bindings/timetable_binding.dart';
 import '../modules/timetable/student_timetable/bindings/student_timetable_binding.dart';
 import '../modules/timetable/student_timetable/views/student_timetable_view.dart';
@@ -45,10 +47,15 @@ class AppPages {
         ),
         GetPage(
           name: _Paths.TEACHER_TIMETABLE,
-          page: () => TeacherTimetableView(),
+          page: () => const TeacherTimetableView(),
           binding: TeacherTimetableBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.SYNC,
+      page: () => SyncView(),
+      binding: SyncBinding(),
     ),
   ];
 }

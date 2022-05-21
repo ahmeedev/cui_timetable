@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class StudentUIView extends GetView<StudentUIController> {
+  const StudentUIView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

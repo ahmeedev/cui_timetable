@@ -98,7 +98,7 @@ class ButtonList extends StatelessWidget {
         buildButton(context,
             icon: const AssetImage('assets/drawer/sync.png'),
             title: 'Synchronized', onTap: () {
-          // Get.to(() => const Sync());
+          Get.toNamed(Routes.SYNC);
         }),
         buildButton(context,
             icon: const AssetImage('assets/drawer/feedback.png'),

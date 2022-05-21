@@ -22,8 +22,8 @@ class TimetableView extends GetView<TimetableController> {
             SliverFillRemaining(
               child: TabBarView(
                 children: [
-                  StudentUIView(),
-                  TeacherUIView(),
+                  const StudentUIView(),
+                  const TeacherUIView(),
 
                   // main container
                   AvatarGlow(

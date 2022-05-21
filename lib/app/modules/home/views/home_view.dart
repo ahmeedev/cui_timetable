@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';

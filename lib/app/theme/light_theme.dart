@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/text_theme.dart';

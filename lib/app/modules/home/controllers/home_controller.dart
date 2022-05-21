@@ -6,12 +6,11 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
-import 'package:path_provider/path_provider.dart';
 
 class HomeController extends GetxController {
   final internet = true.obs;
-  @override
-  Future<void> onInit() async {}
+  // @override
+  // Future<void> onInit() async {}
 
   Stream<dynamic> getStream() async* {
     final ConnectivityResult result = await Connectivity().checkConnectivity();

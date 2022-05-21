@@ -1,9 +1,7 @@
-import 'dart:ui';
 
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/routes/circular_reveal_clipper.dart';
 
 Card buildNews(context,
     {required String title,
