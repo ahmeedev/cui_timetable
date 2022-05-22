@@ -1,5 +1,6 @@
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/timetable/controllers/student_ui_controller.dart';
+import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
@@ -164,10 +165,8 @@ class StudentUIView extends GetView<StudentUIController> {
                 final box = await Hive.openBox(DBNames.info);
                 box.put(DBInfo.searchSection,
                     controller.textController.text.toString());
-
-                // Get.to(() => StudentTimetable(),
-                //     transition: Transition.cupertino,
-                //     arguments: [controller.textController.text]);
+                Get.toNamed(Routes.STUDENT_TIMETABLE,
+                    arguments: [controller.textController.text]);
               } else {
                 GetXUtilities.snackbar(
                     title: 'Not Found!!',

@@ -14,12 +14,12 @@ class SyncController extends GetxController {
   var timetableSyncStatus = false.obs;
   var freeroomsSyncStatus = false.obs;
   // ignore: prefer_typing_uninitialized_variables
-  late final box;
 
   @override
   Future<void> onInit() async {
-    box = await Hive.openBox(DBNames.info);
+    final box = await Hive.openBox(DBNames.info);
     lastUpdate.value = box.get(DBInfo.lastUpdate) ?? 'No Record';
+
     super.onInit();
   }
 
@@ -27,17 +27,18 @@ class SyncController extends GetxController {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
+      final box = await Hive.openBox(DBNames.info);
       await getRemoteVersion().then((remoteVersion) async {
         if (box.get(DBInfo.version).toString() != remoteVersion) {
           // insert time in main isolate
-          clickable = false;
-          await _insertTime();
-          // update the sync statuses.
-          timetableSyncStatus.value = true;
-
           if (dialogPop) {
             GetXUtilities.dialog();
+          } else {
+            clickable = false;
+            // update the sync statuses.
+            timetableSyncStatus.value = true;
           }
+          // await _insertTime();
           await _syncAllFiles();
         } else {
           // Execute when the user is new and already synchronized
@@ -53,7 +54,7 @@ class SyncController extends GetxController {
     } else {
       GetXUtilities.snackbar(
           title: 'Error!!',
-          message: 'Make sure you have a connection',
+          message: 'Make sure you have a internet connection',
           gradient: errorGradient);
     }
   }
@@ -86,9 +87,6 @@ class SyncController extends GetxController {
       };
       box.put('defaultTime', time);
     }
-
-    print(box.get('monToThur'));
-    print(box.get('fri'));
   }
 }
 
@@ -98,7 +96,7 @@ class SyncController extends GetxController {
 Future<String> getRemoteVersion() async {
   final remoteConfig = FirebaseRemoteConfig.instance;
   await remoteConfig.setConfigSettings(RemoteConfigSettings(
-    fetchTimeout: const Duration(minutes: 1),
+    fetchTimeout: const Duration(seconds: 10),
     minimumFetchInterval: const Duration(minutes: 1),
   ));
 

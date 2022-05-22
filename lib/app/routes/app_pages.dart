@@ -47,14 +47,14 @@ class AppPages {
         ),
         GetPage(
           name: _Paths.TEACHER_TIMETABLE,
-          page: () => const TeacherTimetableView(),
+          page: () => TeacherTimetableView(),
           binding: TeacherTimetableBinding(),
         ),
       ],
     ),
     GetPage(
       name: _Paths.SYNC,
-      page: () => SyncView(),
+      page: () => const SyncView(),
       binding: SyncBinding(),
     ),
   ];

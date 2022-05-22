@@ -1,6 +1,5 @@
 import 'dart:developer' as devlog;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/light_theme.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
@@ -25,13 +24,6 @@ Future<void> _initialized() async {
     name: 'cui-timetable',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  final db = FirebaseFirestore.instance;
-  await db.collection("info").get().then((event) {
-    for (var doc in event.docs) {
-      print("${doc.id} => ${doc.data()}");
-    }
-  });
 
   devlog.log("Firebase Initialized...", name: 'FIREBASE');
 

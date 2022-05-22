@@ -1,16 +1,26 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
-import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
+import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   final internet = true.obs;
-  // @override
-  // Future<void> onInit() async {}
+  @override
+  Future<void> onInit() async {
+    final box = await Hive.openBox(DBNames.info);
+    await getRemoteVersion().then((value) {
+      if (box.get(DBInfo.version).toString() != value) {
+        final controller = Get.put(SyncController());
+        controller.syncData(dialogPop: true);
+      }
+    });
+    super.onInit();
+  }
 
   /// Stream for the News.
   Stream<dynamic> getStream() async* {

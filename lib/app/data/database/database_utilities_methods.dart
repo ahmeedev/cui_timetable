@@ -60,7 +60,7 @@ _backgroundTask(map) async {
 
 Future<List<dynamic>> _getFileContent(
     {required String fileLocation, required String fileName}) async {
-  var fields;
+  dynamic fields;
   try {
     final File file = File('$fileLocation/$fileName');
     final input = file.openRead();

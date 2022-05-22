@@ -3,7 +3,7 @@ version: 1.0.0+1
 publish_to: none
 description: Build with ❤ for specially IOS Platform.
 environment: 
-  sdk: '>=2.16.1 <3.0.0'
+  sdk: '>=2.16.1 <3.0.1'
 
 dependencies: 
   cupertino_icons: ^1.0.2
@@ -31,7 +31,7 @@ dependencies:
   carousel_slider: ^4.1.1
   connectivity_plus: ^2.3.0
   avatar_glow: ^2.0.2
-  get: 4.6.3
+  get: ^4.6.3
   http: ^0.13.4
   html: ^0.15.0
 

@@ -37,7 +37,8 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                         section: Get.arguments[0].toString()),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const SpinKitFadingCube(
+                        return const SpinKitFadingCircle(
+                          size: 50,
                           color: primaryColor,
                         );
                       } else {
@@ -110,7 +111,7 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
 class DayTile extends GetView<StudentTimetableController> {
   late final String day;
   late final String dayKey;
-  late final callback;
+  late final Function callback;
 
   late final Rx<bool> obs;
   final colorList = [
@@ -160,6 +161,7 @@ class DayTile extends GetView<StudentTimetableController> {
                       color: obs.value ? selectionColor : widgetColor,
                       borderRadius: BorderRadius.circular(defaultRadius)),
                   child: Material(
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(defaultRadius),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(defaultRadius),
@@ -172,36 +174,57 @@ class DayTile extends GetView<StudentTimetableController> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(day,
-                              style: Theme.of(context).textTheme.titleSmall),
+                              style: Theme.of(context).textTheme.titleMedium),
                           controller.lecturesCount[dayKey] == "null"
-                              ? const SpinKitFadingCube(
+                              ? const SpinKitFadingCircle(
                                   color: primaryColor,
                                 )
                               : Text(
-                                  controller.lecturesCount[dayKey].toString()),
-                          Wrap(
-                            alignment: WrapAlignment.center,
-                            children: [
-                              ...List.generate(
-                                  int.parse(controller.lecturesCount[dayKey]
-                                      .toString()),
-                                  (index) => Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 1),
-                                        child: Container(
-                                          width: 6,
-                                          height: 6,
-                                          decoration: BoxDecoration(
-                                              color: colorList[index],
-                                              shape: BoxShape.circle),
-                                        ),
-                                      ))
-                            ],
-                          ),
+                                  controller.lecturesCount[dayKey].toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(fontWeight: FontWeight.normal),
+                                ),
+                          int.parse(controller.lecturesCount[dayKey.toString()]
+                                      .toString()) ==
+                                  0
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: defaultPadding * 2),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    height: 5,
+                                    decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                            colors: successGradient)),
+                                  ),
+                                )
+                              : Wrap(
+                                  alignment: WrapAlignment.center,
+                                  children: [
+                                    ...List.generate(
+                                        int.parse(controller
+                                            .lecturesCount[dayKey]
+                                            .toString()),
+                                        (index) => Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 1),
+                                              child: Container(
+                                                width: 6,
+                                                height: 6,
+                                                decoration: BoxDecoration(
+                                                    color: colorList[index],
+                                                    shape: BoxShape.circle),
+                                              ),
+                                            ))
+                                  ],
+                                ),
                         ],
                       ),
                     ),
-                    color: Colors.transparent,
                   ),
                 ))),
           )),
@@ -210,12 +233,12 @@ class DayTile extends GetView<StudentTimetableController> {
 }
 
 class LectureDetailsTile extends StatelessWidget {
-  late final String subject;
-  late final String teacher;
-  late final String room;
-  late final time;
+  final String subject;
+  final String teacher;
+  final String room;
+  final dynamic time;
 
-  LectureDetailsTile(
+  const LectureDetailsTile(
       {Key? key,
       required this.subject,
       required this.teacher,
@@ -226,7 +249,8 @@ class LectureDetailsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
+      padding: const EdgeInsets.fromLTRB(
+          defaultPadding / 2, 0, defaultPadding / 2, defaultPadding / 2),
       child: Card(
         color: widgetColor,
         elevation: defaultElevation,
@@ -245,17 +269,19 @@ class LectureDetailsTile extends StatelessWidget {
                   children: [
                     Text(
                       time[0],
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          // fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
                     const Text('|'),
                     const Text('|'),
                     Text(
                       time[1],
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          // fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
@@ -266,7 +292,8 @@ class LectureDetailsTile extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    padding: const EdgeInsets.only(
+                        left: defaultPadding / 2, right: defaultPadding / 2),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -284,7 +311,9 @@ class LectureDetailsTile extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
-                                  .copyWith(fontStyle: FontStyle.italic),
+                                  .copyWith(
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: 18),
                             ),
                           ),
                         ),
