@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -98,6 +99,8 @@ _updateStatuses() async {
   Get.find<SyncController>().timetableSyncStatus.value = false;
   Get.find<SyncController>().clickable = true;
   Get.find<SyncController>().lastUpdate.value = lastUpdate;
+
+  Get.find<HomeController>().newUpdate.value = false;
 
   // Get.delete<StudentTimetableController>();
   // Get.delete<TeacherTimetableController>();

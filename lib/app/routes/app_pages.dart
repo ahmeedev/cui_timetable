@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/freerooms/bindings/freerooms_binding.dart';
+import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/sync/bindings/sync_binding.dart';
@@ -56,6 +58,11 @@ class AppPages {
       name: _Paths.SYNC,
       page: () => const SyncView(),
       binding: SyncBinding(),
+    ),
+    GetPage(
+      name: _Paths.FREEROOMS,
+      page: () => FreeroomsView(),
+      binding: FreeroomsBinding(),
     ),
   ];
 }

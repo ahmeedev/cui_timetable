@@ -1,8 +1,8 @@
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_drawer.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_widgets.dart';
+import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -173,6 +173,46 @@ class HomeBody extends GetView<HomeController> {
                 fit: FlexFit.tight,
                 child: Column(
                   children: [
+                    Obx(
+                      () => controller.newUpdate.value
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: defaultPadding),
+                              child: Card(
+                                  // color: widgetColor,
+                                  elevation: defaultElevation,
+                                  shadowColor: shadowColor,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(defaultRadius))),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(defaultRadius)),
+                                        gradient: LinearGradient(
+                                          colors: successGradient,
+                                        )),
+                                    child: ListTile(
+                                      title: Text('Update Available! ',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium),
+                                      trailing: ElevatedButton(
+                                        child: Text('Sync Now',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge),
+                                        onPressed: () async {
+                                          Get.toNamed(Routes.SYNC);
+                                        },
+                                      ),
+                                      // subtitle: Text('Click here to Update',
+                                      //     style: Theme.of(context).textTheme.bodyMedium),
+                                    ),
+                                  )),
+                            )
+                          : const SizedBox(),
+                    ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -348,11 +388,7 @@ class HomeOverlay extends StatelessWidget {
                   highlightColor: Colors.transparent,
                   splashColor: shadowColor,
                   onTap: () {
-                    // Get.to(() => FreeRooms(), transition: Transition.cupertino);
-                    // GetXUtilities.snackbar(
-                    //     title: 'In Development',
-                    //     message: 'This Module is still in Developement Phase',
-                    //     gradient: primaryGradient);
+                    Get.toNamed(Routes.FREEROOMS);
                   },
                   child: Padding(
                     padding:

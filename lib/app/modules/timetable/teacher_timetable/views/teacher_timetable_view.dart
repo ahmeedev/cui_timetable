@@ -195,7 +195,7 @@ class DayTile extends GetView<TeacherTimetableController> {
                                   0
                               ? Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: defaultPadding * 2),
+                                      horizontal: defaultPadding * 2.5),
                                   child: Container(
                                     alignment: Alignment.center,
                                     width: double.infinity,

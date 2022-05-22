@@ -173,8 +173,9 @@ class DayTile extends GetView<StudentTimetableController> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(day,
-                              style: Theme.of(context).textTheme.titleMedium),
+                          Text(
+                            day,
+                          ),
                           controller.lecturesCount[dayKey] == "null"
                               ? const SpinKitFadingCircle(
                                   color: primaryColor,
@@ -191,7 +192,7 @@ class DayTile extends GetView<StudentTimetableController> {
                                   0
                               ? Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: defaultPadding * 2),
+                                      horizontal: defaultPadding * 2.5),
                                   child: Container(
                                     alignment: Alignment.center,
                                     width: double.infinity,

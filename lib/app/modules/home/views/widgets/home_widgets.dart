@@ -1,4 +1,3 @@
-
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ Card buildNews(context,
       child: ExpansionTile(
           expandedAlignment: Alignment.centerLeft,
           initiallyExpanded: expanded,
-          // backgroundColor: widgetColor,
+          backgroundColor: widgetColor,
           iconColor: primaryColor,
 
           // trailing: const Icon(Icons.motion_photos_on_rounded),

@@ -10,15 +10,21 @@ import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   final internet = true.obs;
+  var newUpdate = false.obs;
   @override
   Future<void> onInit() async {
     final box = await Hive.openBox(DBNames.info);
-    await getRemoteVersion().then((value) {
-      if (box.get(DBInfo.version).toString() != value) {
-        final controller = Get.put(SyncController());
-        controller.syncData(dialogPop: true);
-      }
-    });
+    final newUser = await box.get(DBInfo.newUser, defaultValue: true);
+    if (newUser) {
+      final controller = Get.find<SyncController>();
+      controller.syncData(dialogPop: true);
+    } else {
+      await getRemoteVersion().then((value) {
+        if (box.get(DBInfo.version).toString() != value) {
+          newUpdate.value = true;
+        }
+      });
+    }
     super.onInit();
   }
 

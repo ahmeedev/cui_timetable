@@ -27,8 +27,8 @@ class TimetableDatabase extends GetxController {
     final teachers = <String>{};
 
     for (var item in data) {
-      sections.add(item[0]);
-      teachers.add(item[4]);
+      sections.add(item[0].trim());
+      teachers.add(item[4].trim());
     }
 
     //  =====  creating students database  ===== //
