@@ -17,16 +17,17 @@ class AboutUsView extends StatelessWidget {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: const [
-            AboutUsTile(
-              pic: 'ahmad_shaf.jpg',
-              name: 'Mr.',
-              subName: 'Ahmad Shaf',
-              position: 'Team Manager',
-              description: 'CUI Software House Coordinator',
-            ),
+        
             AboutUsTile(
               pic: 'ahmad.jpg',
               name: 'Ahmad Tariq',
+              position: 'C.E.O',
+              description: 'CUI Computer Science Student',
+            ),
+              AboutUsTile(
+              pic: 'naeem.jpg',
+              name: 'Naeem',
+              subName: 'Yousaf Khokhar',
               position: 'Developer',
               description: 'CUI Computer Science Student',
             ),
@@ -37,6 +38,16 @@ class AboutUsView extends StatelessWidget {
               position: 'Developer',
               description: 'CUI Computer Science Student',
             ),
+
+            AboutUsTile(
+              pic: 'ramay.JPG',
+              name: 'Hamza',
+              subName: 'Rafique Ramay',
+              position: 'Developer',
+              description: 'CUI Computer Science Student',
+            ),
+
+          
           ],
         ),
       ),

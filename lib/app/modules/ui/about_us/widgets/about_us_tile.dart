@@ -34,33 +34,36 @@ class AboutUsTile extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 100,
-                  height: 100,
+                  width: 80,
+                  height: 80,
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle, color: Colors.transparent),
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(name,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(color: primaryColor, fontSize: 18)),
-                    subName.isNotEmpty
-                        ? Text(subName,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(color: primaryColor, fontSize: 18))
-                        : const SizedBox(),
-                    const SizedBox(height: 10),
-                    Text(description,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Colors.black, fontWeight: FontWeight.bold)),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(top:defaultPadding*2),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(color: primaryColor, fontSize: 14)),
+                      subName.isNotEmpty
+                          ? Text(subName,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(color: primaryColor, fontSize: 14))
+                          : const SizedBox(),
+                      const SizedBox(height: 10),
+                      Text(description,
+                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: Colors.black, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -75,8 +78,8 @@ class AboutUsTile extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(defaultPadding / 3),
               child: Container(
-                width: 120,
-                height: 120,
+                width: 100,
+                height: 100,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
