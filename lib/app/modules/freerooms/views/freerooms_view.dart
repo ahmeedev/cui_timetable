@@ -39,7 +39,6 @@ class FreeroomsView extends GetView<FreeroomsController> {
                   ...List.generate(5, (index) {
                     return DayTile(
                       day: daysList[index],
-                      nOfRooms: nORooms[index],
                       callback: controller.allFalse,
                       obs: controller.giveValue(index),
                     );
@@ -59,15 +58,15 @@ class FreeroomsView extends GetView<FreeroomsController> {
                       padding: const EdgeInsets.all(defaultPadding / 2),
                       physics: const BouncingScrollPhysics(),
                       children: const [
-                        FreeRoomsMainExpansionTile(
+                        FreeroomsMainExpansionTile(
                             slot: '10:00AM - 11:00AM', expanded: true),
-                        FreeRoomsMainExpansionTile(
+                        FreeroomsMainExpansionTile(
                             slot: '11:00AM - 12:00PM', expanded: false),
-                        FreeRoomsMainExpansionTile(
+                        FreeroomsMainExpansionTile(
                             slot: '02:00PM - 03:00PM', expanded: false),
-                        FreeRoomsMainExpansionTile(
+                        FreeroomsMainExpansionTile(
                             slot: '03:00PM - 04:00PM', expanded: false),
-                        FreeRoomsMainExpansionTile(
+                        FreeroomsMainExpansionTile(
                             slot: '12:00PM - 01:00PM', expanded: false),
                       ])),
             ),

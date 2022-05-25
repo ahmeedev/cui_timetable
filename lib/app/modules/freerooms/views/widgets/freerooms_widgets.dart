@@ -3,157 +3,12 @@ import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FreeRoomsMainExpansionTile extends StatelessWidget {
-  final String slot;
-  final bool expanded;
-
-  const FreeRoomsMainExpansionTile(
-      {Key? key, required this.slot, required this.expanded})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      // color: widgetColor,
-      shadowColor: shadowColor,
-      elevation: defaultElevation,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
-      child: ExpansionTile(
-        initiallyExpanded: expanded,
-        maintainState: true,
-        leading: const ImageIcon(
-          AssetImage('assets/freerooms/timer.png'),
-          size: iconSize,
-          // color: primaryColor,
-        ),
-        childrenPadding: const EdgeInsets.all(defaultPadding / 2),
-        collapsedBackgroundColor: widgetColor,
-        backgroundColor: expandedColor,
-        iconColor: primaryColor,
-        title: Text(
-          slot,
-          style:
-              Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
-        ),
-        children: const [
-          FreeRoomsClassesExpensionTile(),
-          FreeRoomsLabsExpensionTile(),
-        ],
-      ),
-    );
-  }
-}
-
-class FreeRoomsClassesExpensionTile extends StatelessWidget {
-  const FreeRoomsClassesExpensionTile({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shadowColor: shadowColor,
-      elevation: defaultElevation,
-      child: ExpansionTile(
-        collapsedBackgroundColor: widgetColor,
-        backgroundColor: textFieldColor,
-        onExpansionChanged: (value) {},
-        title: Text(
-          'Classes',
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.only(top: defaultPadding / 3),
-          child: Text(
-            '12',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 16,
-                ),
-          ),
-        ),
-        children: [
-          GridView.count(
-            physics: const ScrollPhysics(),
-            shrinkWrap: true,
-            crossAxisCount: 4,
-            scrollDirection: Axis.vertical,
-            children: [
-              ...List.generate(
-                  12,
-                  (index) => const LectureDetailsTile(
-                        room: "A1.1",
-                      ))
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FreeRoomsLabsExpensionTile extends StatelessWidget {
-  const FreeRoomsLabsExpensionTile({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shadowColor: shadowColor,
-      elevation: defaultElevation,
-      child: ExpansionTile(
-        collapsedBackgroundColor: widgetColor,
-        backgroundColor: textFieldColor,
-        onExpansionChanged: (value) {},
-        title: Text(
-          'Labs',
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.only(top: defaultPadding / 3),
-          child: Text(
-            '12',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 16,
-                ),
-          ),
-        ),
-        children: [
-          GridView.count(
-            physics: const ScrollPhysics(),
-            shrinkWrap: true,
-            crossAxisCount: 4,
-            scrollDirection: Axis.vertical,
-            children: [
-              ...List.generate(
-                  12,
-                  (index) => const LectureDetailsTile(
-                        room: "A1.1",
-                      ))
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class DayTile extends StatelessWidget {
   final String day;
-  final int nOfRooms;
   final Function callback;
   final Rx<bool> obs;
   const DayTile(
-      {required this.day,
-      required this.nOfRooms,
-      required this.callback,
-      required this.obs,
-      Key? key})
+      {required this.day, required this.callback, required this.obs, Key? key})
       : super(key: key);
 
   @override
@@ -188,13 +43,6 @@ class DayTile extends StatelessWidget {
                           children: [
                             Text(day,
                                 style: Theme.of(context).textTheme.titleMedium),
-                            Text(
-                              nOfRooms.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(fontWeight: FontWeight.normal),
-                            ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: defaultPadding * 2.5),
@@ -218,9 +66,225 @@ class DayTile extends StatelessWidget {
   }
 }
 
-class LectureDetailsTile extends StatelessWidget {
+class FreeroomsMainExpansionTile extends StatelessWidget {
+  final String slot;
+  final bool expanded;
+
+  const FreeroomsMainExpansionTile(
+      {Key? key, required this.slot, required this.expanded})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      // color: widgetColor,
+      shadowColor: shadowColor,
+      elevation: defaultElevation,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
+      child: ExpansionTile(
+        initiallyExpanded: expanded,
+        maintainState: true,
+        leading: const ImageIcon(
+          AssetImage('assets/freerooms/timer.png'),
+          size: iconSize,
+          // color: primaryColor,
+        ),
+        childrenPadding: const EdgeInsets.all(defaultPadding / 2),
+        collapsedBackgroundColor: widgetColor,
+        backgroundColor: expandedColor,
+        iconColor: primaryColor,
+        title: Text(
+          slot,
+          style:
+              Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
+        ),
+        children: const [
+          FreeroomsClassesExpensionTile(),
+          FreeroomsLabsExpensionTile(),
+        ],
+      ),
+    );
+  }
+}
+
+class FreeroomsClassesExpensionTile extends StatelessWidget {
+  const FreeroomsClassesExpensionTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shadowColor: shadowColor,
+      elevation: defaultElevation,
+      child: ExpansionTile(
+        collapsedBackgroundColor: widgetColor,
+        backgroundColor: textFieldColor,
+        onExpansionChanged: (value) {},
+        title: Text(
+          'Classes',
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.only(top: defaultPadding / 3),
+          child: Text(
+            '12',
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 16,
+                ),
+          ),
+        ),
+        children: [
+          FreeroomsDepartmentWiseExpensionTile(
+            department: 'A',
+          ),
+          FreeroomsDepartmentWiseExpensionTile(
+            department: 'B',
+          ),
+          FreeroomsDepartmentWiseExpensionTile(
+            department: 'C',
+          ),
+          FreeroomsDepartmentWiseExpensionTile(
+            department: 'W',
+          ),
+
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+          //   child: GridView.count(
+          //     physics: const ScrollPhysics(),
+          //     shrinkWrap: true,
+          //     crossAxisCount: 4,
+          //     scrollDirection: Axis.vertical,
+          //     children: [
+          //       ...List.generate(
+          //           12,
+          //           (index) => const FreeRoomsTile(
+          //                 room: "A1.1",
+          //               ))
+          //     ],
+          //   ),
+          // ),
+        ],
+      ),
+    );
+  }
+}
+
+class FreeroomsLabsExpensionTile extends StatelessWidget {
+  const FreeroomsLabsExpensionTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shadowColor: shadowColor,
+      elevation: defaultElevation,
+      child: ExpansionTile(
+        collapsedBackgroundColor: widgetColor,
+        backgroundColor: textFieldColor,
+        onExpansionChanged: (value) {},
+        title: Text(
+          'Labs',
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.only(top: defaultPadding / 3),
+          child: Text(
+            '12',
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 16,
+                ),
+          ),
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(defaultPadding),
+            child: GridView.count(
+              physics: const ScrollPhysics(),
+              shrinkWrap: true,
+              crossAxisCount: 4,
+              scrollDirection: Axis.vertical,
+              children: [
+                ...List.generate(
+                    12,
+                    (index) => const FreeroomsTile(
+                          room: "A1.1",
+                        ))
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
+  final department;
+  const FreeroomsDepartmentWiseExpensionTile(
+      {Key? key, required this.department})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+      child: Card(
+        shadowColor: shadowColor,
+        elevation: defaultElevation,
+        child: ExpansionTile(
+          collapsedBackgroundColor: widgetColor,
+          backgroundColor: expandedColor,
+          onExpansionChanged: (value) {},
+          title: Text(
+            '$department dept',
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          leading: Padding(
+            padding: const EdgeInsets.only(top: defaultPadding / 3),
+            child: Text(
+              '12',
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16,
+                  ),
+            ),
+          ),
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+              child: GridView.count(
+                physics: const ScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 4,
+                scrollDirection: Axis.vertical,
+                children: [
+                  ...List.generate(
+                      12,
+                      (index) => const FreeroomsTile(
+                            room: "A1.1",
+                          ))
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FreeroomsTile extends StatelessWidget {
   final String room;
-  const LectureDetailsTile({
+  const FreeroomsTile({
     Key? key,
     required this.room,
   }) : super(key: key);
