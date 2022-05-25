@@ -22,20 +22,25 @@ class HomeView extends StatelessWidget {
 
         // extendBodyBehindAppBar: true,
         drawer: Drawer(
+          width: MediaQuery.of(context).size.width / 1.5,
           child: Container(
             color: scaffoldColor,
-            child: Column(
-              children: const [Header(), ButtonList()],
+            child: SingleChildScrollView(
+              child: Column(
+                children: const [Header(), ButtonList()],
+              ),
             ),
           ),
         ),
         body: Stack(
           fit: StackFit.expand,
-          children: const [
+          children: [
             CustomScrollView(
               physics: NeverScrollableScrollPhysics(),
               slivers: [
-                HomeAppBar(),
+                HomeAppBar(
+                  textHeight: 0.40,
+                ),
                 HomeBody(),
                 // const HomeBottomWidget(),
               ],
@@ -48,8 +53,8 @@ class HomeView extends StatelessWidget {
 
 /// AppBar for the Home Screen.
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({Key? key}) : super(key: key);
-  final textHeight = 0.20;
+  late final textHeight;
+  HomeAppBar({Key? key, required this.textHeight}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -108,9 +113,8 @@ class HomeAppBar extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: kIsWeb
-                    ? Alignment.topCenter + Alignment(textHeight, textHeight)
-                    : Alignment.topCenter + Alignment(textHeight, textHeight),
+                alignment:
+                    Alignment.topCenter + Alignment(textHeight, textHeight),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -337,7 +341,8 @@ class HomeOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: MediaQuery.of(context).size.height / 4 - 50,
+        top: MediaQuery.of(context).size.height / 2 -
+            MediaQuery.of(context).size.height / 3.5,
         right: 10,
         left: 10,
         child: Card(

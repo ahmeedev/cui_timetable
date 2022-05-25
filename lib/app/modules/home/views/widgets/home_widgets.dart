@@ -12,27 +12,30 @@ Card buildNews(context,
       shadowColor: shadowColor,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
-      child: ExpansionTile(
-          expandedAlignment: Alignment.centerLeft,
-          initiallyExpanded: expanded,
-          backgroundColor: widgetColor,
-          iconColor: primaryColor,
-          
-          // trailing: const Icon(Icons.motion_photos_on_rounded),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(defaultRadius)),
+        child: ExpansionTile(
+            expandedAlignment: Alignment.centerLeft,
+            initiallyExpanded: expanded,
+            backgroundColor: widgetColor,
+            iconColor: primaryColor,
 
-          tilePadding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-          childrenPadding: const EdgeInsets.fromLTRB(
-              defaultPadding, 0, defaultPadding, defaultPadding + 15),
-          title: Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          children: [
-            Text(
-              description,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.justify,
-              textDirection: TextDirection.ltr,
-            )
-          ]));
+            // trailing: const Icon(Icons.motion_photos_on_rounded),
+
+            tilePadding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+            childrenPadding: const EdgeInsets.fromLTRB(
+                defaultPadding, 0, defaultPadding, defaultPadding + 15),
+            title: Text(
+              title,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            children: [
+              Text(
+                description,
+                style: Theme.of(context).textTheme.bodyMedium,
+                textAlign: TextAlign.justify,
+                textDirection: TextDirection.ltr,
+              )
+            ]),
+      ));
 }
