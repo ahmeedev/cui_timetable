@@ -17,7 +17,7 @@ Card buildNews(context,
           initiallyExpanded: expanded,
           backgroundColor: widgetColor,
           iconColor: primaryColor,
-
+          
           // trailing: const Icon(Icons.motion_photos_on_rounded),
 
           tilePadding: const EdgeInsets.symmetric(horizontal: defaultPadding),

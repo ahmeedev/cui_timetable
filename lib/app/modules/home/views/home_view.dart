@@ -17,35 +17,33 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          // resizeToAvoidBottomInset: false,
-          // extendBody: true,
+    return Scaffold(
+        // resizeToAvoidBottomInset: false,
+        // extendBody: true,
 
-          // extendBodyBehindAppBar: true,
-          drawer: Drawer(
-            child: Container(
-              color: scaffoldColor,
-              child: Column(
-                children: const [Header(), ButtonList()],
-              ),
+        // extendBodyBehindAppBar: true,
+        drawer: Drawer(
+          child: Container(
+            color: scaffoldColor,
+            child: Column(
+              children: const [Header(), ButtonList()],
             ),
           ),
-          body: Stack(
-            fit: StackFit.expand,
-            children: const [
-              CustomScrollView(
-                physics: NeverScrollableScrollPhysics(),
-                slivers: [
-                  HomeAppBar(),
-                  HomeBody(),
-                  // const HomeBottomWidget(),
-                ],
-              ),
-              HomeOverlay()
-            ],
-          )),
-    );
+        ),
+        body: Stack(
+          fit: StackFit.expand,
+          children: const [
+            CustomScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              slivers: [
+                HomeAppBar(),
+                HomeBody(),
+                // const HomeBottomWidget(),
+              ],
+            ),
+            HomeOverlay()
+          ],
+        ));
   }
 }
 

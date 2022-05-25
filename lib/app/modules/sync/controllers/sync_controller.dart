@@ -46,7 +46,7 @@ class SyncController extends GetxController {
             Get.back();
           }
           GetXUtilities.snackbar(
-              title: 'Congratulation!',
+              title: 'Synced!',
               message: 'Data is Already Synchronized',
               gradient: successGradient);
         }

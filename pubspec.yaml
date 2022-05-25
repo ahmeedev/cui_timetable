@@ -59,7 +59,6 @@ flutter:
     - assets/drawer/
     - assets/about_us/
     - assets/timetable/
-    - assets/csv/
     - assets/home/
     - assets/freerooms/
     - assets/misc/
