@@ -1,21 +1,29 @@
-
 import 'package:flutter/material.dart';
 
-TextTheme getTextTheme() {
-  return const TextTheme(
-    titleSmall: TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
-    titleMedium: TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
-    // bodyMedium: TextStyle(fontWeight: FontWeight.w500),
+TextTheme getTextTheme({required double scaleFactor}) {
+  return TextTheme(
+    // title
+    titleSmall: TextStyle(
+        fontSize: 14 - scaleFactor,
+        fontWeight: FontWeight.w600,
+        color: Colors.black),
+    titleMedium: TextStyle(
+        fontSize: 16 - scaleFactor,
+        fontWeight: FontWeight.w600,
+        color: Colors.black),
+    titleLarge: TextStyle(
+        fontSize: 22 - scaleFactor,
+        fontWeight: FontWeight.bold,
+        color: Colors.white),
+
+    // body
+    bodyMedium: TextStyle(fontSize: 14 - scaleFactor),
+
+    // label
     labelLarge: TextStyle(
+      fontSize: 14 - scaleFactor,
       color: Colors.white,
       fontWeight: FontWeight.w900,
     ),
-
-    // for appbar title
-    titleLarge: TextStyle(
-        fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
-    // labelSmall: TextStyle()
-    // titleSmall: TextStyle(fontWeight: FontWeight.bold),
-    // headlineMedium: TextStyle(color: Colors.white)
   );
 }

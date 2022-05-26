@@ -3,6 +3,7 @@ import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:html/dom.dart' as dom;
@@ -13,6 +14,15 @@ class HomeController extends GetxController {
   var newUpdate = false.obs;
   @override
   Future<void> onInit() async {
+    super.onInit();
+    FlutterNativeSplash.remove();
+  }
+
+  @override
+  Future<void> onReady() async {
+    super.onReady();
+    print('onready executed');
+
     final box = await Hive.openBox(DBNames.info);
     final newUser = await box.get(DBInfo.newUser, defaultValue: true);
     if (newUser) {
@@ -25,7 +35,6 @@ class HomeController extends GetxController {
         }
       });
     }
-    super.onInit();
   }
 
   /// Stream for the News.

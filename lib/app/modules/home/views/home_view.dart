@@ -38,9 +38,7 @@ class HomeView extends StatelessWidget {
             CustomScrollView(
               physics: NeverScrollableScrollPhysics(),
               slivers: [
-                HomeAppBar(
-                  textHeight: 0.40,
-                ),
+                HomeAppBar(),
                 HomeBody(),
                 // const HomeBottomWidget(),
               ],
@@ -53,8 +51,10 @@ class HomeView extends StatelessWidget {
 
 /// AppBar for the Home Screen.
 class HomeAppBar extends StatelessWidget {
-  late final textHeight;
-  HomeAppBar({Key? key, required this.textHeight}) : super(key: key);
+  // late final textHeight;
+  HomeAppBar({
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -91,7 +91,9 @@ class HomeAppBar extends StatelessWidget {
                   child: Text(
                     'CUI TIMETABLE',
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
 
                   // child: DefaultTextStyle(
@@ -112,41 +114,36 @@ class HomeAppBar extends StatelessWidget {
                   // ),
                 ),
               ),
-              Align(
-                alignment:
-                    Alignment.topCenter + Alignment(textHeight, textHeight),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    DefaultTextStyle(
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: shadowColor, fontStyle: FontStyle.italic),
-                      child: AnimatedTextKit(
-                        animatedTexts: [
-                          TypewriterAnimatedText('BE AWESOME'),
-                          TypewriterAnimatedText('BE OPTIMISTIC'),
-                          TypewriterAnimatedText('BE DIFFERENT'),
-                          TypewriterAnimatedText('BE CONSISTENT'),
-                          TypewriterAnimatedText('YOU MATTER'),
-                          TypewriterAnimatedText('YOU CAN'),
-                          TypewriterAnimatedText('TAKE RISK'),
-                          TypewriterAnimatedText('ACCEPT YOURSELF'),
-                          TypewriterAnimatedText('TRUST YOURSELF'),
-                          TypewriterAnimatedText('STAY FOCUSED'),
-                          TypewriterAnimatedText('STAY POSITIVE'),
-                          TypewriterAnimatedText('STAY CURIOUS'),
-                          TypewriterAnimatedText('MOVE FORWARD'),
-                          TypewriterAnimatedText('TRY AGAIN'),
-                          TypewriterAnimatedText('ENJOY LIFE'),
-                        ],
-                        repeatForever: true,
-                        pause: const Duration(milliseconds: 2000),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                  ],
+              Align(alignment: Alignment.topRight),
+              Container(
+                alignment: Alignment.topRight,
+                margin: EdgeInsets.symmetric(
+                    vertical: defaultPadding * 4, horizontal: defaultPadding),
+                // color: Colors.amber,
+                child: DefaultTextStyle(
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: shadowColor, fontStyle: FontStyle.italic),
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      TypewriterAnimatedText('BE AWESOME'),
+                      TypewriterAnimatedText('BE OPTIMISTIC'),
+                      TypewriterAnimatedText('BE DIFFERENT'),
+                      TypewriterAnimatedText('BE CONSISTENT'),
+                      TypewriterAnimatedText('YOU MATTER'),
+                      TypewriterAnimatedText('YOU CAN'),
+                      TypewriterAnimatedText('TAKE RISK'),
+                      TypewriterAnimatedText('ACCEPT YOURSELF'),
+                      TypewriterAnimatedText('TRUST YOURSELF'),
+                      TypewriterAnimatedText('STAY FOCUSED'),
+                      TypewriterAnimatedText('STAY POSITIVE'),
+                      TypewriterAnimatedText('STAY CURIOUS'),
+                      TypewriterAnimatedText('MOVE FORWARD'),
+                      TypewriterAnimatedText('TRY AGAIN'),
+                      TypewriterAnimatedText('ENJOY LIFE'),
+                    ],
+                    repeatForever: true,
+                    pause: const Duration(milliseconds: 2000),
+                  ),
                 ),
               ),
             ]),
@@ -320,6 +317,8 @@ class HomeBottomWidget extends StatelessWidget {
                 // GetXUtilities.dialog();
                 // downloadFile('timetable.csv');
                 // controller.insertTime();
+                print(MediaQuery.of(context).size.width);
+                print(MediaQuery.of(context).size.height);
               },
               child: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
