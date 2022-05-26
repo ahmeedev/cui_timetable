@@ -42,25 +42,23 @@ class MyApp extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth < 380) {
-          return GetMaterialApp(
-            theme: lightThemeForSmallScreens(context),
-            defaultTransition: Transition.cupertino,
-            transitionDuration: const Duration(milliseconds: 300),
-            title: 'CUI TIMETABLE',
-            initialRoute: AppPages.INITIAL,
-            getPages: AppPages.routes,
-          );
+  
+         return getMaterialApp(theme: lightThemeForSmallScreens(context));
         } else {
-          return GetMaterialApp(
-            theme: lightThemeForLargeScreens(context),
-            defaultTransition: Transition.cupertino,
-            transitionDuration: const Duration(milliseconds: 300),
-            title: 'CUI TIMETABLE',
-            initialRoute: AppPages.INITIAL,
-            getPages: AppPages.routes,
-          );
+          return getMaterialApp(theme: lightThemeForLargeScreens(context));
         }
       },
     );
+  }
+
+  getMaterialApp({required theme}){
+return GetMaterialApp(
+            theme: theme,
+            defaultTransition: Transition.cupertino,
+            transitionDuration: const Duration(milliseconds: 300),
+            title: 'CUI TIMETABLE',
+            initialRoute: AppPages.INITIAL,
+            getPages: AppPages.routes,
+          );
   }
 }

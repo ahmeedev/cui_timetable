@@ -58,7 +58,7 @@ class TeacherTimetableView extends GetView<TeacherTimetableController> {
               height: defaultPadding / 2,
             ),
             Flexible(
-              flex: 6,
+              flex: 5,
               child: Obx(() => FractionallySizedBox(
                     widthFactor: 1,
                     heightFactor: 1,
@@ -149,89 +149,85 @@ class DayTile extends GetView<TeacherTimetableController> {
           alignment: Alignment.centerLeft,
           heightFactor: 1,
           widthFactor: 1,
-          child: Padding(
-            padding: const EdgeInsets.only(
-                left: defaultPadding / 2, right: defaultPadding / 2),
-            child: Obx(() => Card(
-                color: widgetColor,
-                shadowColor: shadowColor,
-                elevation: obs.value ? defaultElevation : defaultElevation / 2,
-                shape: RoundedRectangleBorder(
+          child: Obx(() => Card(
+              color: widgetColor,
+              shadowColor: shadowColor,
+              elevation: obs.value ? defaultElevation : defaultElevation / 2,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(defaultRadius)),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                decoration: BoxDecoration(
+                    color: obs.value ? selectionColor : widgetColor,
                     borderRadius: BorderRadius.circular(defaultRadius)),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 500),
-                  decoration: BoxDecoration(
-                      color: obs.value ? selectionColor : widgetColor,
-                      borderRadius: BorderRadius.circular(defaultRadius)),
-                  child: Material(
-                    color: Colors.transparent,
+                child: Material(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(defaultRadius),
+                  child: InkWell(
                     borderRadius: BorderRadius.circular(defaultRadius),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(defaultRadius),
-                      onTap: () {
-                        callback();
-                        controller.getLectures(key: dayKey.toString());
-                        obs.value = true;
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(day,
-                              style: Theme.of(context).textTheme.titleMedium),
-                          controller.lecturesCount[dayKey] == "null"
-                              ? const SpinKitFadingCircle(
-                                  size: 50,
-                                  color: primaryColor,
-                                )
-                              : Text(
-                                  controller.lecturesCount[dayKey].toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(fontWeight: FontWeight.normal),
+                    onTap: () {
+                      callback();
+                      controller.getLectures(key: dayKey.toString());
+                      obs.value = true;
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(day,
+                            style: Theme.of(context).textTheme.titleMedium),
+                        controller.lecturesCount[dayKey] == "null"
+                            ? const SpinKitFadingCircle(
+                                size: 50,
+                                color: primaryColor,
+                              )
+                            : Text(
+                                controller.lecturesCount[dayKey].toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontWeight: FontWeight.normal),
+                              ),
+                        int.parse(controller.lecturesCount[dayKey.toString()]
+                                    .toString()) ==
+                                0
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: defaultPadding * 2.5),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: double.infinity,
+                                  height: 5,
+                                  decoration: const BoxDecoration(
+                                      gradient: LinearGradient(
+                                          colors: successGradient)),
                                 ),
-                          int.parse(controller.lecturesCount[dayKey.toString()]
-                                      .toString()) ==
-                                  0
-                              ? Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: defaultPadding * 2.5),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    width: double.infinity,
-                                    height: 5,
-                                    decoration: const BoxDecoration(
-                                        gradient: LinearGradient(
-                                            colors: successGradient)),
-                                  ),
-                                )
-                              : Wrap(
-                                  alignment: WrapAlignment.center,
-                                  children: [
-                                    ...List.generate(
-                                        int.parse(controller
-                                            .lecturesCount[dayKey.toString()]
-                                            .toString()),
-                                        (index) => Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 1),
-                                              child: Container(
-                                                width: 6,
-                                                height: 6,
-                                                decoration: BoxDecoration(
-                                                    color: colorList[index],
-                                                    shape: BoxShape.circle),
-                                              ),
-                                            ))
-                                  ],
-                                ),
-                        ],
-                      ),
+                              )
+                            : Wrap(
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  ...List.generate(
+                                      int.parse(controller
+                                          .lecturesCount[dayKey.toString()]
+                                          .toString()),
+                                      (index) => Padding(
+                                            padding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 1),
+                                            child: Container(
+                                              width: 6,
+                                              height: 6,
+                                              decoration: BoxDecoration(
+                                                  color: colorList[index],
+                                                  shape: BoxShape.circle),
+                                            ),
+                                          ))
+                                ],
+                              ),
+                      ],
                     ),
                   ),
-                ))),
-          )),
+                ),
+              )))),
     );
   }
 }
@@ -274,7 +270,7 @@ class LectureDetailsTile extends StatelessWidget {
                       time[0],
                       style: Theme.of(context)
                           .textTheme
-                          .titleSmall!
+                          .titleMedium!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                     const Text('|'),
@@ -283,7 +279,7 @@ class LectureDetailsTile extends StatelessWidget {
                       time[1],
                       style: Theme.of(context)
                           .textTheme
-                          .titleSmall!
+                          .titleMedium!
                           .copyWith(fontWeight: FontWeight.bold),
                     )
                   ],
@@ -313,9 +309,13 @@ class LectureDetailsTile extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
+                                  
                                   .copyWith(
                                       fontStyle: FontStyle.italic,
-                                      fontSize: 18),
+                                      fontSize:Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!.fontSize!+2
+                                  )
                             ),
                           ),
                         ),
@@ -333,8 +333,8 @@ class LectureDetailsTile extends StatelessWidget {
                               room.toString(),
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.bold),
+                                  .bodyLarge
+                                  
                             ),
                           ],
                         ),
@@ -350,10 +350,11 @@ class LectureDetailsTile extends StatelessWidget {
                             const SizedBox(width: 5),
                             Text(
                               section.toString(),
+                              overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.bold),
+                                  .bodyLarge
+                               
                             ),
                           ],
                         ),

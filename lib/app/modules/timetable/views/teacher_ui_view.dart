@@ -25,7 +25,7 @@ class TeacherUIView extends GetView<TeacherUIController> {
             children: [
               _buildTextField(context),
               const SizedBox(
-                height: 20,
+                height: defaultPadding,
               ),
               _buildButton(context)
             ],
@@ -49,14 +49,14 @@ class TeacherUIView extends GetView<TeacherUIController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
-              height: 10,
+              height: defaultPadding,
             ),
             Text(
               'Teacher Name',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(
-              height: 10,
+              height: defaultPadding,
             ),
 
             TextFormField(
@@ -96,9 +96,9 @@ class TeacherUIView extends GetView<TeacherUIController> {
                       borderSide: const BorderSide(color: primaryColor)),
                 )),
 
-            // const SizedBox(
-            //   height: 10,
-            // ),
+            const SizedBox(
+              height: defaultPadding/2,
+            ),
             Obx(() => controller.filteredList.isEmpty
                 ? const SizedBox()
                 : ConstrainedBox(
@@ -107,6 +107,7 @@ class TeacherUIView extends GetView<TeacherUIController> {
                       maxHeight: controller.listVisible.value ? height : 0,
                     ),
                     child: ListView.separated(
+                      padding: EdgeInsets.zero,
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: controller.filteredList.length,
@@ -135,7 +136,7 @@ class TeacherUIView extends GetView<TeacherUIController> {
                       separatorBuilder: (context, index) {
                         return const Divider(
                           color: primaryColor,
-                          height: 3,
+                          height: 2,
                           // indent: 15,
                           // endIndent: 15,
                         );

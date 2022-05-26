@@ -21,7 +21,7 @@ class AboutUsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(defaultPadding / 2),
+      padding: const EdgeInsets.symmetric(vertical: defaultPadding/2),
       child: Stack(children: [
         Positioned(
           left: 40,
@@ -40,7 +40,7 @@ class AboutUsTile extends StatelessWidget {
                       shape: BoxShape.circle, color: Colors.transparent),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top:defaultPadding*2),
+                  padding: const EdgeInsets.only(top:defaultPadding*2.5),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -50,18 +50,21 @@ class AboutUsTile extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
-                              .copyWith(color: primaryColor, fontSize: 14)),
+                              .copyWith(color: primaryColor)),
                       subName.isNotEmpty
                           ? Text(subName,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
-                                  .copyWith(color: primaryColor, fontSize: 14))
+                                  .copyWith(color: primaryColor))
                           : const SizedBox(),
-                      const SizedBox(height: 10),
-                      Text(description,
-                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: Colors.black, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: defaultPadding/2),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+                        child: Text(description,
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                color: Colors.black, fontWeight: FontWeight.bold)),
+                      ),
                     ],
                   ),
                 ),
@@ -78,7 +81,7 @@ class AboutUsTile extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(defaultPadding / 3),
               child: Container(
-                width: 100,
+                width:100,
                 height: 100,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -89,13 +92,14 @@ class AboutUsTile extends StatelessWidget {
             ),
           ),
         ),
+       
         Align(
           alignment: Alignment.topRight,
           child: Padding(
-            padding: const EdgeInsets.only(right: defaultPadding / 2, top: 2),
+            padding: const EdgeInsets.only(right: defaultPadding / 2, top: 8),
             child: Container(
               alignment: Alignment.center,
-              width: 120,
+              width: MediaQuery.of(context).size.width/4,
               height: 40,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -113,6 +117,10 @@ class AboutUsTile extends StatelessWidget {
             ),
           ),
         )
+     
+     
+     
+     
       ]),
     );
   }

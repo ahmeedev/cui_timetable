@@ -25,10 +25,8 @@ class HomeView extends StatelessWidget {
           width: MediaQuery.of(context).size.width / 1.5,
           child: Container(
             color: scaffoldColor,
-            child: SingleChildScrollView(
-              child: Column(
-                children: const [Header(), ButtonList()],
-              ),
+            child: Column(
+              children: const [Header(), ButtonList()],
             ),
           ),
         ),
@@ -93,6 +91,7 @@ class HomeAppBar extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize:Theme.of(context).textTheme.headlineSmall!.fontSize!-4.0 
                         ),
                   ),
 
@@ -160,7 +159,7 @@ class HomeBody extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return SliverPadding(
         padding: const EdgeInsets.only(
-            top: defaultPadding * 6.5,
+            top: defaultPadding * 5.8,
             right: defaultPadding,
             left: defaultPadding,
             bottom: 0),
@@ -340,8 +339,7 @@ class HomeOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: MediaQuery.of(context).size.height / 2 -
-            MediaQuery.of(context).size.height / 3.5,
+        top: MediaQuery.of(context).size.height / 4.8,
         right: 10,
         left: 10,
         child: Card(
@@ -351,7 +349,7 @@ class HomeOverlay extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding * 2),
+                horizontal: defaultPadding, vertical: defaultPadding *1.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

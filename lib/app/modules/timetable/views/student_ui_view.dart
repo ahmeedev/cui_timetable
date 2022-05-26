@@ -25,7 +25,7 @@ class StudentUIView extends GetView<StudentUIController> {
             children: [
               _buildTextField(context),
               const SizedBox(
-                height: 20,
+                height: defaultPadding,
               ),
               _buildButton(context)
             ],
@@ -49,14 +49,14 @@ class StudentUIView extends GetView<StudentUIController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
-              height: 10,
+              height: defaultPadding,
             ),
             Text(
               'Section Name',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(
-              height: 10,
+              height: defaultPadding,
             ),
 
             TextFormField(
@@ -95,18 +95,21 @@ class StudentUIView extends GetView<StudentUIController> {
                       borderRadius: BorderRadius.circular(defaultRadius),
                       borderSide: const BorderSide(color: primaryColor)),
                 )),
-
-            // const SizedBox(
-            //   height: 10,
-            // ),
+                
+const SizedBox(
+              height: defaultPadding/2,
+            ),
+           
             Obx(() => controller.filteredList.isEmpty
                 ? const SizedBox()
                 : ConstrainedBox(
                     constraints: BoxConstraints(
+                       
                       minWidth: double.infinity,
                       maxHeight: controller.listVisible.value ? height : 0,
                     ),
                     child: ListView.separated(
+                      padding: EdgeInsets.zero,
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: controller.filteredList.length,
@@ -123,6 +126,7 @@ class StudentUIView extends GetView<StudentUIController> {
                           },
                           dense: true,
                           contentPadding: EdgeInsets.zero,
+                          
                           leading: Text(
                             controller.filteredList[index],
                             style: Theme.of(context)
@@ -135,7 +139,7 @@ class StudentUIView extends GetView<StudentUIController> {
                       separatorBuilder: (context, index) {
                         return const Divider(
                           color: primaryColor,
-                          height: 3,
+                          height: 2,
                           // indent: 15,
                           // endIndent: 15,
                         );

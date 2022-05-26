@@ -18,49 +18,46 @@ class DayTile extends StatelessWidget {
           alignment: Alignment.centerLeft,
           heightFactor: 1,
           widthFactor: 1,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-            child: Card(
-              color: widgetColor,
-              elevation: defaultElevation / 2,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: Obx(() => AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    decoration: BoxDecoration(
-                        color: obs.value ? selectionColor : widgetColor,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Material(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
-                        onTap: () {
-                          callback();
-                          obs.value = true;
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(day,
-                                style: Theme.of(context).textTheme.titleMedium),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: defaultPadding * 2.5),
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: double.infinity,
-                                height: 5,
-                                decoration: const BoxDecoration(
-                                    gradient: LinearGradient(
-                                        colors: successGradient)),
-                              ),
-                            )
-                          ],
-                        ),
+          child: Card(
+            color: widgetColor,
+            elevation: defaultElevation / 2,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)),
+            child: Obx(() => AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  decoration: BoxDecoration(
+                      color: obs.value ? selectionColor : widgetColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(10),
+                    child: InkWell(
+                      onTap: () {
+                        callback();
+                        obs.value = true;
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(day,
+                              style: Theme.of(context).textTheme.titleMedium),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: defaultPadding * 2.5),
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: double.infinity,
+                              height: 5,
+                              decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: successGradient)),
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                  )),
-            ),
+                  ),
+                )),
           )),
     );
   }
@@ -292,7 +289,7 @@ class FreeroomsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+      padding: EdgeInsets.zero,
       child: Card(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),

@@ -75,55 +75,58 @@ class ButtonList extends StatelessWidget {
   const ButtonList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        buildButton(context,
-            icon: const AssetImage('assets/drawer/vision.png'),
-            title: 'Director Vision', onTap: () {
-          Get.toNamed(Routes.DIRECTOR_VISION);
-        }),
-        buildButton(context,
-            icon: const AssetImage('assets/drawer/about_us.png'),
-            title: 'About Us', onTap: () {
-          Get.toNamed(Routes.ABOUT_US);
-        }),
-        buildButton(context,
-            icon: const AssetImage('assets/drawer/remainder.png'),
-            title: 'Remainder',
-            onTap: () {}),
-        buildButton(context,
-            icon: const AssetImage('assets/drawer/bookings.png'),
-            title: 'Bookings',
-            onTap: () {}),
-        buildButton(context,
-            icon: const AssetImage('assets/drawer/sync.png'),
-            title: 'Synchronized', onTap: () {
-          Get.toNamed(Routes.SYNC);
-        }),
-        buildButton(context,
-            icon: const AssetImage('assets/drawer/feedback.png'),
-            title: 'Feedback / Report an Issue',
-            onTap: () {}),
-        buildButton(context,
-            icon: const AssetImage('assets/drawer/sign_in.png'),
-            title: 'Sign In',
-            onTap: () {}),
-        // buildButton(context,
-        //     icon: const AssetImage('assets/drawer/settings.png'),
-        //     title: 'Settings', onTap: () {
-        //   Get.to(() => const Settings(), transition: Transition.cupertino);
-        // }),
-        // buildButton(context,
-        //     icon: const AssetImage('assets/drawer/developer.png'),
-        //     title: 'For Developer', onTap: () {
-        //   Get.to(() => Developer());
-        // }),
-        // buildButton(context,
-        //     icon: const AssetImage('assets/drawer/firebase.png'),
-        //     title: 'Firebase', onTap: () {
-        //   Get.to(FirebaseUI());
-        // }),
-      ],
+    return Flexible(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          buildButton(context,
+              icon: const AssetImage('assets/drawer/vision.png'),
+              title: 'Director Vision', onTap: () {
+            Get.toNamed(Routes.DIRECTOR_VISION);
+          }),
+          buildButton(context,
+              icon: const AssetImage('assets/drawer/about_us.png'),
+              title: 'About Us', onTap: () {
+            Get.toNamed(Routes.ABOUT_US);
+          }),
+          buildButton(context,
+              icon: const AssetImage('assets/drawer/remainder.png'),
+              title: 'Remainder',
+              onTap: () {}),
+          buildButton(context,
+              icon: const AssetImage('assets/drawer/bookings.png'),
+              title: 'Bookings',
+              onTap: () {}),
+          buildButton(context,
+              icon: const AssetImage('assets/drawer/sync.png'),
+              title: 'Synchronized', onTap: () {
+            Get.toNamed(Routes.SYNC);
+          }),
+          buildButton(context,
+              icon: const AssetImage('assets/drawer/feedback.png'),
+              title: 'Feedback / Report an Issue',
+              onTap: () {}),
+          buildButton(context,
+              icon: const AssetImage('assets/drawer/sign_in.png'),
+              title: 'Sign In',
+              onTap: () {}),
+          // buildButton(context,
+          //     icon: const AssetImage('assets/drawer/settings.png'),
+          //     title: 'Settings', onTap: () {
+          //   Get.to(() => const Settings(), transition: Transition.cupertino);
+          // }),
+          // buildButton(context,
+          //     icon: const AssetImage('assets/drawer/developer.png'),
+          //     title: 'For Developer', onTap: () {
+          //   Get.to(() => Developer());
+          // }),
+          // buildButton(context,
+          //     icon: const AssetImage('assets/drawer/firebase.png'),
+          //     title: 'Firebase', onTap: () {
+          //   Get.to(FirebaseUI());
+          // }),
+        ],
+      ),
     );
   }
 
