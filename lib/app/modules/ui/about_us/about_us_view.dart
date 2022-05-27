@@ -13,14 +13,12 @@ class AboutUsView extends StatelessWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(defaultPadding),
+        padding: EdgeInsets.all(Constants.defaultPadding),
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: const [
-        
             AboutUsTile(
               pic: 'ahmad.jpg',
-
               name: ' ',
               subName: 'Ahmad Tariq',
               position: 'C.E.O',
@@ -48,8 +46,6 @@ class AboutUsView extends StatelessWidget {
             //   position: 'Developer',
             //   description: 'CUI Computer Science Student',
             // ),
-
-          
           ],
         ),
       ),

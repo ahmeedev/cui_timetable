@@ -54,8 +54,8 @@ class TeacherTimetableView extends GetView<TeacherTimetableController> {
                     }),
               ),
             ),
-            const SizedBox(
-              height: defaultPadding / 2,
+            SizedBox(
+              height: Constants.defaultPadding / 2,
             ),
             Flexible(
               flex: 5,
@@ -152,19 +152,23 @@ class DayTile extends GetView<TeacherTimetableController> {
           child: Obx(() => Card(
               color: widgetColor,
               shadowColor: shadowColor,
-              elevation: obs.value ? defaultElevation : defaultElevation / 2,
+              elevation: obs.value
+                  ? Constants.defaultElevation
+                  : Constants.defaultElevation / 2,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(defaultRadius)),
+                  borderRadius: BorderRadius.circular(Constants.defaultRadius)),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
                 decoration: BoxDecoration(
                     color: obs.value ? selectionColor : widgetColor,
-                    borderRadius: BorderRadius.circular(defaultRadius)),
+                    borderRadius:
+                        BorderRadius.circular(Constants.defaultRadius)),
                 child: Material(
                   color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(defaultRadius),
+                  borderRadius: BorderRadius.circular(Constants.defaultRadius),
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(defaultRadius),
+                    borderRadius:
+                        BorderRadius.circular(Constants.defaultRadius),
                     onTap: () {
                       callback();
                       controller.getLectures(key: dayKey.toString());
@@ -191,8 +195,8 @@ class DayTile extends GetView<TeacherTimetableController> {
                                     .toString()) ==
                                 0
                             ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: defaultPadding * 2.5),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: Constants.defaultPadding * 2.5),
                                 child: Container(
                                   alignment: Alignment.center,
                                   width: double.infinity,
@@ -210,9 +214,8 @@ class DayTile extends GetView<TeacherTimetableController> {
                                           .lecturesCount[dayKey.toString()]
                                           .toString()),
                                       (index) => Padding(
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 1),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 1),
                                             child: Container(
                                               width: 6,
                                               height: 6,
@@ -252,12 +255,13 @@ class LectureDetailsTile extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 4),
       child: Card(
         color: widgetColor,
-        elevation: defaultElevation,
+        elevation: Constants.defaultElevation,
         shadowColor: shadowColor,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
+        shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.all(Radius.circular(Constants.defaultRadius))),
         child: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
+          padding: EdgeInsets.all(Constants.defaultPadding),
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -299,24 +303,22 @@ class LectureDetailsTile extends StatelessWidget {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               color: textFieldColor,
-                              borderRadius:
-                                  BorderRadius.circular(defaultRadius)),
+                              borderRadius: BorderRadius.circular(
+                                  Constants.defaultRadius)),
                           child: Padding(
-                            padding: const EdgeInsets.all(defaultPadding),
-                            child: Text(
-                              subject.toString(),
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  
-                                  .copyWith(
-                                      fontStyle: FontStyle.italic,
-                                      fontSize:Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!.fontSize!+2
-                                  )
-                            ),
+                            padding: EdgeInsets.all(Constants.defaultPadding),
+                            child: Text(subject.toString(),
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .fontSize! +
+                                            2)),
                           ),
                         ),
                         const SizedBox(
@@ -329,13 +331,8 @@ class LectureDetailsTile extends StatelessWidget {
                               color: primaryColor,
                             ),
                             const SizedBox(width: 5),
-                            Text(
-                              room.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  
-                            ),
+                            Text(room.toString(),
+                                style: Theme.of(context).textTheme.bodyLarge),
                           ],
                         ),
                         const SizedBox(
@@ -348,14 +345,9 @@ class LectureDetailsTile extends StatelessWidget {
                               color: primaryColor,
                             ),
                             const SizedBox(width: 5),
-                            Text(
-                              section.toString(),
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                               
-                            ),
+                            Text(section.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.bodyLarge),
                           ],
                         ),
                       ],

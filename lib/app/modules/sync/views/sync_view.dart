@@ -31,7 +31,7 @@ class SyncBody extends GetView<SyncController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: defaultPadding * 1.5),
+      padding: EdgeInsets.symmetric(vertical: Constants.defaultPadding * 1.5),
       child: Column(
         children: [
           Obx(() => SyncTile(
@@ -62,8 +62,8 @@ class SyncBody extends GetView<SyncController> {
                         color: successColor,
                       ),
               )),
-          const SizedBox(
-            height: defaultPadding,
+          SizedBox(
+            height: Constants.defaultPadding,
           ),
           ElevatedButton(
               onPressed: () async {
@@ -77,9 +77,9 @@ class SyncBody extends GetView<SyncController> {
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: defaultPadding * 1.2,
-                    horizontal: defaultPadding * 2),
+                padding: EdgeInsets.symmetric(
+                    vertical: Constants.defaultPadding * 1.2,
+                    horizontal: Constants.defaultPadding * 2),
                 child: Text(
                   'Sync',
                   style: Theme.of(context).textTheme.labelLarge,
@@ -105,12 +105,14 @@ class SyncTile extends StatelessWidget {
     return Card(
       color: widgetColor,
       shadowColor: shadowColor,
-      elevation: defaultElevation,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
+      elevation: Constants.defaultElevation,
+      shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.all(Radius.circular(Constants.defaultRadius))),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: defaultPadding, vertical: defaultPadding + 2),
+        padding: EdgeInsets.symmetric(
+            horizontal: Constants.defaultPadding,
+            vertical: Constants.defaultPadding + 2),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -142,8 +144,9 @@ class SyncTile extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: defaultPadding * 2, right: defaultPadding),
+                padding: EdgeInsets.only(
+                    left: Constants.defaultPadding * 2,
+                    right: Constants.defaultPadding),
                 child: icon,
               )
             ])

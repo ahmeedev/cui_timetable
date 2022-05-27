@@ -46,8 +46,8 @@ class FreeroomsView extends GetView<FreeroomsController> {
                 ]),
               ),
             ),
-            const SizedBox(
-              height: defaultPadding,
+            SizedBox(
+              height: Constants.defaultPadding,
             ),
             Flexible(
               flex: 5,
@@ -55,7 +55,8 @@ class FreeroomsView extends GetView<FreeroomsController> {
                   widthFactor: 1,
                   heightFactor: 1,
                   child: ListView(
-                      padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Constants.defaultPadding / 2),
                       physics: const BouncingScrollPhysics(),
                       children: const [
                         FreeroomsMainExpansionTile(

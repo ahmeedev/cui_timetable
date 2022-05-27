@@ -8,12 +8,14 @@ Card buildNews(context,
     required bool expanded}) {
   return Card(
       color: widgetColor,
-      elevation: defaultElevation,
+      elevation: Constants.defaultElevation,
       shadowColor: shadowColor,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
+      shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.all(Radius.circular(Constants.defaultRadius))),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(defaultRadius)),
+        borderRadius:
+            BorderRadius.all(Radius.circular(Constants.defaultRadius)),
         child: ExpansionTile(
             expandedAlignment: Alignment.centerLeft,
             initiallyExpanded: expanded,
@@ -22,9 +24,10 @@ Card buildNews(context,
 
             // trailing: const Icon(Icons.motion_photos_on_rounded),
 
-            tilePadding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-            childrenPadding: const EdgeInsets.fromLTRB(
-                defaultPadding, 0, defaultPadding, defaultPadding + 15),
+            tilePadding:
+                EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
+            childrenPadding: EdgeInsets.fromLTRB(Constants.defaultPadding, 0,
+                Constants.defaultPadding, Constants.defaultPadding + 15),
             title: Text(
               title,
               style: Theme.of(context).textTheme.titleMedium,

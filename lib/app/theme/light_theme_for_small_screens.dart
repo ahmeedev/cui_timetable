@@ -1,5 +1,4 @@
 import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/light_theme_for_large_screens.dart';
 import 'package:cui_timetable/app/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

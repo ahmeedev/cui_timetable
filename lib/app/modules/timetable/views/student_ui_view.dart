@@ -18,14 +18,17 @@ class StudentUIView extends GetView<StudentUIController> {
         resizeToAvoidBottomInset: false,
         backgroundColor: scaffoldColor,
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(
-              defaultPadding, defaultPadding, defaultPadding, defaultPadding),
+          padding: EdgeInsets.fromLTRB(
+              Constants.defaultPadding,
+              Constants.defaultPadding,
+              Constants.defaultPadding,
+              Constants.defaultPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildTextField(context),
-              const SizedBox(
-                height: defaultPadding,
+              SizedBox(
+                height: Constants.defaultPadding,
               ),
               _buildButton(context)
             ],
@@ -39,26 +42,25 @@ class StudentUIView extends GetView<StudentUIController> {
     return Card(
       color: widgetColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(defaultRadius),
+        borderRadius: BorderRadius.circular(Constants.defaultRadius),
       ),
-      elevation: defaultElevation,
+      elevation: Constants.defaultElevation,
       shadowColor: shadowColor,
       child: Padding(
-        padding: const EdgeInsets.all(defaultPadding),
+        padding: EdgeInsets.all(Constants.defaultPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: defaultPadding,
+            SizedBox(
+              height: Constants.defaultPadding,
             ),
             Text(
               'Section Name',
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            const SizedBox(
-              height: defaultPadding,
+            SizedBox(
+              height: Constants.defaultPadding,
             ),
-
             TextFormField(
                 style: Theme.of(context)
                     .textTheme
@@ -92,19 +94,17 @@ class StudentUIView extends GetView<StudentUIController> {
                   fillColor: textFieldColor,
                   filled: true,
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(defaultRadius),
+                      borderRadius:
+                          BorderRadius.circular(Constants.defaultRadius),
                       borderSide: const BorderSide(color: primaryColor)),
                 )),
-                
-const SizedBox(
-              height: defaultPadding/2,
+            SizedBox(
+              height: Constants.defaultPadding / 2,
             ),
-           
             Obx(() => controller.filteredList.isEmpty
                 ? const SizedBox()
                 : ConstrainedBox(
                     constraints: BoxConstraints(
-                       
                       minWidth: double.infinity,
                       maxHeight: controller.listVisible.value ? height : 0,
                     ),
@@ -126,7 +126,6 @@ const SizedBox(
                           },
                           dense: true,
                           contentPadding: EdgeInsets.zero,
-                          
                           leading: Text(
                             controller.filteredList[index],
                             style: Theme.of(context)
@@ -179,9 +178,9 @@ const SizedBox(
               }
             },
             child: Padding(
-              padding: const EdgeInsets.all(defaultPadding),
+              padding: EdgeInsets.all(Constants.defaultPadding),
               child: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(Constants.defaultPadding),
                 child: Text('Find Now',
                     style: Theme.of(context).textTheme.labelLarge
                     // .copyWith(fontSize: 16),

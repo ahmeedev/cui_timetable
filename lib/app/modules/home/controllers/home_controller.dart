@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   final internet = true.obs;
-  var newUpdate = false.obs;
+  final newUpdate = false.obs;
   @override
   Future<void> onInit() async {
     super.onInit();

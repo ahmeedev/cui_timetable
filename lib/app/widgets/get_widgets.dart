@@ -32,8 +32,8 @@ class GetXUtilities {
         titlePadding: EdgeInsets.zero,
         barrierDismissible: false,
         backgroundColor: widgetColor,
-        contentPadding: const EdgeInsets.all(defaultPadding),
-        radius: defaultRadius * 2,
+        contentPadding: EdgeInsets.all(Constants.defaultPadding),
+        radius: Constants.defaultRadius * 2,
         content: AspectRatio(
           aspectRatio: 8 / 3,
           child: (Column(

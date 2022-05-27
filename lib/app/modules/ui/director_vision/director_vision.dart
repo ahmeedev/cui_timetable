@@ -21,7 +21,7 @@ class DirectorVisionView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(Constants.defaultPadding),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: primaryColor, width: 2),
@@ -53,10 +53,10 @@ class DirectorVisionView extends StatelessWidget {
                   .copyWith(color: Colors.black)),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.only(
-                  top: defaultPadding,
-                  left: defaultPadding,
-                  right: defaultPadding),
+              padding: EdgeInsets.only(
+                  top: Constants.defaultPadding,
+                  left: Constants.defaultPadding,
+                  right: Constants.defaultPadding),
               child: ListView(
                 physics: const BouncingScrollPhysics(),
                 children: [

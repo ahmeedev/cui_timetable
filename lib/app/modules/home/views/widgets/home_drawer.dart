@@ -43,8 +43,8 @@ class Header extends StatelessWidget {
     //     crossAxisAlignment: CrossAxisAlignment.start,
     //     children: [
     //       Padding(
-    //           padding: const EdgeInsets.fromLTRB(defaultPadding * 1.5,
-    //               defaultPadding * 2, defaultPadding, defaultPadding),
+    //           padding: const EdgeInsets.fromLTRB(Constants.defaultPadding * 1.5,
+    //               Constants.defaultPadding * 2, Constants.defaultPadding, Constants.defaultPadding),
     //           child: Container(
     //             padding: const EdgeInsets.all(30),
     //             decoration: const BoxDecoration(
@@ -55,7 +55,7 @@ class Header extends StatelessWidget {
     //             ),
     //           )),
     //       Padding(
-    //         padding: const EdgeInsets.only(left: defaultPadding * 1.5),
+    //         padding: const EdgeInsets.only(left: Constants.defaultPadding * 1.5),
     //         child: Text(
     //           'No Details Available',
     //           style: Theme.of(context)
@@ -141,7 +141,7 @@ class ButtonList extends StatelessWidget {
         child: ListTile(
             // dense: true,
             // contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
-            // visualDensity: VisualDensity(horizontal: 0, vertical: 0),
+            // visualDensity: VisualDensity(horizontal: 1, vertical: 0),
             // onTap: onTap,
             leading: ImageIcon(
               icon,

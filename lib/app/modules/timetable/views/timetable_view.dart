@@ -56,14 +56,14 @@ class TimetableView extends GetView<TimetableController> {
         centerTitle: true,
         // actions: const [
         //   Padding(
-        //     padding: EdgeInsets.only(right: defaultPadding),
+        //     padding: EdgeInsets.only(right: Constants.defaultPadding),
         //     child: Icon(
         //       Icons.search,
         //     ),
         //   )
         // ],
         bottom: TabBar(
-          indicatorPadding: const EdgeInsets.all(defaultPadding / 3),
+          indicatorPadding: EdgeInsets.all(Constants.defaultPadding / 3),
           indicatorWeight: 4,
           indicatorColor: shadowColor,
           tabs: [

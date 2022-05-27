@@ -1,5 +1,14 @@
+class Constants {
+  static var defaultPadding;
+  static var defaultRadius;
+  static var defaultElevation;
+  static var iconSize;
 
-const defaultPadding = 10.0;
-const defaultRadius = 10.0;
-const defaultElevation = 10.0;
-const iconSize = 25.0;
+  static initializeFields(
+      {required padding, required radius, required elevation, required icon}) {
+    defaultPadding = padding;
+    defaultRadius = radius;
+    defaultElevation = elevation;
+    iconSize = icon;
+  }
+}

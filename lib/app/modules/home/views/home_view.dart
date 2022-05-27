@@ -6,7 +6,6 @@ import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -61,9 +60,9 @@ class HomeAppBar extends StatelessWidget {
       centerTitle: true,
       // title: const Text('CUI_TIMETABLE'),
       flexibleSpace: ClipRRect(
-        borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(defaultRadius * 2),
-            bottomRight: Radius.circular(defaultRadius * 2)),
+        borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(Constants.defaultRadius * 2),
+            bottomRight: Radius.circular(Constants.defaultRadius * 2)),
         child: Stack(
             fit: StackFit.expand,
             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -88,11 +87,12 @@ class HomeAppBar extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'CUI TIMETABLE',
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize:Theme.of(context).textTheme.headlineSmall!.fontSize!-4.0 
-                        ),
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize:
+                            Theme.of(context).textTheme.titleLarge!.fontSize! +
+                                4.0),
                   ),
 
                   // child: DefaultTextStyle(
@@ -117,7 +117,8 @@ class HomeAppBar extends StatelessWidget {
               Container(
                 alignment: Alignment.topRight,
                 margin: EdgeInsets.symmetric(
-                    vertical: defaultPadding * 4, horizontal: defaultPadding),
+                    vertical: Constants.defaultPadding * 4,
+                    horizontal: Constants.defaultPadding),
                 // color: Colors.amber,
                 child: DefaultTextStyle(
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -158,10 +159,10 @@ class HomeBody extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-        padding: const EdgeInsets.only(
-            top: defaultPadding * 5.8,
-            right: defaultPadding,
-            left: defaultPadding,
+        padding: EdgeInsets.only(
+            top: Constants.defaultPadding * 5.8,
+            right: Constants.defaultPadding,
+            left: Constants.defaultPadding,
             bottom: 0),
         sliver: SliverFillRemaining(
           child: Column(
@@ -173,19 +174,21 @@ class HomeBody extends GetView<HomeController> {
                     Obx(
                       () => controller.newUpdate.value
                           ? Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: defaultPadding),
+                              padding: EdgeInsets.only(
+                                  bottom: Constants.defaultPadding),
                               child: Card(
                                   // color: widgetColor,
-                                  elevation: defaultElevation,
+                                  elevation: Constants.defaultElevation,
                                   shadowColor: shadowColor,
-                                  shape: const RoundedRectangleBorder(
+                                  shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(defaultRadius))),
+                                          Radius.circular(
+                                              Constants.defaultRadius))),
                                   child: Container(
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(defaultRadius)),
+                                            Radius.circular(
+                                                Constants.defaultRadius)),
                                         gradient: LinearGradient(
                                           colors: successGradient,
                                         )),
@@ -214,8 +217,8 @@ class HomeBody extends GetView<HomeController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding:
-                                const EdgeInsets.only(bottom: defaultPadding),
+                            padding: EdgeInsets.only(
+                                bottom: Constants.defaultPadding),
                             child: Row(
                               children: [
                                 Text('Latest News',
@@ -297,10 +300,10 @@ class HomeBottomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(defaultPadding),
+      padding: EdgeInsets.all(Constants.defaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -320,7 +323,7 @@ class HomeBottomWidget extends StatelessWidget {
                 print(MediaQuery.of(context).size.height);
               },
               child: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(Constants.defaultPadding),
                 child: Text(
                   'Sign in',
                   style: Theme.of(context).textTheme.labelLarge,
@@ -339,17 +342,19 @@ class HomeOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: MediaQuery.of(context).size.height / 4.8,
+        top: MediaQuery.of(context).size.height / 4.6,
         right: 10,
         left: 10,
         child: Card(
           color: widgetColor,
-          elevation: defaultElevation,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
+          elevation: Constants.defaultElevation,
+          shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(Constants.defaultRadius))),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding *1.5),
+            padding: EdgeInsets.symmetric(
+                horizontal: Constants.defaultPadding,
+                vertical: Constants.defaultPadding * 1.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -360,13 +365,13 @@ class HomeOverlay extends StatelessWidget {
                     Get.toNamed(Routes.TIMETABLE);
                   },
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: defaultPadding),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Constants.defaultPadding),
                     child: Column(
                       children: [
-                        const ImageIcon(
+                        ImageIcon(
                           AssetImage('assets/home/timetable.png'),
-                          size: iconSize,
+                          size: Constants.iconSize,
                           color: primaryColor,
                         ),
                         const SizedBox(height: 10),
@@ -390,13 +395,13 @@ class HomeOverlay extends StatelessWidget {
                     Get.toNamed(Routes.FREEROOMS);
                   },
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: defaultPadding),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Constants.defaultPadding),
                     child: Column(
                       children: [
-                        const ImageIcon(
+                        ImageIcon(
                           AssetImage('assets/home/room.png'),
-                          size: iconSize,
+                          size: Constants.iconSize,
                           color: primaryColor,
                         ),
                         const SizedBox(height: 10),
@@ -423,13 +428,13 @@ class HomeOverlay extends StatelessWidget {
                         gradient: primaryGradient);
                   },
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: defaultPadding),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Constants.defaultPadding),
                     child: Column(
                       children: [
-                        const ImageIcon(
+                        ImageIcon(
                           AssetImage('assets/home/datesheet.png'),
-                          size: iconSize,
+                          size: Constants.iconSize,
                           color: primaryColor,
                         ),
                         const SizedBox(height: 6),

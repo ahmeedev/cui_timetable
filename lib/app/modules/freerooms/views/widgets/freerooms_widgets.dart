@@ -20,9 +20,9 @@ class DayTile extends StatelessWidget {
           widthFactor: 1,
           child: Card(
             color: widgetColor,
-            elevation: defaultElevation / 2,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)),
+            elevation: Constants.defaultElevation / 2,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Obx(() => AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   decoration: BoxDecoration(
@@ -42,15 +42,15 @@ class DayTile extends StatelessWidget {
                           Text(day,
                               style: Theme.of(context).textTheme.titleMedium),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: defaultPadding * 2.5),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Constants.defaultPadding * 2.5),
                             child: Container(
                               alignment: Alignment.center,
                               width: double.infinity,
                               height: 5,
                               decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: successGradient)),
+                                  gradient:
+                                      LinearGradient(colors: successGradient)),
                             ),
                           )
                         ],
@@ -76,18 +76,19 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
     return Card(
       // color: widgetColor,
       shadowColor: shadowColor,
-      elevation: defaultElevation,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
+      elevation: Constants.defaultElevation,
+      shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.all(Radius.circular(Constants.defaultRadius))),
       child: ExpansionTile(
         initiallyExpanded: expanded,
         maintainState: true,
-        leading: const ImageIcon(
+        leading: ImageIcon(
           AssetImage('assets/freerooms/timer.png'),
-          size: iconSize,
+          size: Constants.iconSize,
           // color: primaryColor,
         ),
-        childrenPadding: const EdgeInsets.all(defaultPadding / 2),
+        childrenPadding: EdgeInsets.all(Constants.defaultPadding / 2),
         collapsedBackgroundColor: widgetColor,
         backgroundColor: expandedColor,
         iconColor: primaryColor,
@@ -112,7 +113,7 @@ class FreeroomsClassesExpensionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shadowColor: shadowColor,
-      elevation: defaultElevation,
+      elevation: Constants.defaultElevation,
       child: ExpansionTile(
         collapsedBackgroundColor: widgetColor,
         backgroundColor: textFieldColor,
@@ -125,7 +126,7 @@ class FreeroomsClassesExpensionTile extends StatelessWidget {
               .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         leading: Padding(
-          padding: const EdgeInsets.only(top: defaultPadding / 3),
+          padding: EdgeInsets.only(top: Constants.defaultPadding / 3),
           child: Text(
             '12',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -149,7 +150,7 @@ class FreeroomsClassesExpensionTile extends StatelessWidget {
           ),
 
           // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+          //   padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding / 2),
           //   child: GridView.count(
           //     physics: const ScrollPhysics(),
           //     shrinkWrap: true,
@@ -177,7 +178,7 @@ class FreeroomsLabsExpensionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shadowColor: shadowColor,
-      elevation: defaultElevation,
+      elevation: Constants.defaultElevation,
       child: ExpansionTile(
         collapsedBackgroundColor: widgetColor,
         backgroundColor: textFieldColor,
@@ -190,7 +191,7 @@ class FreeroomsLabsExpensionTile extends StatelessWidget {
               .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         leading: Padding(
-          padding: const EdgeInsets.only(top: defaultPadding / 3),
+          padding: EdgeInsets.only(top: Constants.defaultPadding / 3),
           child: Text(
             '12',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -201,7 +202,7 @@ class FreeroomsLabsExpensionTile extends StatelessWidget {
         ),
         children: [
           Padding(
-            padding: const EdgeInsets.all(defaultPadding),
+            padding: EdgeInsets.all(Constants.defaultPadding),
             child: GridView.count(
               physics: const ScrollPhysics(),
               shrinkWrap: true,
@@ -230,10 +231,10 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+      padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
       child: Card(
         shadowColor: shadowColor,
-        elevation: defaultElevation,
+        elevation: Constants.defaultElevation,
         child: ExpansionTile(
           collapsedBackgroundColor: widgetColor,
           backgroundColor: expandedColor,
@@ -246,7 +247,7 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
                 .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           leading: Padding(
-            padding: const EdgeInsets.only(top: defaultPadding / 3),
+            padding: EdgeInsets.only(top: Constants.defaultPadding / 3),
             child: Text(
               '12',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -257,7 +258,8 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
           ),
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+              padding: EdgeInsets.symmetric(
+                  horizontal: Constants.defaultPadding / 2),
               child: GridView.count(
                 physics: const ScrollPhysics(),
                 shrinkWrap: true,
@@ -291,10 +293,11 @@ class FreeroomsTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.zero,
       child: Card(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
+        shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.all(Radius.circular(Constants.defaultRadius))),
         color: widgetColor,
-        elevation: defaultElevation / 2,
+        elevation: Constants.defaultElevation / 2,
         shadowColor: shadowColor,
         child: Center(
           child: Text(
