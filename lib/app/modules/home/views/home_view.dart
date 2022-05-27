@@ -89,10 +89,13 @@ class HomeAppBar extends StatelessWidget {
                   child: Text(
                     'CUI TIMETABLE',
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize:Theme.of(context).textTheme.headlineSmall!.fontSize!-4.0 
-                        ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .fontSize! -
+                            4.0),
                   ),
 
                   // child: DefaultTextStyle(
@@ -159,7 +162,7 @@ class HomeBody extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return SliverPadding(
         padding: const EdgeInsets.only(
-            top: defaultPadding * 5.8,
+            top: defaultPadding * 4.8,
             right: defaultPadding,
             left: defaultPadding,
             bottom: 0),
@@ -297,10 +300,11 @@ class HomeBottomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(defaultPadding),
+      padding: const EdgeInsets.symmetric(
+          horizontal: defaultPadding, vertical: defaultPadding / 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -349,7 +353,7 @@ class HomeOverlay extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
           child: Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding *1.5),
+                horizontal: defaultPadding, vertical: defaultPadding * 1.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

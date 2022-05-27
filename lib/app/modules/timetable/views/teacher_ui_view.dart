@@ -58,7 +58,6 @@ class TeacherUIView extends GetView<TeacherUIController> {
             const SizedBox(
               height: defaultPadding,
             ),
-
             TextFormField(
                 style: Theme.of(context)
                     .textTheme
@@ -95,9 +94,8 @@ class TeacherUIView extends GetView<TeacherUIController> {
                       borderRadius: BorderRadius.circular(defaultRadius),
                       borderSide: const BorderSide(color: primaryColor)),
                 )),
-
             const SizedBox(
-              height: defaultPadding/2,
+              height: defaultPadding / 2,
             ),
             Obx(() => controller.filteredList.isEmpty
                 ? const SizedBox()

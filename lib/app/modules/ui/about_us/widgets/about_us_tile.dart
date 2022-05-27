@@ -1,4 +1,3 @@
-
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,7 @@ class AboutUsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: defaultPadding/2),
+      padding: const EdgeInsets.symmetric(vertical: defaultPadding / 2),
       child: Stack(children: [
         Positioned(
           left: 40,
@@ -40,7 +39,7 @@ class AboutUsTile extends StatelessWidget {
                       shape: BoxShape.circle, color: Colors.transparent),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top:defaultPadding*2.5),
+                  padding: const EdgeInsets.only(top: defaultPadding * 2.5),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -58,12 +57,17 @@ class AboutUsTile extends StatelessWidget {
                                   .titleMedium!
                                   .copyWith(color: primaryColor))
                           : const SizedBox(),
-                      const SizedBox(height: defaultPadding/2),
+                      const SizedBox(height: defaultPadding / 2),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: defaultPadding),
                         child: Text(description,
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                color: Colors.black, fontWeight: FontWeight.bold)),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
@@ -81,7 +85,7 @@ class AboutUsTile extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(defaultPadding / 3),
               child: Container(
-                width:100,
+                width: 100,
                 height: 100,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -92,14 +96,13 @@ class AboutUsTile extends StatelessWidget {
             ),
           ),
         ),
-       
         Align(
           alignment: Alignment.topRight,
           child: Padding(
             padding: const EdgeInsets.only(right: defaultPadding / 2, top: 8),
             child: Container(
               alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width/4,
+              width: MediaQuery.of(context).size.width / 4,
               height: 40,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -117,10 +120,6 @@ class AboutUsTile extends StatelessWidget {
             ),
           ),
         )
-     
-     
-     
-     
       ]),
     );
   }

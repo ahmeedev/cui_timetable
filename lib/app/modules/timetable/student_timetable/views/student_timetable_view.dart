@@ -171,9 +171,8 @@ class DayTile extends GetView<StudentTimetableController> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          day,
-                        style: Theme.of(context).textTheme.titleMedium),
+                        Text(day,
+                            style: Theme.of(context).textTheme.titleMedium),
                         controller.lecturesCount[dayKey] == "null"
                             ? const SpinKitFadingCircle(
                                 color: primaryColor,
@@ -204,13 +203,11 @@ class DayTile extends GetView<StudentTimetableController> {
                                 alignment: WrapAlignment.center,
                                 children: [
                                   ...List.generate(
-                                      int.parse(controller
-                                          .lecturesCount[dayKey]
+                                      int.parse(controller.lecturesCount[dayKey]
                                           .toString()),
                                       (index) => Padding(
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 1),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 1),
                                             child: Container(
                                               width: 6,
                                               height: 6,
@@ -309,14 +306,13 @@ class LectureDetailsTile extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
-                                  
                                   .copyWith(
                                       fontStyle: FontStyle.italic,
-                                      fontSize:Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!.fontSize!+2
-                                  
-                                  ),
+                                      fontSize: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .fontSize! +
+                                          2),
                             ),
                           ),
                         ),
@@ -330,13 +326,8 @@ class LectureDetailsTile extends StatelessWidget {
                               color: primaryColor,
                             ),
                             const SizedBox(width: 5),
-                            Text(
-                              room.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  
-                            ),
+                            Text(room.toString(),
+                                style: Theme.of(context).textTheme.bodyLarge!),
                           ],
                         ),
                         const SizedBox(
@@ -351,14 +342,10 @@ class LectureDetailsTile extends StatelessWidget {
                             const SizedBox(width: 5),
                             Flexible(
                               child: Container(
-                                child: Text(
-                                  teacher.toString(),
-                                  overflow: TextOverflow.visible,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      
-                                ),
+                                child: Text(teacher.toString(),
+                                    overflow: TextOverflow.visible,
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge!),
                               ),
                             ),
                           ],

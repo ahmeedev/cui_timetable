@@ -21,8 +21,8 @@ class DayTile extends StatelessWidget {
           child: Card(
             color: widgetColor,
             elevation: defaultElevation / 2,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Obx(() => AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   decoration: BoxDecoration(
@@ -49,8 +49,8 @@ class DayTile extends StatelessWidget {
                               width: double.infinity,
                               height: 5,
                               decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: successGradient)),
+                                  gradient:
+                                      LinearGradient(colors: successGradient)),
                             ),
                           )
                         ],

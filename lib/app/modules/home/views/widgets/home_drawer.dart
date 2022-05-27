@@ -1,5 +1,6 @@
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:cui_timetable/app/theme/app_constants.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -78,6 +79,8 @@ class ButtonList extends StatelessWidget {
     return Flexible(
       child: ListView(
         padding: EdgeInsets.zero,
+        physics: BouncingScrollPhysics(),
+        shrinkWrap: true,
         children: [
           buildButton(context,
               icon: const AssetImage('assets/drawer/vision.png'),
@@ -139,13 +142,14 @@ class ButtonList extends StatelessWidget {
         onTap: onTap,
         splashColor: primaryColor,
         child: ListTile(
-            // dense: true,
+            dense: true,
             // contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
             // visualDensity: VisualDensity(horizontal: 0, vertical: 0),
             // onTap: onTap,
             leading: ImageIcon(
               icon,
               color: primaryColor,
+              size: iconSize,
             ),
             title: Text(title, style: Theme.of(context).textTheme.titleSmall)),
       ),

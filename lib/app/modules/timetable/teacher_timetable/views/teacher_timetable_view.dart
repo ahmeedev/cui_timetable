@@ -210,9 +210,8 @@ class DayTile extends GetView<TeacherTimetableController> {
                                           .lecturesCount[dayKey.toString()]
                                           .toString()),
                                       (index) => Padding(
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 1),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 1),
                                             child: Container(
                                               width: 6,
                                               height: 6,
@@ -303,20 +302,18 @@ class LectureDetailsTile extends StatelessWidget {
                                   BorderRadius.circular(defaultRadius)),
                           child: Padding(
                             padding: const EdgeInsets.all(defaultPadding),
-                            child: Text(
-                              subject.toString(),
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  
-                                  .copyWith(
-                                      fontStyle: FontStyle.italic,
-                                      fontSize:Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!.fontSize!+2
-                                  )
-                            ),
+                            child: Text(subject.toString(),
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .fontSize! +
+                                            2)),
                           ),
                         ),
                         const SizedBox(
@@ -329,13 +326,8 @@ class LectureDetailsTile extends StatelessWidget {
                               color: primaryColor,
                             ),
                             const SizedBox(width: 5),
-                            Text(
-                              room.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  
-                            ),
+                            Text(room.toString(),
+                                style: Theme.of(context).textTheme.bodyLarge),
                           ],
                         ),
                         const SizedBox(
@@ -348,14 +340,9 @@ class LectureDetailsTile extends StatelessWidget {
                               color: primaryColor,
                             ),
                             const SizedBox(width: 5),
-                            Text(
-                              section.toString(),
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                               
-                            ),
+                            Text(section.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.bodyLarge),
                           ],
                         ),
                       ],

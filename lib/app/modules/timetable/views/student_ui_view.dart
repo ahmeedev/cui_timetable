@@ -58,7 +58,6 @@ class StudentUIView extends GetView<StudentUIController> {
             const SizedBox(
               height: defaultPadding,
             ),
-
             TextFormField(
                 style: Theme.of(context)
                     .textTheme
@@ -95,16 +94,13 @@ class StudentUIView extends GetView<StudentUIController> {
                       borderRadius: BorderRadius.circular(defaultRadius),
                       borderSide: const BorderSide(color: primaryColor)),
                 )),
-                
-const SizedBox(
-              height: defaultPadding/2,
+            const SizedBox(
+              height: defaultPadding / 2,
             ),
-           
             Obx(() => controller.filteredList.isEmpty
                 ? const SizedBox()
                 : ConstrainedBox(
                     constraints: BoxConstraints(
-                       
                       minWidth: double.infinity,
                       maxHeight: controller.listVisible.value ? height : 0,
                     ),
@@ -126,7 +122,6 @@ const SizedBox(
                           },
                           dense: true,
                           contentPadding: EdgeInsets.zero,
-                          
                           leading: Text(
                             controller.filteredList[index],
                             style: Theme.of(context)
