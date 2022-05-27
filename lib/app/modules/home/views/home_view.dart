@@ -30,17 +30,19 @@ class HomeView extends StatelessWidget {
           ),
         ),
         body: Stack(
-          fit: StackFit.expand,
+          // fit: StackFit.expand,
+          clipBehavior: Clip.hardEdge,
+
           children: [
             CustomScrollView(
               physics: NeverScrollableScrollPhysics(),
               slivers: [
                 HomeAppBar(),
-                HomeBody(),
+                Flexible(child: HomeBody()),
                 // const HomeBottomWidget(),
               ],
             ),
-            HomeOverlay()
+            // HomeOverlay()
           ],
         ));
   }
@@ -59,13 +61,21 @@ class HomeAppBar extends StatelessWidget {
       backgroundColor: Colors.transparent,
       centerTitle: true,
       // title: const Text('CUI_TIMETABLE'),
+      actions: [
+        Padding(
+          padding: EdgeInsets.all(Constants.defaultPadding),
+          child: Text("Action"),
+        )
+      ],
+
       flexibleSpace: ClipRRect(
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(Constants.defaultRadius * 2),
             bottomRight: Radius.circular(Constants.defaultRadius * 2)),
         child: Stack(
-            fit: StackFit.expand,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
+
+            // fit: StackFit.expand,
+            clipBehavior: Clip.hardEdge,
             alignment: Alignment.center,
             children: [
               Container(
@@ -113,7 +123,6 @@ class HomeAppBar extends StatelessWidget {
                   // ),
                 ),
               ),
-              Align(alignment: Alignment.topRight),
               Container(
                 alignment: Alignment.topRight,
                 margin: EdgeInsets.symmetric(
@@ -146,6 +155,7 @@ class HomeAppBar extends StatelessWidget {
                   ),
                 ),
               ),
+              HomeOverlay()
             ]),
       ),
     );

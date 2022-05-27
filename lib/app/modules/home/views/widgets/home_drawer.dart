@@ -142,14 +142,14 @@ class ButtonList extends StatelessWidget {
         onTap: onTap,
         splashColor: primaryColor,
         child: ListTile(
-            dense: true,
+            // dense: true,
             // contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
             // visualDensity: VisualDensity(horizontal: 1, vertical: 0),
             // onTap: onTap,
             leading: ImageIcon(
               icon,
               color: primaryColor,
-              size: iconSize,
+              size: Constants.iconSize,
             ),
             title: Text(title, style: Theme.of(context).textTheme.titleSmall)),
       ),
