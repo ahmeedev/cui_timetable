@@ -4,6 +4,8 @@ class DBNames {
 
   static const studentsDB = "studentsDB";
   static const teachersDB = "teachersDB";
+
+  static const freerooms = "freerooms";
 }
 
 class DBInfo {
@@ -20,4 +22,12 @@ class DBInfo {
 class DBTimeSlots {
   static const monToThur = 'monToThur';
   static const fri = 'fri';
+}
+
+class DBFreerooms {
+  static const monday = 'monday';
+  static const tuesday = 'tuesday';
+  static const wednesday = 'wednesday';
+  static const thursday = 'thursday';
+  static const friday = 'friday';
 }

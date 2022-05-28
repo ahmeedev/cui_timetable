@@ -5,10 +5,15 @@ import 'package:get/get.dart';
 
 class DayTile extends StatelessWidget {
   final String day;
+  final String dayKey;
   final Function callback;
   final Rx<bool> obs;
   const DayTile(
-      {required this.day, required this.callback, required this.obs, Key? key})
+      {required this.day,
+      required this.dayKey,
+      required this.callback,
+      required this.obs,
+      Key? key})
       : super(key: key);
 
   @override
@@ -34,7 +39,9 @@ class DayTile extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         callback();
+
                         obs.value = true;
+                        // controller.
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -66,9 +73,13 @@ class DayTile extends StatelessWidget {
 class FreeroomsMainExpansionTile extends StatelessWidget {
   final String slot;
   final bool expanded;
+  var totalClasses;
 
-  const FreeroomsMainExpansionTile(
-      {Key? key, required this.slot, required this.expanded})
+  FreeroomsMainExpansionTile(
+      {Key? key,
+      required this.slot,
+      required this.totalClasses,
+      required this.expanded})
       : super(key: key);
 
   @override
@@ -100,9 +111,11 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
             style:
                 Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
           ),
-          children: const [
-            FreeroomsClassesExpensionTile(),
-            FreeroomsLabsExpensionTile(),
+          children: [
+            FreeroomsClassesExpensionTile(
+              totalClasses: totalClasses,
+            ),
+            // FreeroomsLabsExpensionTile(),
           ],
         ),
       ),
@@ -111,7 +124,9 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
 }
 
 class FreeroomsClassesExpensionTile extends StatelessWidget {
-  const FreeroomsClassesExpensionTile({Key? key}) : super(key: key);
+  var totalClasses;
+  FreeroomsClassesExpensionTile({Key? key, required this.totalClasses})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +153,7 @@ class FreeroomsClassesExpensionTile extends StatelessWidget {
           leading: Padding(
             padding: EdgeInsets.only(top: Constants.defaultPadding / 3),
             child: Text(
-              '12',
+              totalClasses.toString(),
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     fontWeight: FontWeight.w900,
                     fontSize: 16,

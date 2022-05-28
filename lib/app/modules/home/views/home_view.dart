@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cui_timetable/app/data/database/freerooms/freerooms_database.dart';
 import 'package:cui_timetable/app/data/database/timeslots/timeslots_database.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_drawer.dart';
@@ -301,6 +302,8 @@ class HomeBottomWidget extends StatelessWidget {
                 // GetXUtilities.dialog();
                 // downloadFile('timetable.csv');
                 // controller.insertTime();
+                final database = FreeRoomsDatabase();
+                database.createDatabase();
               },
               child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),
