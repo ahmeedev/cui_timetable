@@ -50,7 +50,7 @@ class FreeroomsView extends GetView<FreeroomsController> {
               height: Constants.defaultPadding,
             ),
             Flexible(
-              flex: 5,
+              flex: Constants.lectureFlex,
               child: FractionallySizedBox(
                   widthFactor: 1,
                   heightFactor: 1,
