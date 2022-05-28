@@ -58,7 +58,7 @@ class TeacherTimetableView extends GetView<TeacherTimetableController> {
               height: Constants.defaultPadding / 2,
             ),
             Flexible(
-              flex: 5,
+              flex: Constants.lectureFlex,
               child: Obx(() => FractionallySizedBox(
                     widthFactor: 1,
                     heightFactor: 1,
@@ -252,7 +252,8 @@ class LectureDetailsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 4),
+      padding: EdgeInsets.fromLTRB(Constants.defaultPadding / 2, 0,
+          Constants.defaultPadding / 2, Constants.defaultPadding / 2),
       child: Card(
         color: widgetColor,
         elevation: Constants.defaultElevation,
@@ -332,7 +333,10 @@ class LectureDetailsTile extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(room.toString(),
-                                style: Theme.of(context).textTheme.bodyLarge),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontWeight: FontWeight.bold)),
                           ],
                         ),
                         const SizedBox(
@@ -347,7 +351,10 @@ class LectureDetailsTile extends StatelessWidget {
                             const SizedBox(width: 5),
                             Text(section.toString(),
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.bodyLarge),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontWeight: FontWeight.bold)),
                           ],
                         ),
                       ],

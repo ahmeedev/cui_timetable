@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +59,7 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
               ),
             ),
             Flexible(
-              flex: 5,
+              flex: Constants.lectureFlex,
               child: Obx(() => FractionallySizedBox(
                     widthFactor: 1,
                     heightFactor: 1,
@@ -333,7 +335,10 @@ class LectureDetailsTile extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(room.toString(),
-                                style: Theme.of(context).textTheme.bodyLarge!),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontWeight: FontWeight.bold)),
                           ],
                         ),
                         const SizedBox(
@@ -350,8 +355,10 @@ class LectureDetailsTile extends StatelessWidget {
                               child: Container(
                                 child: Text(teacher.toString(),
                                     overflow: TextOverflow.visible,
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge!),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(fontWeight: FontWeight.bold)),
                               ),
                             ),
                           ],

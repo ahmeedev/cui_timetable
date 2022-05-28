@@ -44,7 +44,12 @@ class MyApp extends GetView<HomeController> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         Constants.initializeFields(
-            elevation: 10.0, padding: 10.0, radius: 10.0, icon: 26.0);
+            elevation: 10.0,
+            padding: 10.0,
+            radius: 10.0,
+            icon: 26.0,
+            overlaySize: 5,
+            flex: 6);
         if (constraints.maxWidth < 380) {
           return getMaterialApp(theme: lightThemeForSmallScreens(context));
         } else {

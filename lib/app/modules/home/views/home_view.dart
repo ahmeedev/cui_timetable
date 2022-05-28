@@ -38,11 +38,11 @@ class HomeView extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               slivers: [
                 HomeAppBar(),
-                Flexible(child: HomeBody()),
+                HomeBody(),
                 // const HomeBottomWidget(),
               ],
             ),
-            // HomeOverlay()
+            HomeOverlay()
           ],
         ));
   }
@@ -63,8 +63,34 @@ class HomeAppBar extends StatelessWidget {
       // title: const Text('CUI_TIMETABLE'),
       actions: [
         Padding(
-          padding: EdgeInsets.all(Constants.defaultPadding),
-          child: Text("Action"),
+          padding: EdgeInsets.all(Constants.defaultPadding * 2),
+          child: DefaultTextStyle(
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: shadowColor, fontStyle: FontStyle.italic),
+            child: AnimatedTextKit(
+              animatedTexts: [
+                TypewriterAnimatedText('BE AWESOME'),
+                TypewriterAnimatedText('BE OPTIMISTIC'),
+                TypewriterAnimatedText('BE DIFFERENT'),
+                TypewriterAnimatedText('BE CONSISTENT'),
+                TypewriterAnimatedText('YOU MATTER'),
+                TypewriterAnimatedText('YOU CAN'),
+                TypewriterAnimatedText('TAKE RISK'),
+                TypewriterAnimatedText('ACCEPT YOURSELF'),
+                TypewriterAnimatedText('TRUST YOURSELF'),
+                TypewriterAnimatedText('STAY FOCUSED'),
+                TypewriterAnimatedText('STAY POSITIVE'),
+                TypewriterAnimatedText('STAY CURIOUS'),
+                TypewriterAnimatedText('MOVE FORWARD'),
+                TypewriterAnimatedText('TRY AGAIN'),
+                TypewriterAnimatedText('ENJOY LIFE'),
+              ],
+              repeatForever: true,
+              pause: const Duration(milliseconds: 2000),
+            ),
+          ),
         )
       ],
 
@@ -73,9 +99,8 @@ class HomeAppBar extends StatelessWidget {
             bottomLeft: Radius.circular(Constants.defaultRadius * 2),
             bottomRight: Radius.circular(Constants.defaultRadius * 2)),
         child: Stack(
-
             // fit: StackFit.expand,
-            clipBehavior: Clip.hardEdge,
+            // clipBehavior: Clip.hardEdge,
             alignment: Alignment.center,
             children: [
               Container(
@@ -88,10 +113,6 @@ class HomeAppBar extends StatelessWidget {
                       forGradient,
                     ],
                   ),
-                  // image: const DecorationImage(
-                  //     image: AssetImage('assets/home/art.png'),
-                  //     scale: 10,
-                  //     fit: BoxFit.fitWidth)
                 ),
                 height: double.infinity,
                 child: Center(
@@ -104,58 +125,8 @@ class HomeAppBar extends StatelessWidget {
                             Theme.of(context).textTheme.titleLarge!.fontSize! +
                                 4.0),
                   ),
-
-                  // child: DefaultTextStyle(
-                  //   style: Theme.of(context).textTheme.titleLarge!,
-                  //   child: AnimatedTextKit(
-                  //     repeatForever: true,
-                  //     animatedTexts: [
-                  //       // TypewriterAnimatedText('CUI'),
-                  //       // TypewriterAnimatedText('TIMETABLE'),
-                  //       TypewriterAnimatedText('CUI TIMETABLE'),
-                  //     ],
-                  //     onTap: () {
-                  //       print("Tap Event");
-                  //     },
-                  //     pause: const Duration(milliseconds: 5000),
-                  //     // displayFullTextOnTap: true,
-                  //   ),
-                  // ),
                 ),
               ),
-              Container(
-                alignment: Alignment.topRight,
-                margin: EdgeInsets.symmetric(
-                    vertical: Constants.defaultPadding * 4,
-                    horizontal: Constants.defaultPadding),
-                // color: Colors.amber,
-                child: DefaultTextStyle(
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: shadowColor, fontStyle: FontStyle.italic),
-                  child: AnimatedTextKit(
-                    animatedTexts: [
-                      TypewriterAnimatedText('BE AWESOME'),
-                      TypewriterAnimatedText('BE OPTIMISTIC'),
-                      TypewriterAnimatedText('BE DIFFERENT'),
-                      TypewriterAnimatedText('BE CONSISTENT'),
-                      TypewriterAnimatedText('YOU MATTER'),
-                      TypewriterAnimatedText('YOU CAN'),
-                      TypewriterAnimatedText('TAKE RISK'),
-                      TypewriterAnimatedText('ACCEPT YOURSELF'),
-                      TypewriterAnimatedText('TRUST YOURSELF'),
-                      TypewriterAnimatedText('STAY FOCUSED'),
-                      TypewriterAnimatedText('STAY POSITIVE'),
-                      TypewriterAnimatedText('STAY CURIOUS'),
-                      TypewriterAnimatedText('MOVE FORWARD'),
-                      TypewriterAnimatedText('TRY AGAIN'),
-                      TypewriterAnimatedText('ENJOY LIFE'),
-                    ],
-                    repeatForever: true,
-                    pause: const Duration(milliseconds: 2000),
-                  ),
-                ),
-              ),
-              HomeOverlay()
             ]),
       ),
     );
@@ -170,7 +141,7 @@ class HomeBody extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return SliverPadding(
         padding: EdgeInsets.only(
-            top: Constants.defaultPadding * 5.8,
+            top: Constants.defaultPadding * Constants.homeOverlaySize,
             right: Constants.defaultPadding,
             left: Constants.defaultPadding,
             bottom: 0),
@@ -352,7 +323,8 @@ class HomeOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: MediaQuery.of(context).size.height / 4.6,
+        top: MediaQuery.of(context).size.height /
+            (Constants.homeOverlaySize - 0.4),
         right: 10,
         left: 10,
         child: Card(
