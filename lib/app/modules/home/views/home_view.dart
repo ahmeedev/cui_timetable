@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cui_timetable/app/data/database/timeslots/timeslots_database.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_drawer.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_widgets.dart';
@@ -300,8 +301,11 @@ class HomeBottomWidget extends StatelessWidget {
                 // GetXUtilities.dialog();
                 // downloadFile('timetable.csv');
                 // controller.insertTime();
-                print(MediaQuery.of(context).size.width);
-                print(MediaQuery.of(context).size.height);
+
+                final timeslots = TimeslotsDatabase();
+                timeslots.createDatabase().then(
+                      (value) => print(value),
+                    );
               },
               child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),

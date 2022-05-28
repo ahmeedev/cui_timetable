@@ -1,10 +1,9 @@
-import 'dart:ui';
+// import 'dart:ui';
 
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/student_timetable_controller.dart';
@@ -98,8 +97,15 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                                 subject: controller.daywiseLectures[index][1],
                                 teacher: controller.daywiseLectures[index][4],
                                 room: controller.daywiseLectures[index][5],
-                                time: controller.timeMap[
-                                    "${controller.daywiseLectures[index][2]}"],
+                                time: int.parse(
+                                            "${controller.daywiseLectures[index][2]}") ==
+                                        5
+                                    ? controller.friSlots[int.parse(
+                                            "${controller.daywiseLectures[index][2]}") -
+                                        1]
+                                    : controller.monToThursSlots[int.parse(
+                                            "${controller.daywiseLectures[index][2]}") -
+                                        1],
                               );
                             },
                           ),
@@ -270,7 +276,7 @@ class LectureDetailsTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      time[0],
+                      time.toString().split('-')[0],
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -279,7 +285,7 @@ class LectureDetailsTile extends StatelessWidget {
                     const Text('|'),
                     const Text('|'),
                     Text(
-                      time[1],
+                      time.toString().split('-')[1],
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!

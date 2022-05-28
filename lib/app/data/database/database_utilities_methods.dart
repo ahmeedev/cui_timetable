@@ -18,6 +18,7 @@ import 'package:jiffy/jiffy.dart';
 Future<void> downloadFile({
   required String fileName,
   required callback,
+  csv = true,
 }) async {
   final storageRef = FirebaseStorage.instance.ref();
   final islandRef = storageRef.child(fileName);
@@ -35,13 +36,22 @@ Future<void> downloadFile({
             name: fileName.toUpperCase());
         break;
       case TaskState.success:
+        if (csv) {
+          compute(_backgroundTaskCsv, {
+            "filePath": LocationUtilities.defaultpath,
+            "fileName": fileName,
+            "callback": callback
+          }).then((value) => _updateStatuses());
+        } else {
+          compute(_backgroundTaskJson, {
+            "filePath": LocationUtilities.defaultpath,
+            "fileName": fileName,
+            "callback": callback
+          }).then((value) => _updateStatuses());
+        }
+
         devlog.log("File Downloaded Successfully...",
             name: fileName.toUpperCase());
-        compute(_backgroundTask, {
-          "filePath": LocationUtilities.defaultpath,
-          "fileName": fileName,
-          "callback": callback
-        }).then((value) => _updateStatuses());
         break;
       case TaskState.canceled:
         devlog.log("File Downloading Cancelled...",
@@ -55,13 +65,19 @@ Future<void> downloadFile({
   });
 }
 
-_backgroundTask(map) async {
-  await _getFileContent(
+_backgroundTaskCsv(map) async {
+  await _getCsvFileContent(
           fileLocation: map["filePath"], fileName: map["fileName"])
       .then((data) => map["callback"](filePath: map['filePath'], data: data));
 }
 
-Future<List<dynamic>> _getFileContent(
+_backgroundTaskJson(map) async {
+  await _getJsonFileContent(
+          fileLocation: map["filePath"], fileName: map["fileName"])
+      .then((data) => map["callback"](filePath: map['filePath'], data: data));
+}
+
+Future<List<dynamic>> _getCsvFileContent(
     {required String fileLocation, required String fileName}) async {
   dynamic fields;
   try {
@@ -81,6 +97,26 @@ Future<List<dynamic>> _getFileContent(
 
   }
   return Future<List<dynamic>>.value(fields);
+}
+
+Future<String> _getJsonFileContent(
+    {required String fileLocation, required String fileName}) async {
+  dynamic fields;
+  try {
+    final File file = File('$fileLocation/$fileName');
+    final input = file.readAsString();
+    fields = input;
+    // print(input);
+    // devlog.log("File Read Successfully With Records Count: ${fields.length}",
+    //     name: "SYNC_READ");
+  } catch (e) {
+    debugPrint(e.toString());
+    devlog.log("Error!, While file Reading... ", name: "SYNC_READ");
+  } finally {
+    // Isolate.exit(port, map);
+
+  }
+  return fields;
 }
 
 //! run in main thread.

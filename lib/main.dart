@@ -1,5 +1,9 @@
+import 'dart:convert';
 import 'dart:developer' as devlog;
 
+import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/data/database/timeslots/timeslots_database.dart';
+import 'package:cui_timetable/app/data/models/timetable_model.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -16,7 +20,8 @@ import 'package:flutter/services.dart';
 
 Future<void> main() async {
   await _initialized();
-
+  final box = await Hive.openBox(DBNames.timeSlots);
+  print(box.values);
   runApp(const MyApp());
 }
 

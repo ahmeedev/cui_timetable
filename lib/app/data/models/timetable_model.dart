@@ -1,21 +1,42 @@
 class Timetable {
-  List<MonToThurs>? monToThurs;
+  Lectures? lectures;
 
-  Timetable({this.monToThurs});
+  Timetable({this.lectures});
 
   Timetable.fromJson(Map<String, dynamic> json) {
-    if (json['monToThurs'] != null) {
-      monToThurs = <MonToThurs>[];
-      json['monToThurs'].forEach((v) {
-        monToThurs?.add(MonToThurs.fromJson(v));
-      });
+    lectures =
+        json['lectures'] != null ? Lectures?.fromJson(json['lectures']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    if (lectures != null) {
+      data['lectures'] = lectures?.toJson();
     }
+    return data;
+  }
+}
+
+class Lectures {
+  MonToThurs? monToThurs;
+  MonToThurs? fri;
+
+  Lectures({this.monToThurs, this.fri});
+
+  Lectures.fromJson(Map<String, dynamic> json) {
+    monToThurs = json['monToThurs'] != null
+        ? MonToThurs?.fromJson(json['monToThurs'])
+        : null;
+    fri = json['fri'] != null ? MonToThurs?.fromJson(json['fri']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     if (monToThurs != null) {
-      data['monToThurs'] = monToThurs?.map((v) => v.toJson()).toList();
+      data['monToThurs'] = monToThurs?.toJson();
+    }
+    if (fri != null) {
+      data['fri'] = fri?.toJson();
     }
     return data;
   }
