@@ -20,8 +20,7 @@ import 'package:flutter/services.dart';
 
 Future<void> main() async {
   await _initialized();
-  final box = await Hive.openBox(DBNames.timeSlots);
-  print(box.values);
+
   runApp(const MyApp());
 }
 

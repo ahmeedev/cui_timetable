@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/data/database/timeslots/timeslots_database.dart';
 import 'package:cui_timetable/app/data/database/timetable/timetable_database.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
@@ -60,33 +61,12 @@ class SyncController extends GetxController {
   }
 
   Future<bool> _syncAllFiles() async {
+    final timeslots = TimeslotsDatabase();
+    await timeslots.createDatabase();
     final timetableDB = TimetableDatabase();
     await timetableDB.createDatabase();
 
     return Future.value(true);
-  }
-
-  Future<void> _insertTime() async {
-    final box = await Hive.openBox(DBNames.timeSlots);
-
-    var collection = FirebaseFirestore.instance.collection('info');
-    var docSnapshot = await collection.doc('time').get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      final time1 = data?['monToThur'];
-      final time2 = data?['fri'];
-      box.put('monToThur', time1);
-      box.put('fri', time2);
-    } else {
-      final time = {
-        "1": "08:30AM - 10:00AM",
-        "2": "10:00AM - 11:30AM",
-        "3": "11:30AM - 01:00PM",
-        "4": "01:30PM - 03:00PM",
-        "5": "03:00PM - 04:30PM",
-      };
-      box.put('defaultTime', time);
-    }
   }
 }
 

@@ -301,11 +301,6 @@ class HomeBottomWidget extends StatelessWidget {
                 // GetXUtilities.dialog();
                 // downloadFile('timetable.csv');
                 // controller.insertTime();
-
-                final timeslots = TimeslotsDatabase();
-                timeslots.createDatabase().then(
-                      (value) => print(value),
-                    );
               },
               child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),

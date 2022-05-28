@@ -47,7 +47,7 @@ Future<void> downloadFile({
             "filePath": LocationUtilities.defaultpath,
             "fileName": fileName,
             "callback": callback
-          }).then((value) => _updateStatuses());
+          });
         }
 
         devlog.log("File Downloaded Successfully...",
