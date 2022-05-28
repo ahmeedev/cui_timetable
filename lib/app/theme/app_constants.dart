@@ -5,7 +5,8 @@ class Constants {
   static var iconSize;
   static var homeOverlaySize;
   static var lectureFlex;
-
+  static var imageWidth;
+  static var imageHeight;
   static initializeFields({
     required padding,
     required radius,
@@ -13,6 +14,8 @@ class Constants {
     required icon,
     required overlaySize,
     required flex,
+    required IWidth,
+    required IHeight,
   }) {
     defaultPadding = padding;
     defaultRadius = radius;
@@ -20,5 +23,7 @@ class Constants {
     iconSize = icon;
     homeOverlaySize = overlaySize;
     lectureFlex = flex;
+    imageHeight = IHeight;
+    imageWidth = IWidth;
   }
 }

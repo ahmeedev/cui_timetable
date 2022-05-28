@@ -11,6 +11,7 @@ const selectionColor = Color(0xff93afd2);
 const expandedColor = Color(0xff93afd2);
 const successColor = Color(0xff028c5a);
 const successColor2 = Color(0xff02734a);
+const errorColor1 = Color(0xff800000);
 
 const primaryGradient = [primaryColor, forGradient];
 const successGradient = [successColor, successColor2];

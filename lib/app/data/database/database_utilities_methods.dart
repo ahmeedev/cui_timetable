@@ -6,7 +6,9 @@ import 'package:csv/csv.dart';
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
+import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -97,10 +99,15 @@ _updateStatuses() async {
   });
 
   Get.find<SyncController>().timetableSyncStatus.value = false;
-  Get.find<SyncController>().clickable = true;
+  Get.find<SyncController>().clickable.value = true;
   Get.find<SyncController>().lastUpdate.value = lastUpdate;
 
   Get.find<HomeController>().newUpdate.value = false;
+
+  GetXUtilities.snackbar(
+      title: 'Synced!',
+      message: 'Data Synchronized Successfully!',
+      gradient: successGradient);
 
   // Get.delete<StudentTimetableController>();
   // Get.delete<TeacherTimetableController>();

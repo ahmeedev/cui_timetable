@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class SyncController extends GetxController {
-  var clickable = true;
+  var clickable = true.obs;
   var lastUpdate = ''.obs;
   var timetableSyncStatus = false.obs;
   var freeroomsSyncStatus = false.obs;
@@ -34,7 +34,7 @@ class SyncController extends GetxController {
           if (dialogPop) {
             GetXUtilities.dialog();
           } else {
-            clickable = false;
+            clickable.value = false;
             // update the sync statuses.
             timetableSyncStatus.value = true;
           }
@@ -47,7 +47,7 @@ class SyncController extends GetxController {
           }
           GetXUtilities.snackbar(
               title: 'Synced!',
-              message: 'Data is Already Synchronized',
+              message: 'Data Already Synchronized..',
               gradient: successGradient);
         }
       });

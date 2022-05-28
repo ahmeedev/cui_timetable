@@ -18,9 +18,16 @@ class AboutUsView extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           children: const [
             AboutUsTile(
+              pic: 'ahmad_shaf.jpg',
+              name: 'Ahmad Shaf',
+              subName: '',
+              position: 'Team Manager',
+              description: 'CUI Software House Coordinator',
+            ),
+            AboutUsTile(
               pic: 'ahmad.jpg',
-              name: ' ',
-              subName: 'Ahmad Tariq',
+              name: 'Ahmad Tariq',
+              subName: '',
               position: 'C.E.O',
               description: 'CUI Computer Science Student',
             ),

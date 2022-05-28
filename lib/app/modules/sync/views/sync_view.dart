@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
@@ -42,32 +43,38 @@ class SyncBody extends GetView<SyncController> {
                         color: primaryColor,
                         size: 30.0,
                       )
-                    : const Icon(
-                        Icons.cloud_done,
-                        size: 30,
-                        color: successColor,
-                      ),
+                    : Get.find<HomeController>().newUpdate.value
+                        ? const Icon(
+                            Icons.cloud_download,
+                            size: 30,
+                            color: errorColor1,
+                          )
+                        : const Icon(
+                            Icons.cloud_done,
+                            size: 30,
+                            color: successColor,
+                          ),
               )),
-          Obx(() => SyncTile(
-                title: 'Free Rooms',
-                lastUpdate: controller.lastUpdate.value,
-                icon: controller.freeroomsSyncStatus.value
-                    ? const SpinKitChasingDots(
-                        color: primaryColor,
-                        size: 30.0,
-                      )
-                    : const Icon(
-                        Icons.cloud_done,
-                        size: 30,
-                        color: successColor,
-                      ),
-              )),
+          // Obx(() => SyncTile(
+          //       title: 'Free Rooms',
+          //       lastUpdate: controller.lastUpdate.value,
+          //       icon: controller.freeroomsSyncStatus.value
+          //           ? const SpinKitChasingDots(
+          //               color: primaryColor,
+          //               size: 30.0,
+          //             )
+          //           : const Icon(
+          //               Icons.cloud_done,
+          //               size: 30,
+          //               color: successColor,
+          //             ),
+          //     )),
           SizedBox(
             height: Constants.defaultPadding,
           ),
           ElevatedButton(
               onPressed: () async {
-                if (controller.clickable) {
+                if (controller.clickable.value) {
                   controller.syncData();
                 } else {
                   GetXUtilities.snackbar(
@@ -78,13 +85,34 @@ class SyncBody extends GetView<SyncController> {
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: Constants.defaultPadding * 1.2,
+                    vertical: Constants.defaultPadding * 1.3,
                     horizontal: Constants.defaultPadding * 2),
                 child: Text(
                   'Sync',
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
               )),
+          SizedBox(
+            height: Constants.defaultPadding * 2,
+          ),
+          Obx(() => Container(
+                child: controller.clickable.value
+                    ? SizedBox()
+                    : Column(
+                        children: [
+                          const SpinKitFadingCircle(
+                            color: primaryColor,
+                          ),
+                          SizedBox(
+                            height: Constants.defaultPadding,
+                          ),
+                          Text(
+                            'Fetching Data From Internet...',
+                            style: Theme.of(context).textTheme.labelMedium,
+                          )
+                        ],
+                      ),
+              ))
         ],
       ),
     );
@@ -104,8 +132,8 @@ class SyncTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: widgetColor,
-      shadowColor: shadowColor,
       elevation: Constants.defaultElevation,
+      shadowColor: shadowColor,
       shape: RoundedRectangleBorder(
           borderRadius:
               BorderRadius.all(Radius.circular(Constants.defaultRadius))),

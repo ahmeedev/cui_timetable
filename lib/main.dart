@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:flutter/services.dart';
 
 Future<void> main() async {
   await _initialized();
@@ -22,6 +23,10 @@ Future<void> main() async {
 Future<void> _initialized() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
   await LocationUtilities.initialize();
 
@@ -49,7 +54,9 @@ class MyApp extends GetView<HomeController> {
             radius: 10.0,
             icon: 26.0,
             overlaySize: 5,
-            flex: 6);
+            flex: 6,
+            IWidth: 100.0,
+            IHeight: 100.0);
         if (constraints.maxWidth < 380) {
           return getMaterialApp(theme: lightThemeForSmallScreens(context));
         } else {
