@@ -30,7 +30,7 @@ class StudentUIView extends GetView<StudentUIController> {
               SizedBox(
                 height: Constants.defaultPadding,
               ),
-              _buildButton(context)
+              _buildButton(context),
             ],
           ),
         ));
@@ -75,8 +75,10 @@ class StudentUIView extends GetView<StudentUIController> {
                           .contains(value.toLowerCase()))
                       .toList();
 
-                  if (value.isEmpty) {
+                  if (value.isEmpty || value.length == 0) {
                     controller.listVisible.value = false;
+                    controller.filteredList.clear();
+                    print("value is null");
                   } else if (controller.filteredList.contains(value) &&
                       controller.filteredList.length == 1) {
                     controller.listVisible.value = false;
@@ -102,7 +104,48 @@ class StudentUIView extends GetView<StudentUIController> {
               height: Constants.defaultPadding / 2,
             ),
             Obx(() => controller.filteredList.isEmpty
-                ? const SizedBox()
+                ?
+                // ? Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Text('Suggestions',
+                //           style: Theme.of(context).textTheme.titleMedium),
+                //       Container(
+                //         padding:
+                //             EdgeInsets.only(top: Constants.defaultPadding / 2),
+                //         height: height,
+                //         child: ListView.separated(
+                //           padding: EdgeInsets.zero,
+                //           physics: const BouncingScrollPhysics(),
+                //           shrinkWrap: true,
+                //           itemCount: 6,
+                //           itemBuilder: (context, index) {
+                //             return ListTile(
+                //               onTap: () {},
+                //               dense: true,
+                //               contentPadding: EdgeInsets.zero,
+                //               leading: Text(
+                //                 'Deme',
+                //                 style: Theme.of(context)
+                //                     .textTheme
+                //                     .titleSmall!
+                //                     .copyWith(fontWeight: FontWeight.bold),
+                //               ),
+                //             );
+                //           },
+                //           separatorBuilder: (context, index) {
+                //             return const Divider(
+                //               color: primaryColor,
+                //               height: 2,
+                //               // indent: 15,
+                //               // endIndent: 15,
+                //             );
+                //           },
+                //         ),
+                //       ),
+                //     ],
+                //   )
+                SizedBox()
                 : ConstrainedBox(
                     constraints: BoxConstraints(
                       minWidth: double.infinity,

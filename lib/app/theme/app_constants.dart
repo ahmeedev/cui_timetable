@@ -3,7 +3,7 @@ class Constants {
   static var defaultRadius;
   static var defaultElevation;
   static var iconSize;
-  static var homeOverlaySize;
+  static late double homeOverlaySize;
   static late int lectureFlex;
   static var imageWidth;
   static var imageHeight;
@@ -12,7 +12,7 @@ class Constants {
     required radius,
     required elevation,
     required icon,
-    required overlaySize,
+    required double overlaySize,
     required int flex,
     required IWidth,
     required IHeight,

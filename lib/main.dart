@@ -28,7 +28,6 @@ Future<void> _initialized() async {
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-
   ]);
 
 // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -55,30 +54,28 @@ class MyApp extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-
         if (constraints.maxWidth < 380) {
-         
-
-             Constants.initializeFields(
-            elevation: 10.0,
-            padding: 8.0,
-            radius: 10.0,
-            icon: 20.0,
-            overlaySize: 4.6,
-            flex: 5,
-            IWidth: 80.0,
-            IHeight: 80.0);
+          Constants.initializeFields(
+              elevation: 10.0,
+              padding: 8.0,
+              radius: 10.0,
+              icon: 20.0,
+              overlaySize: 4.6,
+              flex: 5,
+              IWidth: 80.0,
+              IHeight: 80.0);
           return getMaterialApp(theme: lightThemeForSmallScreens(context));
         } else {
-                   Constants.initializeFields(
-            elevation: 10.0,
-            padding: 10.0,
-            radius: 10.0,
-            icon: 26.0,
-            overlaySize: 4.6,
-            flex: 6,
-            IWidth: 100.0,
-            IHeight: 100.0); 
+          Constants.initializeFields(
+              elevation: 10.0,
+              padding: 10.0,
+              radius: 10.0,
+              icon: 26.0,
+              overlaySize: 4.6, //! critical
+              flex: 6,
+              IWidth: 100.0,
+              IHeight: 100.0);
+          print(Constants.homeOverlaySize.floor());
           return getMaterialApp(theme: lightThemeForLargeScreens(context));
         }
       },
@@ -93,7 +90,6 @@ class MyApp extends GetView<HomeController> {
       title: 'CUI TIMETABLE',
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      
     );
   }
 }

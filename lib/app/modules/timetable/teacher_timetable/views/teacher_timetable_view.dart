@@ -97,8 +97,15 @@ class TeacherTimetableView extends GetView<TeacherTimetableController> {
                                 section: controller.daywiseLectures[index][0],
                                 subject: controller.daywiseLectures[index][1],
                                 room: controller.daywiseLectures[index][5],
-                                time: controller.timeMap[
-                                    "${controller.daywiseLectures[index][2]}"],
+                                time: int.parse(
+                                            "${controller.daywiseLectures[index][2]}") ==
+                                        5
+                                    ? controller.friSlots[int.parse(
+                                            "${controller.daywiseLectures[index][2]}") -
+                                        1]
+                                    : controller.monToThursSlots[int.parse(
+                                            "${controller.daywiseLectures[index][2]}") -
+                                        1],
                               );
                             },
                           ),
@@ -272,7 +279,7 @@ class LectureDetailsTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      time[0],
+                      time.toString().split('-')[0],
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -281,7 +288,7 @@ class LectureDetailsTile extends StatelessWidget {
                     const Text('|'),
                     const Text('|'),
                     Text(
-                      time[1],
+                      time.toString().split('-')[1],
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!

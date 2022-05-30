@@ -100,7 +100,7 @@ class HomeAppBar extends StatelessWidget {
             bottomRight: Radius.circular(Constants.defaultRadius * 2)),
         child: Stack(
             // fit: StackFit.expand,
-            // clipBehavior: Clip.hardEdge,
+            clipBehavior: Clip.none,
             alignment: Alignment.center,
             children: [
               Container(
@@ -141,7 +141,7 @@ class HomeBody extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return SliverPadding(
         padding: EdgeInsets.only(
-            top:Constants.homeOverlaySize*Constants.defaultPadding,
+            top: Constants.homeOverlaySize * Constants.defaultPadding,
             right: Constants.defaultPadding,
             left: Constants.defaultPadding,
             bottom: 0),
@@ -323,8 +323,7 @@ class HomeOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: MediaQuery.of(context).size.height /
-            (Constants.homeOverlaySize - 0.4),
+        top: MediaQuery.of(context).size.height / Constants.homeOverlaySize,
         right: 10,
         left: 10,
         child: Card(
