@@ -6,6 +6,8 @@ class DBNames {
   static const teachersDB = "teachersDB";
 
   static const freerooms = "freerooms";
+
+  static const history = "history";
 }
 
 class DBInfo {
@@ -30,4 +32,9 @@ class DBFreerooms {
   static const wednesday = 'wednesday';
   static const thursday = 'thursday';
   static const friday = 'friday';
+}
+
+class DBHistory {
+  static const studentTimetable = 'studentTimetable';
+  static const teacherTimetable = 'teacherTimetable';
 }

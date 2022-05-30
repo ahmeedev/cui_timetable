@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/timetable/controllers/student_ui_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
@@ -54,9 +56,30 @@ class StudentUIView extends GetView<StudentUIController> {
             SizedBox(
               height: Constants.defaultPadding,
             ),
-            Text(
-              'Section Name',
-              style: Theme.of(context).textTheme.titleMedium,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Section Name',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                InkWell(
+                  onTap: () async {
+                    final box = await Hive.openBox(DBNames.history);
+                    final List result =
+                        box.get(DBHistory.studentTimetable, defaultValue: []);
+                    GetXUtilities.historyDialog(
+                      context: context,
+                      content: result,
+                    );
+                  },
+                  child: Icon(
+                    Icons.history,
+                    size: Constants.iconSize + 2,
+                    color: primaryColor,
+                  ),
+                )
+              ],
             ),
             SizedBox(
               height: Constants.defaultPadding,
@@ -104,48 +127,7 @@ class StudentUIView extends GetView<StudentUIController> {
               height: Constants.defaultPadding / 2,
             ),
             Obx(() => controller.filteredList.isEmpty
-                ?
-                // ? Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Text('Suggestions',
-                //           style: Theme.of(context).textTheme.titleMedium),
-                //       Container(
-                //         padding:
-                //             EdgeInsets.only(top: Constants.defaultPadding / 2),
-                //         height: height,
-                //         child: ListView.separated(
-                //           padding: EdgeInsets.zero,
-                //           physics: const BouncingScrollPhysics(),
-                //           shrinkWrap: true,
-                //           itemCount: 6,
-                //           itemBuilder: (context, index) {
-                //             return ListTile(
-                //               onTap: () {},
-                //               dense: true,
-                //               contentPadding: EdgeInsets.zero,
-                //               leading: Text(
-                //                 'Deme',
-                //                 style: Theme.of(context)
-                //                     .textTheme
-                //                     .titleSmall!
-                //                     .copyWith(fontWeight: FontWeight.bold),
-                //               ),
-                //             );
-                //           },
-                //           separatorBuilder: (context, index) {
-                //             return const Divider(
-                //               color: primaryColor,
-                //               height: 2,
-                //               // indent: 15,
-                //               // endIndent: 15,
-                //             );
-                //           },
-                //         ),
-                //       ),
-                //     ],
-                //   )
-                SizedBox()
+                ? SizedBox()
                 : ConstrainedBox(
                     constraints: BoxConstraints(
                       minWidth: double.infinity,
@@ -205,12 +187,21 @@ class StudentUIView extends GetView<StudentUIController> {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              if (controller.sections
-                  .contains(controller.textController.text.toString())) {
+              final value = controller.textController.text.toString();
+              if (controller.sections.contains(value)) {
                 // Storing the information for state persistency
-                final box = await Hive.openBox(DBNames.info);
-                box.put(DBInfo.searchSection,
-                    controller.textController.text.toString());
+                final box1 = await Hive.openBox(DBNames.info);
+                box1.put(DBInfo.searchSection, value);
+
+                final box2 = await Hive.openBox(DBNames.history);
+                List list =
+                    box2.get(DBHistory.studentTimetable, defaultValue: []);
+                if (list.length != 4) {
+                  Set result = list.toSet();
+                  result.add(value);
+                  box2.put(DBHistory.studentTimetable, result.toList());
+                  // await box2.close();
+                }
                 Get.toNamed(Routes.STUDENT_TIMETABLE,
                     arguments: [controller.textController.text]);
               } else {

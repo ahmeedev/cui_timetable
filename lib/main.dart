@@ -1,4 +1,5 @@
 import 'dart:developer' as devlog;
+import 'dart:io';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
@@ -29,7 +30,6 @@ Future<void> _initialized() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-
 // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
 //     statusBarColor: Colors.red,
 //  ));
@@ -45,6 +45,8 @@ Future<void> _initialized() async {
 
   Hive.init(LocationUtilities.defaultpath);
   devlog.log("Hive Initialized...", name: 'HIVE');
+  // Hive.deleteBoxFromDisk(DBNames.history);
+  // print('done');
 }
 
 /// Root Widget of the application.
@@ -71,7 +73,7 @@ class MyApp extends GetView<HomeController> {
               padding: 10.0,
               radius: 10.0,
               icon: 26.0,
-              overlaySize: 4.6, //! critical
+              overlaySize: Platform.isIOS ? 5.0 : 4.6, //! critical
               flex: 6,
               IWidth: 100.0,
               IHeight: 100.0);
