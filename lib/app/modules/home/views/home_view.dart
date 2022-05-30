@@ -1,6 +1,4 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:cui_timetable/app/data/database/freerooms/freerooms_database.dart';
-import 'package:cui_timetable/app/data/database/timeslots/timeslots_database.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_drawer.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_widgets.dart';

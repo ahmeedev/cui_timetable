@@ -1,5 +1,4 @@
 import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/data/models/timetable_model.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 

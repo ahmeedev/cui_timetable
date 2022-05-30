@@ -1,9 +1,6 @@
-import 'dart:convert';
 import 'dart:developer' as devlog;
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/data/database/timeslots/timeslots_database.dart';
-import 'package:cui_timetable/app/data/models/timetable_model.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -13,10 +10,10 @@ import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 import 'package:cui_timetable/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:flutter/services.dart';
 
 Future<void> main() async {
   await _initialized();
@@ -78,7 +75,7 @@ class MyApp extends GetView<HomeController> {
             padding: 10.0,
             radius: 10.0,
             icon: 26.0,
-            overlaySize: 5.0,
+            overlaySize: 4.6,
             flex: 6,
             IWidth: 100.0,
             IHeight: 100.0); 

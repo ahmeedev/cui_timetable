@@ -73,7 +73,7 @@ class DayTile extends StatelessWidget {
 class FreeroomsMainExpansionTile extends StatelessWidget {
   final String slot;
   final bool expanded;
-  var totalClasses;
+  final totalClasses;
 
   FreeroomsMainExpansionTile(
       {Key? key,
@@ -124,7 +124,7 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
 }
 
 class FreeroomsClassesExpensionTile extends StatelessWidget {
-  var totalClasses;
+  final totalClasses;
   FreeroomsClassesExpensionTile({Key? key, required this.totalClasses})
       : super(key: key);
 
