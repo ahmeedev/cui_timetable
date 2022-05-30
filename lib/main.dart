@@ -31,7 +31,12 @@ Future<void> _initialized() async {
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
+
   ]);
+
+// SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+//     statusBarColor: Colors.red,
+//  ));
 
   await LocationUtilities.initialize();
 
@@ -53,20 +58,30 @@ class MyApp extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        Constants.initializeFields(
+
+        if (constraints.maxWidth < 380) {
+         
+
+             Constants.initializeFields(
+            elevation: 10.0,
+            padding: 8.0,
+            radius: 10.0,
+            icon: 20.0,
+            overlaySize: 4.6,
+            flex: 5,
+            IWidth: 80.0,
+            IHeight: 80.0);
+          return getMaterialApp(theme: lightThemeForSmallScreens(context));
+        } else {
+                   Constants.initializeFields(
             elevation: 10.0,
             padding: 10.0,
             radius: 10.0,
             icon: 26.0,
-            overlaySize: 5,
+            overlaySize: 5.0,
             flex: 6,
             IWidth: 100.0,
-            IHeight: 100.0);
-        if (constraints.maxWidth < 380) {
-          return getMaterialApp(theme: lightThemeForSmallScreens(context));
-        } else {
-          // Constants.initializeFields(
-          //     elevation: 10.0, padding: 10.0, radius: 10.0, icon: 20.0);
+            IHeight: 100.0); 
           return getMaterialApp(theme: lightThemeForLargeScreens(context));
         }
       },
@@ -81,6 +96,7 @@ class MyApp extends GetView<HomeController> {
       title: 'CUI TIMETABLE',
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      
     );
   }
 }

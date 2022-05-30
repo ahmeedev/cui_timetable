@@ -4,7 +4,7 @@ class Constants {
   static var defaultElevation;
   static var iconSize;
   static var homeOverlaySize;
-  static var lectureFlex;
+  static late int lectureFlex;
   static var imageWidth;
   static var imageHeight;
   static initializeFields({
@@ -13,7 +13,7 @@ class Constants {
     required elevation,
     required icon,
     required overlaySize,
-    required flex,
+    required int flex,
     required IWidth,
     required IHeight,
   }) {

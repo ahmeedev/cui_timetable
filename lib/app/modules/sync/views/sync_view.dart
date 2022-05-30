@@ -32,7 +32,7 @@ class SyncBody extends GetView<SyncController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: Constants.defaultPadding * 1.5),
+      padding: EdgeInsets.symmetric(vertical: Constants.defaultPadding * 1.5, horizontal: Constants.defaultPadding/2),
       child: Column(
         children: [
           Obx(() => SyncTile(

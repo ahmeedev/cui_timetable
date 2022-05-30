@@ -143,7 +143,7 @@ class HomeBody extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return SliverPadding(
         padding: EdgeInsets.only(
-            top: Constants.defaultPadding * Constants.homeOverlaySize,
+            top:Constants.homeOverlaySize*Constants.defaultPadding,
             right: Constants.defaultPadding,
             left: Constants.defaultPadding,
             bottom: 0),
@@ -302,8 +302,8 @@ class HomeBottomWidget extends StatelessWidget {
                 // GetXUtilities.dialog();
                 // downloadFile('timetable.csv');
                 // controller.insertTime();
-                final database = FreeRoomsDatabase();
-                database.createDatabase();
+                // final database = FreeRoomsDatabase();
+                // database.createDatabase();
               },
               child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),
@@ -376,7 +376,11 @@ class HomeOverlay extends StatelessWidget {
                   highlightColor: Colors.transparent,
                   splashColor: shadowColor,
                   onTap: () {
-                    Get.toNamed(Routes.FREEROOMS);
+                    // Get.toNamed(Routes.FREEROOMS);
+                    GetXUtilities.snackbar(
+                        title: 'In Working!',
+                        message: 'This Module is still in Development Phase',
+                        gradient: primaryGradient);
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -407,7 +411,7 @@ class HomeOverlay extends StatelessWidget {
                   splashColor: shadowColor,
                   onTap: () {
                     GetXUtilities.snackbar(
-                        title: 'In Developement',
+                        title: 'In Working!',
                         message: 'This Module is still in Development Phase',
                         gradient: primaryGradient);
                   },
