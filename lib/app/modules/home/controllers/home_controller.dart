@@ -1,13 +1,18 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
-import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
+
+// Project imports:
+import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
+import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 
 class HomeController extends GetxController {
   final internet = true.obs;

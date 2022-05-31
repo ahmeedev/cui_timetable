@@ -1,7 +1,10 @@
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/text_theme.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Project imports:
+import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:cui_timetable/app/theme/text_theme.dart';
 
 ThemeData lightThemeForSmallScreens(context) {
   final base = ThemeData.light();

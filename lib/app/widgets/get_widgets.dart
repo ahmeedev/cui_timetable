@@ -1,11 +1,20 @@
+// Dart imports:
 import 'dart:io';
 
+// Flutter imports:
+import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/modules/timetable/controllers/student_ui_controller.dart';
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
+
+// Project imports:
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 class GetXUtilities {
   static void snackbar(
@@ -93,7 +102,8 @@ class GetXUtilities {
         ));
   }
 
-  static void historyDialog({required context, required List content}) {
+  static void historyDialog(
+      {required context, required List content, required bool student}) {
     Get.defaultDialog(
       backgroundColor: widgetColor,
       titlePadding: EdgeInsets.all(Constants.defaultPadding),
@@ -110,23 +120,53 @@ class GetXUtilities {
                 physics: BouncingScrollPhysics(),
                 itemCount: content.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    onTap: () {
-                      // Get.back();
+                  return Row(
+                    children: [
+                      Flexible(
+                        child: ListTile(
+                          onTap: () {
+                            // Get.back();
+                            if (student) {
+                              Get.toNamed(Routes.STUDENT_TIMETABLE,
+                                  arguments: [content[index]]);
+                            } else {
+                              Get.toNamed(Routes.TEACHER_TIMETABLE,
+                                  arguments: [content[index]]);
+                            }
+                          },
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                          leading: Text(
+                            content[index].toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      // InkWell(
+                      //   onTap: () async {
+                      //     if (student) {
+                      //       final box2 = await Hive.openBox(DBNames.history);
+                      //       List list = box2.get(DBHistory.studentTimetable,
+                      //           defaultValue: []);
+                      //       list.removeAt(index.toInt());
+                      //       Get.find<StudentUIController>()
+                      //           .dialogHistoryList
+                      //           .value = list;
 
-                      Get.toNamed(Routes.STUDENT_TIMETABLE,
-                          arguments: [content[index]]);
-                    },
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    leading: Text(
-                      content[index].toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
+                      //       box2.put(DBHistory.studentTimetable, list);
+                      //     }
+                      //   },
+                      //   child: Icon(
+                      //     Icons.cancel,
+                      //     color: errorColor1,
+                      //     size: Constants.iconSize - 2,
+                      //   ),
+                      // ),
+                    ],
                   );
                 },
                 separatorBuilder: (context, index) {

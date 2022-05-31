@@ -1,13 +1,17 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+
+// Project imports:
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/timetable/controllers/teacher_ui_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
-import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 
 class TeacherUIView extends GetView<TeacherUIController> {
   const TeacherUIView({Key? key}) : super(key: key);
@@ -54,9 +58,28 @@ class TeacherUIView extends GetView<TeacherUIController> {
             SizedBox(
               height: Constants.defaultPadding,
             ),
-            Text(
-              'Teacher Name',
-              style: Theme.of(context).textTheme.titleMedium,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Teacher Name',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                InkWell(
+                  onTap: () async {
+                    final box = await Hive.openBox(DBNames.history);
+                    final List result =
+                        box.get(DBHistory.teacherTimetable, defaultValue: []);
+                    GetXUtilities.historyDialog(
+                        context: context, content: result, student: false);
+                  },
+                  child: Icon(
+                    Icons.history,
+                    size: Constants.iconSize + 2,
+                    color: primaryColor,
+                  ),
+                )
+              ],
             ),
             SizedBox(
               height: Constants.defaultPadding,
@@ -162,15 +185,24 @@ class TeacherUIView extends GetView<TeacherUIController> {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              if (controller.teachers
-                  .contains(controller.textController.text.toString())) {
+              final value = controller.textController.text.toString();
+              if (controller.teachers.contains(value)) {
                 // Storing the information for state persistency
-                final box = await Hive.openBox(DBNames.info);
-                box.put(DBInfo.searchTeacher,
+                final box1 = await Hive.openBox(DBNames.info);
+                box1.put(DBInfo.searchTeacher,
                     controller.textController.text.toString());
 
-                Get.toNamed(Routes.TEACHER_TIMETABLE,
-                    arguments: [controller.textController.text]);
+                final box2 = await Hive.openBox(DBNames.history);
+                List list =
+                    box2.get(DBHistory.teacherTimetable, defaultValue: []);
+                if (list.length != 6) {
+                  Set result = list.toSet();
+                  result.add(value);
+                  box2.put(DBHistory.teacherTimetable, result.toList());
+                  // await box2.close();
+                }
+
+                Get.toNamed(Routes.TEACHER_TIMETABLE, arguments: [value]);
               } else {
                 GetXUtilities.snackbar(
                     title: 'Not Found!!!',

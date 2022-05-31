@@ -1,13 +1,19 @@
-import 'package:cui_timetable/app/data/database/database_constants.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+
+// Project imports:
+import 'package:cui_timetable/app/data/database/database_constants.dart';
 
 class StudentUIController extends GetxController {
   var sections = [];
   final TextEditingController textController = TextEditingController();
   var filteredList = [].obs;
   var listVisible = true.obs;
+  var dialogHistoryList = [].obs;
 
   @override
   Future<void> onInit() async {

@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:get/get.dart';
 
+// Project imports:
 import '../models/timetable_model.dart';
 
 class TimetableProvider extends GetConnect {

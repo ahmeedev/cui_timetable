@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:get/get.dart';
 
+// Project imports:
 import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';

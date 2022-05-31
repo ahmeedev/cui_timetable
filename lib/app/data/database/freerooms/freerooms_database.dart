@@ -1,7 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:hive/hive.dart';
+
+// Project imports:
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
-import 'package:hive/hive.dart';
-import 'package:flutter/material.dart';
 
 class FreeRoomsDatabase {
   Future<bool> createDatabase() async {

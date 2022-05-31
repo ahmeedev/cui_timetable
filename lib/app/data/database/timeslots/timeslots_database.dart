@@ -1,10 +1,16 @@
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:hive/hive.dart';
+
+// Project imports:
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
 import 'package:cui_timetable/app/data/models/timetable_model.dart';
-import 'package:hive/hive.dart';
 
 class TimeslotsDatabase {
   Future<bool> createDatabase() async {

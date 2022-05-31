@@ -1,7 +1,12 @@
-import 'package:cui_timetable/app/data/database/database_constants.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+
+// Project imports:
+import 'package:cui_timetable/app/data/database/database_constants.dart';
 
 class TeacherUIController extends GetxController {
   var teachers = [];
