@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -120,8 +122,8 @@ class AboutUsTile extends StatelessWidget {
                     position,
                     style: Theme.of(context)
                         .textTheme
-                        .labelLarge!
-                        .copyWith(color: widgetColor),
+                        .labelMedium!
+                        .copyWith(color: widgetColor, fontWeight: FontWeight.bold),
                   ),
                 ),
               )),
