@@ -172,8 +172,7 @@ class DayTile extends GetView<TeacherTimetableController> {
                   : Constants.defaultElevation / 2,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(Constants.defaultRadius)),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 500),
+              child: Container(
                 decoration: BoxDecoration(
                     color: obs.value ? selectionColor : widgetColor,
                     borderRadius:

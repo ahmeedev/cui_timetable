@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 
-// Flutter imports:
-
-// Project imports:
-
 class AboutUsTile extends StatelessWidget {
   final String pic;
   final String name;
@@ -120,10 +116,8 @@ class AboutUsTile extends StatelessWidget {
                   ),
                   child: Text(
                     position,
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelLarge!
-                        .copyWith(color: widgetColor),
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        color: widgetColor, fontWeight: FontWeight.bold),
                   ),
                 ),
               )),

@@ -68,20 +68,29 @@ class StudentUIView extends GetView<StudentUIController> {
                   'Section Name',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                InkWell(
-                  onTap: () async {
-                    final box = await Hive.openBox(DBNames.history);
-                    final List result =
-                        box.get(DBHistory.studentTimetable, defaultValue: []);
-                    controller.dialogHistoryList.value = result;
-                    GetXUtilities.historyDialog(
-                        context: context, content: result, student: true);
-                  },
-                  child: Icon(
-                    Icons.history,
-                    size: Constants.iconSize + 2,
-                    color: primaryColor,
-                  ),
+
+      //  final box = await Hive.openBox(DBNames.history);
+      //               final List result =
+      //                   box.get(DBHistory.studentTimetable, defaultValue: []);
+      //               controller.dialogHistoryList.value = result;
+      //               GetXUtilities.historyDialog(
+      //                   context: context, content: result, student: true);
+
+                        
+                Stack(
+                  children: [
+                    Container(
+                      width: Constants.iconSize+8,
+                      height: Constants.iconSize+8,
+                      // color: Colors.red,
+                    
+                    ),
+                    Icon(
+                      Icons.history,
+                      size: Constants.iconSize + 2,
+                      color: primaryColor,
+                    ),
+                  ],
                 )
               ],
             ),
