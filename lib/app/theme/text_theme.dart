@@ -1,5 +1,6 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Flutter imports:
 
 TextTheme getTextTheme({required double scaleFactor}) {
   return TextTheme(

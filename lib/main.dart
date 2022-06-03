@@ -1,18 +1,14 @@
-// Dart imports:
 import 'dart:developer' as devlog;
 import 'dart:io';
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Package imports:
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-// Project imports:
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';

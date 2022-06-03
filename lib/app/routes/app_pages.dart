@@ -1,11 +1,11 @@
-// Package imports:
 import 'package:get/get.dart';
 
-// Project imports:
 import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/portals/bindings/portals_binding.dart';
+import '../modules/portals/views/portals_view.dart';
 import '../modules/sync/bindings/sync_binding.dart';
 import '../modules/sync/views/sync_view.dart';
 import '../modules/timetable/bindings/timetable_binding.dart';
@@ -16,6 +16,10 @@ import '../modules/timetable/teacher_timetable/views/teacher_timetable_view.dart
 import '../modules/timetable/views/timetable_view.dart';
 import '../modules/ui/about_us/about_us_view.dart';
 import '../modules/ui/director_vision/director_vision.dart';
+
+// Package imports:
+
+// Project imports:
 
 part 'app_routes.dart';
 
@@ -65,6 +69,11 @@ class AppPages {
       name: _Paths.FREEROOMS,
       page: () => FreeroomsView(),
       binding: FreeroomsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PORTALS,
+      page: () => const PortalsView(),
+      binding: PortalsBinding(),
     ),
   ];
 }

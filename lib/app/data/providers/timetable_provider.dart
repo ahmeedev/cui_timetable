@@ -1,8 +1,10 @@
-// Package imports:
 import 'package:get/get.dart';
 
-// Project imports:
 import '../models/timetable_model.dart';
+
+// Package imports:
+
+// Project imports:
 
 class TimetableProvider extends GetConnect {
   @override

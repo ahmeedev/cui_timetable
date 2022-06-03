@@ -1,9 +1,11 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
 import 'package:cui_timetable/app/modules/ui/about_us/widgets/about_us_tile.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+
+// Flutter imports:
+
+// Project imports:
 
 class AboutUsView extends StatelessWidget {
   const AboutUsView({Key? key}) : super(key: key);

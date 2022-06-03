@@ -1,17 +1,20 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-// Project imports:
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/timetable/controllers/student_ui_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+
+// Flutter imports:
+
+// Package imports:
+
+// Project imports:
 
 class StudentUIView extends GetView<StudentUIController> {
   const StudentUIView({Key? key}) : super(key: key);

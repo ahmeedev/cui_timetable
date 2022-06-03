@@ -1,12 +1,9 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
-// Project imports:
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_drawer.dart';
 import 'package:cui_timetable/app/modules/home/views/widgets/home_widgets.dart';
@@ -14,6 +11,12 @@ import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+
+// Flutter imports:
+
+// Package imports:
+
+// Project imports:
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -302,11 +305,7 @@ class HomeBottomWidget extends StatelessWidget {
               ]),
           ElevatedButton(
               onPressed: () async {
-                // GetXUtilities.dialog();
-                // downloadFile('timetable.csv');
-                // controller.insertTime();
-                // final database = FreeRoomsDatabase();
-                // database.createDatabase();
+                Get.toNamed(Routes.PORTALS);
               },
               child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),

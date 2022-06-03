@@ -1,8 +1,10 @@
-// Flutter imports:
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-// Package imports:
 import 'package:path_provider/path_provider.dart';
+
+// Flutter imports:
+
+// Package imports:
 
 class LocationUtilities {
   static String defaultpath = '';

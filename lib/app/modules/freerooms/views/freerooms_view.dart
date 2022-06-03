@@ -1,16 +1,20 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
-// Project imports:
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/freerooms/views/widgets/freerooms_widgets.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+
 import '../controllers/freerooms_controller.dart';
+
+// Flutter imports:
+
+// Package imports:
+
+// Project imports:
 
 class FreeroomsView extends GetView<FreeroomsController> {
   FreeroomsView({Key? key}) : super(key: key);

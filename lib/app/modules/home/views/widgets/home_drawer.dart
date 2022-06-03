@@ -1,13 +1,16 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:get/get.dart';
 
-// Project imports:
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+
+// Flutter imports:
+
+// Package imports:
+
+// Project imports:
 
 /// Header of the Drawer.
 class Header extends StatelessWidget {

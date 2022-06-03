@@ -1,12 +1,15 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:hive/hive.dart';
 
-// Project imports:
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
+
+// Flutter imports:
+
+// Package imports:
+
+// Project imports:
 
 class TimetableDatabase {
   // String search_section = '';

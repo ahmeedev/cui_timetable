@@ -1,9 +1,11 @@
-// Package imports:
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-// Project imports:
 import 'package:cui_timetable/app/data/database/database_constants.dart';
+
+// Package imports:
+
+// Project imports:
 
 class FreeroomsController extends GetxController {
   var mon = true.obs;

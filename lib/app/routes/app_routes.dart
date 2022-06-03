@@ -13,6 +13,7 @@ abstract class Routes {
   static const TEACHER_TIMETABLE = _Paths.TIMETABLE + _Paths.TEACHER_TIMETABLE;
   static const SYNC = _Paths.SYNC;
   static const FREEROOMS = _Paths.FREEROOMS;
+  static const PORTALS = _Paths.PORTALS;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const TEACHER_TIMETABLE = '/teacher-timetable';
   static const SYNC = '/sync';
   static const FREEROOMS = '/freerooms';
+  static const PORTALS = '/portals';
 }

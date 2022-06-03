@@ -1,18 +1,22 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
-
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
-// Project imports:
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+
 import '../controllers/sync_controller.dart';
+
+// ignore_for_file: prefer_typing_uninitialized_variables
+
+// Flutter imports:
+
+// Package imports:
+
+// Project imports:
 
 class SyncView extends GetView<SyncController> {
   const SyncView({Key? key}) : super(key: key);
@@ -36,7 +40,9 @@ class SyncBody extends GetView<SyncController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: Constants.defaultPadding * 1.5, horizontal: Constants.defaultPadding/2),
+      padding: EdgeInsets.symmetric(
+          vertical: Constants.defaultPadding * 1.5,
+          horizontal: Constants.defaultPadding / 2),
       child: Column(
         children: [
           Obx(() => SyncTile(

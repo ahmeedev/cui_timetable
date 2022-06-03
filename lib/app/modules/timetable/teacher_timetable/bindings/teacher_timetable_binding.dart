@@ -1,8 +1,10 @@
-// Package imports:
 import 'package:get/get.dart';
 
-// Project imports:
 import '../controllers/teacher_timetable_controller.dart';
+
+// Package imports:
+
+// Project imports:
 
 class TeacherTimetableBinding extends Bindings {
   @override
