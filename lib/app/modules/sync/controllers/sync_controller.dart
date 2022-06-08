@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:cui_timetable/app/data/database/freerooms/freerooms_database.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -69,6 +70,9 @@ class SyncController extends GetxController {
     await timeslots.createDatabase();
     final timetableDB = TimetableDatabase();
     await timetableDB.createDatabase();
+
+    // final freerooms = FreeRoomsDatabase();
+    // await freerooms.createDatabase();
 
     return Future.value(true);
   }

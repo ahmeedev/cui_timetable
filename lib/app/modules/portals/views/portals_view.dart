@@ -16,7 +16,7 @@ class PortalsView extends GetView<PortalsController> {
     return DefaultTabController(
       length: 2,
       child: CustomScrollView(
-        // physics: const NeverScrollableScrollPhysics(),
+// physics: const NeverScrollableScrollPhysics(),
         slivers: [
           _buildAppBar(context),
           SliverFillRemaining(

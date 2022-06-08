@@ -10,12 +10,6 @@ import 'package:cui_timetable/app/theme/app_constants.dart';
 
 import '../controllers/freerooms_controller.dart';
 
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
 class FreeroomsView extends GetView<FreeroomsController> {
   FreeroomsView({Key? key}) : super(key: key);
   final daysList = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -98,7 +92,7 @@ class FreeroomsView extends GetView<FreeroomsController> {
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
                           return FreeroomsMainExpansionTile(
-                              slot: controller.currentSecreenTime[index],
+                              slot: controller.currentScreenTime[index],
                               totalClasses:
                                   controller.currentScreenSlot1Classes.length,
                               expanded: index == 0 ? true : false);

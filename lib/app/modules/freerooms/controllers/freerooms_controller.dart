@@ -3,10 +3,6 @@ import 'package:hive/hive.dart';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 
-// Package imports:
-
-// Project imports:
-
 class FreeroomsController extends GetxController {
   var mon = true.obs;
   var tue = false.obs;
@@ -14,7 +10,7 @@ class FreeroomsController extends GetxController {
   var thu = false.obs;
   var fri = false.obs;
 
-  var MonToThursSlots = [];
+  var monToThursSlots = [];
   var friSlots = [];
 
   var monList;
@@ -49,11 +45,11 @@ class FreeroomsController extends GetxController {
   Future fetchDetails() async {
     // Fetching timeslots
     final box1 = await Hive.openBox(DBNames.timeSlots);
-    MonToThursSlots = box1.get(DBTimeSlots.monToThur);
+    monToThursSlots = box1.get(DBTimeSlots.monToThur);
     friSlots = box1.get(DBTimeSlots.fri);
 
     // For Default Reason
-    currentSecreenTime = MonToThursSlots; // select timeslots for current screen
+    currentScreenTime = monToThursSlots; // select timeslots for current screen
     final box2 = await Hive.openBox(DBNames.freerooms);
     final List list = box2.get(DBFreerooms.monday);
     currentScreenSlot1Classes =
@@ -63,7 +59,7 @@ class FreeroomsController extends GetxController {
     return Future.value(true);
   }
 
-  var currentSecreenTime;
+  var currentScreenTime;
   var currentScreenSlot1Classes;
   var currentScreenSlot1Labs;
 }

@@ -68,7 +68,7 @@ class TeacherUIView extends GetView<TeacherUIController> {
                   'Teacher Name',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: () async {
                     final box = await Hive.openBox(DBNames.history);
                     final List result =
@@ -76,12 +76,19 @@ class TeacherUIView extends GetView<TeacherUIController> {
                     GetXUtilities.historyDialog(
                         context: context, content: result, student: false);
                   },
-                  child: Icon(
-                    Icons.history,
-                    size: Constants.iconSize + 2,
-                    color: primaryColor,
+                  child: Container(
+                    // color: Colors.red,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Constants.defaultPadding / 2,
+                        vertical: Constants.defaultPadding / 3),
+                    // color: Colors.red,
+                    child: Icon(
+                      Icons.history,
+                      size: Constants.iconSize + 2,
+                      color: primaryColor,
+                    ),
                   ),
-                )
+                ),
               ],
             ),
             SizedBox(

@@ -10,12 +10,6 @@ import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
 class StudentUIView extends GetView<StudentUIController> {
   const StudentUIView({Key? key}) : super(key: key);
 
@@ -69,29 +63,31 @@ class StudentUIView extends GetView<StudentUIController> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
 
-      //  final box = await Hive.openBox(DBNames.history);
-      //               final List result =
-      //                   box.get(DBHistory.studentTimetable, defaultValue: []);
-      //               controller.dialogHistoryList.value = result;
-      //               GetXUtilities.historyDialog(
-      //                   context: context, content: result, student: true);
-
-                        
-                Stack(
-                  children: [
-                    Container(
-                      width: Constants.iconSize+8,
-                      height: Constants.iconSize+8,
-                      // color: Colors.red,
-                    
-                    ),
-                    Icon(
+                GestureDetector(
+                  onTap: () async {
+                    final box = await Hive.openBox(DBNames.history);
+                    final List result =
+                        box.get(DBHistory.studentTimetable, defaultValue: []);
+                    controller.dialogHistoryList.value = result;
+                    GetXUtilities.historyDialog(
+                        context: context, content: result, student: true);
+                  },
+                  child: Container(
+                    // color: Colors.red,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Constants.defaultPadding / 2,
+                        vertical: Constants.defaultPadding / 3),
+                    // color: Colors.red,
+                    child: Icon(
                       Icons.history,
                       size: Constants.iconSize + 2,
                       color: primaryColor,
                     ),
-                  ],
-                )
+                  ),
+                ),
+
+                //   ],
+                // )
               ],
             ),
             SizedBox(

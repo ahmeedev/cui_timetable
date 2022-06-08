@@ -75,7 +75,7 @@ class MyApp extends GetView<HomeController> {
               padding: 10.0,
               radius: 10.0,
               icon: 26.0,
-              overlaySize: Platform.isIOS ? 4.2: 4.6, //! critical
+              overlaySize: Platform.isIOS ? 4.2 : 4.6, //! critical
               flex: 6,
               IWidth: 100.0,
               IHeight: 100.0);

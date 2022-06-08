@@ -36,8 +36,7 @@ class DayTile extends StatelessWidget {
             elevation: Constants.defaultElevation / 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: Obx(() => AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
+            child: Obx(() => Container(
                   decoration: BoxDecoration(
                       color: obs.value ? selectionColor : widgetColor,
                       borderRadius: BorderRadius.circular(10)),
@@ -47,7 +46,7 @@ class DayTile extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         callback();
-
+                        print('clicked $day');
                         obs.value = true;
                         // controller.
                       },
