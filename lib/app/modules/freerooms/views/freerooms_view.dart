@@ -65,14 +65,31 @@ class FreeroomsView extends GetView<FreeroomsController> {
                   heightFactor: 1,
                   child: Obx(
                     () => controller.loading.value
-                        ? SpinKitFadingCircle(
-                            color: primaryColor,
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SpinKitFadingCircle(
+                                size: 50,
+                                color: primaryColor,
+                              ),
+                              SizedBox(
+                                height: Constants.defaultPadding,
+                              ),
+                              Text(
+                                'Fetching Rooms From Database...',
+                                style: Theme.of(context).textTheme.labelMedium,
+                              )
+                            ],
                           )
-                        : Container(
-                            alignment: Alignment.bottomRight,
-                            color: Colors.amber,
-                            width: 100,
-                            height: 100,
+                        : ListView.builder(
+                            itemCount: 1,
+                            itemBuilder: (BuildContext context, int index) {
+                              return FreeroomsMainExpansionTile(
+                                  slot: controller.currentScreenTime[index],
+                                  totalClasses:
+                                      controller.currentDayFreeClasses[index],
+                                  expanded: true);
+                            },
                           ),
                   )
                   // child: FutureBuilder(
@@ -80,22 +97,6 @@ class FreeroomsView extends GetView<FreeroomsController> {
                   //   // initialData: initialData,
                   //   builder: (BuildContext context, AsyncSnapshot snapshot) {
                   //     if (snapshot.connectionState == ConnectionState.waiting) {
-                  //       return Column(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           const SpinKitFadingCircle(
-                  //             size: 50,
-                  //             color: primaryColor,
-                  //           ),
-                  //           SizedBox(
-                  //             height: Constants.defaultPadding,
-                  //           ),
-                  //           Text(
-                  //             'Fetching Rooms From Database...',
-                  //             style: Theme.of(context).textTheme.labelMedium,
-                  //           )
-                  //         ],
-                  //       );
                   //     } else {
                   //       return ListView.builder(
                   //         itemCount: 1,

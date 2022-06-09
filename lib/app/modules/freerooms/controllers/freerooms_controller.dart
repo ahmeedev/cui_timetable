@@ -14,6 +14,7 @@ class FreeroomsController extends GetxController {
 
   var monToThursSlots = [];
   var friSlots = [];
+  var currentScreenTime = [];
 
   var freeroomsBox;
 
@@ -26,7 +27,7 @@ class FreeroomsController extends GetxController {
     friSlots = await box1.get(DBTimeSlots.fri);
     freeroomsBox = await Hive.openBox(DBNames.freerooms);
 
-    getFreerooms(day: "Mon");
+    // getFreerooms(day: "Mon");
   }
 
   void allFalse() {
@@ -68,20 +69,67 @@ class FreeroomsController extends GetxController {
   //   return Future.value(true);
   // }
 
-  // var currentScreenTime;
-  // var currentScreenSlot1Classes;
+  var currentDayFreeClasses = []; // for calculation of digits in all slots.
+
+  var currentSlotFreeClasses = {
+    "a": "",
+    "b": "",
+    "c": "",
+    "w": "",
+  };
   // var currentScreenSlot1Labs;
+
+  List _getDayWiseLectures({required day}) {
+    switch (day) {
+      case "Mon":
+        return freeroomsBox.get(DBFreerooms.monday);
+      // break;
+      case "Tue":
+        return freeroomsBox.get(DBFreerooms.tuesday);
+      case "Wed":
+        return freeroomsBox.get(DBFreerooms.wednesday);
+      case "Thu":
+        return freeroomsBox.get(DBFreerooms.thursday);
+
+      default:
+        return freeroomsBox.get(DBFreerooms.friday);
+    }
+  }
 
   getFreerooms({required day}) async {
     if (day == "Mon") {
+      currentScreenTime = monToThursSlots;
       loading.value = true;
-      final List list = freeroomsBox.get(DBFreerooms.monday);
+      final List list =
+          _getDayWiseLectures(day: day); // get required day lecture.
 
-      List monday = await list[0]
-          .where((element) => !element.toString().toLowerCase().contains('lab'))
-          .toList();
-      print(monday.length);
+      // list contains all the slots data for specific day.
+
+      List.generate(1, (index) async {
+        // set to 1 for all the slots
+
+        List data = await list[index]
+            .where((element) => element.toString().isNotEmpty)
+            .toList(); // filter empty cells
+        List<String> filtered = List<String>.from(data); // casting..
+        filtered = filtered
+            .where((element) => !element.toLowerCase().contains('lab'))
+            .toList(); // sortout the labs
+        currentDayFreeClasses.add(filtered.length); //! add total classes length
+        filtered = filtered
+            .where((element) => element.toLowerCase().contains('a'))
+            .toList();
+
+        print(filtered);
+      });
+
       loading.value = false;
     }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    // loading.value = false;
   }
 }
