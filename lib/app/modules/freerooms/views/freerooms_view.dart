@@ -61,47 +61,59 @@ class FreeroomsView extends GetView<FreeroomsController> {
             Flexible(
               flex: Constants.lectureFlex,
               child: FractionallySizedBox(
-                widthFactor: 1,
-                heightFactor: 1,
-                child: FutureBuilder(
-                  future: controller.fetchDetails(),
-                  // initialData: initialData,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SpinKitFadingCircle(
-                            size: 50,
+                  widthFactor: 1,
+                  heightFactor: 1,
+                  child: Obx(
+                    () => controller.loading.value
+                        ? SpinKitFadingCircle(
                             color: primaryColor,
-                          ),
-                          SizedBox(
-                            height: Constants.defaultPadding,
-                          ),
-                          Text(
-                            'Fetching Rooms From Database...',
-                            style: Theme.of(context).textTheme.labelMedium,
                           )
-                        ],
-                      );
-                    } else {
-                      return ListView.builder(
-                        itemCount: 1,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Constants.defaultPadding / 2),
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return FreeroomsMainExpansionTile(
-                              slot: controller.currentScreenTime[index],
-                              totalClasses:
-                                  controller.currentScreenSlot1Classes.length,
-                              expanded: index == 0 ? true : false);
-                        },
-                      );
-                    }
-                  },
-                ),
-              ),
+                        : Container(
+                            alignment: Alignment.bottomRight,
+                            color: Colors.amber,
+                            width: 100,
+                            height: 100,
+                          ),
+                  )
+                  // child: FutureBuilder(
+                  //   future: controller.fetchDetails(),
+                  //   // initialData: initialData,
+                  //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  //     if (snapshot.connectionState == ConnectionState.waiting) {
+                  //       return Column(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           const SpinKitFadingCircle(
+                  //             size: 50,
+                  //             color: primaryColor,
+                  //           ),
+                  //           SizedBox(
+                  //             height: Constants.defaultPadding,
+                  //           ),
+                  //           Text(
+                  //             'Fetching Rooms From Database...',
+                  //             style: Theme.of(context).textTheme.labelMedium,
+                  //           )
+                  //         ],
+                  //       );
+                  //     } else {
+                  //       return ListView.builder(
+                  //         itemCount: 1,
+                  //         padding: EdgeInsets.symmetric(
+                  //             horizontal: Constants.defaultPadding / 2),
+                  //         physics: const BouncingScrollPhysics(),
+                  //         itemBuilder: (BuildContext context, int index) {
+                  //           return FreeroomsMainExpansionTile(
+                  //               slot: controller.currentScreenTime[index],
+                  //               totalClasses:
+                  //                   controller.currentScreenSlot1Classes.length,
+                  //               expanded: index == 0 ? true : false);
+                  //         },
+                  //       );
+                  //     }
+                  //   },
+                  // ),
+                  ),
             ),
           ],
         ));

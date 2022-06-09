@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/modules/freerooms/controllers/freerooms_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -5,13 +6,7 @@ import 'package:get/get.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
-class DayTile extends StatelessWidget {
+class DayTile extends GetView<FreeroomsController> {
   final String day;
   final String dayKey;
   final Function callback;
@@ -46,7 +41,7 @@ class DayTile extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         callback();
-                        print('clicked $day');
+                        controller.getFreerooms(day: day);
                         obs.value = true;
                         // controller.
                       },
