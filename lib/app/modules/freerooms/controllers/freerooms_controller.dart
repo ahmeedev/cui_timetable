@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/modules/freerooms/models/freerooms_model.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
@@ -15,7 +16,7 @@ class FreeroomsController extends GetxController {
   var monToThursSlots = [];
   var friSlots = [];
   var currentScreenTime = [];
-
+  List<FreeroomsModel> freerooms = [];
   var freeroomsBox;
 
   @override
@@ -69,14 +70,6 @@ class FreeroomsController extends GetxController {
   //   return Future.value(true);
   // }
 
-  var currentDayFreeClasses = []; // for calculation of digits in all slots.
-
-  var currentSlotFreeClasses = {
-    "a": "",
-    "b": "",
-    "c": "",
-    "w": "",
-  };
   // var currentScreenSlot1Labs;
 
   List _getDayWiseLectures({required day}) {
@@ -107,7 +100,6 @@ class FreeroomsController extends GetxController {
 
       List.generate(1, (index) async {
         // set to 1 for all the slots
-
         List data = await list[index]
             .where((element) => element.toString().isNotEmpty)
             .toList(); // filter empty cells
@@ -115,12 +107,38 @@ class FreeroomsController extends GetxController {
         filtered = filtered
             .where((element) => !element.toLowerCase().contains('lab'))
             .toList(); // sortout the labs
-        currentDayFreeClasses.add(filtered.length); //! add total classes length
+        var totalClasses = filtered.length; // total classes length
         filtered = filtered
             .where((element) => element.toLowerCase().contains('a'))
+            .toList(); // fetch Classes of A
+
+        var subclass1 =
+            FreeroomsSubClass(totalClasses: filtered.length, classes: filtered);
+
+        filtered = filtered
+            .where((element) => element.toLowerCase().contains('b'))
+            .toList(); // fetch Classes of B
+
+        var subclass2 =
+            FreeroomsSubClass(totalClasses: filtered.length, classes: filtered);
+
+        var listOfSubClasses = [subclass1, subclass2];
+
+        //! Calculating Labs
+
+        filtered = filtered
+            .where((element) => element.toLowerCase().contains('lab'))
             .toList();
 
-        print(filtered);
+        var totalLabs = filtered.length;
+
+        var freeroomsModel = FreeroomsModel(
+            totalClasses: totalClasses,
+            classes: listOfSubClasses,
+            totalLabs: totalLabs,
+            labs: filtered);
+
+        freerooms.add(freeroomsModel);
       });
 
       loading.value = false;

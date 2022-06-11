@@ -1,4 +1,5 @@
 import 'package:cui_timetable/app/modules/freerooms/controllers/freerooms_controller.dart';
+import 'package:cui_timetable/app/modules/freerooms/models/freerooms_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -76,11 +77,17 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
   final String slot;
   final bool expanded;
   final totalClasses;
+  List<FreeroomsSubClass> classes;
+  final totalLabs;
+  final labs;
 
   FreeroomsMainExpansionTile(
       {Key? key,
       required this.slot,
       required this.totalClasses,
+      required this.classes,
+      required this.totalLabs,
+      required this.labs,
       required this.expanded})
       : super(key: key);
 
@@ -116,6 +123,7 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
           children: [
             FreeroomsClassesExpensionTile(
               totalClasses: totalClasses,
+              classes: classes,
             ),
             // FreeroomsLabsExpensionTile(),
           ],
@@ -126,8 +134,11 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
 }
 
 class FreeroomsClassesExpensionTile extends StatelessWidget {
+  final dept = ['A', 'B', 'C', 'W'];
   final totalClasses;
-  FreeroomsClassesExpensionTile({Key? key, required this.totalClasses})
+  List<FreeroomsSubClass> classes;
+  FreeroomsClassesExpensionTile(
+      {Key? key, required this.totalClasses, required this.classes})
       : super(key: key);
 
   @override
@@ -163,17 +174,17 @@ class FreeroomsClassesExpensionTile extends StatelessWidget {
             ),
           ),
           children: [
-            FreeroomsDepartmentWiseExpensionTile(
-              department: 'A',
-            ),
-            FreeroomsDepartmentWiseExpensionTile(
-              department: 'B',
-            ),
-            FreeroomsDepartmentWiseExpensionTile(
-              department: 'C',
-            ),
-            FreeroomsDepartmentWiseExpensionTile(
-              department: 'W',
+            Expanded(
+              child: ListView.builder(
+                // itemCount: dept.length,
+                itemCount: 2,
+                itemBuilder: (BuildContext context, int index) {
+                  return FreeroomsDepartmentWiseExpensionTile(
+                    department: dept[index],
+                    availableClasses: classes[index].classes,
+                  );
+                },
+              ),
             ),
             SizedBox(
               height: Constants.defaultPadding,
@@ -246,8 +257,9 @@ class FreeroomsLabsExpensionTile extends StatelessWidget {
 
 class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
   final department;
+  final List availableClasses;
   const FreeroomsDepartmentWiseExpensionTile(
-      {Key? key, required this.department})
+      {Key? key, required this.department, required this.availableClasses})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

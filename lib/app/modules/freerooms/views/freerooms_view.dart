@@ -87,7 +87,11 @@ class FreeroomsView extends GetView<FreeroomsController> {
                               return FreeroomsMainExpansionTile(
                                   slot: controller.currentScreenTime[index],
                                   totalClasses:
-                                      controller.currentDayFreeClasses[index],
+                                      controller.freerooms[index].totalClasses,
+                                  classes: controller.freerooms[index].classes,
+                                  totalLabs:
+                                      controller.freerooms[index].totalLabs,
+                                  labs: controller.freerooms[index].labs,
                                   expanded: true);
                             },
                           ),
