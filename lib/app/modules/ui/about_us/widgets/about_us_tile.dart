@@ -80,13 +80,15 @@ class AboutUsTile extends StatelessWidget {
                             Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: Constants.defaultPadding),
-                                child: Text(description,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold)))
+                                child: FittedBox(
+                                  child: Text(description,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold)),
+                                ))
                           ],
                         ),
                       ),
@@ -114,10 +116,16 @@ class AboutUsTile extends StatelessWidget {
                             Radius.circular(Constants.defaultRadius * 2)),
                     color: primaryColor,
                   ),
-                  child: Text(
-                    position,
-                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                        color: widgetColor, fontWeight: FontWeight.bold),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Constants.defaultPadding),
+                    child: FittedBox(
+                      child: Text(
+                        position,
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: widgetColor, fontWeight: FontWeight.w900),
+                      ),
+                    ),
                   ),
                 ),
               )),

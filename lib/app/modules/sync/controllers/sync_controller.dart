@@ -1,14 +1,13 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:cui_timetable/app/data/database/freerooms/freerooms_database.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-
 import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/data/database/freerooms/freerooms_database.dart';
 import 'package:cui_timetable/app/data/database/timeslots/timeslots_database.dart';
 import 'package:cui_timetable/app/data/database/timetable/timetable_database.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 // Package imports:
 
@@ -43,6 +42,7 @@ class SyncController extends GetxController {
             clickable.value = false;
             // update the sync statuses.
             timetableSyncStatus.value = true;
+            freeroomsSyncStatus.value = true;
           }
           // await _insertTime();
           await _syncAllFiles();
@@ -68,11 +68,12 @@ class SyncController extends GetxController {
   Future<bool> _syncAllFiles() async {
     final timeslots = TimeslotsDatabase();
     await timeslots.createDatabase();
+
     final timetableDB = TimetableDatabase();
     await timetableDB.createDatabase();
 
-    // final freerooms = FreeRoomsDatabase();
-    // await freerooms.createDatabase();
+    final freerooms = FreeRoomsDatabase();
+    await freerooms.createDatabase(lastEntity: true);
 
     return Future.value(true);
   }

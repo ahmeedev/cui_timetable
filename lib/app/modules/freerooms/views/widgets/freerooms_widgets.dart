@@ -1,9 +1,9 @@
-import 'package:cui_timetable/app/modules/freerooms/controllers/freerooms_controller.dart';
-import 'package:cui_timetable/app/modules/freerooms/models/freerooms_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import 'package:cui_timetable/app/modules/freerooms/controllers/freerooms_controller.dart';
+import 'package:cui_timetable/app/modules/freerooms/models/freerooms_model.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 
@@ -77,7 +77,7 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
   final String slot;
   final bool expanded;
   final totalClasses;
-  List<FreeroomsSubClass> classes;
+  final List<FreeroomsSubClass> classes;
   final totalLabs;
   final labs;
 
@@ -141,7 +141,7 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
 class FreeroomsClassesExpensionTile extends StatelessWidget {
   final dept = ['A', 'B', 'C', 'W'];
   final totalClasses;
-  List<FreeroomsSubClass> classes;
+  final List<FreeroomsSubClass> classes;
   FreeroomsClassesExpensionTile(
       {Key? key, required this.totalClasses, required this.classes})
       : super(key: key);

@@ -17,19 +17,11 @@ import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 
-// Dart imports:
-
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
-Future<void> downloadFile({
-  required String fileName,
-  required callback,
-  csv = true,
-}) async {
+Future<void> downloadFile(
+    {required String fileName,
+    required callback,
+    csv = true,
+    lastEntity = false}) async {
   final storageRef = FirebaseStorage.instance.ref();
   final islandRef = storageRef.child(fileName);
   final filePath = "${LocationUtilities.defaultpath}/$fileName";
@@ -47,11 +39,14 @@ Future<void> downloadFile({
         break;
       case TaskState.success:
         if (csv) {
-          compute(_backgroundTaskCsv, {
+          final result = await compute(_backgroundTaskCsv, {
             "filePath": LocationUtilities.defaultpath,
             "fileName": fileName,
             "callback": callback
-          }).then((value) => _updateStatuses());
+          });
+          if (lastEntity) {
+            await _updateStatuses();
+          }
         } else {
           compute(_backgroundTaskJson, {
             "filePath": LocationUtilities.defaultpath,
@@ -145,6 +140,7 @@ _updateStatuses() async {
   });
 
   Get.find<SyncController>().timetableSyncStatus.value = false;
+  Get.find<SyncController>().freeroomsSyncStatus.value = false;
   Get.find<SyncController>().clickable.value = true;
   Get.find<SyncController>().lastUpdate.value = lastUpdate;
 
@@ -157,4 +153,9 @@ _updateStatuses() async {
 
   // Get.delete<StudentTimetableController>();
   // Get.delete<TeacherTimetableController>();
+}
+
+Future<void> closeDatabases() async {
+  await Hive.close();
+  await Future.delayed(const Duration(milliseconds: 200));
 }

@@ -1,8 +1,8 @@
-import 'package:cui_timetable/app/modules/freerooms/models/freerooms_model.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/modules/freerooms/models/freerooms_model.dart';
 
 class FreeroomsController extends GetxController {
   var mon = true.obs;
@@ -76,22 +76,26 @@ class FreeroomsController extends GetxController {
   List _getDayWiseLectures({required day}) {
     switch (day) {
       case "Mon":
+        currentScreenTime = monToThursSlots;
         return freeroomsBox.get(DBFreerooms.monday);
       // break;
       case "Tue":
+        currentScreenTime = monToThursSlots;
         return freeroomsBox.get(DBFreerooms.tuesday);
       case "Wed":
+        currentScreenTime = monToThursSlots;
         return freeroomsBox.get(DBFreerooms.wednesday);
       case "Thu":
+        currentScreenTime = monToThursSlots;
         return freeroomsBox.get(DBFreerooms.thursday);
 
       default:
+        currentScreenTime = friSlots;
         return freeroomsBox.get(DBFreerooms.friday);
     }
   }
 
   getFreerooms({required day}) async {
-    currentScreenTime = monToThursSlots;
     loading.value = true;
     _freerooms.clear();
     // list contains all the slots data for specific day.

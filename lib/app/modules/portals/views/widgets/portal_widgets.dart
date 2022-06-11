@@ -1,7 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+// ignore_for_file: must_call_super
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+
+import 'package:webview_flutter/webview_flutter.dart';
 
 class StudentPortal extends StatefulWidget {
   StudentPortal({Key? key}) : super(key: key);
@@ -30,6 +33,7 @@ class _StudentPortalState extends State<StudentPortal>
         javascriptMode: JavascriptMode.unrestricted,
         gestureRecognizers: gestureRecognizers,
         zoomEnabled: true,
+        onPageFinished: (value) {},
       ),
     );
   }
@@ -65,6 +69,5 @@ class _TeacherPortalState extends State<TeacherPortal>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

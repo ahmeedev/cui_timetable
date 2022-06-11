@@ -12,10 +12,13 @@ import 'package:cui_timetable/app/data/database/database_utilities_methods.dart'
 // Project imports:
 
 class FreeRoomsDatabase {
-  Future<bool> createDatabase() async {
-    Hive.close();
+  Future<bool> createDatabase({required lastEntity}) async {
+    await closeDatabases();
+
     await downloadFile(
-        fileName: 'freerooms.csv', callback: insertFreeRoomsData);
+        fileName: 'freerooms.csv',
+        lastEntity: lastEntity,
+        callback: insertFreeRoomsData);
     return Future.value(true);
   }
 }

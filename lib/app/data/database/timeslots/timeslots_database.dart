@@ -18,7 +18,8 @@ import 'package:cui_timetable/app/data/models/timetable_model.dart';
 
 class TimeslotsDatabase {
   Future<bool> createDatabase() async {
-    Hive.close();
+    await closeDatabases();
+
     await downloadFile(
         fileName: 'timetable.json', callback: insertTimeslotsData, csv: false);
     return Future.value(true);

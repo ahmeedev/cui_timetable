@@ -15,7 +15,7 @@ class TimetableDatabase {
   // String search_section = '';
 
   Future<bool> createDatabase() async {
-    Hive.close();
+    await closeDatabases();
     await downloadFile(
       fileName: 'timetable.csv',
       callback: insertTimetableData,

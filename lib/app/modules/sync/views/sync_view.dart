@@ -1,4 +1,3 @@
-import 'package:cui_timetable/app/data/database/freerooms/freerooms_database.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -64,11 +63,17 @@ class SyncBody extends GetView<SyncController> {
                         color: primaryColor,
                         size: 30.0,
                       )
-                    : const Icon(
-                        Icons.cloud_done,
-                        size: 30,
-                        color: successColor,
-                      ),
+                    : Get.find<HomeController>().newUpdate.value
+                        ? const Icon(
+                            Icons.cloud_download,
+                            size: 30,
+                            color: errorColor1,
+                          )
+                        : const Icon(
+                            Icons.cloud_done,
+                            size: 30,
+                            color: successColor,
+                          ),
               )),
           SizedBox(
             height: Constants.defaultPadding,

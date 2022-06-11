@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-
 import 'package:cui_timetable/app/modules/portals/views/widgets/portal_widgets.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../controllers/portals_controller.dart';
 
