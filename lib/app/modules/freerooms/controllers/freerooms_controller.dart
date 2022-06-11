@@ -16,7 +16,8 @@ class FreeroomsController extends GetxController {
   var monToThursSlots = [];
   var friSlots = [];
   var currentScreenTime = [];
-  List<FreeroomsModel> freerooms = [];
+  List<FreeroomsModel> _freerooms = [];
+  var freerooms = [].obs;
   var freeroomsBox;
 
   @override
@@ -28,7 +29,7 @@ class FreeroomsController extends GetxController {
     friSlots = await box1.get(DBTimeSlots.fri);
     freeroomsBox = await Hive.openBox(DBNames.freerooms);
 
-    // getFreerooms(day: "Mon");
+    getFreerooms(day: "Mon"); // For default behaviour
   }
 
   void allFalse() {
@@ -90,59 +91,71 @@ class FreeroomsController extends GetxController {
   }
 
   getFreerooms({required day}) async {
-    if (day == "Mon") {
-      currentScreenTime = monToThursSlots;
-      loading.value = true;
-      final List list =
-          _getDayWiseLectures(day: day); // get required day lecture.
+    currentScreenTime = monToThursSlots;
+    loading.value = true;
+    _freerooms.clear();
+    // list contains all the slots data for specific day.
+    final List list =
+        await _getDayWiseLectures(day: day); // get required day lecture.
 
-      // list contains all the slots data for specific day.
+    List.generate(5, (index) async {
+      // set to 1 for all the slots
+      List data = await list[index]
+          .where((element) => element.toString().isNotEmpty)
+          .toList(); // filter empty cells
+      List<String> filtered = List<String>.from(data); // casting..
+      var storage = [];
+      var classes = filtered
+          .where((element) => !element.toLowerCase().contains('lab'))
+          .toList(); // sortout the labs
+      var totalClasses = classes.length; // total classes length
 
-      List.generate(1, (index) async {
-        // set to 1 for all the slots
-        List data = await list[index]
-            .where((element) => element.toString().isNotEmpty)
-            .toList(); // filter empty cells
-        List<String> filtered = List<String>.from(data); // casting..
-        filtered = filtered
-            .where((element) => !element.toLowerCase().contains('lab'))
-            .toList(); // sortout the labs
-        var totalClasses = filtered.length; // total classes length
-        filtered = filtered
-            .where((element) => element.toLowerCase().contains('a'))
-            .toList(); // fetch Classes of A
+      // Filtering the classes
+      storage = classes
+          .where((element) => element.toLowerCase().contains('a'))
+          .toList(); // fetch Classes of A
+      var subclass1 =
+          FreeroomsSubClass(totalClasses: storage.length, classes: storage);
 
-        var subclass1 =
-            FreeroomsSubClass(totalClasses: filtered.length, classes: filtered);
+      storage = classes
+          .where((element) => element.toLowerCase().contains('b'))
+          .toList(); // fetch Classes of B
+      var subclass2 =
+          FreeroomsSubClass(totalClasses: storage.length, classes: storage);
 
-        filtered = filtered
-            .where((element) => element.toLowerCase().contains('b'))
-            .toList(); // fetch Classes of B
+      storage = classes
+          .where((element) => element.toLowerCase().contains('c'))
+          .toList(); // fetch Classes of B
+      var subclass3 =
+          FreeroomsSubClass(totalClasses: storage.length, classes: storage);
 
-        var subclass2 =
-            FreeroomsSubClass(totalClasses: filtered.length, classes: filtered);
+      storage = classes
+          .where((element) => element.toLowerCase().contains('w'))
+          .toList(); // fetch Classes of B
+      var subclass4 =
+          FreeroomsSubClass(totalClasses: storage.length, classes: storage);
 
-        var listOfSubClasses = [subclass1, subclass2];
+      var listOfSubClasses = [subclass1, subclass2, subclass3, subclass4];
 
-        //! Calculating Labs
+      //! Calculating Labs
 
-        filtered = filtered
-            .where((element) => element.toLowerCase().contains('lab'))
-            .toList();
+      storage = filtered
+          .where((element) => element.toLowerCase().contains('lab'))
+          .toList()
+        ..sort();
 
-        var totalLabs = filtered.length;
+      var totalLabs = storage.length;
 
-        var freeroomsModel = FreeroomsModel(
-            totalClasses: totalClasses,
-            classes: listOfSubClasses,
-            totalLabs: totalLabs,
-            labs: filtered);
+      var freeroomsModel = FreeroomsModel(
+          totalClasses: totalClasses,
+          classes: listOfSubClasses,
+          totalLabs: totalLabs,
+          labs: storage);
 
-        freerooms.add(freeroomsModel);
-      });
-
-      loading.value = false;
-    }
+      _freerooms.add(freeroomsModel);
+    });
+    freerooms.value = _freerooms;
+    loading.value = false;
   }
 
   @override

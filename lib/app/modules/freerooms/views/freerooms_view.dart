@@ -82,7 +82,7 @@ class FreeroomsView extends GetView<FreeroomsController> {
                             ],
                           )
                         : ListView.builder(
-                            itemCount: 1,
+                            itemCount: 5,
                             itemBuilder: (BuildContext context, int index) {
                               return FreeroomsMainExpansionTile(
                                   slot: controller.currentScreenTime[index],
@@ -92,7 +92,7 @@ class FreeroomsView extends GetView<FreeroomsController> {
                                   totalLabs:
                                       controller.freerooms[index].totalLabs,
                                   labs: controller.freerooms[index].labs,
-                                  expanded: true);
+                                  expanded: index == 0 ? true : false);
                             },
                           ),
                   )

@@ -125,6 +125,11 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
               totalClasses: totalClasses,
               classes: classes,
             ),
+
+            FreeroomsLabsExpensionTile(
+              totalLabs: totalLabs,
+              labs: labs,
+            )
             // FreeroomsLabsExpensionTile(),
           ],
         ),
@@ -174,18 +179,13 @@ class FreeroomsClassesExpensionTile extends StatelessWidget {
             ),
           ),
           children: [
-            Expanded(
-              child: ListView.builder(
-                // itemCount: dept.length,
-                itemCount: 2,
-                itemBuilder: (BuildContext context, int index) {
-                  return FreeroomsDepartmentWiseExpensionTile(
-                    department: dept[index],
-                    availableClasses: classes[index].classes,
-                  );
-                },
-              ),
-            ),
+            ...List.generate(
+                dept.length,
+                (index) => FreeroomsDepartmentWiseExpensionTile(
+                      department: dept[index],
+                      totalClasses: classes[index].totalClasses,
+                      availableClasses: classes[index].classes,
+                    )),
             SizedBox(
               height: Constants.defaultPadding,
             )
@@ -197,7 +197,11 @@ class FreeroomsClassesExpensionTile extends StatelessWidget {
 }
 
 class FreeroomsLabsExpensionTile extends StatelessWidget {
-  const FreeroomsLabsExpensionTile({Key? key}) : super(key: key);
+  final totalLabs;
+  final List labs;
+  const FreeroomsLabsExpensionTile(
+      {Key? key, required this.totalLabs, required this.labs})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +228,7 @@ class FreeroomsLabsExpensionTile extends StatelessWidget {
           leading: Padding(
             padding: EdgeInsets.only(top: Constants.defaultPadding / 3),
             child: Text(
-              '12',
+              '$totalLabs',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     fontWeight: FontWeight.w900,
                     fontSize: 16,
@@ -234,19 +238,47 @@ class FreeroomsLabsExpensionTile extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.all(Constants.defaultPadding),
-              child: GridView.count(
-                physics: const ScrollPhysics(),
-                shrinkWrap: true,
-                crossAxisCount: 4,
-                scrollDirection: Axis.vertical,
-                children: [
-                  ...List.generate(
-                      12,
-                      (index) => const FreeroomsTile(
-                            room: "A1.1",
-                          ))
-                ],
-              ),
+              child: totalLabs == 0
+                  ? Card(
+                      shadowColor: shadowColor,
+                      elevation: Constants.defaultElevation,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(Constants.defaultRadius))),
+                      child: Padding(
+                        padding: EdgeInsets.all(
+                          Constants.defaultPadding,
+                        ),
+                        child: Text('All Labs Reserved',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(color: errorColor1)),
+                      ),
+                    )
+                  : ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: labs.length,
+                      itemBuilder: (context, index) {
+                        return LabShowCard(
+                          lab: labs[index].toString(),
+                        );
+                      },
+                    ),
+              // : GridView.count(
+              //     crossAxisCount: 2,
+              //     physics: const ScrollPhysics(),
+              //     shrinkWrap: true,
+              //     // crossAxisCount: 2,
+              //     padding: EdgeInsets.zero,
+
+              //     scrollDirection: Axis.vertical,
+              //     children: [
+              //       ...List.generate(labs.length,
+              //           (index) => Text(labs[index].toString()))
+              //     ],
+              //   ),
             ),
           ],
         ),
@@ -257,9 +289,13 @@ class FreeroomsLabsExpensionTile extends StatelessWidget {
 
 class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
   final department;
+  final int totalClasses;
   final List availableClasses;
   const FreeroomsDepartmentWiseExpensionTile(
-      {Key? key, required this.department, required this.availableClasses})
+      {Key? key,
+      required this.department,
+      required this.totalClasses,
+      required this.availableClasses})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -279,7 +315,7 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
             backgroundColor: expandedColor,
             onExpansionChanged: (value) {},
             title: Text(
-              '$department dept',
+              '$department Dept.',
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -288,29 +324,46 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
             leading: Padding(
               padding: EdgeInsets.only(top: Constants.defaultPadding / 3),
               child: Text(
-                '12',
+                '$totalClasses',
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.w900,
-                      fontSize: 16,
                     ),
               ),
             ),
             children: [
               Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding / 2),
-                child: GridView.count(
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 4,
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    ...List.generate(
-                        12,
-                        (index) => const FreeroomsTile(
-                              room: "A1.1",
-                            ))
-                  ],
-                ),
+                child: availableClasses.length == 0
+                    ? Card(
+                        shadowColor: shadowColor,
+                        elevation: Constants.defaultElevation,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(Constants.defaultRadius))),
+                        child: Padding(
+                          padding: EdgeInsets.all(
+                            Constants.defaultPadding,
+                          ),
+                          child: Text('All Classes Reserved',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(color: errorColor1)),
+                        ),
+                      )
+                    : GridView.count(
+                        physics: const ScrollPhysics(),
+                        shrinkWrap: true,
+                        crossAxisCount: 4,
+                        scrollDirection: Axis.vertical,
+                        children: [
+                          ...List.generate(
+                              availableClasses.length,
+                              (index) => RoomShowCard(
+                                    room: availableClasses[index].toString(),
+                                  ))
+                        ],
+                      ),
               ),
             ],
           ),
@@ -320,9 +373,9 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
   }
 }
 
-class FreeroomsTile extends StatelessWidget {
+class RoomShowCard extends StatelessWidget {
   final String room;
-  const FreeroomsTile({
+  RoomShowCard({
     Key? key,
     required this.room,
   }) : super(key: key);
@@ -339,14 +392,61 @@ class FreeroomsTile extends StatelessWidget {
             borderRadius:
                 BorderRadius.all(Radius.circular(Constants.defaultRadius))),
         child: Center(
-          child: Text(
-            room.toString(),
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(fontWeight: FontWeight.bold),
+          child: FittedBox(
+            child: Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
+              child: Text(
+                room.toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(fontWeight: FontWeight.w900),
+              ),
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LabShowCard extends StatelessWidget {
+  final String lab;
+  LabShowCard({
+    Key? key,
+    required this.lab,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.zero,
+      child: Card(
+        color: widgetColor,
+        elevation: Constants.defaultElevation,
+        shadowColor: shadowColor,
+        shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.all(Radius.circular(Constants.defaultRadius))),
+        child: ListTile(
+            // contentPadding: EdgeInsets.zero,
+            minVerticalPadding: 0.0,
+            dense: true,
+            // visualDensity: VisualDensity(horizontal: 0, vertical: 0),
+            title: Align(
+              alignment: Alignment.centerLeft,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  lab.toString(),
+                  // textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ),
+            )),
       ),
     );
   }
