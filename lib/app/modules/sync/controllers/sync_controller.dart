@@ -1,9 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
-import 'package:cui_timetable/app/data/database/freerooms/freerooms_database.dart';
-import 'package:cui_timetable/app/data/database/timeslots/timeslots_database.dart';
-import 'package:cui_timetable/app/data/database/timetable/timetable_database.dart';
+
+import 'package:cui_timetable/app/data/database/timeslots_db/timeslots_database.dart';
+
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';

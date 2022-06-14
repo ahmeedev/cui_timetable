@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'dart:developer' as devlog;
 import 'dart:io';
 
-import 'package:cui_timetable/app/data/database/freerooms/freerooms_database.dart';
-import 'package:cui_timetable/app/data/database/timetable/timetable_database.dart';
+import 'package:cui_timetable/app/data/database/freerooms_db/freerooms_database.dart';
+import 'package:cui_timetable/app/data/database/timetable_db/timetable_database.dart';
+
 import 'package:flutter/foundation.dart';
 
 import 'package:csv/csv.dart';

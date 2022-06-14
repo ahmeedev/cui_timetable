@@ -10,12 +10,6 @@ import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
 class TeacherUIView extends GetView<TeacherUIController> {
   const TeacherUIView({Key? key}) : super(key: key);
 
@@ -66,7 +60,10 @@ class TeacherUIView extends GetView<TeacherUIController> {
               children: [
                 Text(
                   'Teacher Name',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
                 GestureDetector(
                   onTap: () async {

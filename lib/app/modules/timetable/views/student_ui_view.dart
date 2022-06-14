@@ -60,7 +60,10 @@ class StudentUIView extends GetView<StudentUIController> {
               children: [
                 Text(
                   'Section Name',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
 
                 GestureDetector(

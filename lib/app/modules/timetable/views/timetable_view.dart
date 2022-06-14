@@ -1,6 +1,7 @@
+import 'package:cui_timetable/app/modules/timetable/comparision/views/comparision_view.dart';
+import 'package:cui_timetable/app/modules/timetable/views/comparision_ui_view.dart';
 import 'package:flutter/material.dart';
 
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:get/get.dart';
 
 import 'package:cui_timetable/app/modules/timetable/controllers/timetable_controller.dart';
@@ -8,12 +9,6 @@ import 'package:cui_timetable/app/modules/timetable/views/student_ui_view.dart';
 import 'package:cui_timetable/app/modules/timetable/views/teacher_ui_view.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
 
 // ignore: use_key_in_widget_constructors
 class TimetableView extends GetView<TimetableController> {
@@ -32,23 +27,7 @@ class TimetableView extends GetView<TimetableController> {
                 children: [
                   const StudentUIView(),
                   const TeacherUIView(),
-
-                  // main container
-                  AvatarGlow(
-                    endRadius: 190.0,
-                    duration: const Duration(milliseconds: 2000),
-                    repeat: true,
-                    showTwoGlows: true,
-                    repeatPauseDuration: const Duration(milliseconds: 100),
-                    glowColor: primaryColor,
-                    child: Container(
-                        width: 50,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          color: successColor,
-                          shape: BoxShape.circle,
-                        )),
-                  ),
+                  ComparisionUiView()
                 ],
               ),
             )

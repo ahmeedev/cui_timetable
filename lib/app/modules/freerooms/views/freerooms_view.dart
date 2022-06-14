@@ -20,13 +20,6 @@ class FreeroomsView extends GetView<FreeroomsController> {
     DBFreerooms.thursday,
     DBFreerooms.friday,
   ];
-  final slots = [
-    "08:30AM - 10:00AM",
-    "10:00AM - 11:30AM",
-    "11:30AM - 01:00PM",
-    "01:30PM - 3:00PM",
-    "03:00PM - 04:30PM"
-  ];
 
   @override
   Widget build(BuildContext context) {

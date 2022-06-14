@@ -3,10 +3,6 @@ import 'package:hive/hive.dart';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 
-// Package imports:
-
-// Project imports:
-
 class TeacherTimetableController extends GetxController {
   var monToThursSlots = [];
   var friSlots = [];

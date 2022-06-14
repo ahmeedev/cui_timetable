@@ -9,6 +9,8 @@ import '../modules/portals/views/portals_view.dart';
 import '../modules/sync/bindings/sync_binding.dart';
 import '../modules/sync/views/sync_view.dart';
 import '../modules/timetable/bindings/timetable_binding.dart';
+import '../modules/timetable/comparision/bindings/comparision_binding.dart';
+import '../modules/timetable/comparision/views/comparision_view.dart';
 import '../modules/timetable/student_timetable/bindings/student_timetable_binding.dart';
 import '../modules/timetable/student_timetable/views/student_timetable_view.dart';
 import '../modules/timetable/teacher_timetable/bindings/teacher_timetable_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
           name: _Paths.TEACHER_TIMETABLE,
           page: () => TeacherTimetableView(),
           binding: TeacherTimetableBinding(),
+        ),
+        GetPage(
+          name: _Paths.COMPARISION,
+          page: () => ComparisionView(),
+          binding: ComparisionBinding(),
         ),
       ],
     ),

@@ -49,20 +49,22 @@ class DayTile extends GetView<FreeroomsController> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(day,
-                              style: Theme.of(context).textTheme.titleMedium),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: Constants.defaultPadding * 3),
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: double.infinity,
-                              height: 5,
-                              decoration: const BoxDecoration(
-                                  gradient:
-                                      LinearGradient(colors: successGradient)),
-                            ),
-                          )
+                          Center(
+                            child: Text(day,
+                                style: Theme.of(context).textTheme.titleMedium),
+                          ),
+                          // Padding(
+                          //   padding: EdgeInsets.symmetric(
+                          //       horizontal: Constants.defaultPadding * 3),
+                          //   child: Container(
+                          //     alignment: Alignment.center,
+                          //     width: double.infinity,
+                          //     height: 5,
+                          //     decoration: const BoxDecoration(
+                          //         gradient:
+                          //             LinearGradient(colors: successGradient)),
+                          //   ),
+                          // )
                         ],
                       ),
                     ),

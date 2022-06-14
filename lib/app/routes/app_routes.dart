@@ -14,6 +14,7 @@ abstract class Routes {
   static const SYNC = _Paths.SYNC;
   static const FREEROOMS = _Paths.FREEROOMS;
   static const PORTALS = _Paths.PORTALS;
+  static const COMPARISION = _Paths.TIMETABLE + _Paths.COMPARISION;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const SYNC = '/sync';
   static const FREEROOMS = '/freerooms';
   static const PORTALS = '/portals';
+  static const COMPARISION = '/comparision';
 }
