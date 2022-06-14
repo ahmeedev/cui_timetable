@@ -10,27 +10,12 @@ import 'package:cui_timetable/app/data/database/database_constants.dart';
 class TeacherTimetableController extends GetxController {
   var monToThursSlots = [];
   var friSlots = [];
-  // var timeMap = {
-  //   '1': ["08:30AM", "10:00AM"],
-  //   '2': ["10:00AM", "11:30AM"],
-  //   '3': ["11:30AM", "01:00PM"],
-  //   '4': ["01:30PM", "03:00PM"],
-  //   '5': ["03:00PM", "04:30PM"]
-  // };
-
-  // var timeMap;
-  // final timeMap = {
-  //   "1": ["08:30AM", "10:00AM"],
-  //   "2": ["10:00AM", "11:30AM"],
-  //   "3": ["11:30AM", "01:00PM"],
-  //   "4": ["01:30PM", "03:00PM"],
-  //   "5": ["03:00PM", "04:30PM"],
-  // };
+  var currentTimeSlots = [];
 
   @override
   Future<void> onInit() async {
     final box = await Hive.openBox(DBNames.timeSlots);
-    monToThursSlots = box.get(DBTimeSlots.monToThur);
+    currentTimeSlots = monToThursSlots = box.get(DBTimeSlots.monToThur);
     friSlots = box.get(DBTimeSlots.fri);
     super.onInit();
   }

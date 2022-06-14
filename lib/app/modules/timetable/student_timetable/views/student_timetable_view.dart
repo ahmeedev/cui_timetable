@@ -94,19 +94,15 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                             itemCount: controller.daywiseLectures.length,
                             itemBuilder: (context, index) {
                               return LectureDetailsTile(
-                                subject: controller.daywiseLectures[index][1],
-                                teacher: controller.daywiseLectures[index][4],
-                                room: controller.daywiseLectures[index][5],
-                                time: int.parse(
-                                            "${controller.daywiseLectures[index][2]}") ==
-                                        5
-                                    ? controller.friSlots[int.parse(
-                                            "${controller.daywiseLectures[index][2]}") -
-                                        1]
-                                    : controller.monToThursSlots[int.parse(
-                                            "${controller.daywiseLectures[index][2]}") -
-                                        1],
-                              );
+                                  subject: controller.daywiseLectures[index][1],
+                                  teacher: controller.daywiseLectures[index][4],
+                                  room: controller.daywiseLectures[index][5],
+                                  time: controller.currentTimeSlots[int.parse(
+                                              controller.daywiseLectures[index]
+                                                      [2]
+                                                  .toString()) -
+                                          1]
+                                      .toString());
                             },
                           ),
                   )),
@@ -176,6 +172,12 @@ class DayTile extends GetView<StudentTimetableController> {
                         BorderRadius.circular(Constants.defaultRadius),
                     onTap: () {
                       callback();
+                      if (dayKey == "1") {
+                        controller.currentTimeSlots = controller.friSlots;
+                      } else {
+                        controller.currentTimeSlots =
+                            controller.monToThursSlots;
+                      }
                       controller.getLectures(key: dayKey);
                       obs.value = true;
                     },

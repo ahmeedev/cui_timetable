@@ -105,15 +105,11 @@ class TeacherTimetableView extends GetView<TeacherTimetableController> {
                                 section: controller.daywiseLectures[index][0],
                                 subject: controller.daywiseLectures[index][1],
                                 room: controller.daywiseLectures[index][5],
-                                time: int.parse(
-                                            "${controller.daywiseLectures[index][2]}") ==
-                                        5
-                                    ? controller.friSlots[int.parse(
-                                            "${controller.daywiseLectures[index][2]}") -
+                                time: controller.currentTimeSlots[int.parse(
+                                            controller.daywiseLectures[index][2]
+                                                .toString()) -
                                         1]
-                                    : controller.monToThursSlots[int.parse(
-                                            "${controller.daywiseLectures[index][2]}") -
-                                        1],
+                                    .toString(),
                               );
                             },
                           ),

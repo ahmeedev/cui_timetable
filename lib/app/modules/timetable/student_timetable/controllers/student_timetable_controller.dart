@@ -6,6 +6,7 @@ import 'package:cui_timetable/app/data/database/database_constants.dart';
 class StudentTimetableController extends GetxController {
   var monToThursSlots = [];
   var friSlots = [];
+  var currentTimeSlots = [];
   // final timeMap = {
   //   "1": ["08:30AM", "10:00AM"],
   //   "2": ["10:00AM", "11:30AM"],
@@ -19,9 +20,8 @@ class StudentTimetableController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     final box = await Hive.openBox(DBNames.timeSlots);
-    monToThursSlots = box.get(DBTimeSlots.monToThur);
+    currentTimeSlots = monToThursSlots = box.get(DBTimeSlots.monToThur);
     friSlots = box.get(DBTimeSlots.fri);
-    print(box.get(DBTimeSlots.monToThur));
   }
 
   var mon = true.obs; // mon is selected by default
