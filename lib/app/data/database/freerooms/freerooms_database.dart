@@ -13,8 +13,6 @@ import 'package:cui_timetable/app/data/database/database_utilities_methods.dart'
 
 class FreeRoomsDatabase {
   Future<bool> createDatabase({required lastEntity}) async {
-    await closeDatabases();
-
     await downloadFile(
         fileName: 'freerooms.csv',
         lastEntity: lastEntity,

@@ -44,7 +44,9 @@ Future<void> downloadFile(
             "fileName": fileName,
             "callback": callback
           });
+
           if (lastEntity) {
+            await Future.delayed(const Duration(milliseconds: 500));
             await _updateStatuses();
           }
         } else {
@@ -157,5 +159,5 @@ _updateStatuses() async {
 
 Future<void> closeDatabases() async {
   await Hive.close();
-  await Future.delayed(const Duration(milliseconds: 200));
+  await Future.delayed(const Duration(milliseconds: 300));
 }

@@ -8,18 +8,8 @@ import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
 import 'package:cui_timetable/app/data/models/timetable_model.dart';
 
-// Dart imports:
-
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
 class TimeslotsDatabase {
   Future<bool> createDatabase() async {
-    await closeDatabases();
-
     await downloadFile(
         fileName: 'timetable.json', callback: insertTimeslotsData, csv: false);
     return Future.value(true);

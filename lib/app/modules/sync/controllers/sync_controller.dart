@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
 import 'package:cui_timetable/app/data/database/freerooms/freerooms_database.dart';
 import 'package:cui_timetable/app/data/database/timeslots/timeslots_database.dart';
 import 'package:cui_timetable/app/data/database/timetable/timetable_database.dart';
@@ -8,10 +9,6 @@ import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-
-// Package imports:
-
-// Project imports:
 
 class SyncController extends GetxController {
   var clickable = true.obs;
@@ -41,8 +38,8 @@ class SyncController extends GetxController {
           } else {
             clickable.value = false;
             // update the sync statuses.
-            timetableSyncStatus.value = true;
-            freeroomsSyncStatus.value = true;
+            // timetableSyncStatus.value = true;
+            // freeroomsSyncStatus.value = true;
           }
           // await _insertTime();
           await _syncAllFiles();
@@ -66,14 +63,18 @@ class SyncController extends GetxController {
   }
 
   Future<bool> _syncAllFiles() async {
+    await closeDatabases();
+
     final timeslots = TimeslotsDatabase();
     await timeslots.createDatabase();
 
     final timetableDB = TimetableDatabase();
+    timetableSyncStatus.value = true;
     await timetableDB.createDatabase();
 
-    final freerooms = FreeRoomsDatabase();
-    await freerooms.createDatabase(lastEntity: true);
+    // final freerooms = FreeRoomsDatabase();
+    // freeroomsSyncStatus.value = true;
+    // await freerooms.createDatabase(lastEntity: true);
 
     return Future.value(true);
   }
