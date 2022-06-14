@@ -8,14 +8,6 @@ import 'package:cui_timetable/app/theme/app_constants.dart';
 
 import '../controllers/student_timetable_controller.dart';
 
-// import 'dart:ui';
-
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
 class StudentTimetableView extends GetView<StudentTimetableController> {
   StudentTimetableView({Key? key}) : super(key: key);
 

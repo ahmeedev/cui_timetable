@@ -68,9 +68,9 @@ class SyncController extends GetxController {
     final timeslots = TimeslotsDatabase();
     await timeslots.createDatabase();
 
-    final timetableDB = TimetableDatabase();
-    timetableSyncStatus.value = true;
-    await timetableDB.createDatabase();
+    // final timetableDB = TimetableDatabase();
+    // timetableSyncStatus.value = true;
+    // await timetableDB.createDatabase();
 
     // final freerooms = FreeRoomsDatabase();
     // freeroomsSyncStatus.value = true;

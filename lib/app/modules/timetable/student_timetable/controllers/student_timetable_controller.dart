@@ -3,10 +3,6 @@ import 'package:hive/hive.dart';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 
-// Package imports:
-
-// Project imports:
-
 class StudentTimetableController extends GetxController {
   var monToThursSlots = [];
   var friSlots = [];
@@ -21,11 +17,11 @@ class StudentTimetableController extends GetxController {
   // late final box;
   @override
   Future<void> onInit() async {
+    super.onInit();
     final box = await Hive.openBox(DBNames.timeSlots);
     monToThursSlots = box.get(DBTimeSlots.monToThur);
     friSlots = box.get(DBTimeSlots.fri);
-
-    super.onInit();
+    print(box.get(DBTimeSlots.monToThur));
   }
 
   var mon = true.obs; // mon is selected by default

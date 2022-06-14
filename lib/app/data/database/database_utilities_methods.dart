@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer' as devlog;
 import 'dart:io';
 
+import 'package:cui_timetable/app/data/database/freerooms/freerooms_database.dart';
+import 'package:cui_timetable/app/data/database/timetable/timetable_database.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:csv/csv.dart';
@@ -39,21 +41,34 @@ Future<void> downloadFile(
         break;
       case TaskState.success:
         if (csv) {
-          final result = await compute(_backgroundTaskCsv, {
+          await compute(_backgroundTaskCsv, {
             "filePath": LocationUtilities.defaultpath,
             "fileName": fileName,
             "callback": callback
+          }).then((value) async {
+            if (!lastEntity) {
+              final freerooms = FreeRoomsDatabase();
+              Get.find<SyncController>().freeroomsSyncStatus.value = true;
+              await freerooms.createDatabase(lastEntity: true);
+            } else {
+              await Future.delayed(const Duration(milliseconds: 500));
+              await _updateStatuses();
+            }
           });
 
-          if (lastEntity) {
-            await Future.delayed(const Duration(milliseconds: 500));
-            await _updateStatuses();
-          }
+          // if (lastEntity) {
+          //   await Future.delayed(const Duration(milliseconds: 500));
+          //   await _updateStatuses();
+          // }
         } else {
-          compute(_backgroundTaskJson, {
+          await compute(_backgroundTaskJson, {
             "filePath": LocationUtilities.defaultpath,
             "fileName": fileName,
             "callback": callback
+          }).then((value) async {
+            final timetableDB = TimetableDatabase();
+            Get.find<SyncController>().timetableSyncStatus.value = true;
+            await timetableDB.createDatabase();
           });
         }
 
