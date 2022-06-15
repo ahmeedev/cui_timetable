@@ -5,12 +5,6 @@ import 'package:hive/hive.dart';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
 class StudentUIController extends GetxController {
   var sections = [];
   final TextEditingController textController = TextEditingController();

@@ -1,16 +1,10 @@
-import 'dart:ui';
-
 import 'package:cui_timetable/app/modules/timetable/controllers/comparision_ui_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
-import 'package:flutter/material.dart';
-
-import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 
 class ComparisionUiView extends GetView<ComparisionUiController> {
   @override
@@ -19,11 +13,7 @@ class ComparisionUiView extends GetView<ComparisionUiController> {
         resizeToAvoidBottomInset: false,
         backgroundColor: scaffoldColor,
         body: Padding(
-          padding: EdgeInsets.fromLTRB(
-              Constants.defaultPadding,
-              Constants.defaultPadding,
-              Constants.defaultPadding,
-              Constants.defaultPadding),
+          padding: EdgeInsets.all(Constants.defaultPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -39,7 +29,7 @@ class ComparisionUiView extends GetView<ComparisionUiController> {
 
 // Build the textfield portion.
   Card _buildTextField(context) {
-    // var height = MediaQuery.of(context).size.height / 4;
+    var height = MediaQuery.of(context).size.height / 4;
 
     return Card(
       color: widgetColor,
@@ -66,60 +56,119 @@ class ComparisionUiView extends GetView<ComparisionUiController> {
             SizedBox(
               height: Constants.defaultPadding,
             ),
-            TypeAheadField(
-              textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: true,
-                  controller: controller.textController,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontWeight: FontWeight.bold),
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          controller.textController.clear();
-                          controller.respectiveSections.value = [' '];
-                          controller.dropBoxValue.value = ' ';
-                        },
-                        icon: const Icon(Icons.cancel, color: primaryColor)),
-                    fillColor: textFieldColor,
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.circular(Constants.defaultRadius),
-                        borderSide: const BorderSide(color: primaryColor)),
-                  )),
-              suggestionsCallback: (pattern) async {
-                if (pattern.isEmpty) return [];
-                // if (controller.teachers.contains(pattern)) return [];
-                return controller.teachers.where((element) => element
-                    .toString()
-                    .toLowerCase()
-                    .contains(pattern.toLowerCase()));
-              },
-              itemBuilder: (context, suggestion) {
-                return ListTile(
-                  title: Text(suggestion.toString()),
-                  dense: true,
-                );
-              },
-              onSuggestionSelected: (suggestion) {
-                controller.textController.text = suggestion.toString();
-                List list =
-                    controller.box.get(suggestion.toString().toLowerCase());
-                print(list);
-                final sections = <String>{};
-                list.forEach((element) {
-                  sections.add(element[0]);
-                });
+            TextFormField(
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontWeight: FontWeight.bold),
+                controller: controller.textController,
+                onChanged: (value) {
+                  controller.filteredList.value = controller.teachers
+                      .where((element) => element
+                          .toString()
+                          .toLowerCase()
+                          .contains(value.toLowerCase()))
+                      .toList();
 
-                controller.respectiveSections.value = sections.toList();
-                // controller.respectiveSections.value.setAll(0, [' ']);
-                // print(controller.respectiveSections.value);
-              },
+                  if (value.isEmpty || value.length == 0) {
+                    controller.listVisible.value = false;
+                    controller.filteredList.clear();
+                    print("value is null");
+                  } else if (controller.filteredList.contains(value) &&
+                      controller.filteredList.length == 1) {
+                    controller.listVisible.value = false;
+                  } else {
+                    controller.listVisible.value = true;
+                  }
+
+                  if (!controller.filteredList.contains(value)) {
+                    controller.respectiveSections.value = [' '];
+                    controller.dropBoxValue.value = ' ';
+                  }
+                },
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        controller.textController.clear();
+                        controller.filteredList.value = [];
+                        controller.respectiveSections.value = [' '];
+                        controller.dropBoxValue.value = ' ';
+                      },
+                      icon: const Icon(Icons.cancel, color: primaryColor)),
+                  fillColor: textFieldColor,
+                  filled: true,
+                  border: OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.circular(Constants.defaultRadius),
+                      borderSide: const BorderSide(color: primaryColor)),
+                )),
+            SizedBox(
+              height: Constants.defaultPadding / 2,
+            ),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
+              child: Obx(() => controller.filteredList.isEmpty
+                  ? SizedBox()
+                  : ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minWidth: double.infinity,
+                        maxHeight: controller.listVisible.value ? height : 0,
+                      ),
+                      child: ListView.separated(
+                        padding: EdgeInsets.zero,
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: controller.filteredList.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            onTap: () {
+                              controller.textController.text =
+                                  controller.filteredList[index];
+                              controller.textController.selection =
+                                  TextSelection.fromPosition(TextPosition(
+                                      offset: controller
+                                          .textController.text.length));
+                              controller.listVisible.value = false;
+
+                              List list = controller.box
+                                  .get(controller.filteredList[index]
+                                      .toString()
+                                      .toLowerCase())
+                                  .toList();
+                              final sections = <String>{};
+                              list.forEach((element) {
+                                sections.add(element[0]);
+                              });
+                              controller.respectiveSections.value = [];
+                              controller.respectiveSections.value =
+                                  sections.toList();
+                              print(list);
+                            },
+                            dense: true,
+                            contentPadding: EdgeInsets.zero,
+                            leading: Text(
+                              controller.filteredList[index],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            color: primaryColor,
+                            height: 2,
+                            // indent: 15,
+                            // endIndent: 15,
+                          );
+                        },
+                      ),
+                    )),
             ),
             SizedBox(
-              height: Constants.defaultPadding * 2,
+              height: Constants.defaultPadding / 2,
             ),
             Text(
               'Select Section',
@@ -132,7 +181,8 @@ class ComparisionUiView extends GetView<ComparisionUiController> {
               height: Constants.defaultPadding,
             ),
             Padding(
-                padding: EdgeInsets.all(Constants.defaultPadding / 2),
+                padding: EdgeInsets.fromLTRB(Constants.defaultPadding * 1.2, 0,
+                    Constants.defaultPadding * 2, 0),
                 child: Obx(() => DropdownButton(
                       isExpanded: true,
                       borderRadius: BorderRadius.all(
@@ -153,6 +203,7 @@ class ComparisionUiView extends GetView<ComparisionUiController> {
                       },
 
                       icon: const Icon(Icons.keyboard_arrow_down),
+                      iconEnabledColor: primaryColor,
 
                       items: controller.respectiveSections.map((String items) {
                         return DropdownMenuItem(
@@ -182,7 +233,10 @@ class ComparisionUiView extends GetView<ComparisionUiController> {
             onPressed: () async {
               final value = controller.textController.text.toString();
               if (controller.teachers.contains(value)) {
-                Get.toNamed(Routes.COMPARISION);
+                Get.toNamed(Routes.COMPARISION, arguments: <String>[
+                  controller.textController.text,
+                  controller.dropBoxValue.value
+                ]);
               } else {
                 GetXUtilities.snackbar(
                     title: 'Not Found!!',

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class ComparisionUiController extends GetxController {
-  var teachers = [];
   final TextEditingController textController = TextEditingController();
   var listVisible = true.obs;
   late final Box box;
+  var teachers = [];
+  var filteredList = [].obs;
+
   var respectiveSections =
       <String>[' '].obs; //! blank for the null section droplist
   var dropBoxValue = ' '.obs;

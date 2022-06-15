@@ -7,12 +7,6 @@ import 'package:cui_timetable/app/modules/timetable/teacher_timetable/controller
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
 class TeacherTimetableView extends GetView<TeacherTimetableController> {
   TeacherTimetableView({Key? key}) : super(key: key);
   // final teacherTimetableController = Get.put(TeacherTimetableController());

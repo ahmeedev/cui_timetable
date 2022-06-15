@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 
 class ComparisionController extends GetxController {
-  //TODO: Implement ComparisionController
-
   final count = 0.obs;
   @override
   void onInit() {
