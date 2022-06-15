@@ -21,9 +21,6 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(Get.arguments[0]),
-          // actions: [
-          //   IconButton(onPressed: () {}, icon: const Icon(Icons.search))
-          // ],
         ),
         body: Column(
           children: [

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-class ComparisionUiController extends GetxController {
+class ComparisonUiController extends GetxController {
   final TextEditingController textController = TextEditingController();
   var listVisible = true.obs;
   late final Box box;

@@ -7,13 +7,6 @@ class StudentTimetableController extends GetxController {
   var monToThursSlots = [];
   var friSlots = [];
   var currentTimeSlots = [];
-  // final timeMap = {
-  //   "1": ["08:30AM", "10:00AM"],
-  //   "2": ["10:00AM", "11:30AM"],
-  //   "3": ["11:30AM", "01:00PM"],
-  //   "4": ["01:30PM", "03:00PM"],
-  //   "5": ["03:00PM", "04:30PM"],
-  // };
 
   // late final box;
   @override

@@ -1,4 +1,4 @@
-import 'package:cui_timetable/app/modules/timetable/controllers/comparision_ui_controller.dart';
+import 'package:cui_timetable/app/modules/timetable/controllers/comparison_ui_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -6,7 +6,7 @@ import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ComparisionUiView extends GetView<ComparisionUiController> {
+class ComparisonUiView extends GetView<ComparisonUiController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

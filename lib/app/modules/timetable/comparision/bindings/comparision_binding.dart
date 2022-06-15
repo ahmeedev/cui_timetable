@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 
-import '../controllers/comparision_controller.dart';
+import '../controllers/comparison_controller.dart';
 
 class ComparisionBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ComparisionController>(
-      () => ComparisionController(),
+    Get.lazyPut<ComparisonController>(
+      () => ComparisonController(),
     );
   }
 }

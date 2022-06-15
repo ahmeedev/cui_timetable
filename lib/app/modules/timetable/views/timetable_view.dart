@@ -1,5 +1,5 @@
 import 'package:cui_timetable/app/modules/timetable/controllers/timetable_controller.dart';
-import 'package:cui_timetable/app/modules/timetable/views/comparision_ui_view.dart';
+import 'package:cui_timetable/app/modules/timetable/views/comparison_ui_view.dart';
 import 'package:cui_timetable/app/modules/timetable/views/student_ui_view.dart';
 import 'package:cui_timetable/app/modules/timetable/views/teacher_ui_view.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
@@ -24,7 +24,7 @@ class TimetableView extends GetView<TimetableController> {
                 children: [
                   const StudentUIView(),
                   const TeacherUIView(),
-                  ComparisionUiView()
+                  ComparisonUiView()
                 ],
               ),
             )

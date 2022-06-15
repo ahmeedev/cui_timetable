@@ -62,7 +62,7 @@ class AppPages {
         ),
         GetPage(
           name: _Paths.COMPARISION,
-          page: () => ComparisionView(),
+          page: () => ComparisonView(),
           binding: ComparisionBinding(),
         ),
       ],
