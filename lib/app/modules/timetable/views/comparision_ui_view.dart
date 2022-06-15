@@ -143,7 +143,8 @@ class ComparisionUiView extends GetView<ComparisionUiController> {
                               controller.respectiveSections.value = [];
                               controller.respectiveSections.value =
                                   sections.toList();
-                              print(list);
+                              controller.dropBoxValue.value =
+                                  sections.elementAt(0);
                             },
                             dense: true,
                             contentPadding: EdgeInsets.zero,
@@ -184,6 +185,7 @@ class ComparisionUiView extends GetView<ComparisionUiController> {
                 padding: EdgeInsets.fromLTRB(Constants.defaultPadding * 1.2, 0,
                     Constants.defaultPadding * 2, 0),
                 child: Obx(() => DropdownButton(
+                      focusColor: textFieldColor,
                       isExpanded: true,
                       borderRadius: BorderRadius.all(
                           Radius.circular(Constants.defaultRadius)),
