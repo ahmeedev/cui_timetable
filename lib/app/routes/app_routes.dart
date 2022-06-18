@@ -16,6 +16,7 @@ abstract class Routes {
   static const PORTALS = _Paths.PORTALS;
   static const COMPARISION = _Paths.TIMETABLE + _Paths.COMPARISION;
   static const DATESHEET = _Paths.DATESHEET;
+  static const STUDENT_DATESHEET = _Paths.DATESHEET + _Paths.STUDENT_DATESHEET;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const PORTALS = '/portals';
   static const COMPARISION = '/comparision';
   static const DATESHEET = '/datesheet';
+  static const STUDENT_DATESHEET = '/student-datesheet';
 }

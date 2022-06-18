@@ -16,9 +16,16 @@ class DBInfo {
   static const lastUpdate = "lastUpdate";
   static const sections = 'sections';
   static const teachers = 'teachers';
+  static const datesheetSections = 'datesheetSections';
+  static const datesheetTeachers = 'datesheetTeachers';
+
   static const searchSection = 'searchSection';
   static const searchTeacher = 'searchTeacher';
   static const searchComparisonTeacher = 'searchComparisonTeacher';
+
+  static const datesheetSearchSection = 'datesheetSearchSection';
+  static const datesheetSearchTeacher = 'datesheetSearchTeacher';
+
   static const newUser = 'newUser';
   static const news = 'news';
 }
