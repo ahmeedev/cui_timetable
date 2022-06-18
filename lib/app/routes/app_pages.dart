@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import 'package:cui_timetable/app/modules/timetable/comparison/bindings/comparision_binding.dart';
+import 'package:cui_timetable/app/modules/timetable/comparison/views/comparison_view.dart';
+
 import '../modules/datesheet/bindings/datesheet_binding.dart';
 import '../modules/datesheet/views/datesheet_view.dart';
 import '../modules/freerooms/bindings/freerooms_binding.dart';
@@ -11,8 +14,6 @@ import '../modules/portals/views/portals_view.dart';
 import '../modules/sync/bindings/sync_binding.dart';
 import '../modules/sync/views/sync_view.dart';
 import '../modules/timetable/bindings/timetable_binding.dart';
-import '../modules/timetable/comparision/bindings/comparision_binding.dart';
-import '../modules/timetable/comparision/views/comparision_view.dart';
 import '../modules/timetable/student_timetable/bindings/student_timetable_binding.dart';
 import '../modules/timetable/student_timetable/views/student_timetable_view.dart';
 import '../modules/timetable/teacher_timetable/bindings/teacher_timetable_binding.dart';

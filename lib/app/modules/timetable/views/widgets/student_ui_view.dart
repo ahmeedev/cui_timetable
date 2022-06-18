@@ -19,11 +19,7 @@ class StudentUIView extends GetView<StudentUIController> {
         resizeToAvoidBottomInset: false,
         backgroundColor: scaffoldColor,
         body: Padding(
-          padding: EdgeInsets.fromLTRB(
-              Constants.defaultPadding,
-              Constants.defaultPadding,
-              Constants.defaultPadding,
-              Constants.defaultPadding),
+          padding: EdgeInsets.all(Constants.defaultPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

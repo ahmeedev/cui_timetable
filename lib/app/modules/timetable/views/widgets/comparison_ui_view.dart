@@ -1,14 +1,14 @@
-import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
+import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/timetable/controllers/comparison_ui_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
-import 'package:hive/hive.dart';
 
 class ComparisonUiView extends GetView<ComparisonUiController> {
   @override

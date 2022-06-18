@@ -15,6 +15,7 @@ class ComparisonUiController extends GetxController {
   var respectiveSections =
       <String>[' '].obs; //! blank for the null section droplist
   var dropBoxValue = ' '.obs;
+
   @override
   Future<void> onInit() async {
     await fetchTeachers();
@@ -37,17 +38,15 @@ class ComparisonUiController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
   Future<void> fetchTeachers() async {
     final box = await Hive.openBox(DBNames.info);
     final list = box.get(DBInfo.teachers);
     teachers = list ?? [];
   }
 
+  // Use for two purpose.
+  // 1. When user open the UI, it gets the stored information. and,
+  // 2. When user taps on search list tiles.
   listTileTap({int index = -1, String initialData = ""}) {
     final sections = <String>{};
     if (index != -1) {

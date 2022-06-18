@@ -10,13 +10,6 @@ import 'package:cui_timetable/app/modules/home/views/widgets/home_widgets.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
-
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);

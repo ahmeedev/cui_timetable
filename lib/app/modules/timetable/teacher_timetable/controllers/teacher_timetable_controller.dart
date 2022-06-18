@@ -8,22 +8,14 @@ class TeacherTimetableController extends GetxController {
   var friSlots = [];
   var currentTimeSlots = [];
 
-  @override
-  Future<void> onInit() async {
-    final box = await Hive.openBox(DBNames.timeSlots);
-    currentTimeSlots = monToThursSlots = box.get(DBTimeSlots.monToThur);
-    friSlots = box.get(DBTimeSlots.fri);
-    super.onInit();
-  }
-
   late final box;
-  var mon = true.obs; // mon is selected by default
+  var mon = true.obs; //! mon is selected by default
   var tue = false.obs;
   var wed = false.obs;
   var thu = false.obs;
   var fri = false.obs;
 
-  var daywiseLectures = [].obs;
+  var daywiseLectures = [].obs; //! Current day lectures.
 
   var monLectures = [];
   var tueLectures = [];
@@ -32,20 +24,15 @@ class TeacherTimetableController extends GetxController {
   var friLectures = [];
   var lecturesCount = <String, String>{}.obs;
 
-  openBox({required String teacher}) async* {
-    box = await Hive.openBox(DBNames.teachersDB);
-    final list = box.get(teacher.toLowerCase());
-    await _setLectures(list: list, key: "10000");
-    await _setLectures(list: list, key: "1000");
-    await _setLectures(list: list, key: "100");
-    await _setLectures(list: list, key: "10");
-    await _setLectures(list: list, key: "1");
-
-    daywiseLectures.value = monLectures; //* For default purpose
-
-    yield lecturesCount;
+  @override
+  Future<void> onInit() async {
+    final box = await Hive.openBox(DBNames.timeSlots);
+    currentTimeSlots = monToThursSlots = box.get(DBTimeSlots.monToThur);
+    friSlots = box.get(DBTimeSlots.fri);
+    super.onInit();
   }
 
+  // Methods for Controlling DayTile.
   void allFalse() {
     mon.value = false;
     tue.value = false;
@@ -66,6 +53,21 @@ class TeacherTimetableController extends GetxController {
     } else {
       return fri;
     }
+  }
+
+  // Methods for controlling LectureTile
+  openBox({required String teacher}) async* {
+    box = await Hive.openBox(DBNames.teachersDB);
+    final list = box.get(teacher.toLowerCase());
+    await _setLectures(list: list, key: "10000");
+    await _setLectures(list: list, key: "1000");
+    await _setLectures(list: list, key: "100");
+    await _setLectures(list: list, key: "10");
+    await _setLectures(list: list, key: "1");
+
+    daywiseLectures.value = monLectures; //* For default purpose
+
+    yield lecturesCount;
   }
 
   _setLectures({required list, required String key}) {

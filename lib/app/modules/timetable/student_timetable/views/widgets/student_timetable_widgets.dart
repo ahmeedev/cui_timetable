@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/modules/timetable/comparision/controllers/comparison_controller.dart';
+import 'package:cui_timetable/app/modules/timetable/student_timetable/controllers/student_timetable_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 
-class DayTile extends GetView<ComparisonController> {
+class DayTile extends GetView<StudentTimetableController> {
   late final String day;
   late final String dayKey;
   late final Function callback;
@@ -104,7 +104,7 @@ class DayTile extends GetView<ComparisonController> {
                                   height: 5,
                                   decoration: const BoxDecoration(
                                       gradient: LinearGradient(
-                                          colors: errorGradient)),
+                                          colors: successGradient)),
                                 ),
                               )
                             : Wrap(
@@ -136,9 +136,18 @@ class DayTile extends GetView<ComparisonController> {
 }
 
 class LectureDetailsTile extends StatelessWidget {
+  final String subject;
+  final String teacher;
+  final String room;
   final dynamic time;
 
-  const LectureDetailsTile({Key? key, required this.time}) : super(key: key);
+  const LectureDetailsTile(
+      {Key? key,
+      required this.subject,
+      required this.teacher,
+      required this.room,
+      required this.time})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,12 +155,12 @@ class LectureDetailsTile extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(Constants.defaultPadding / 2, 0,
           Constants.defaultPadding / 2, Constants.defaultPadding / 2),
       child: Card(
-        color: widgetColor,
-        elevation: Constants.defaultElevation,
-        shadowColor: shadowColor,
-        shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.all(Radius.circular(Constants.defaultRadius))),
+        // color: widgetColor,
+        // elevation: Constants.defaultElevation,
+        // shadowColor: shadowColor,
+        // shape: RoundedRectangleBorder(
+        //     borderRadius:
+        //         BorderRadius.all(Radius.circular(Constants.defaultRadius))),
         child: Padding(
           padding: EdgeInsets.all(Constants.defaultPadding),
           child: IntrinsicHeight(
@@ -202,23 +211,60 @@ class LectureDetailsTile extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.all(Constants.defaultPadding),
                             child: Text(
-                              'Free Slot',
+                              subject.toString(),
+                              textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(
-                                      fontWeight: FontWeight.w900,
-                                      color: successColor),
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .fontSize! +
+                                          2),
                             ),
                           ),
                         ),
                         const SizedBox(
                           height: 8,
                         ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Book Now"),
-                        )
+                        Row(
+                          children: [
+                            const ImageIcon(
+                              AssetImage('assets/home/room.png'),
+                              color: primaryColor,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(room.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            const ImageIcon(
+                              AssetImage('assets/timetable/professor.png'),
+                              color: primaryColor,
+                            ),
+                            const SizedBox(width: 5),
+                            Flexible(
+                              child: Container(
+                                child: Text(teacher.toString(),
+                                    overflow: TextOverflow.visible,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

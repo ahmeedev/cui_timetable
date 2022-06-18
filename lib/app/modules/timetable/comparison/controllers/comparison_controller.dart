@@ -10,6 +10,22 @@ class ComparisonController extends GetxController {
   var currentTimeSlots = [];
   late final Box studentsDB;
   late final Box teachersDB;
+
+  var mon = true.obs; //! mon is selected by default
+  var tue = false.obs;
+  var wed = false.obs;
+  var thu = false.obs;
+  var fri = false.obs;
+
+  var daywiseLectures = [].obs; //! Current day lectures.
+
+  var monLectures = [];
+  var tueLectures = [];
+  var wedLectures = [];
+  var thuLectures = [];
+  var friLectures = [];
+  var lecturesCount = <String, String>{}.obs;
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -23,20 +39,7 @@ class ComparisonController extends GetxController {
     await openBox();
   }
 
-  var mon = true.obs; // mon is selected by default
-  var tue = false.obs;
-  var wed = false.obs;
-  var thu = false.obs;
-  var fri = false.obs;
-
-  var daywiseLectures = [].obs;
-
-  var monLectures = [];
-  var tueLectures = [];
-  var wedLectures = [];
-  var thuLectures = [];
-  var friLectures = [];
-  var lecturesCount = <String, String>{}.obs;
+  // Methods for Controlling DayTile.
 
   void allFalse() {
     mon.value = false;
@@ -60,6 +63,7 @@ class ComparisonController extends GetxController {
     }
   }
 
+  // Methods for controlling LectureTile
   openBox() async {
     await _setLectures(key: "10000");
     await _setLectures(key: "1000");
@@ -143,7 +147,4 @@ class ComparisonController extends GetxController {
       daywiseLectures.value = friLectures;
     }
   }
-
-  @override
-  void onClose() {}
 }
