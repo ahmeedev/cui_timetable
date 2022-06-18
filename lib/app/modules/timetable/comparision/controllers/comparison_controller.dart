@@ -19,6 +19,37 @@ class ComparisonController extends GetxController {
     studentsDB = await Hive.openBox(DBNames.studentsDB);
     print(teachersDB.get(Get.arguments[0].toString().toLowerCase()).length);
     print(studentsDB.get(Get.arguments[1].toString().toLowerCase()).length);
+
+    final List teachers =
+        teachersDB.get(Get.arguments[0].toString().toLowerCase());
+    final List students =
+        studentsDB.get(Get.arguments[1].toString().toLowerCase());
+    print(teachers[1]);
+    final result1 =
+        teachers.where((element) => element[3].toString() == "10000");
+    print(result1.length);
+    final result2 =
+        students.where((element) => element[3].toString() == "10000");
+    print(result2.length);
+    final teachersSlotsList = <String>{};
+    final freeSlotsTeacher = result1.forEach((element) {
+      teachersSlotsList.add(element[2].toString());
+    });
+    final studentsSlotsList = <String>{};
+    final freeSlotsStudent = result2.forEach((element) {
+      studentsSlotsList.add(element[2].toString());
+    });
+
+    print(teachersSlotsList);
+    print(studentsSlotsList);
+    teachersSlotsList.addAll(studentsSlotsList);
+    print(teachersSlotsList);
+    final listt = [1, 2, 3, 4, 5];
+    listt.forEach((element) {
+      if (!teachersSlotsList.contains(element.toString())) {
+        print('Slot $element');
+      }
+    });
   }
 
   var mon = true.obs; // mon is selected by default
