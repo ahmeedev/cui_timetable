@@ -77,6 +77,7 @@ class TeacherTimetableController extends GetxController {
     } else if (key == "1000") {
       tueLectures =
           list.where((element) => element[3].toString() == key).toList();
+
       tueLectures.sort((a, b) => a[2].compareTo(b[2]));
       lecturesCount[key] = tueLectures.length.toString();
     } else if (key == "100") {
@@ -102,6 +103,7 @@ class TeacherTimetableController extends GetxController {
       daywiseLectures.value = monLectures;
     } else if (key == "1000") {
       daywiseLectures.value = tueLectures;
+      print(currentTimeSlots);
     } else if (key == "100") {
       daywiseLectures.value = wedLectures;
     } else if (key == "10") {

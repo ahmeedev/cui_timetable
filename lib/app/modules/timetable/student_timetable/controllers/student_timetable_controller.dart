@@ -13,8 +13,8 @@ class StudentTimetableController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     final box = await Hive.openBox(DBNames.timeSlots);
-    currentTimeSlots = monToThursSlots = box.get(DBTimeSlots.monToThur);
-    friSlots = box.get(DBTimeSlots.fri);
+    currentTimeSlots = monToThursSlots = await box.get(DBTimeSlots.monToThur);
+    friSlots = await box.get(DBTimeSlots.fri);
   }
 
   var mon = true.obs; // mon is selected by default

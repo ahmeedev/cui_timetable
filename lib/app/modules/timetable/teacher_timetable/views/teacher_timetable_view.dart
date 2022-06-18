@@ -175,6 +175,12 @@ class DayTile extends GetView<TeacherTimetableController> {
                         BorderRadius.circular(Constants.defaultRadius),
                     onTap: () {
                       callback();
+                      if (dayKey == "1") {
+                        controller.currentTimeSlots = controller.friSlots;
+                      } else {
+                        controller.currentTimeSlots =
+                            controller.monToThursSlots;
+                      }
                       controller.getLectures(key: dayKey.toString());
                       obs.value = true;
                     },

@@ -13,15 +13,14 @@ import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:cui_timetable/app/theme/light_theme_for_large_screens.dart';
-import 'package:cui_timetable/app/theme/light_theme_for_small_screens.dart';
+import 'package:cui_timetable/app/theme/light_theme.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 import 'package:cui_timetable/firebase_options.dart';
 
 Future<void> main() async {
   await _initialized();
-  final box = await Hive.openBox(DBNames.freerooms);
-  print(box.get(DBFreerooms.friday));
+  final box = await Hive.openBox(DBNames.timeSlots);
+  print(box.get(DBTimeSlots.monToThur));
   runApp(const MyApp());
 }
 
@@ -68,7 +67,7 @@ class MyApp extends GetView<HomeController> {
               flex: 5,
               IWidth: 80.0,
               IHeight: 80.0);
-          return getMaterialApp(theme: lightThemeForSmallScreens(context));
+          return getMaterialApp(theme: lightTheme(context, isLarge: false));
         } else {
           Constants.initializeFields(
               elevation: 10.0,
@@ -80,7 +79,7 @@ class MyApp extends GetView<HomeController> {
               IWidth: 100.0,
               IHeight: 100.0);
           print(Constants.homeOverlaySize.floor());
-          return getMaterialApp(theme: lightThemeForLargeScreens(context));
+          return getMaterialApp(theme: lightTheme(context, isLarge: true));
         }
       },
     );

@@ -71,7 +71,7 @@ class DayTile extends GetView<ComparisonController> {
                         controller.currentTimeSlots =
                             controller.monToThursSlots;
                       }
-                      // controller.getLectures(key: dayKey);
+                      controller.getLectures(key: dayKey);
                       obs.value = true;
                     },
                     child: Column(
@@ -79,56 +79,153 @@ class DayTile extends GetView<ComparisonController> {
                       children: [
                         Text(day,
                             style: Theme.of(context).textTheme.titleMedium),
-                        // controller.lecturesCount[dayKey] == "null"
-                        //     ? const SpinKitFadingCircle(
-                        //         color: primaryColor,
-                        //       )
-                        //     : Text(
-                        //         controller.lecturesCount[dayKey].toString(),
-                        //         style: Theme.of(context)
-                        //             .textTheme
-                        //             .titleSmall!
-                        //             .copyWith(fontWeight: FontWeight.normal),
-                        //       ),
-                        // int.parse(controller.lecturesCount[dayKey.toString()]
-                        //             .toString()) ==
-                        //         0
-                        //     ? Padding(
-                        //         padding: EdgeInsets.symmetric(
-                        //             horizontal: Constants.defaultPadding * 2),
-                        //         child: Container(
-                        //           alignment: Alignment.center,
-                        //           width: double.infinity,
-                        //           height: 5,
-                        //           decoration: const BoxDecoration(
-                        //               gradient: LinearGradient(
-                        //                   colors: successGradient)),
-                        //         ),
-                        //       )
-                        //     : Wrap(
-                        //         alignment: WrapAlignment.center,
-                        //         children: [
-                        //           ...List.generate(
-                        //               int.parse(controller.lecturesCount[dayKey]
-                        //                   .toString()),
-                        //               (index) => Padding(
-                        //                     padding: const EdgeInsets.symmetric(
-                        //                         horizontal: 1),
-                        //                     child: Container(
-                        //                       width: 6,
-                        //                       height: 6,
-                        //                       decoration: BoxDecoration(
-                        //                           color: colorList[index],
-                        //                           shape: BoxShape.circle),
-                        //                     ),
-                        //                   ))
-                        //         ],
-                        //       ),
+                        controller.lecturesCount[dayKey] == "null"
+                            ? const SpinKitFadingCircle(
+                                color: primaryColor,
+                              )
+                            : Text(
+                                controller.lecturesCount[dayKey].toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontWeight: FontWeight.normal),
+                              ),
+                        int.parse(controller.lecturesCount[dayKey.toString()]
+                                    .toString()) ==
+                                0
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: Constants.defaultPadding * 3),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: double.infinity,
+                                  height: 5,
+                                  decoration: const BoxDecoration(
+                                      gradient: LinearGradient(
+                                          colors: errorGradient)),
+                                ),
+                              )
+                            : Wrap(
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  ...List.generate(
+                                      int.parse(controller.lecturesCount[dayKey]
+                                          .toString()),
+                                      (index) => Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 1),
+                                            child: Container(
+                                              width: 6,
+                                              height: 6,
+                                              decoration: BoxDecoration(
+                                                  color: colorList[index],
+                                                  shape: BoxShape.circle),
+                                            ),
+                                          ))
+                                ],
+                              ),
                       ],
                     ),
                   ),
                 ),
               )))),
+    );
+  }
+}
+
+class LectureDetailsTile extends StatelessWidget {
+  final dynamic time;
+
+  const LectureDetailsTile({Key? key, required this.time}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(Constants.defaultPadding / 2, 0,
+          Constants.defaultPadding / 2, Constants.defaultPadding / 2),
+      child: Card(
+        color: widgetColor,
+        elevation: Constants.defaultElevation,
+        shadowColor: shadowColor,
+        shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.all(Radius.circular(Constants.defaultRadius))),
+        child: Padding(
+          padding: EdgeInsets.all(Constants.defaultPadding),
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      time.toString().split('-')[0],
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const Text('|'),
+                    const Text('|'),
+                    Text(
+                      time.toString().split('-')[1],
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                const VerticalDivider(
+                  color: primaryColor,
+                  thickness: 2.0,
+                  // indent: 4,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: Constants.defaultPadding / 2,
+                        right: Constants.defaultPadding / 2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: textFieldColor,
+                              borderRadius: BorderRadius.circular(
+                                  Constants.defaultRadius)),
+                          child: Padding(
+                            padding: EdgeInsets.all(Constants.defaultPadding),
+                            child: Text(
+                              'Free Slot',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w900,
+                                      color: successColor),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text("Book Now"),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
