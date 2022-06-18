@@ -1,11 +1,11 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
+
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 
 import 'package:cui_timetable/app/modules/timetable/comparision/views/widgets/comparison_widgets.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
 
 import '../controllers/comparison_controller.dart';
 

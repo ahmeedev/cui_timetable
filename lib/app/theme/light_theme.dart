@@ -1,8 +1,8 @@
-import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/theme/text_theme.dart';
 
 ThemeData lightTheme(context, {required isLarge}) {

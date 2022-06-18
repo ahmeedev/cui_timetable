@@ -1,6 +1,7 @@
-import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+
+import 'package:cui_timetable/app/data/database/database_constants.dart';
 
 class ComparisonController extends GetxController {
   var isLoading = true.obs;
