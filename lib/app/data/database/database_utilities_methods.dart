@@ -46,14 +46,14 @@ Future<void> downloadFile(
             "fileName": fileName,
             "callback": callback
           }).then((value) async {
-            if (!lastEntity) {
-              final freerooms = FreeRoomsDatabase();
-              Get.find<SyncController>().freeroomsSyncStatus.value = true;
-              await freerooms.createDatabase(lastEntity: true);
-            } else {
-              await Future.delayed(const Duration(milliseconds: 500));
-              await _updateStatuses();
-            }
+            // if (!lastEntity) {
+            //   final freerooms = FreeRoomsDatabase();
+            //   Get.find<SyncController>().freeroomsSyncStatus.value = true;
+            //   await freerooms.createDatabase(lastEntity: true);
+            // } else {
+            //   await Future.delayed(const Duration(milliseconds: 500));
+            //   await _updateStatuses();
+            // }
           });
 
           // if (lastEntity) {

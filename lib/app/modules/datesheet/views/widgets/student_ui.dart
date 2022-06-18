@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/data/database/datesheet_db/datesheet_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -22,6 +23,40 @@ class StudentUI extends GetView<StudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
+              ElevatedButton(
+                onPressed: () {
+                  final db = DatesheetDatabase();
+                  db.createDatabase();
+                },
+                child: Text('Download'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  List<String> tokens = "FA21-CVE-FA19-CVE".split('-');
+
+                  List<String> result = [];
+                  var section;
+                  for (var i = 0; i < tokens.length; i++) {
+                    if (tokens[i].length == 4) {
+                      section = "";
+                      section = tokens[i] + "-";
+                    } else if (tokens[i].length == 3) {
+                      section += tokens[i];
+                      if (i == tokens.length - 1 || tokens[i + 1].length == 4) {
+                        result.add(section);
+                      }
+                    } else if (tokens[i].length == 1) {
+                      section += "-" + tokens[i];
+                      if (i != tokens.length - 1 && tokens[i + 1].length == 4) {
+                        result.add(section);
+                      }
+                    }
+                  }
+                  // "asdf-add-a".split(r'-');
+                  print(result);
+                },
+                child: Text('Token'),
+              ),
             ],
           ),
         ));
