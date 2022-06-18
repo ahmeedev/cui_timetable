@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:hive/hive.dart';
 
 class ComparisonUiView extends GetView<ComparisonUiController> {
   @override
@@ -125,28 +127,7 @@ class ComparisonUiView extends GetView<ComparisonUiController> {
                         itemBuilder: (context, index) {
                           return ListTile(
                             onTap: () {
-                              controller.textController.text =
-                                  controller.filteredList[index];
-                              controller.textController.selection =
-                                  TextSelection.fromPosition(TextPosition(
-                                      offset: controller
-                                          .textController.text.length));
-                              controller.listVisible.value = false;
-
-                              List list = controller.box
-                                  .get(controller.filteredList[index]
-                                      .toString()
-                                      .toLowerCase())
-                                  .toList();
-                              final sections = <String>{};
-                              list.forEach((element) {
-                                sections.add(element[0]);
-                              });
-                              controller.respectiveSections.value = [];
-                              controller.respectiveSections.value =
-                                  sections.toList();
-                              controller.dropBoxValue.value =
-                                  sections.elementAt(0);
+                              controller.listTileTap(index: index);
                             },
                             dense: true,
                             contentPadding: EdgeInsets.zero,
@@ -237,6 +218,9 @@ class ComparisonUiView extends GetView<ComparisonUiController> {
             onPressed: () async {
               final value = controller.textController.text.toString();
               if (controller.teachers.contains(value)) {
+                final box1 = await Hive.openBox(DBNames.info);
+                box1.put(DBInfo.searchComparisonTeacher, value);
+
                 Get.toNamed(Routes.COMPARISION, arguments: <String>[
                   controller.textController.text,
                   controller.dropBoxValue.value

@@ -411,10 +411,11 @@ class HomeOverlay extends StatelessWidget {
                   highlightColor: Colors.transparent,
                   splashColor: shadowColor,
                   onTap: () {
-                    GetXUtilities.snackbar(
-                        title: 'In Working!',
-                        message: 'This Module is still in Development Phase',
-                        gradient: primaryGradient);
+                    Get.toNamed(Routes.DATESHEET);
+                    // GetXUtilities.snackbar(
+                    //     title: 'In Working!',
+                    //     message: 'This Module is still in Development Phase',
+                    //     gradient: primaryGradient);
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(

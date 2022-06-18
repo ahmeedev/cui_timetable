@@ -17,6 +17,7 @@ class DBInfo {
   static const teachers = 'teachers';
   static const searchSection = 'searchSection';
   static const searchTeacher = 'searchTeacher';
+  static const searchComparisonTeacher = 'searchComparisonTeacher';
   static const newUser = 'newUser';
   static const news = 'news';
 }

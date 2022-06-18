@@ -103,7 +103,6 @@ class TeacherTimetableController extends GetxController {
       daywiseLectures.value = monLectures;
     } else if (key == "1000") {
       daywiseLectures.value = tueLectures;
-      print(currentTimeSlots);
     } else if (key == "100") {
       daywiseLectures.value = wedLectures;
     } else if (key == "10") {

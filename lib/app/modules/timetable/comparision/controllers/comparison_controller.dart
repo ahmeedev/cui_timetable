@@ -101,11 +101,11 @@ class ComparisonController extends GetxController {
 
     final result1 =
         teachers.where((element) => element[3].toString() == dayKey);
-    print("Teacher Lectures : ${result1.length}");
+    // print("Teacher Lectures : ${result1.length}");
 
     final result2 =
         students.where((element) => element[3].toString() == dayKey);
-    print("Student Lectures : ${result2.length}");
+    // print("Student Lectures : ${result2.length}");
 
     final teachersSlotsList = <String>{};
     result1.forEach((element) {
