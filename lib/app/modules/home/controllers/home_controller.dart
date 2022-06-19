@@ -72,8 +72,10 @@ class HomeController extends GetxController {
       yield result;
     } else {
       // final result =
-      //     await compute(_fetchNewsFromCache, LocationUtilities.defaultpath);
-      // yield result;
+      //     await compute(_fetchImgFromInternet, LocationUtilities.defaultpath);
+
+      // yield [];
+      internet.value = false;
     }
     // yield list;
   }

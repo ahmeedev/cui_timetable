@@ -180,113 +180,118 @@ class HomeCarousel extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Map<String, String>>>(
-      stream: controller.getCarouselStream(),
-      // initialData: initialData,
-      builder: (BuildContext context,
-          AsyncSnapshot<List<Map<String, String>>> snapshot) {
-        if (snapshot.hasData) {
-          return Padding(
-            padding: EdgeInsets.all(Constants.defaultPadding / 2),
-            child: CarouselSlider(
-              options: CarouselOptions(
-                  autoPlay: true,
-                  clipBehavior: Clip.antiAlias,
-                  viewportFraction: 1,
-                  // padEnds: false,
-                  // pageSnapping: true,
+    return Obx(() => controller.internet.value
+        ? StreamBuilder<List<Map<String, String>>>(
+            stream: controller.getCarouselStream(),
+            // initialData: initialData,
+            builder: (BuildContext context,
+                AsyncSnapshot<List<Map<String, String>>> snapshot) {
+              if (snapshot.hasError) {}
 
-                  enlargeCenterPage: true,
-                  autoPlayAnimationDuration: const Duration(seconds: 3),
-                  autoPlayInterval: const Duration(seconds: 5),
-                  scrollPhysics: BouncingScrollPhysics(),
-                  height: MediaQuery.of(context).size.height / 6),
-              items: snapshot.data!.map((e) {
-                print(snapshot.data.runtimeType);
-                return Stack(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        print('hello');
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          // margin: EdgeInsets.symmetric(horizontal: 2.0),
-                          decoration: BoxDecoration(
-                            // boxShadow: [
-                            //   BoxShadow(color: Colors.black)
-                            // ],
-                            color: widgetColor,
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(Constants.defaultRadius)),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(Constants.defaultRadius)),
-                            child: CachedNetworkImage(
-                              imageUrl: e["img"]!,
-                              fit: BoxFit.cover,
-                              placeholder: (context, string) {
-                                return const SpinKitFadingCircle(
-                                  color: primaryColor,
-                                );
-                              },
-                            ),
-                          )),
-                    ),
-                    e["title"]!.length == 0
-                        ? SizedBox()
-                        : Positioned(
-                            // alignment: Alignment.center,
-                            // left: 2,
-                            // top: 10,
+              if (snapshot.hasData) {
+                return Padding(
+                  padding: EdgeInsets.all(Constants.defaultPadding / 2),
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                        autoPlay: true,
+                        clipBehavior: Clip.antiAlias,
+                        viewportFraction: 1,
+                        // padEnds: false,
+                        // pageSnapping: true,
+
+                        enlargeCenterPage: true,
+                        autoPlayAnimationDuration: const Duration(seconds: 3),
+                        autoPlayInterval: const Duration(seconds: 5),
+                        scrollPhysics: BouncingScrollPhysics(),
+                        height: MediaQuery.of(context).size.height / 6),
+                    items: snapshot.data!.map((e) {
+                      return Stack(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              print('hello');
+                            },
                             child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                // margin: EdgeInsets.symmetric(horizontal: 2.0),
                                 decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        // secondaryColor,
-                                        primaryColor,
-                                        forGradient,
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(
-                                          Constants.defaultRadius),
-                                      bottomLeft: Radius.circular(
-                                          Constants.defaultRadius),
-                                    )
-                                    // border:
-                                    //     Border.all(width: 3, color: Colors.white),
-                                    ),
-
-                                // color: primaryColor,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: Constants.defaultPadding,
-                                      vertical: Constants.defaultPadding / 2),
-                                  child: FittedBox(
-                                    child: Text(
-                                      e["title"]!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .copyWith(color: Colors.white),
-                                    ),
+                                  // boxShadow: [
+                                  //   BoxShadow(color: Colors.black)
+                                  // ],
+                                  color: widgetColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Constants.defaultRadius)),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Constants.defaultRadius)),
+                                  child: CachedNetworkImage(
+                                    imageUrl: e["img"]!,
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, string) {
+                                      return const SpinKitFadingCircle(
+                                        color: primaryColor,
+                                      );
+                                    },
                                   ),
-                                ))),
-                  ],
-                );
-              }).toList(),
-            ),
-          );
-        }
+                                )),
+                          ),
+                          e["title"]!.length == 0
+                              ? SizedBox()
+                              : Positioned(
+                                  // alignment: Alignment.center,
+                                  // left: 2,
+                                  // top: 10,
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              // secondaryColor,
+                                              primaryColor,
+                                              forGradient,
+                                            ],
+                                          ),
+                                          borderRadius: BorderRadius.only(
+                                            bottomRight: Radius.circular(
+                                                Constants.defaultRadius),
+                                            bottomLeft: Radius.circular(
+                                                Constants.defaultRadius),
+                                          )
+                                          // border:
+                                          //     Border.all(width: 3, color: Colors.white),
+                                          ),
 
-        return const SpinKitFadingCircle(
-          color: primaryColor,
-        );
-      },
-    );
+                                      // color: primaryColor,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                Constants.defaultPadding,
+                                            vertical:
+                                                Constants.defaultPadding / 2),
+                                        child: FittedBox(
+                                          child: Text(
+                                            e["title"]!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(color: Colors.white),
+                                          ),
+                                        ),
+                                      ))),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                );
+              }
+
+              return const SpinKitFadingCircle(
+                color: primaryColor,
+              );
+            },
+          )
+        : SizedBox());
   }
 }
 
