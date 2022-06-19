@@ -211,7 +211,7 @@ class HomeCarousel extends GetView<HomeController> {
                       },
                       child: Container(
                           width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 2.0),
+                          // margin: EdgeInsets.symmetric(horizontal: 2.0),
                           decoration: BoxDecoration(
                             // boxShadow: [
                             //   BoxShadow(color: Colors.black)
@@ -238,25 +238,28 @@ class HomeCarousel extends GetView<HomeController> {
                         ? SizedBox()
                         : Positioned(
                             // alignment: Alignment.center,
-                            // left: 10,
+                            // left: 2,
                             // top: 10,
-                            child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                                topLeft:
-                                    Radius.circular(Constants.defaultRadius),
-                                topRight:
-                                    Radius.circular(Constants.defaultRadius)),
                             child: Container(
-                                decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      // secondaryColor,
-                                      primaryColor,
-                                      forGradient,
-                                    ],
-                                  ),
-                                ),
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        // secondaryColor,
+                                        primaryColor,
+                                        forGradient,
+                                      ],
+                                    ),
+                                    borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(
+                                          Constants.defaultRadius),
+                                      bottomLeft: Radius.circular(
+                                          Constants.defaultRadius),
+                                    )
+                                    // border:
+                                    //     Border.all(width: 3, color: Colors.white),
+                                    ),
+
                                 // color: primaryColor,
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
@@ -271,8 +274,7 @@ class HomeCarousel extends GetView<HomeController> {
                                           .copyWith(color: Colors.white),
                                     ),
                                   ),
-                                )),
-                          )),
+                                ))),
                   ],
                 );
               }).toList(),
