@@ -59,7 +59,7 @@ class HomeController extends GetxController {
   }
 
   /// Stream for the carousel.
-  Stream<List<String>> getCarouselStream() async* {
+  Stream<List<Map<String, String>>> getCarouselStream() async* {
     final ConnectivityResult result = await Connectivity().checkConnectivity();
     if (result == ConnectivityResult.none) {
       internet.value = false;
@@ -156,16 +156,25 @@ _purifyNoticeboardNews({string}) {
 }
 
 // Carousel Methods
-Future<List<String>> _fetchImgFromInternet(location) async {
+Future<List<Map<String, String>>> _fetchImgFromInternet(location) async {
   final src = "https://sahiwal.comsats.edu.pk/";
   var url = Uri.parse(src);
   var response = await http.get(url);
   dom.Document html = await dom.Document.html(response.body);
-  final List<String> list = [];
-  final result = await html.querySelectorAll(
-      "#layerslider-container-fw >#layerslider >.ls-layer >img");
+  final List<Map<String, String>> list = [];
+  final result = await html
+      .querySelectorAll("#layerslider-container-fw >#layerslider >.ls-layer");
+
   result.forEach((element) {
-    list.add('$src${element.attributes["src"]}');
+    final text = element.getElementsByClassName("plus2");
+    String title = '';
+    if (text.length != 0) {
+      title = text[0].text.trim();
+    }
+    final img = element.getElementsByTagName("img")[0];
+    // print(img.attributes["src"]);
+
+    list.add({"title": title, "img": "$src${img.attributes["src"]}"});
   });
 
   return list;

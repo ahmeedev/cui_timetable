@@ -2,22 +2,19 @@ import 'dart:convert';
 import 'dart:developer' as devlog;
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-
 import 'package:csv/csv.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:jiffy/jiffy.dart';
-
 import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/data/database/freerooms_db/freerooms_database.dart';
 import 'package:cui_timetable/app/data/database/timetable_db/timetable_database.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:jiffy/jiffy.dart';
 
 Future<void> downloadFile(
     {required String fileName,

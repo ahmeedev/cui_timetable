@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
-
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
-
 import 'package:cui_timetable/app/modules/timetable/student_timetable/controllers/student_timetable_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DayTile extends GetView<StudentTimetableController> {
   late final String day;
