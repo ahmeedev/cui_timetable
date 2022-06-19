@@ -11,6 +11,9 @@ import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 
+import 'package:html/dom.dart' as dom;
+import 'package:http/http.dart' as http;
+
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
 

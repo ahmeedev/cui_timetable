@@ -11,12 +11,6 @@ import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
 class HomeController extends GetxController {
   final internet = true.obs;
   final newUpdate = false.obs;
@@ -66,9 +60,8 @@ class HomeController extends GetxController {
 }
 
 _fetchNewsFromInternet(location) async {
-  final url = Uri.parse('https://sahiwal.comsats.edu.pk/Default.aspx');
-  final response = await http.get(url);
-  dom.Document html = dom.Document.html(response.body);
+  var html = await _getDocument(
+      address: "https://sahiwal.comsats.edu.pk/Default.aspx");
 
   final titles = html
       .querySelectorAll('#myNews >h4')
@@ -94,6 +87,23 @@ _fetchNewsFromInternet(location) async {
     list.add({"title": titles[i], "description": description[i]});
   }
 
+  var html2 =
+      await _getDocument(address: 'https://swl-cms.comsats.edu.pk:8082/');
+
+  var result = _purifyNoticeboardNews(
+      string: html2.querySelector(".notice_board >ul >li")!.text.toString());
+
+  list.add({"title": "Noticeboard #${list.length}", "description": result});
+
+  result = _purifyNoticeboardNews(
+      string: result = await html2
+          .querySelector(".notice_board >ul >li")!
+          .nextElementSibling!
+          .text
+          .toString());
+
+  list.add({"title": "Noticeboard #${list.length}", "description": result});
+
   // putting into box for cache purpose\
   Hive.init(location);
   final box = await Hive.openBox(DBNames.info);
@@ -102,9 +112,23 @@ _fetchNewsFromInternet(location) async {
   return list;
 }
 
+_getDocument({address}) async {
+  var url = Uri.parse(address);
+  var response = await http.get(url);
+  dom.Document html = await dom.Document.html(response.body);
+  return html;
+}
+
 _fetchNewsFromCache(location) async {
   Hive.init(location);
   final box = await Hive.openBox(DBNames.info);
   final news = box.get(DBInfo.news, defaultValue: []);
   return news;
+}
+
+_purifyNoticeboardNews({string}) {
+  return string
+      .trim()
+      .replaceAll(RegExp('\n'), '')
+      .replaceAll('Dear Students:', 'Dear Students:\n');
 }
