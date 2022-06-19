@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -137,6 +141,16 @@ class HomeAppBar extends StatelessWidget {
   }
 }
 
+final List<String> imgList = [
+  'https://sahiwal.comsats.edu.pk/slides/pcl_sp22.jpg',
+  // 'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+  // 'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+  // 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
+  // 'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
+  // 'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
+  // 'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+];
+
 /// Body of Home Screen.
 class HomeBody extends GetView<HomeController> {
   const HomeBody({Key? key}) : super(key: key);
@@ -198,6 +212,84 @@ class HomeBody extends GetView<HomeController> {
                             )
                           : const SizedBox(),
                     ),
+
+                    // StreamBuilder<List<String>>(
+                    //   stream: controller.getCarouselStream(),
+                    //   // initialData: initialData,
+                    //   builder: (BuildContext context,
+                    //       AsyncSnapshot<List<String>> snapshot) {
+                    //     if (snapshot.hasData) {
+                    //       return Padding(
+                    //         padding:
+                    //             EdgeInsets.all(Constants.defaultPadding / 2),
+                    //         child: CarouselSlider(
+                    //           options: CarouselOptions(
+                    //               autoPlay: true,
+                    //               clipBehavior: Clip.antiAlias,
+                    //               viewportFraction: 1,
+                    //               // padEnds: false,
+                    //               // pageSnapping: true,
+
+                    //               enlargeCenterPage: true,
+                    //               autoPlayAnimationDuration:
+                    //                   const Duration(seconds: 3),
+                    //               autoPlayInterval: const Duration(seconds: 5),
+                    //               scrollPhysics: BouncingScrollPhysics(),
+                    //               height:
+                    //                   MediaQuery.of(context).size.height / 6),
+                    //           items: snapshot.data!.map((e) {
+                    //             print(snapshot.data.runtimeType);
+                    //             return Stack(
+                    //               children: [
+                    //                 Container(
+                    //                     width:
+                    //                         MediaQuery.of(context).size.width,
+                    //                     margin: EdgeInsets.symmetric(
+                    //                         horizontal: 2.0),
+                    //                     decoration: BoxDecoration(
+                    //                       // boxShadow: [
+                    //                       //   BoxShadow(color: Colors.black)
+                    //                       // ],
+                    //                       color: widgetColor,
+                    //                       borderRadius: BorderRadius.all(
+                    //                           Radius.circular(
+                    //                               Constants.defaultRadius)),
+                    //                     ),
+                    //                     child: ClipRRect(
+                    //                       borderRadius: BorderRadius.all(
+                    //                           Radius.circular(
+                    //                               Constants.defaultRadius)),
+                    //                       child: CachedNetworkImage(
+                    //                         imageUrl: e,
+                    //                         fit: BoxFit.cover,
+                    //                         placeholder: (context, string) {
+                    //                           return const SpinKitFadingCircle(
+                    //                             color: primaryColor,
+                    //                           );
+                    //                         },
+                    //                       ),
+                    //                     )),
+                    //                 Positioned(
+                    //                     // alignment: Alignment.center,
+                    //                     left: 10,
+                    //                     top: 10,
+                    //                     child: Container(
+                    //                         width: 50,
+                    //                         height: 40,
+                    //                         color: Colors.yellow,
+                    //                         child: Text('My Name IS'))),
+                    //               ],
+                    //             );
+                    //           }).toList(),
+                    //         ),
+                    //       );
+                    //     }
+
+                    //     return const SpinKitFadingCircle(
+                    //       color: primaryColor,
+                    //     );
+                    //   },
+                    // ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -216,7 +308,7 @@ class HomeBody extends GetView<HomeController> {
                           ),
                         ]),
                     StreamBuilder(
-                      stream: controller.getStream(),
+                      stream: controller.getNewsStream(),
                       // initialData: initialData,
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (snapshot.hasData) {

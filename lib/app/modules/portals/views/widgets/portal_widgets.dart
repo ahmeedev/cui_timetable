@@ -33,7 +33,9 @@ class _StudentPortalState extends State<StudentPortal>
         javascriptMode: JavascriptMode.unrestricted,
         gestureRecognizers: gestureRecognizers,
         zoomEnabled: true,
-        onPageFinished: (value) {},
+        onPageFinished: (value) {
+          // CookieManager().setCookie(WebViewCookie(name: name, value: value, domain: domain))
+        },
       ),
     );
   }

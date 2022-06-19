@@ -23,7 +23,6 @@ class HomeController extends GetxController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    print('onready executed');
 
     final box = await Hive.openBox(DBNames.info);
     final newUser = await box.get(DBInfo.newUser, defaultValue: true);
@@ -40,7 +39,7 @@ class HomeController extends GetxController {
   }
 
   /// Stream for the News.
-  Stream<dynamic> getStream() async* {
+  Stream<dynamic> getNewsStream() async* {
     final ConnectivityResult result = await Connectivity().checkConnectivity();
     if (result == ConnectivityResult.none) {
       internet.value = false;
@@ -49,6 +48,7 @@ class HomeController extends GetxController {
     if (internet.value) {
       final result =
           await compute(_fetchNewsFromInternet, LocationUtilities.defaultpath);
+
       yield result;
     } else {
       final result =
@@ -57,7 +57,29 @@ class HomeController extends GetxController {
     }
     // yield list;
   }
+
+  /// Stream for the carousel.
+  Stream<List<String>> getCarouselStream() async* {
+    final ConnectivityResult result = await Connectivity().checkConnectivity();
+    if (result == ConnectivityResult.none) {
+      internet.value = false;
+    }
+
+    if (internet.value) {
+      final result =
+          await compute(_fetchImgFromInternet, LocationUtilities.defaultpath);
+
+      yield result;
+    } else {
+      // final result =
+      //     await compute(_fetchNewsFromCache, LocationUtilities.defaultpath);
+      // yield result;
+    }
+    // yield list;
+  }
 }
+
+// News Methods
 
 _fetchNewsFromInternet(location) async {
   var html = await _getDocument(
@@ -131,4 +153,20 @@ _purifyNoticeboardNews({string}) {
       .trim()
       .replaceAll(RegExp('\n'), '')
       .replaceAll('Dear Students:', 'Dear Students:\n');
+}
+
+// Carousel Methods
+Future<List<String>> _fetchImgFromInternet(location) async {
+  final src = "https://sahiwal.comsats.edu.pk/";
+  var url = Uri.parse(src);
+  var response = await http.get(url);
+  dom.Document html = await dom.Document.html(response.body);
+  final List<String> list = [];
+  final result = await html.querySelectorAll(
+      "#layerslider-container-fw >#layerslider >.ls-layer >img");
+  result.forEach((element) {
+    list.add('$src${element.attributes["src"]}');
+  });
+
+  return list;
 }
