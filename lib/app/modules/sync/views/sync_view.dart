@@ -58,6 +58,26 @@ class SyncBody extends GetView<SyncController> {
                           ),
               )),
           Obx(() => SyncTile(
+                title: 'DateSheet',
+                lastUpdate: controller.lastUpdate.value,
+                icon: controller.datesheetSyncStatus.value
+                    ? const SpinKitChasingDots(
+                        color: primaryColor,
+                        size: 30.0,
+                      )
+                    : Get.find<HomeController>().newUpdate.value
+                        ? const Icon(
+                            Icons.cloud_download,
+                            size: 30,
+                            color: errorColor1,
+                          )
+                        : const Icon(
+                            Icons.cloud_done,
+                            size: 30,
+                            color: successColor,
+                          ),
+              )),
+          Obx(() => SyncTile(
                 title: 'Free Rooms',
                 lastUpdate: controller.lastUpdate.value,
                 icon: controller.freeroomsSyncStatus.value

@@ -5,17 +5,23 @@ import 'package:hive/hive.dart';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
+import 'package:cui_timetable/app/data/database/datesheet_db/datesheet_database.dart';
+import 'package:cui_timetable/app/data/database/freerooms_db/freerooms_database.dart';
 import 'package:cui_timetable/app/data/database/timeslots_db/timeslots_database.dart';
+import 'package:cui_timetable/app/data/database/timetable_db/timetable_database.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 
 class SyncController extends GetxController {
+  var syncFile = 0.obs; //! crontroll the sync action of multiple files
   var clickable = true.obs;
   var lastUpdate = ''.obs;
+
   var timetableSyncStatus = false.obs;
   var freeroomsSyncStatus = false.obs;
-  // ignore: prefer_typing_uninitialized_variables
+  var datesheetSyncStatus = false.obs;
 
+  // ignore: prefer_typing_uninitialized_variables
   @override
   Future<void> onInit() async {
     final box = await Hive.openBox(DBNames.info);
@@ -28,6 +34,8 @@ class SyncController extends GetxController {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
+      await _syncAllFiles();
+
       final box = await Hive.openBox(DBNames.info);
       await getRemoteVersion().then((remoteVersion) async {
         if (box.get(DBInfo.version).toString() != remoteVersion) {
@@ -67,13 +75,24 @@ class SyncController extends GetxController {
     final timeslots = TimeslotsDatabase();
     await timeslots.createDatabase();
 
-    // final timetableDB = TimetableDatabase();
-    // timetableSyncStatus.value = true;
-    // await timetableDB.createDatabase();
-
-    // final freerooms = FreeRoomsDatabase();
-    // freeroomsSyncStatus.value = true;
-    // await freerooms.createDatabase(lastEntity: true);
+    ever(syncFile, (_) async {
+      if (_ == 1) {
+        await Future.delayed(const Duration(milliseconds: 200));
+        final timetableDB = TimetableDatabase();
+        timetableSyncStatus.value = true;
+        await timetableDB.createDatabase();
+      } else if (_ == 2) {
+        await Future.delayed(const Duration(milliseconds: 200));
+        final datesheetDB = DatesheetDatabase();
+        datesheetSyncStatus.value = true;
+        await datesheetDB.createDatabase();
+      } else if (_ == 3) {
+        await Future.delayed(const Duration(milliseconds: 200));
+        final freerooms = FreeRoomsDatabase();
+        freeroomsSyncStatus.value = true;
+        await freerooms.createDatabase(lastEntity: true);
+      }
+    });
 
     return Future.value(true);
   }

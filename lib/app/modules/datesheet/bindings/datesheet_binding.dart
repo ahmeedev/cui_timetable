@@ -1,5 +1,6 @@
-import 'package:cui_timetable/app/modules/datesheet/controllers/student_ui_controlller.dart';
 import 'package:get/get.dart';
+
+import 'package:cui_timetable/app/modules/datesheet/controllers/student_ui_controlller.dart';
 
 import '../controllers/datesheet_controller.dart';
 

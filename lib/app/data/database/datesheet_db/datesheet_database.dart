@@ -1,6 +1,7 @@
+import 'package:hive/hive.dart';
+
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
-import 'package:hive/hive.dart';
 
 class DatesheetDatabase {
   Future<bool> createDatabase() async {

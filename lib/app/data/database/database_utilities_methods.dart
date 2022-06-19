@@ -2,7 +2,14 @@ import 'dart:convert';
 import 'dart:developer' as devlog;
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 import 'package:csv/csv.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:jiffy/jiffy.dart';
+
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/data/database/timetable_db/timetable_database.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
@@ -10,11 +17,6 @@ import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart'
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:jiffy/jiffy.dart';
 
 Future<void> downloadFile(
     {required String fileName,
@@ -42,30 +44,21 @@ Future<void> downloadFile(
             "filePath": LocationUtilities.defaultpath,
             "fileName": fileName,
             "callback": callback
-          }).then((value) async {
-            // if (!lastEntity) {
-            //   final freerooms = FreeRoomsDatabase();
-            //   Get.find<SyncController>().freeroomsSyncStatus.value = true;
-            //   await freerooms.createDatabase(lastEntity: true);
-            // } else {
-            //   await Future.delayed(const Duration(milliseconds: 500));
-            //   await _updateStatuses();
-            // }
           });
-
-          // if (lastEntity) {
-          //   await Future.delayed(const Duration(milliseconds: 500));
-          //   await _updateStatuses();
-          // }
+          Get.find<SyncController>().syncFile.value +=
+              1; //! Start the next file action
+          if (lastEntity) {
+            await Future.delayed(const Duration(milliseconds: 500));
+            await _updateStatuses();
+          }
         } else {
           await compute(_backgroundTaskJson, {
             "filePath": LocationUtilities.defaultpath,
             "fileName": fileName,
             "callback": callback
           }).then((value) async {
-            final timetableDB = TimetableDatabase();
-            Get.find<SyncController>().timetableSyncStatus.value = true;
-            await timetableDB.createDatabase();
+            Get.find<SyncController>().syncFile.value +=
+                1; //! Start the next file action
           });
         }
 
@@ -155,6 +148,7 @@ _updateStatuses() async {
 
   Get.find<SyncController>().timetableSyncStatus.value = false;
   Get.find<SyncController>().freeroomsSyncStatus.value = false;
+  Get.find<SyncController>().datesheetSyncStatus.value = false;
   Get.find<SyncController>().clickable.value = true;
   Get.find<SyncController>().lastUpdate.value = lastUpdate;
 

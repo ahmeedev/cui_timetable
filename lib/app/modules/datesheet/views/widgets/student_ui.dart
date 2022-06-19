@@ -1,15 +1,15 @@
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/data/database/datesheet_db/datesheet_database.dart';
-import 'package:cui_timetable/app/routes/app_pages.dart';
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
+import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/data/database/datesheet_db/datesheet_database.dart';
 import 'package:cui_timetable/app/modules/datesheet/controllers/student_ui_controlller.dart';
+import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:hive/hive.dart';
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
 
 class StudentUI extends GetView<StudentUIController> {
   @override
@@ -27,17 +27,17 @@ class StudentUI extends GetView<StudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
-              ElevatedButton(
-                onPressed: () {
-                  final db = DatesheetDatabase();
-                  db.createDatabase();
-                },
-                child: Text('Download'),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text('Token'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     final db = DatesheetDatabase();
+              //     db.createDatabase();
+              //   },
+              //   child: Text('Download'),
+              // ),
+              // ElevatedButton(
+              //   onPressed: () {},
+              //   child: Text('Token'),
+              // ),
             ],
           ),
         ));

@@ -1,14 +1,17 @@
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:flutter/material.dart';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
-import 'package:cui_timetable/app/routes/app_pages.dart';
-import 'package:flutter/material.dart';
-
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+
+import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
+import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
+import 'package:cui_timetable/app/routes/app_pages.dart';
+import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:cui_timetable/app/theme/app_constants.dart';
 
 /// AppBar for the Home Screen.
 class HomeAppBar extends StatelessWidget {
@@ -529,11 +532,11 @@ class HomeOverlay extends StatelessWidget {
                   highlightColor: Colors.transparent,
                   splashColor: shadowColor,
                   onTap: () {
-                    Get.toNamed(Routes.DATESHEET);
-                    // GetXUtilities.snackbar(
-                    //     title: 'In Working!',
-                    //     message: 'This Module is still in Development Phase',
-                    //     gradient: primaryGradient);
+                    // Get.toNamed(Routes.DATESHEET);
+                    GetXUtilities.snackbar(
+                        title: 'In Working!',
+                        message: 'This Module is still in Development Phase',
+                        gradient: primaryGradient);
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(
