@@ -13,6 +13,8 @@ class ComparisonView extends GetView<ComparisonController> {
   final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   final keys = ['10000', '1000', '100', '10', '1'];
 
+  ComparisonView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

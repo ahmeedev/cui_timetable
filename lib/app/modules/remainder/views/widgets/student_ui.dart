@@ -1,17 +1,11 @@
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/routes/app_pages.dart';
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
-import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-
-import 'package:cui_timetable/app/modules/datesheet/controllers/teacher_ui_controller.dart';
+import 'package:cui_timetable/app/modules/remainder/controllers/student_ui_controlller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:hive/hive.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class TeacherUI extends GetView<TeacherUIController> {
-  const TeacherUI({Key? key}) : super(key: key);
+class StudentUI extends GetView<StudentUIController> {
+  const StudentUI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +22,15 @@ class TeacherUI extends GetView<TeacherUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Testing'),
+              ),
+
+              // ElevatedButton(
+              //   onPressed: () {},
+              //   child: Text('Token'),
+              // ),
             ],
           ),
         ));
@@ -52,7 +55,7 @@ class TeacherUI extends GetView<TeacherUIController> {
               height: Constants.defaultPadding,
             ),
             Text(
-              'Teacher Name',
+              'Section Name',
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -68,7 +71,7 @@ class TeacherUI extends GetView<TeacherUIController> {
                     .copyWith(fontWeight: FontWeight.bold),
                 controller: controller.textController,
                 onChanged: (value) {
-                  controller.filteredList.value = controller.teachers
+                  controller.filteredList.value = controller.sections
                       .where((element) => element
                           .toString()
                           .toLowerCase()
@@ -163,25 +166,25 @@ class TeacherUI extends GetView<TeacherUIController> {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              final value = controller.textController.text.toString();
-              if (controller.teachers.contains(value)) {
-                // Storing the information for state persistency
-                final box1 = await Hive.openBox(DBNames.info);
-                box1.put(DBInfo.datesheetSearchTeacher, value);
+              // final value = controller.textController.text.toString();
+              // if (controller.sections.contains(value)) {
+              //   // Storing the information for state persistency
+              //   final box1 = await Hive.openBox(DBNames.info);
+              //   box1.put(DBInfo.datesheetSearchSection, value);
 
-                Get.toNamed(Routes.TEACHER_DATESHEET, arguments: [value]);
-              } else {
-                GetXUtilities.snackbar(
-                    title: 'Not Found!!',
-                    message: 'Enter Valid Teacher Name',
-                    gradient: primaryGradient);
-              }
+              //   Get.toNamed(Routes.STUDENT_DATESHEET, arguments: [value]);
+              // } else {
+              //   GetXUtilities.snackbar(
+              //       title: 'Not Found!!',
+              //       message: 'Enter Valid Section Name',
+              //       gradient: primaryGradient);
+              // }
             },
             child: Padding(
               padding: EdgeInsets.all(Constants.defaultPadding),
               child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),
-                child: Text('Find Now',
+                child: Text('Set Remainder',
                     style: Theme.of(context).textTheme.labelLarge
                     // .copyWith(fontSize: 16),
                     ),

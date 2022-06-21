@@ -112,24 +112,24 @@ class ComparisonController extends GetxController {
     // print("Student Lectures : ${result2.length}");
 
     final teachersSlotsList = <String>{};
-    result1.forEach((element) {
+    for (var element in result1) {
       teachersSlotsList.add(element[2].toString());
-    });
+    }
     final studentsSlotsList = <String>{};
-    result2.forEach((element) {
+    for (var element in result2) {
       studentsSlotsList.add(element[2].toString());
-    });
+    }
 
     teachersSlotsList.addAll(
         studentsSlotsList); //! critical slots, in which lecture not available
 
     final listt = [1, 2, 3, 4, 5];
     final resultSlots = [];
-    listt.forEach((element) {
+    for (var element in listt) {
       if (!teachersSlotsList.contains(element.toString())) {
         resultSlots.add(element);
       }
-    });
+    }
     resultSlots.sort();
     return resultSlots;
   }

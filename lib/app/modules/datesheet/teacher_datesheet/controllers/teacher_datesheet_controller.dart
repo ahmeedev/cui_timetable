@@ -63,7 +63,6 @@ class TeacherDatesheetController extends GetxController {
   // Methods for controlling LectureTile
   openBox() async {
     List list = await datesheetDB.get(Get.arguments[0].toString());
-    print(list);
 
     await _setLectures(list: list, key: "10000");
     await _setLectures(list: list, key: "1000");
@@ -72,7 +71,6 @@ class TeacherDatesheetController extends GetxController {
     await _setLectures(list: list, key: "1");
     daywiseLectures.value = monLectures; //* For default purpose
 
-    print(daywiseLectures.length);
     // yield lecturesCount;
     isLoading.value = false;
   }

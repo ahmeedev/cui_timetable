@@ -13,15 +13,5 @@ class PortalsController extends GetxController
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   void increment() => count.value++;
 }

@@ -27,9 +27,8 @@ void insertFreeRoomsData(
   Hive.init(filePath); // initialize the data, bcz of their separate isolate.
   await deleteData();
 
-  var list;
   final box = await Hive.openBox(DBNames.freerooms);
-  list = [data[1], data[2], data[3], data[4], data[5]];
+  var list = [data[1], data[2], data[3], data[4], data[5]];
   // Remove the unnecessary monday keyword
   for (List i in list) {
     i.removeAt(0);

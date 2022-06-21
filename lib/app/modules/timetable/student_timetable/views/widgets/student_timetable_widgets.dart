@@ -254,14 +254,12 @@ class LectureDetailsTile extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Flexible(
-                              child: Container(
-                                child: Text(teacher.toString(),
-                                    overflow: TextOverflow.visible,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(fontWeight: FontWeight.bold)),
-                              ),
+                              child: Text(teacher.toString(),
+                                  overflow: TextOverflow.visible,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontWeight: FontWeight.bold)),
                             ),
                           ],
                         ),

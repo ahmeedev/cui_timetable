@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -83,7 +85,7 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
   final totalLabs;
   final labs;
 
-  FreeroomsMainExpansionTile(
+  const FreeroomsMainExpansionTile(
       {Key? key,
       required this.slot,
       required this.totalClasses,
@@ -109,7 +111,7 @@ class FreeroomsMainExpansionTile extends StatelessWidget {
           initiallyExpanded: expanded,
           maintainState: true,
           leading: ImageIcon(
-            AssetImage('assets/freerooms/timer.png'),
+            const AssetImage('assets/freerooms/timer.png'),
             size: Constants.iconSize,
             // color: primaryColor,
           ),
@@ -335,7 +337,7 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding / 2),
-                child: availableClasses.length == 0
+                child: availableClasses.isEmpty
                     ? Card(
                         shadowColor: shadowColor,
                         elevation: Constants.defaultElevation,
@@ -377,7 +379,7 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
 
 class RoomShowCard extends StatelessWidget {
   final String room;
-  RoomShowCard({
+  const RoomShowCard({
     Key? key,
     required this.room,
   }) : super(key: key);
@@ -415,7 +417,7 @@ class RoomShowCard extends StatelessWidget {
 
 class LabShowCard extends StatelessWidget {
   final String lab;
-  LabShowCard({
+  const LabShowCard({
     Key? key,
     required this.lab,
   }) : super(key: key);

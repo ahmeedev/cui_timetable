@@ -10,6 +10,8 @@ import 'package:cui_timetable/app/theme/app_constants.dart';
 import '../controllers/datesheet_controller.dart';
 
 class DatesheetView extends GetView<DatesheetController> {
+  const DatesheetView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -20,7 +22,7 @@ class DatesheetView extends GetView<DatesheetController> {
           physics: const NeverScrollableScrollPhysics(),
           slivers: [
             buildAppBar(context),
-            SliverFillRemaining(
+            const SliverFillRemaining(
               child: TabBarView(
                 children: [StudentUI(), TeacherUI()],
               ),

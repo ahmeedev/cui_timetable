@@ -259,21 +259,19 @@ class LectureDetailsTile extends StatelessWidget {
                               .textTheme
                               .bodyLarge!
                               .copyWith(fontWeight: FontWeight.bold)),
-                      Spacer(),
+                      const Spacer(),
                       const ImageIcon(
                         AssetImage('assets/freerooms/timer.png'),
                         color: primaryColor,
                       ),
                       const SizedBox(width: 5),
-                      Container(
-                        child: FittedBox(
-                          child: Text(time.toString(),
-                              overflow: TextOverflow.visible,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(fontWeight: FontWeight.bold)),
-                        ),
+                      FittedBox(
+                        child: Text(time.toString(),
+                            overflow: TextOverflow.visible,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),

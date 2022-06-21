@@ -12,6 +12,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/portals/bindings/portals_binding.dart';
 import '../modules/portals/views/portals_view.dart';
+import '../modules/remainder/bindings/remainder_binding.dart';
+import '../modules/remainder/views/remainder_view.dart';
 import '../modules/sync/bindings/sync_binding.dart';
 import '../modules/sync/views/sync_view.dart';
 import '../modules/timetable/bindings/timetable_binding.dart';
@@ -90,7 +92,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DATESHEET,
-      page: () => DatesheetView(),
+      page: () => const DatesheetView(),
       binding: DatesheetBinding(),
       children: [
         GetPage(
@@ -104,6 +106,11 @@ class AppPages {
           binding: TeacherDatesheetBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.REMAINDER,
+      page: () => const RemainderView(),
+      binding: RemainderBinding(),
     ),
   ];
 }

@@ -1,17 +1,16 @@
-import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-
 import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/data/database/datesheet_db/datesheet_database.dart';
 import 'package:cui_timetable/app/modules/datesheet/controllers/student_ui_controlller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 class StudentUI extends GetView<StudentUIController> {
+  const StudentUI({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +26,7 @@ class StudentUI extends GetView<StudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
+
               // ElevatedButton(
               //   onPressed: () {
               //     final db = DatesheetDatabase();
@@ -85,10 +85,9 @@ class StudentUI extends GetView<StudentUIController> {
                           .contains(value.toLowerCase()))
                       .toList();
 
-                  if (value.isEmpty || value.length == 0) {
+                  if (value.isEmpty || value.isEmpty) {
                     controller.listVisible.value = false;
                     controller.filteredList.clear();
-                    print("value is null");
                   } else if (controller.filteredList.contains(value) &&
                       controller.filteredList.length == 1) {
                     controller.listVisible.value = false;
@@ -114,7 +113,7 @@ class StudentUI extends GetView<StudentUIController> {
               height: Constants.defaultPadding / 2,
             ),
             Obx(() => controller.filteredList.isEmpty
-                ? SizedBox()
+                ? const SizedBox()
                 : ConstrainedBox(
                     constraints: BoxConstraints(
                       minWidth: double.infinity,

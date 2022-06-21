@@ -27,7 +27,7 @@ class HomeView extends StatelessWidget {
           // fit: StackFit.expand,
           clipBehavior: Clip.hardEdge,
 
-          children: [
+          children: const [
             CustomScrollView(
               physics: NeverScrollableScrollPhysics(),
               slivers: [

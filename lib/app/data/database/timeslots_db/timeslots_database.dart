@@ -43,7 +43,6 @@ void insertTimeslotsData(
   final box = await Hive.openBox(DBNames.timeSlots);
   box.put(DBTimeSlots.monToThur, monToThursList);
   box.put(DBTimeSlots.fri, firList);
-  print(box.get(DBTimeSlots.monToThur));
   await Future.delayed(const Duration(milliseconds: 200));
   await box.close();
   await Future.delayed(const Duration(milliseconds: 200));

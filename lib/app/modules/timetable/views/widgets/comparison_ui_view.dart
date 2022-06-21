@@ -11,6 +11,8 @@ import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 
 class ComparisonUiView extends GetView<ComparisonUiController> {
+  const ComparisonUiView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,10 +76,9 @@ class ComparisonUiView extends GetView<ComparisonUiController> {
                           .contains(value.toLowerCase()))
                       .toList();
 
-                  if (value.isEmpty || value.length == 0) {
+                  if (value.isEmpty || value.isEmpty) {
                     controller.listVisible.value = false;
                     controller.filteredList.clear();
-                    print("value is null");
                   } else if (controller.filteredList.contains(value) &&
                       controller.filteredList.length == 1) {
                     controller.listVisible.value = false;
@@ -113,7 +114,7 @@ class ComparisonUiView extends GetView<ComparisonUiController> {
               padding:
                   EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
               child: Obx(() => controller.filteredList.isEmpty
-                  ? SizedBox()
+                  ? const SizedBox()
                   : ConstrainedBox(
                       constraints: BoxConstraints(
                         minWidth: double.infinity,
@@ -179,6 +180,7 @@ class ComparisonUiView extends GetView<ComparisonUiController> {
                         color: primaryColor,
                       ),
                       // Initial Value
+                      // ignore: unrelated_type_equality_checks
                       value: controller.dropBoxValue == ' '
                           ? controller.respectiveSections[0]
                           : controller.dropBoxValue.value,

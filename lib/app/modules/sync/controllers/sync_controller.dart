@@ -18,8 +18,8 @@ class SyncController extends GetxController {
   var lastUpdate = ''.obs;
 
   var timetableSyncStatus = false.obs;
-  var freeroomsSyncStatus = false.obs;
   var datesheetSyncStatus = false.obs;
+  var freeroomsSyncStatus = false.obs;
 
   // ignore: prefer_typing_uninitialized_variables
   @override
@@ -34,8 +34,6 @@ class SyncController extends GetxController {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
         connectivityResult == ConnectivityResult.wifi) {
-      await _syncAllFiles();
-
       final box = await Hive.openBox(DBNames.info);
       await getRemoteVersion().then((remoteVersion) async {
         if (box.get(DBInfo.version).toString() != remoteVersion) {

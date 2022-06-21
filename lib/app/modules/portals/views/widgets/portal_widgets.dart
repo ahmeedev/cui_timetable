@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,7 @@ class _StudentPortalState extends State<StudentPortal>
     Factory(() => EagerGestureRecognizer())
   };
 
-  UniqueKey _key = UniqueKey();
+  final UniqueKey _key = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class _TeacherPortalState extends State<TeacherPortal>
     Factory(() => EagerGestureRecognizer())
   };
 
-  UniqueKey _key = UniqueKey();
+  final UniqueKey _key = UniqueKey();
 
   @override
   Widget build(BuildContext context) {

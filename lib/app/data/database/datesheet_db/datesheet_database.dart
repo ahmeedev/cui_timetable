@@ -43,10 +43,10 @@ class DatesheetDatabase {
     for (String element in sectionsData) {
       // List<String> tokens = element.replaceAll("+", "-").split(r'-');
       List<String> tokens = element.split(r'#');
-      tokens.forEach((element) {
+      for (var element in tokens) {
         sections.add(element); // Making pure sections without repitition.
         // print(element);
-      });
+      }
     }
 
     await box.put(DBInfo.datesheetSections, sections.toList());
@@ -54,14 +54,14 @@ class DatesheetDatabase {
     //!  ===== Tokenizing the sections && Creating students database  ===== //
 
     for (var item in sections) {
-      List result = await data
+      List result = data
           .where((element) => element[7].toString().contains(item))
           .toList();
 
       // Remove unneccesary fields
       // creating another list for this purpose
       final purified = [];
-      result.forEach((element) {
+      for (var element in result) {
         purified.add([
           element[0],
           element[1],
@@ -71,7 +71,7 @@ class DatesheetDatabase {
           element[6],
           element[8]
         ]);
-      });
+      }
 
       await box1.put(item, purified);
     }
@@ -96,23 +96,23 @@ class DatesheetDatabase {
     for (String element in teachersData) {
       // List<String> tokens = element.replaceAll("+", "-").split(r'-');
       List<String> tokens = element.split(r'-');
-      tokens.forEach((element) {
+      for (var element in tokens) {
         teachers.add(element); // Making pure sections without repitition.
         // print(element);
-      });
+      }
     }
 
     await box.put(DBInfo.datesheetTeachers, teachers.toList());
 
     for (var item in teachers) {
-      List result = await data
+      List result = data
           .where((element) => element[9].toString().contains(item))
           .toList();
 
       // Remove unneccesary fields
       // creating another list for this purpose
       final purified = [];
-      result.forEach((element) {
+      for (var element in result) {
         purified.add([
           element[0], // 0. day
           element[1], // 1. day
@@ -123,7 +123,7 @@ class DatesheetDatabase {
           element[7], // 6. section
           element[8], // 7. subject
         ]);
-      });
+      }
 
       await box2.put(item, purified);
     }

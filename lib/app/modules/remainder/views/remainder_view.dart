@@ -1,33 +1,31 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:cui_timetable/app/modules/remainder/views/widgets/student_ui.dart';
+import 'package:cui_timetable/app/modules/remainder/views/widgets/teacher_ui.dart';
+import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/modules/timetable/controllers/timetable_controller.dart';
-import 'package:cui_timetable/app/modules/timetable/views/widgets/comparison_ui_view.dart';
-import 'package:cui_timetable/app/modules/timetable/views/widgets/student_ui_view.dart';
-import 'package:cui_timetable/app/modules/timetable/views/widgets/teacher_ui_view.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import '../controllers/remainder_controller.dart';
 
-// ignore: use_key_in_widget_constructors
-class TimetableView extends GetView<TimetableController> {
+class RemainderView extends GetView<RemainderController> {
+  const RemainderView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: CustomScrollView(
           physics: const NeverScrollableScrollPhysics(),
           slivers: [
             buildAppBar(context),
-            const SliverFillRemaining(
+            SliverFillRemaining(
               child: TabBarView(
-                children: [
-                  StudentUIView(),
-                  TeacherUIView(),
-                  ComparisonUiView()
-                ],
+                children: const [StudentUI(), TeacherUI()],
               ),
             )
           ],
@@ -38,7 +36,7 @@ class TimetableView extends GetView<TimetableController> {
 
   SliverAppBar buildAppBar(context) {
     return SliverAppBar(
-        title: const Text('Timetable'),
+        title: const Text('Remainder'),
         centerTitle: true,
         // actions: const [
         //   Padding(
@@ -61,11 +59,6 @@ class TimetableView extends GetView<TimetableController> {
             Tab(
                 child: Text(
               'Teacher',
-              style: Theme.of(context).textTheme.labelLarge,
-            )),
-            Tab(
-                child: Text(
-              'Compare',
               style: Theme.of(context).textTheme.labelLarge,
             )),
           ],

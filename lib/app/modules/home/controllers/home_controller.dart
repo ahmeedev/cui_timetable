@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations
+
 import 'package:flutter/foundation.dart';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -120,7 +122,7 @@ _fetchNewsFromInternet(location) async {
   list.add({"title": "Noticeboard #${list.length}", "description": result});
 
   result = _purifyNoticeboardNews(
-      string: result = await html2
+      string: result = html2
           .querySelector(".notice_board >ul >li")!
           .nextElementSibling!
           .text
@@ -139,7 +141,7 @@ _fetchNewsFromInternet(location) async {
 _getDocument({address}) async {
   var url = Uri.parse(address);
   var response = await http.get(url);
-  dom.Document html = await dom.Document.html(response.body);
+  dom.Document html = dom.Document.html(response.body);
   return html;
 }
 
@@ -162,22 +164,22 @@ Future<List<Map<String, String>>> _fetchImgFromInternet(location) async {
   final src = "https://sahiwal.comsats.edu.pk/";
   var url = Uri.parse(src);
   var response = await http.get(url);
-  dom.Document html = await dom.Document.html(response.body);
+  dom.Document html = dom.Document.html(response.body);
   final List<Map<String, String>> list = [];
-  final result = await html
+  final result = html
       .querySelectorAll("#layerslider-container-fw >#layerslider >.ls-layer");
 
-  result.forEach((element) {
+  for (var element in result) {
     final text = element.getElementsByClassName("plus2");
     String title = '';
-    if (text.length != 0) {
+    if (text.isNotEmpty) {
       title = text[0].text.trim();
     }
     final img = element.getElementsByTagName("img")[0];
     // print(img.attributes["src"]);
 
     list.add({"title": title, "img": "$src${img.attributes["src"]}"});
-  });
+  }
 
   return list;
 }

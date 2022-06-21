@@ -1,26 +1,21 @@
 import 'dart:developer' as devlog;
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-
-import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/theme/light_theme.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 import 'package:cui_timetable/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 Future<void> main() async {
   await _initialized();
-  final box = await Hive.openBox(DBNames.timeSlots);
-  print(box.get(DBTimeSlots.monToThur));
   runApp(const MyApp());
 }
 
@@ -78,7 +73,6 @@ class MyApp extends GetView<HomeController> {
               flex: 6,
               IWidth: 100.0,
               IHeight: 100.0);
-          print(Constants.homeOverlaySize.floor());
           return getMaterialApp(theme: lightTheme(context, isLarge: true));
         }
       },

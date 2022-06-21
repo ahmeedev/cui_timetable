@@ -113,12 +113,12 @@ class GetXUtilities {
           Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.black),
       contentPadding: EdgeInsets.all(Constants.defaultPadding),
       content: content.isEmpty
-          ? Text('No Record yet')
-          : Container(
+          ? const Text('No Record yet')
+          : SizedBox(
               height: MediaQuery.of(context).size.height / 4,
               width: MediaQuery.of(context).size.width,
               child: ListView.separated(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemCount: content.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Row(

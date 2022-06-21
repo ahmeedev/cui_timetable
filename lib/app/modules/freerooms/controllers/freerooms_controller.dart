@@ -16,9 +16,10 @@ class FreeroomsController extends GetxController {
   var monToThursSlots = [];
   var friSlots = [];
   var currentScreenTime = [];
-  List<FreeroomsModel> _freerooms = [];
+  final List<FreeroomsModel> _freerooms = [];
   var freerooms = [].obs;
-  var freeroomsBox;
+  // ignore: prefer_typing_uninitialized_variables
+  late var freeroomsBox;
 
   @override
   Future<void> onInit() async {
@@ -100,7 +101,7 @@ class FreeroomsController extends GetxController {
     _freerooms.clear();
     // list contains all the slots data for specific day.
     final List list =
-        await _getDayWiseLectures(day: day); // get required day lecture.
+        _getDayWiseLectures(day: day); // get required day lecture.
 
     List.generate(5, (index) async {
       // set to 1 for all the slots
@@ -160,11 +161,5 @@ class FreeroomsController extends GetxController {
     });
     freerooms.value = _freerooms;
     loading.value = false;
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    // loading.value = false;
   }
 }

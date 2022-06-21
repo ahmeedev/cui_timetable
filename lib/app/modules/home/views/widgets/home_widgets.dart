@@ -1,22 +1,18 @@
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
-import 'package:flutter/material.dart';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
-
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
-import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 
 /// AppBar for the Home Screen.
 class HomeAppBar extends StatelessWidget {
   // late final textHeight;
-  HomeAppBar({
+  const HomeAppBar({
     Key? key,
   }) : super(key: key);
   @override
@@ -135,7 +131,7 @@ class HomeBody extends GetView<HomeController> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(
                                                 Constants.defaultRadius)),
-                                        gradient: LinearGradient(
+                                        gradient: const LinearGradient(
                                           colors: successGradient,
                                         )),
                                     child: ListTile(
@@ -159,8 +155,8 @@ class HomeBody extends GetView<HomeController> {
                             )
                           : const SizedBox(),
                     ),
-                    HomeCarousel(),
-                    HomeNews()
+                    const HomeCarousel(),
+                    const HomeNews()
                   ],
                 ),
               ),
@@ -202,15 +198,13 @@ class HomeCarousel extends GetView<HomeController> {
                         enlargeCenterPage: true,
                         autoPlayAnimationDuration: const Duration(seconds: 3),
                         autoPlayInterval: const Duration(seconds: 5),
-                        scrollPhysics: BouncingScrollPhysics(),
+                        scrollPhysics: const BouncingScrollPhysics(),
                         height: MediaQuery.of(context).size.height / 6),
                     items: snapshot.data!.map((e) {
                       return Stack(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              print('hello');
-                            },
+                            onTap: () {},
                             child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 // margin: EdgeInsets.symmetric(horizontal: 2.0),
@@ -236,15 +230,15 @@ class HomeCarousel extends GetView<HomeController> {
                                   ),
                                 )),
                           ),
-                          e["title"]!.length == 0
-                              ? SizedBox()
+                          e["title"]!.isEmpty
+                              ? const SizedBox()
                               : Positioned(
                                   // alignment: Alignment.center,
                                   // left: 2,
                                   // top: 10,
                                   child: Container(
                                       decoration: BoxDecoration(
-                                          gradient: LinearGradient(
+                                          gradient: const LinearGradient(
                                             end: Alignment.bottomRight,
                                             colors: [
                                               // secondaryColor,
@@ -291,7 +285,7 @@ class HomeCarousel extends GetView<HomeController> {
               );
             },
           )
-        : SizedBox());
+        : const SizedBox());
   }
 }
 
@@ -483,7 +477,7 @@ class HomeOverlay extends StatelessWidget {
                     child: Column(
                       children: [
                         ImageIcon(
-                          AssetImage('assets/home/timetable.png'),
+                          const AssetImage('assets/home/timetable.png'),
                           size: Constants.iconSize,
                           color: primaryColor,
                         ),
@@ -517,7 +511,7 @@ class HomeOverlay extends StatelessWidget {
                     child: Column(
                       children: [
                         ImageIcon(
-                          AssetImage('assets/home/room.png'),
+                          const AssetImage('assets/home/room.png'),
                           size: Constants.iconSize,
                           color: primaryColor,
                         ),
@@ -551,7 +545,7 @@ class HomeOverlay extends StatelessWidget {
                     child: Column(
                       children: [
                         ImageIcon(
-                          AssetImage('assets/home/datesheet.png'),
+                          const AssetImage('assets/home/datesheet.png'),
                           size: Constants.iconSize,
                           color: primaryColor,
                         ),

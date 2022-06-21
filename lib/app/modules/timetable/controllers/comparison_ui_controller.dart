@@ -57,14 +57,14 @@ class ComparisonUiController extends GetxController {
 
       List list =
           box.get(filteredList[index].toString().toLowerCase()).toList();
-      list.forEach((element) {
+      for (var element in list) {
         sections.add(element[0]);
-      });
+      }
     } else {
       List list = box.get(initialData.toLowerCase()).toList();
-      list.forEach((element) {
+      for (var element in list) {
         sections.add(element[0]);
-      });
+      }
     }
     respectiveSections.value = [];
     respectiveSections.value = sections.toList();

@@ -12,6 +12,8 @@ class TeacherDatesheetView extends GetView<TeacherDatesheetController> {
   final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   final keys = ['10000', '1000', '100', '10', '1'];
 
+  TeacherDatesheetView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,14 +90,8 @@ class TeacherDatesheetView extends GetView<TeacherDatesheetController> {
                                   //   child: Text('hllleljasdlf'),
                                   // );
                                   return LectureDetailsTile(
-                                    date: controller.daywiseLectures[index][1]
-                                            .toString() +
-                                        "-" +
-                                        controller.daywiseLectures[index][2]
-                                            .toString() +
-                                        "-" +
-                                        controller.daywiseLectures[index][3]
-                                            .toString(),
+                                    date:
+                                        "${controller.daywiseLectures[index][1]}-${controller.daywiseLectures[index][2]}-${controller.daywiseLectures[index][3]}",
                                     time: controller.daywiseLectures[index][4]
                                         .toString(),
                                     room: controller.daywiseLectures[index][5]

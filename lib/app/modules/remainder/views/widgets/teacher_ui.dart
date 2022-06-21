@@ -1,14 +1,8 @@
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/routes/app_pages.dart';
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
-import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-
-import 'package:cui_timetable/app/modules/datesheet/controllers/teacher_ui_controller.dart';
+import 'package:cui_timetable/app/modules/remainder/controllers/teacher_ui_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:hive/hive.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TeacherUI extends GetView<TeacherUIController> {
   const TeacherUI({Key? key}) : super(key: key);
@@ -163,25 +157,25 @@ class TeacherUI extends GetView<TeacherUIController> {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              final value = controller.textController.text.toString();
-              if (controller.teachers.contains(value)) {
-                // Storing the information for state persistency
-                final box1 = await Hive.openBox(DBNames.info);
-                box1.put(DBInfo.datesheetSearchTeacher, value);
+              // final value = controller.textController.text.toString();
+              // if (controller.teachers.contains(value)) {
+              //   // Storing the information for state persistency
+              //   final box1 = await Hive.openBox(DBNames.info);
+              //   box1.put(DBInfo.datesheetSearchTeacher, value);
 
-                Get.toNamed(Routes.TEACHER_DATESHEET, arguments: [value]);
-              } else {
-                GetXUtilities.snackbar(
-                    title: 'Not Found!!',
-                    message: 'Enter Valid Teacher Name',
-                    gradient: primaryGradient);
-              }
+              //   Get.toNamed(Routes.TEACHER_DATESHEET, arguments: [value]);
+              // } else {
+              //   GetXUtilities.snackbar(
+              //       title: 'Not Found!!',
+              //       message: 'Enter Valid Teacher Name',
+              //       gradient: primaryGradient);
+              // }
             },
             child: Padding(
               padding: EdgeInsets.all(Constants.defaultPadding),
               child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),
-                child: Text('Find Now',
+                child: Text('Set Remainder',
                     style: Theme.of(context).textTheme.labelLarge
                     // .copyWith(fontSize: 16),
                     ),

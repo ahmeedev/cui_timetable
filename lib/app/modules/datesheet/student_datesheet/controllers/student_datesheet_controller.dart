@@ -75,7 +75,6 @@ class StudentDatesheetController extends GetxController {
     await _setLectures(list: list, key: "1");
     daywiseLectures.value = monLectures; //* For default purpose
 
-    print(daywiseLectures.length);
     // yield lecturesCount;
     isLoading.value = false;
   }

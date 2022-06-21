@@ -106,10 +106,9 @@ class StudentUIView extends GetView<StudentUIController> {
                           .contains(value.toLowerCase()))
                       .toList();
 
-                  if (value.isEmpty || value.length == 0) {
+                  if (value.isEmpty || value.isEmpty) {
                     controller.listVisible.value = false;
                     controller.filteredList.clear();
-                    print("value is null");
                   } else if (controller.filteredList.contains(value) &&
                       controller.filteredList.length == 1) {
                     controller.listVisible.value = false;
@@ -135,7 +134,7 @@ class StudentUIView extends GetView<StudentUIController> {
               height: Constants.defaultPadding / 2,
             ),
             Obx(() => controller.filteredList.isEmpty
-                ? SizedBox()
+                ? const SizedBox()
                 : ConstrainedBox(
                     constraints: BoxConstraints(
                       minWidth: double.infinity,

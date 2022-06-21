@@ -217,7 +217,7 @@ class LectureDetailsTile extends StatelessWidget {
                         ),
                         ElevatedButton(
                           onPressed: () {},
-                          child: Text("Book Now"),
+                          child: const Text("Book Now"),
                         )
                       ],
                     ),
