@@ -1,9 +1,8 @@
+import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-
-class StudentDatesheetController extends GetxController {
+class TeacherDatesheetController extends GetxController {
   var isLoading = true.obs;
   var monToThursSlots = [];
   var friSlots = [];
@@ -29,7 +28,7 @@ class StudentDatesheetController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
 
-    datesheetDB = await Hive.openBox(DBNames.datesheetStudentsDB);
+    datesheetDB = await Hive.openBox(DBNames.datesheetTeachersDB);
 
     // list.forEach((element) {
     //   print(element.runtimeType);
@@ -64,9 +63,7 @@ class StudentDatesheetController extends GetxController {
   // Methods for controlling LectureTile
   openBox() async {
     List list = await datesheetDB.get(Get.arguments[0].toString());
-    // list.forEach((element) {
-    //   print(element);
-    // });
+    print(list);
 
     await _setLectures(list: list, key: "10000");
     await _setLectures(list: list, key: "1000");

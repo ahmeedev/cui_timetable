@@ -6,7 +6,8 @@ class DBNames {
   static const teachersDB = "teachersDB";
 
   static const freerooms = "freerooms";
-  static const datesheetDB = "datesheetDB";
+  static const datesheetStudentsDB = "datesheetStudentsDB";
+  static const datesheetTeachersDB = "datesheetTeachersDB";
 
   static const history = "history";
 }

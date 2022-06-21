@@ -27,13 +27,13 @@ class StudentUI extends GetView<StudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
-              ElevatedButton(
-                onPressed: () {
-                  final db = DatesheetDatabase();
-                  db.createDatabase();
-                },
-                child: Text('Download'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     final db = DatesheetDatabase();
+              //     db.createDatabase();
+              //   },
+              //   child: Text('Download'),
+              // ),
               // ElevatedButton(
               //   onPressed: () {},
               //   child: Text('Token'),
@@ -180,15 +180,6 @@ class StudentUI extends GetView<StudentUIController> {
                 final box1 = await Hive.openBox(DBNames.info);
                 box1.put(DBInfo.datesheetSearchSection, value);
 
-                final box2 = await Hive.openBox(DBNames.history);
-                List list =
-                    box2.get(DBHistory.studentTimetable, defaultValue: []);
-                if (list.length != 6) {
-                  Set result = list.toSet();
-                  result.add(value);
-                  box2.put(DBHistory.studentTimetable, result.toList());
-                  //     // await box2.close();
-                }
                 Get.toNamed(Routes.STUDENT_DATESHEET, arguments: [value]);
               } else {
                 GetXUtilities.snackbar(

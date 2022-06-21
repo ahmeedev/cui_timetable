@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import '../modules/datesheet/bindings/datesheet_binding.dart';
 import '../modules/datesheet/student_datesheet/bindings/student_datesheet_binding.dart';
 import '../modules/datesheet/student_datesheet/views/student_datesheet_view.dart';
+import '../modules/datesheet/teacher_datesheet/bindings/teacher_datesheet_binding.dart';
+import '../modules/datesheet/teacher_datesheet/views/teacher_datesheet_view.dart';
 import '../modules/datesheet/views/datesheet_view.dart';
 import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
@@ -95,6 +97,11 @@ class AppPages {
           name: _Paths.STUDENT_DATESHEET,
           page: () => StudentDatesheetView(),
           binding: StudentDatesheetBinding(),
+        ),
+        GetPage(
+          name: _Paths.TEACHER_DATESHEET,
+          page: () => TeacherDatesheetView(),
+          binding: TeacherDatesheetBinding(),
         ),
       ],
     ),

@@ -16,8 +16,15 @@ class DatesheetDatabase {
       {required String filePath, required List<dynamic> data}) async {
     Hive.init(filePath); // initialize the data, bcz of their separate isolate.
     // fetch sections as well as teachers.
-    final sectionsData = <String>{};
-    final sections = <String>{};
+
+    // === opening all the boxes  //
+    final box = await Hive.openBox(DBNames.info);
+
+    final box1 = await Hive.openBox(DBNames.datesheetStudentsDB);
+    await box1.clear(); //! clear the box before inserting values
+
+    final box2 = await Hive.openBox(DBNames.datesheetTeachersDB);
+    await box2.clear(); //! clear the box before inserting values
 
     data.removeAt(0); //! remove the header
     data = data
@@ -25,6 +32,9 @@ class DatesheetDatabase {
             element[7].toString().trim() != "-" ||
             element[7].toString().trim() == "")
         .toList(); //! clean the empty records
+
+    final sectionsData = <String>{};
+    final sections = <String>{};
 
     for (var item in data) {
       sectionsData.add(item[7].trim());
@@ -39,12 +49,9 @@ class DatesheetDatabase {
       });
     }
 
-    final box = await Hive.openBox(DBNames.info);
     await box.put(DBInfo.datesheetSections, sections.toList());
 
-    //  ===== Tokenizing the sections && Creating students database  ===== //
-    final box1 = await Hive.openBox(DBNames.datesheetDB);
-    await box1.clear(); //! clear the box before inserting values
+    //!  ===== Tokenizing the sections && Creating students database  ===== //
 
     for (var item in sections) {
       List result = await data
@@ -71,8 +78,60 @@ class DatesheetDatabase {
 
     // print(box1.get("FA19-BSE-A"));
 
+    //!  ===== Tokenizing the teachers && Creating Teachers database  ===== //
+
+    data = data
+        .where((element) =>
+            element[9].toString().trim() != "-" ||
+            element[9].toString().trim() == "")
+        .toList(); //! clean the empty records
+
+    final teachersData = <String>{};
+    final teachers = <String>{};
+
+    for (var item in data) {
+      teachersData.add(item[9].trim());
+    }
+
+    for (String element in teachersData) {
+      // List<String> tokens = element.replaceAll("+", "-").split(r'-');
+      List<String> tokens = element.split(r'-');
+      tokens.forEach((element) {
+        teachers.add(element); // Making pure sections without repitition.
+        // print(element);
+      });
+    }
+
+    await box.put(DBInfo.datesheetTeachers, teachers.toList());
+
+    for (var item in teachers) {
+      List result = await data
+          .where((element) => element[9].toString().contains(item))
+          .toList();
+
+      // Remove unneccesary fields
+      // creating another list for this purpose
+      final purified = [];
+      result.forEach((element) {
+        purified.add([
+          element[0], // 0. day
+          element[1], // 1. day
+          element[2], // 2. month
+          element[3], // 3. year
+          element[5], // 4. time
+          element[6], // 5. room
+          element[7], // 6. section
+          element[8], // 7. subject
+        ]);
+      });
+
+      await box2.put(item, purified);
+    }
+
+    // === Close all the boxes === //
     await box.close(); // info
-    await box1.close(); // datesheet
+    await box1.close(); // student datesheet
+    await box2.close(); // teacher
     await Future.delayed(const Duration(milliseconds: 200));
     return Future<int>.value(1);
   }

@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
-
-import 'package:cui_timetable/app/modules/datesheet/student_datesheet/views/widgets/student_datesheet_widgets.dart';
+import 'package:cui_timetable/app/modules/datesheet/teacher_datesheet/views/widgets/teacher_datesheet_widgets.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../controllers/student_datesheet_controller.dart';
+import 'package:get/get.dart';
 
-class StudentDatesheetView extends GetView<StudentDatesheetController> {
+import '../controllers/teacher_datesheet_controller.dart';
+
+class TeacherDatesheetView extends GetView<TeacherDatesheetController> {
   final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   final keys = ['10000', '1000', '100', '10', '1'];
 
@@ -69,7 +68,7 @@ class StudentDatesheetView extends GetView<StudentDatesheetController> {
                                     height: 20,
                                   ),
                                   Text(
-                                    'No Paper Today',
+                                    'No Duty Today',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall!
@@ -89,21 +88,26 @@ class StudentDatesheetView extends GetView<StudentDatesheetController> {
                                   //   child: Text('hllleljasdlf'),
                                   // );
                                   return LectureDetailsTile(
-                                      date: controller.daywiseLectures[index][1]
-                                              .toString() +
-                                          "-" +
-                                          controller.daywiseLectures[index][2]
-                                              .toString() +
-                                          "-" +
-                                          controller.daywiseLectures[index][3]
-                                              .toString(),
-                                      subject: controller.daywiseLectures[index]
-                                              [6]
-                                          .toString(),
-                                      room: controller.daywiseLectures[index][5]
-                                          .toString(),
-                                      time: controller.daywiseLectures[index][4]
-                                          .toString());
+                                    date: controller.daywiseLectures[index][1]
+                                            .toString() +
+                                        "-" +
+                                        controller.daywiseLectures[index][2]
+                                            .toString() +
+                                        "-" +
+                                        controller.daywiseLectures[index][3]
+                                            .toString(),
+                                    time: controller.daywiseLectures[index][4]
+                                        .toString(),
+                                    room: controller.daywiseLectures[index][5]
+                                        .toString(),
+                                    subject: controller.daywiseLectures[index]
+                                            [7]
+                                        .toString(),
+                                    sections: controller.daywiseLectures[index]
+                                            [6]
+                                        .toString()
+                                        .replaceAll("#", ", "),
+                                  );
                                 },
                               ),
                       )),
