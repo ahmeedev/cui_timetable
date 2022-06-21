@@ -47,10 +47,10 @@ Future<void> downloadFile(
           });
           Get.find<SyncController>().syncFile.value +=
               1; //! Start the next file action
-          if (lastEntity) {
-            await Future.delayed(const Duration(milliseconds: 500));
-            await _updateStatuses();
-          }
+          // if (lastEntity) {
+          //   await Future.delayed(const Duration(milliseconds: 500));
+          //   await _updateStatuses();
+          // }
         } else {
           await compute(_backgroundTaskJson, {
             "filePath": LocationUtilities.defaultpath,

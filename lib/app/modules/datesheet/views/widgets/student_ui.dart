@@ -27,13 +27,13 @@ class StudentUI extends GetView<StudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     final db = DatesheetDatabase();
-              //     db.createDatabase();
-              //   },
-              //   child: Text('Download'),
-              // ),
+              ElevatedButton(
+                onPressed: () {
+                  final db = DatesheetDatabase();
+                  db.createDatabase();
+                },
+                child: Text('Download'),
+              ),
               // ElevatedButton(
               //   onPressed: () {},
               //   child: Text('Token'),

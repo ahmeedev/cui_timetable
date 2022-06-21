@@ -15,14 +15,15 @@ class DatesheetDatabase {
   Future<Future<int>> insertDatesheetData(
       {required String filePath, required List<dynamic> data}) async {
     Hive.init(filePath); // initialize the data, bcz of their separate isolate.
-    // await deleteData();
     // fetch sections as well as teachers.
     final sectionsData = <String>{};
     final sections = <String>{};
 
     data.removeAt(0); //! remove the header
     data = data
-        .where((element) => element[7].toString() != "-")
+        .where((element) =>
+            element[7].toString().trim() != "-" ||
+            element[7].toString().trim() == "")
         .toList(); //! clean the empty records
 
     for (var item in data) {
@@ -30,10 +31,11 @@ class DatesheetDatabase {
     }
 
     for (String element in sectionsData) {
-      List<String> tokens = element.replaceAll("+", "-").split(r'-');
-      final result = await _tokenizeSection(tokens: tokens);
-      result.forEach((element) {
+      // List<String> tokens = element.replaceAll("+", "-").split(r'-');
+      List<String> tokens = element.split(r'#');
+      tokens.forEach((element) {
         sections.add(element); // Making pure sections without repitition.
+        // print(element);
       });
     }
 
@@ -42,57 +44,36 @@ class DatesheetDatabase {
 
     //  ===== Tokenizing the sections && Creating students database  ===== //
     final box1 = await Hive.openBox(DBNames.datesheetDB);
+    await box1.clear(); //! clear the box before inserting values
 
-    for (var item in data) {
-      List<String> tokens = item[7].replaceAll("+", "-").split(r'-');
-      final result = await _tokenizeSection(tokens: tokens);
-      List<String> subjects = item[8].split('-');
+    for (var item in sections) {
+      List result = await data
+          .where((element) => element[7].toString().contains(item))
+          .toList();
 
-      for (var i = 0; i < result.length; i++) {
-        List data = box1.get(result[i], defaultValue: []);
-        data.add([
-          item[0],
-          item[1],
-          item[2],
-          item[3],
-          item[5].toString().replaceAll("00", ":00").replaceAll("30", ":30"),
-          item[6],
-          subjects.length == 1 ? subjects[0] : subjects[1]
+      // Remove unneccesary fields
+      // creating another list for this purpose
+      final purified = [];
+      result.forEach((element) {
+        purified.add([
+          element[0],
+          element[1],
+          element[2],
+          element[3],
+          element[5],
+          element[6],
+          element[8]
         ]);
-        await box1.put(result[i], data);
-      }
+      });
+
+      await box1.put(item, purified);
     }
 
-    // box1.put(key, value)
-    box.close();
-    box1.close();
-    await Future.delayed(const Duration(milliseconds: 300));
+    // print(box1.get("FA19-BSE-A"));
+
+    await box.close(); // info
+    await box1.close(); // datesheet
+    await Future.delayed(const Duration(milliseconds: 200));
     return Future<int>.value(1);
-  }
-
-  List<String> _tokenizeSection({tokens}) {
-    List<String> result = [];
-    var section;
-    for (var i = 0; i < tokens.length; i++) {
-      if (tokens[i].length == 4) {
-        section = "";
-        section = tokens[i] + "-";
-      } else if (tokens[i].length == 3) {
-        section += tokens[i];
-        if (i == tokens.length - 1 || tokens[i + 1].length == 4) {
-          result.add(section);
-        }
-      } else if (tokens[i].length == 1) {
-        section += "-" + tokens[i];
-        if (i != tokens.length - 1 && tokens[i + 1].length == 4) {
-          result.add(section);
-        } else if (i == tokens.length - 1) {
-          result.add(section);
-        }
-      }
-    }
-    // print("tokens: $tokens");
-    // print("result: ${result}");
-    return result;
   }
 }

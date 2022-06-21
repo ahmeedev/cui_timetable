@@ -30,15 +30,11 @@ class StudentDatesheetController extends GetxController {
     super.onInit();
 
     datesheetDB = await Hive.openBox(DBNames.datesheetDB);
-    List list = datesheetDB.get(Get.arguments[0].toString());
-    print(list.length);
-    list.forEach((element) {
-      print(element);
-    });
+
     // list.forEach((element) {
     //   print(element.runtimeType);
     // });
-    // await openBox();
+    await openBox();
   }
 
 // Methods for Controlling DayTile.
@@ -65,17 +61,75 @@ class StudentDatesheetController extends GetxController {
     }
   }
 
-// Methods for controlling LectureTile
+  // Methods for controlling LectureTile
   openBox() async {
-    // await _setLectures(key: "10000");
-    // await _setLectures(key: "1000");
-    // await _setLectures(key: "100");
-    // await _setLectures(key: "10");
-    // await _setLectures(key: "1");
+    List list = await datesheetDB.get(Get.arguments[0].toString());
+    // list.forEach((element) {
+    //   print(element);
+    // });
 
-    // daywiseLectures.value = monLectures; //* For default purpose
+    await _setLectures(list: list, key: "10000");
+    await _setLectures(list: list, key: "1000");
+    await _setLectures(list: list, key: "100");
+    await _setLectures(list: list, key: "10");
+    await _setLectures(list: list, key: "1");
+    daywiseLectures.value = monLectures; //* For default purpose
 
+    print(daywiseLectures.length);
     // yield lecturesCount;
     isLoading.value = false;
+  }
+
+  _setLectures({required list, required String key}) {
+    if (key == "10000") {
+      monLectures = list
+          .where(
+              (element) => element[0].toString().toLowerCase().contains("mon"))
+          .toList();
+      // monLectures.sort((a, b) => a[2].compareTo(b[2]));
+      lecturesCount[key] = monLectures.length.toString();
+    } else if (key == "1000") {
+      tueLectures = list
+          .where(
+              (element) => element[0].toString().toLowerCase().contains("tue"))
+          .toList();
+      // tueLectures.sort((a, b) => a[2].compareTo(b[2]));
+      lecturesCount[key] = tueLectures.length.toString();
+    } else if (key == "100") {
+      wedLectures = list
+          .where(
+              (element) => element[0].toString().toLowerCase().contains("wed"))
+          .toList();
+      // wedLectures.sort((a, b) => a[2].compareTo(b[2]));
+      lecturesCount[key] = wedLectures.length.toString();
+    } else if (key == "10") {
+      thuLectures = list
+          .where((element) =>
+              element[0].toString().toLowerCase().contains("thurs"))
+          .toList();
+      // t    list.where((element) => element[0].toString().toLowerCase().contains("mon")).toList();
+      lecturesCount[key] = thuLectures.length.toString();
+    } else if (key == "1") {
+      friLectures = list
+          .where(
+              (element) => element[0].toString().toLowerCase().contains("fri"))
+          .toList();
+      // friLectures.sort((a, b) => a[2].compareTo(b[2]));
+      lecturesCount[key] = friLectures.length.toString();
+    }
+  }
+
+  void getLectures({required String key}) {
+    if (key == "10000") {
+      daywiseLectures.value = monLectures;
+    } else if (key == "1000") {
+      daywiseLectures.value = tueLectures;
+    } else if (key == "100") {
+      daywiseLectures.value = wedLectures;
+    } else if (key == "10") {
+      daywiseLectures.value = thuLectures;
+    } else if (key == "1") {
+      daywiseLectures.value = friLectures;
+    }
   }
 }

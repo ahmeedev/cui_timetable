@@ -85,13 +85,25 @@ class StudentDatesheetView extends GetView<StudentDatesheetController> {
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: controller.daywiseLectures.length,
                                 itemBuilder: (context, index) {
-                                  return Card(
-                                    child: Text('hllleljasdlf'),
-                                  );
-                                  // return LectureDetailsTile(
-                                  //     time: controller
-                                  //         .currentTimeSlots[index]
-                                  //         .toString());
+                                  // return Card(
+                                  //   child: Text('hllleljasdlf'),
+                                  // );
+                                  return LectureDetailsTile(
+                                      date: controller.daywiseLectures[index][1]
+                                              .toString() +
+                                          "-" +
+                                          controller.daywiseLectures[index][2]
+                                              .toString() +
+                                          "-" +
+                                          controller.daywiseLectures[index][3]
+                                              .toString(),
+                                      subject: controller.daywiseLectures[index]
+                                              [6]
+                                          .toString(),
+                                      room: controller.daywiseLectures[index][5]
+                                          .toString(),
+                                      time: controller.daywiseLectures[index][4]
+                                          .toString());
                                 },
                               ),
                       )),
