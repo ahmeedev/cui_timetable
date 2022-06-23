@@ -1,16 +1,17 @@
 import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/modules/datesheet/controllers/teacher_ui_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/modules/datesheet/controllers/teacher_ui_controller.dart';
+// import 'package:cui_timetable/app/modules/datesheet/controllers/teacher_ui_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:hive/hive.dart';
 
-class TeacherUI extends GetView<TeacherUIController> {
+class TeacherUI extends GetView<DatesheetTeacherUIController> {
   const TeacherUI({Key? key}) : super(key: key);
 
   @override

@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 
-class StudentUIController extends GetxController {
+class DatesheetStudentUIController extends GetxController {
   var sections = [];
   final TextEditingController textController = TextEditingController();
   var filteredList = [].obs;

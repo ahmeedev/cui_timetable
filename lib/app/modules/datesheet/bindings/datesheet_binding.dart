@@ -11,11 +11,11 @@ class DatesheetBinding extends Bindings {
     Get.lazyPut<DatesheetController>(
       () => DatesheetController(),
     );
-    Get.lazyPut<StudentUIController>(
-      () => StudentUIController(),
+    Get.lazyPut<DatesheetStudentUIController>(
+      () => DatesheetStudentUIController(),
     );
-    Get.lazyPut<TeacherUIController>(
-      () => TeacherUIController(),
+    Get.lazyPut<DatesheetTeacherUIController>(
+      () => DatesheetTeacherUIController(),
     );
   }
 }

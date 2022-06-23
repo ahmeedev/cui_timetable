@@ -1,9 +1,9 @@
-import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:cui_timetable/app/data/database/database_constants.dart';
 
-class TeacherUIController extends GetxController {
+class DatesheetTeacherUIController extends GetxController {
   var teachers = [];
   final TextEditingController textController = TextEditingController();
   var filteredList = [].obs;

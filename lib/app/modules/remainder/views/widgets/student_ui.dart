@@ -1,11 +1,14 @@
 import 'package:cui_timetable/app/modules/remainder/controllers/student_ui_controlller.dart';
+import 'package:cui_timetable/app/modules/remainder/models/user.dart';
+import 'package:cui_timetable/objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class StudentUI extends GetView<StudentUIController> {
-  const StudentUI({Key? key}) : super(key: key);
+class StudentUI extends GetView<RemainderStudentUIController> {
+  StudentUI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +25,29 @@ class StudentUI extends GetView<StudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Testing'),
-              ),
-
               // ElevatedButton(
-              //   onPressed: () {},
-              //   child: Text('Token'),
+              //   onPressed: () async {
+              //     final box = controller.store.box<User>();
+              //     final user = User();
+              //     user.name = "Tina";
+              //     user.id = 0;
+              //     final id = box.put(user); // Create
+              //     print(id);
+              //     // person.lastName = "Black";
+              //     // box.put(person); // Update
+
+              //     // box.remove(person.id); // Delete
+              //   },
+              //   child: const Text('Store'),
+              // ),
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     Box box = controller.store.box<User>();
+              //     var user = box.getAll(); // Read
+              //     // print(user.toString());
+              //     print(user);
+              //   },
+              //   child: Text('Retrieved'),
               // ),
             ],
           ),

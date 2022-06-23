@@ -10,11 +10,11 @@ class RemainderBinding extends Bindings {
     Get.lazyPut<RemainderController>(
       () => RemainderController(),
     );
-    Get.lazyPut<StudentUIController>(
-      () => StudentUIController(),
+    Get.lazyPut<RemainderStudentUIController>(
+      () => RemainderStudentUIController(),
     );
-    Get.lazyPut<TeacherUIController>(
-      () => TeacherUIController(),
+    Get.lazyPut<RemainderTeacherUIController>(
+      () => RemainderTeacherUIController(),
     );
   }
 }

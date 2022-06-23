@@ -1,3 +1,4 @@
+import 'package:cui_timetable/objectbox.g.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -5,16 +6,19 @@ import 'package:hive/hive.dart';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 
-class StudentUIController extends GetxController {
+class RemainderStudentUIController extends GetxController {
   var sections = [];
   final TextEditingController textController = TextEditingController();
   var filteredList = [].obs;
   var listVisible = true.obs;
   // var dialogHistoryList = [].obs;
 
+  late Store store;
   @override
   Future<void> onInit() async {
     await fetchSections();
+    store = await openStore();
+
     // var string = '';
 
     // final box = await Hive.openBox(DBNames.info);
