@@ -237,7 +237,7 @@ class LectureDetailsTile extends StatelessWidget {
                       ),
                       const SizedBox(width: 5),
                       FittedBox(
-                        child: Text(time.toString(),
+                        child: Text(time.replaceAll("00", ":00").toString(),
                             overflow: TextOverflow.visible,
                             style: Theme.of(context)
                                 .textTheme
