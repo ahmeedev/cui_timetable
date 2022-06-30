@@ -84,7 +84,8 @@ class DayTile extends GetView<StudentDatesheetController> {
                                 color: primaryColor,
                               )
                             : Text(
-                                controller.lecturesCount[dayKey].toString(),
+                                controller.datesForDayList[int.parse(dayKey)][1]
+                                    .toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall!

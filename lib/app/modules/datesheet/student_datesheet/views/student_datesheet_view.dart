@@ -10,8 +10,17 @@ import 'package:cui_timetable/app/theme/app_constants.dart';
 import '../controllers/student_datesheet_controller.dart';
 
 class StudentDatesheetView extends GetView<StudentDatesheetController> {
-  final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-  final keys = ['10000', '1000', '100', '10', '1'];
+  final days = {
+    "monday": "Mon",
+    "tuesday": "Tue",
+    "wednesday": "Wed",
+    "thursday": "Thu",
+    "friday": "Fri",
+    "saturday": "Sat",
+    "sunday": "Sun"
+  };
+  // final days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday','Sunday'];
+  // final respectiveDay = ['Mon', 'Tues', 'Wed','Thrus', 'Fri', 'Sat', 'Sun'];
 
   StudentDatesheetView({Key? key}) : super(key: key);
 
@@ -36,10 +45,12 @@ class StudentDatesheetView extends GetView<StudentDatesheetController> {
                           color: primaryColor,
                         )
                       : Row(children: [
-                          ...List.generate(5, (index) {
+                          ...List.generate(controller.daytilesLength, (index) {
                             return DayTile(
-                              day: days[index].toString(),
-                              dayKey: keys[index].toString(),
+                              day: days[controller.datesForDayList[index][0]
+                                  .toString()
+                                  .toLowerCase()]!,
+                              dayKey: index.toString(), //! index as key
                               callback: controller.allFalse,
                               obs: controller.giveValue(index),
                             );
@@ -92,7 +103,7 @@ class StudentDatesheetView extends GetView<StudentDatesheetController> {
                                   // );
                                   return LectureDetailsTile(
                                       date:
-                                          "${controller.daywiseLectures[index][1]}-${controller.daywiseLectures[index][2]}-${controller.daywiseLectures[index][3]}",
+                                          "${controller.daywiseLectures[index][3]}",
                                       subject: controller.daywiseLectures[index]
                                               [6]
                                           .toString(),

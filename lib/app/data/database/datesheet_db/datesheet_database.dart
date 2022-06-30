@@ -63,13 +63,13 @@ class DatesheetDatabase {
       final purified = [];
       for (var element in result) {
         purified.add([
-          element[0],
-          element[1],
-          element[2],
-          element[3],
-          element[5],
-          element[6],
-          element[8]
+          element[0], // 0. day english
+          element[1], // 1. day
+          element[2], // 2. month
+          element[4], // 3. complete date
+          element[5], // 4. time
+          element[6], // 5. room
+          element[8], // 6. subject
         ]);
       }
 
@@ -117,7 +117,7 @@ class DatesheetDatabase {
           element[0], // 0. day
           element[1], // 1. day
           element[2], // 2. month
-          element[3], // 3. year
+          element[4], // 3. complete date
           element[5], // 4. time
           element[6], // 5. room
           element[7], // 6. section

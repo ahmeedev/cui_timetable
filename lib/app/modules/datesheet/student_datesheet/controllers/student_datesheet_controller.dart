@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
@@ -5,9 +6,11 @@ import 'package:cui_timetable/app/data/database/database_constants.dart';
 
 class StudentDatesheetController extends GetxController {
   var isLoading = true.obs;
+  var daytilesLength = 0;
   var monToThursSlots = [];
   var friSlots = [];
   var currentTimeSlots = [];
+  var datesForDayList = []; // [date,day]
 
   var mon = true.obs; //! mon is selected by default
   var tue = false.obs;
@@ -16,6 +19,8 @@ class StudentDatesheetController extends GetxController {
   var fri = false.obs;
 
   var daywiseLectures = [].obs; //! Current day lectures.
+
+  var papers = [];
 
   var monLectures = [];
   var tueLectures = [];
@@ -64,15 +69,27 @@ class StudentDatesheetController extends GetxController {
   // Methods for controlling LectureTile
   openBox() async {
     List list = await datesheetDB.get(Get.arguments[0].toString());
-    // list.forEach((element) {
-    //   print(element);
-    // });
+    daytilesLength = list.length; //! size w.r.t papers
 
-    await _setLectures(list: list, key: "10000");
-    await _setLectures(list: list, key: "1000");
-    await _setLectures(list: list, key: "100");
-    await _setLectures(list: list, key: "10");
-    await _setLectures(list: list, key: "1");
+    // debugPrint(list.toString());
+
+    //* Fetching dates from the list //
+    for (var item in list) {
+      datesForDayList
+          .add([item[0], item[1].toString() + "-" + item[2].toString()]);
+    }
+
+    // debugPrint(datesForDayList.toString());
+
+    // await _setLectures(list: list, key: "10000");
+    // await _setLectures(list: list, key: "1000");
+    // await _setLectures(list: list, key: "100");
+    // await _setLectures(list: list, key: "10");
+    // await _setLectures(list: list, key: "1");
+
+    //? lets put the key for the lectures as index, bcz they are not fixed
+    await _setLectures(list: list, key: "0");
+
     daywiseLectures.value = monLectures; //* For default purpose
 
     // yield lecturesCount;
@@ -80,6 +97,14 @@ class StudentDatesheetController extends GetxController {
   }
 
   _setLectures({required list, required String key}) {
+    if (key == "0") {
+      monLectures = list
+          .where((element) =>
+              element[1].toString() + "-" + element[2].toString() == "28-6")
+          .toList();
+      lecturesCount[key] = monLectures.length.toString();
+    }
+
     if (key == "10000") {
       monLectures = list
           .where(
