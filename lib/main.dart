@@ -62,7 +62,8 @@ class MyApp extends GetView<HomeController> {
               flex: 5,
               IWidth: 80.0,
               IHeight: 80.0);
-          return getMaterialApp(theme: lightTheme(context, isLarge: false));
+          controller.isLarge = false;
+          return getMaterialApp(theme: lightTheme(isLarge: false));
         } else {
           Constants.initializeFields(
               elevation: 10.0,
@@ -73,7 +74,9 @@ class MyApp extends GetView<HomeController> {
               flex: 6,
               IWidth: 100.0,
               IHeight: 100.0);
-          return getMaterialApp(theme: lightTheme(context, isLarge: true));
+          controller.isLarge = true;
+
+          return getMaterialApp(theme: lightTheme(isLarge: true));
         }
       },
     );

@@ -30,9 +30,28 @@ class SettingsView extends GetView<SettingsController> {
               ),
               kHeight,
               _buildSettingTile(
+                  label: "Dark Mode",
+                  value: controller.darkMode,
+                  callback: controller.setDarkMode),
+              kHeight,
+              kHeight,
+              Text(
+                "Home",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(color: Colors.black),
+              ),
+              kHeight,
+              _buildSettingTile(
                   label: "Show Carousel",
                   value: controller.carousel,
-                  callback: controller.setCarousel)
+                  callback: controller.setCarousel),
+              kHeight,
+              _buildSettingTile(
+                  label: "Show News",
+                  value: controller.latestNews,
+                  callback: controller.setLatestNews),
             ]),
       ),
     );

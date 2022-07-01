@@ -2,6 +2,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
+import 'package:cui_timetable/app/modules/home/views/widgets/carousel_screen.dart';
+import 'package:cui_timetable/app/modules/settings/controllers/settings_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -155,8 +157,19 @@ class HomeBody extends GetView<HomeController> {
                             )
                           : const SizedBox(),
                     ),
-                    const HomeCarousel(),
-                    const HomeNews()
+                    Obx(
+                      () =>
+                          Get.find<SettingsController>().carousel.value == true
+                              ? const HomeCarousel()
+                              : const SizedBox(),
+                    ),
+                    Obx(
+                      () => Get.find<SettingsController>().latestNews.value ==
+                              true
+                          ? const HomeNews()
+                          : const SizedBox(),
+                    ),
+                    // const HomeNews()
                   ],
                 ),
               ),
@@ -204,31 +217,46 @@ class HomeCarousel extends GetView<HomeController> {
                       return Stack(
                         children: [
                           GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                // margin: EdgeInsets.symmetric(horizontal: 2.0),
-                                decoration: BoxDecoration(
-                                  // boxShadow: [
-                                  //   BoxShadow(color: Colors.black)
-                                  // ],
-                                  color: widgetColor,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(Constants.defaultRadius)),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(Constants.defaultRadius)),
-                                  child: CachedNetworkImage(
-                                    imageUrl: e["img"]!,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, string) {
-                                      return const SpinKitFadingCircle(
-                                        color: primaryColor,
-                                      );
-                                    },
+                            onTap: () {
+                              Get.to(
+                                () => const CarouselImageDetails(),
+                                arguments: [
+                                  'Image Detail',
+                                  e["img"]!,
+                                  e["title"]!
+                                ],
+                              );
+                              // duration: const Duration(microseconds: 0));
+                            },
+                            child: Hero(
+                              tag: 'img',
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  // margin: EdgeInsets.symmetric(horizontal: 2.0),
+                                  decoration: BoxDecoration(
+                                    // boxShadow: [
+                                    //   BoxShadow(color: Colors.black)
+                                    // ],
+                                    color: widgetColor,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            Constants.defaultRadius)),
                                   ),
-                                )),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            Constants.defaultRadius)),
+                                    child: CachedNetworkImage(
+                                      imageUrl: e["img"]!,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, string) {
+                                        return const SpinKitFadingCircle(
+                                          color: primaryColor,
+                                        );
+                                      },
+                                    ),
+                                  )),
+                            ),
                           ),
                           e["title"]!.isEmpty
                               ? const SizedBox()

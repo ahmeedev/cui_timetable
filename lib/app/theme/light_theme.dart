@@ -5,7 +5,7 @@ import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/theme/text_theme.dart';
 
-ThemeData lightTheme(context, {required isLarge}) {
+ThemeData lightTheme({required isLarge}) {
   final base = ThemeData.light();
   return ThemeData(
       brightness: Brightness.light,
@@ -17,6 +17,7 @@ ThemeData lightTheme(context, {required isLarge}) {
       // drawerTheme: DrawerThemeData(backgroundColor: Colors.red),
       fontFamily: 'Lato',
       appBarTheme: const AppBarTheme(
+        centerTitle: true,
         color: primaryColor,
         systemOverlayStyle:
             SystemUiOverlayStyle(statusBarColor: Color(0xff173962)),

@@ -16,6 +16,7 @@ import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 class HomeController extends GetxController {
   final internet = true.obs;
   final newUpdate = false.obs;
+  var isLarge = true;
   @override
   Future<void> onInit() async {
     super.onInit();

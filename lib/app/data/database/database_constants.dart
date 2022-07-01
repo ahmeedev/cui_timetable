@@ -52,5 +52,8 @@ class DBHistory {
 }
 
 class DBSettings {
+  static const darkMode = 'darkMode';
+
   static const carousel = 'carousel';
+  static const latestNews = 'latestNews';
 }
