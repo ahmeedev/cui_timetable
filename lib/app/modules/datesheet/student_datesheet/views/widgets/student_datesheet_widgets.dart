@@ -2,7 +2,6 @@ import 'package:cui_timetable/app/modules/datesheet/student_datesheet/controller
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 class DayTile extends GetView<StudentDatesheetController> {
@@ -66,11 +65,7 @@ class DayTile extends GetView<StudentDatesheetController> {
                     borderRadius:
                         BorderRadius.circular(Constants.defaultRadius),
                     onTap: () {
-                      // callback();
-                      // callback();
-
                       controller.getPapers(date: date);
-                      // stateVariable = true;
                       controller.giveValue(date: date);
                     },
                     child: Column(

@@ -9,9 +9,15 @@ import 'package:get/get.dart';
 import '../controllers/teacher_datesheet_controller.dart';
 
 class TeacherDatesheetView extends GetView<TeacherDatesheetController> {
-  final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-  final keys = ['10000', '1000', '100', '10', '1'];
-
+  final days = {
+    "monday": "Mon",
+    "tuesday": "Tue",
+    "wednesday": "Wed",
+    "thursday": "Thu",
+    "friday": "Fri",
+    "saturday": "Sat",
+    "sunday": "Sun"
+  };
   TeacherDatesheetView({Key? key}) : super(key: key);
 
   @override
@@ -37,10 +43,14 @@ class TeacherDatesheetView extends GetView<TeacherDatesheetController> {
                       : Row(children: [
                           ...List.generate(5, (index) {
                             return DayTile(
-                              day: days[index].toString(),
-                              dayKey: keys[index].toString(),
+                              day: days[controller.datesForDayList[index][0]
+                                  .toString()
+                                  .toLowerCase()]!,
+                              index: index.toString(), //! index as key
+                              date: controller.datesForDayList[index][1],
                               callback: controller.allFalse,
-                              obs: controller.giveValue(index),
+                              stateVariable: controller.dayTilesSelection[
+                                  controller.datesForDayList[index][1]]!,
                             );
                           })
                         ])))),
@@ -55,7 +65,7 @@ class TeacherDatesheetView extends GetView<TeacherDatesheetController> {
                   child: Obx(() => FractionallySizedBox(
                         widthFactor: 1,
                         heightFactor: 1,
-                        child: controller.daywiseLectures.isEmpty
+                        child: controller.currentDayPapers.isEmpty
                             ? Center(
                                 child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -84,22 +94,23 @@ class TeacherDatesheetView extends GetView<TeacherDatesheetController> {
                               ))
                             : ListView.builder(
                                 physics: const BouncingScrollPhysics(),
-                                itemCount: controller.daywiseLectures.length,
+                                itemCount: controller.currentDayPapers.length,
                                 itemBuilder: (context, index) {
                                   // return Card(
                                   //   child: Text('hllleljasdlf'),
                                   // );
                                   return LectureDetailsTile(
                                     date:
-                                        "${controller.daywiseLectures[index][1]}-${controller.daywiseLectures[index][2]}-${controller.daywiseLectures[index][3]}",
-                                    time: controller.daywiseLectures[index][4]
+                                        "${controller.currentDayPapers[index][3]}",
+                                    time: controller.currentDayPapers[index][4]
+                                        .toString()
+                                        .replaceAll("00", ":00"),
+                                    room: controller.currentDayPapers[index][5]
                                         .toString(),
-                                    room: controller.daywiseLectures[index][5]
-                                        .toString(),
-                                    subject: controller.daywiseLectures[index]
+                                    subject: controller.currentDayPapers[index]
                                             [7]
                                         .toString(),
-                                    sections: controller.daywiseLectures[index]
+                                    sections: controller.currentDayPapers[index]
                                             [6]
                                         .toString()
                                         .replaceAll("#", ", "),

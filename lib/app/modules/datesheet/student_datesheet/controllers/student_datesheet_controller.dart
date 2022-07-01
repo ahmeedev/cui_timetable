@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -15,10 +17,10 @@ class StudentDatesheetController extends GetxController {
   var lecturesCount = <String, int>{}.obs;
 
   late Box datesheetDB;
+
   @override
   Future<void> onInit() async {
     super.onInit();
-
     datesheetDB = await Hive.openBox(DBNames.datesheetStudentsDB);
     await openBox();
   }

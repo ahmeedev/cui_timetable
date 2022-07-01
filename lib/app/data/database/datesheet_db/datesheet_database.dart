@@ -114,7 +114,7 @@ class DatesheetDatabase {
       final purified = [];
       for (var element in result) {
         purified.add([
-          element[0], // 0. day
+          element[0], // 0. day in english
           element[1], // 1. day
           element[2], // 2. month
           element[4], // 3. complete date
