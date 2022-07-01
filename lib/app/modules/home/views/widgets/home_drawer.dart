@@ -114,6 +114,11 @@ class ButtonList extends StatelessWidget {
               title: 'Feedback / Report an Issue',
               onTap: () {}),
           buildButton(context,
+              icon: const AssetImage('assets/drawer/settings.png'),
+              title: 'Settings', onTap: () {
+            Get.toNamed(Routes.SETTINGS);
+          }),
+          buildButton(context,
               icon: const AssetImage('assets/drawer/sign_in.png'),
               title: 'Sign In',
               onTap: () {}),
@@ -150,11 +155,17 @@ class ButtonList extends StatelessWidget {
             // contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
             // visualDensity: VisualDensity(horizontal: 1, vertical: 0),
             // onTap: onTap,
-            leading: ImageIcon(
-              icon,
-              color: primaryColor,
-              size: Constants.iconSize,
-            ),
+            leading: icon is AssetImage
+                ? ImageIcon(
+                    icon,
+                    color: primaryColor,
+                    size: Constants.iconSize,
+                  )
+                : Icon(
+                    icon,
+                    color: primaryColor,
+                    size: Constants.iconSize,
+                  ),
             title: Text(title, style: Theme.of(context).textTheme.titleSmall)),
       ),
     );

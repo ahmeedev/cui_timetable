@@ -19,6 +19,7 @@ abstract class Routes {
   static const STUDENT_DATESHEET = _Paths.DATESHEET + _Paths.STUDENT_DATESHEET;
   static const TEACHER_DATESHEET = _Paths.DATESHEET + _Paths.TEACHER_DATESHEET;
   static const REMAINDER = _Paths.REMAINDER;
+  static const SETTINGS = _Paths.SETTINGS;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const STUDENT_DATESHEET = '/student-datesheet';
   static const TEACHER_DATESHEET = '/teacher-datesheet';
   static const REMAINDER = '/remainder';
+  static const SETTINGS = '/settings';
 }

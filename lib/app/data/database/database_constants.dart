@@ -10,6 +10,8 @@ class DBNames {
   static const datesheetTeachersDB = "datesheetTeachersDB";
 
   static const history = "history";
+
+  static const settings = "settings";
 }
 
 class DBInfo {
@@ -47,4 +49,8 @@ class DBFreerooms {
 class DBHistory {
   static const studentTimetable = 'studentTimetable';
   static const teacherTimetable = 'teacherTimetable';
+}
+
+class DBSettings {
+  static const carousel = 'carousel';
 }

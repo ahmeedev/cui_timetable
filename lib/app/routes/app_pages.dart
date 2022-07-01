@@ -14,6 +14,8 @@ import '../modules/portals/bindings/portals_binding.dart';
 import '../modules/portals/views/portals_view.dart';
 import '../modules/remainder/bindings/remainder_binding.dart';
 import '../modules/remainder/views/remainder_view.dart';
+import '../modules/settings/bindings/settings_binding.dart';
+import '../modules/settings/views/settings_view.dart';
 import '../modules/sync/bindings/sync_binding.dart';
 import '../modules/sync/views/sync_view.dart';
 import '../modules/timetable/bindings/timetable_binding.dart';
@@ -111,6 +113,11 @@ class AppPages {
       name: _Paths.REMAINDER,
       page: () => const RemainderView(),
       binding: RemainderBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => SettingsView(),
+      binding: SettingsBinding(),
     ),
   ];
 }
