@@ -1,33 +1,18 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-
-import 'package:cui_timetable/app/data/database/database_constants.dart';
 
 class StudentDatesheetController extends GetxController {
   var isLoading = true.obs;
   var daytilesLength = 0;
-  var monToThursSlots = [];
-  var friSlots = [];
   var currentTimeSlots = [];
   var datesForDayList = []; // [date,day]
 
-  var mon = true.obs; //! mon is selected by default
-  var tue = false.obs;
-  var wed = false.obs;
-  var thu = false.obs;
-  var fri = false.obs;
+  var dayTilesSelection = <String, bool>{}.obs;
 
-  var daywiseLectures = [].obs; //! Current day lectures.
-
-  var papers = [];
-
-  var monLectures = [];
-  var tueLectures = [];
-  var wedLectures = [];
-  var thuLectures = [];
-  var friLectures = [];
-  var lecturesCount = <String, String>{}.obs;
+  var papers = <String, List<dynamic>>{}; //! Current day lectures.
+  var currentDayPapers = [].obs;
+  var lecturesCount = <String, int>{}.obs;
 
   late Box datesheetDB;
   @override
@@ -35,35 +20,19 @@ class StudentDatesheetController extends GetxController {
     super.onInit();
 
     datesheetDB = await Hive.openBox(DBNames.datesheetStudentsDB);
-
-    // list.forEach((element) {
-    //   print(element.runtimeType);
-    // });
     await openBox();
   }
 
 // Methods for Controlling DayTile.
-
   void allFalse() {
-    mon.value = false;
-    tue.value = false;
-    wed.value = false;
-    thu.value = false;
-    fri.value = false;
+    dayTilesSelection.forEach((date, value) {
+      dayTilesSelection[date] = false;
+    });
   }
 
-  giveValue(index) {
-    if (index == 0) {
-      return mon;
-    } else if (index == 1) {
-      return tue;
-    } else if (index == 2) {
-      return wed;
-    } else if (index == 3) {
-      return thu;
-    } else {
-      return fri;
-    }
+  giveValue({required date}) {
+    allFalse();
+    dayTilesSelection[date] = true;
   }
 
   // Methods for controlling LectureTile
@@ -71,89 +40,39 @@ class StudentDatesheetController extends GetxController {
     List list = await datesheetDB.get(Get.arguments[0].toString());
     daytilesLength = list.length; //! size w.r.t papers
 
-    // debugPrint(list.toString());
-
     //* Fetching dates from the list //
     for (var item in list) {
-      datesForDayList
-          .add([item[0], item[1].toString() + "-" + item[2].toString()]);
+      datesForDayList.add([item[0], "${item[1]}-${item[2]}"]);
     }
 
-    // debugPrint(datesForDayList.toString());
+    //* Setting all the values to false for daytile filled state
+    for (var element in datesForDayList) {
+      dayTilesSelection[element[1]] = false;
+    }
 
-    // await _setLectures(list: list, key: "10000");
-    // await _setLectures(list: list, key: "1000");
-    // await _setLectures(list: list, key: "100");
-    // await _setLectures(list: list, key: "10");
-    // await _setLectures(list: list, key: "1");
+    //? lets put the key for the papers as index, bcz they are not fixed
+    for (var index = 0; index < list.length; index++) {
+      await _setLectures(
+          list: list, key: "$index", date: datesForDayList[index][1]);
+    }
 
-    //? lets put the key for the lectures as index, bcz they are not fixed
-    await _setLectures(list: list, key: "0");
+    getPapers(date: datesForDayList[0][1]); //! Get papers for first slot
+    giveValue(date: datesForDayList[0][1]); //! set the first daytile selected
 
-    daywiseLectures.value = monLectures; //* For default purpose
-
-    // yield lecturesCount;
     isLoading.value = false;
   }
 
-  _setLectures({required list, required String key}) {
-    if (key == "0") {
-      monLectures = list
-          .where((element) =>
-              element[1].toString() + "-" + element[2].toString() == "28-6")
-          .toList();
-      lecturesCount[key] = monLectures.length.toString();
-    }
+  _setLectures({required list, required String date, required String key}) {
+    List result = list.where((element) {
+      final value = "${element[1]}-${element[2]}";
+      return value.contains(date);
+    }).toList();
 
-    if (key == "10000") {
-      monLectures = list
-          .where(
-              (element) => element[0].toString().toLowerCase().contains("mon"))
-          .toList();
-      // monLectures.sort((a, b) => a[2].compareTo(b[2]));
-      lecturesCount[key] = monLectures.length.toString();
-    } else if (key == "1000") {
-      tueLectures = list
-          .where(
-              (element) => element[0].toString().toLowerCase().contains("tue"))
-          .toList();
-      // tueLectures.sort((a, b) => a[2].compareTo(b[2]));
-      lecturesCount[key] = tueLectures.length.toString();
-    } else if (key == "100") {
-      wedLectures = list
-          .where(
-              (element) => element[0].toString().toLowerCase().contains("wed"))
-          .toList();
-      // wedLectures.sort((a, b) => a[2].compareTo(b[2]));
-      lecturesCount[key] = wedLectures.length.toString();
-    } else if (key == "10") {
-      thuLectures = list
-          .where((element) =>
-              element[0].toString().toLowerCase().contains("thurs"))
-          .toList();
-      // t    list.where((element) => element[0].toString().toLowerCase().contains("mon")).toList();
-      lecturesCount[key] = thuLectures.length.toString();
-    } else if (key == "1") {
-      friLectures = list
-          .where(
-              (element) => element[0].toString().toLowerCase().contains("fri"))
-          .toList();
-      // friLectures.sort((a, b) => a[2].compareTo(b[2]));
-      lecturesCount[key] = friLectures.length.toString();
-    }
+    papers[date] = result;
+    lecturesCount[date] = result.length;
   }
 
-  void getLectures({required String key}) {
-    if (key == "10000") {
-      daywiseLectures.value = monLectures;
-    } else if (key == "1000") {
-      daywiseLectures.value = tueLectures;
-    } else if (key == "100") {
-      daywiseLectures.value = wedLectures;
-    } else if (key == "10") {
-      daywiseLectures.value = thuLectures;
-    } else if (key == "1") {
-      daywiseLectures.value = friLectures;
-    }
+  getPapers({required String date}) {
+    currentDayPapers.value = papers[date]!;
   }
 }

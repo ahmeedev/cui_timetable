@@ -7,10 +7,11 @@ import 'package:get/get.dart';
 
 class DayTile extends GetView<StudentDatesheetController> {
   late final String day;
-  late final String dayKey;
+  late final String index;
+  late final String date;
   late final Function callback;
 
-  late final Rx<bool> obs;
+  late final stateVariable;
   final colorList = [
     Colors.purple,
     Colors.amber,
@@ -31,9 +32,10 @@ class DayTile extends GetView<StudentDatesheetController> {
 
   DayTile({
     required this.day,
-    required this.dayKey,
+    required this.index,
+    required this.date,
     required this.callback,
-    required this.obs,
+    required this.stateVariable,
     Key? key,
   }) : super(key: key);
 
@@ -47,14 +49,14 @@ class DayTile extends GetView<StudentDatesheetController> {
           child: Obx(() => Card(
               color: widgetColor,
               shadowColor: shadowColor,
-              elevation: obs.value
+              elevation: stateVariable
                   ? Constants.defaultElevation
                   : Constants.defaultElevation / 2,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(Constants.defaultRadius)),
               child: Container(
                 decoration: BoxDecoration(
-                    color: obs.value ? selectionColor : widgetColor,
+                    color: stateVariable ? selectionColor : widgetColor,
                     borderRadius:
                         BorderRadius.circular(Constants.defaultRadius)),
                 child: Material(
@@ -64,67 +66,58 @@ class DayTile extends GetView<StudentDatesheetController> {
                     borderRadius:
                         BorderRadius.circular(Constants.defaultRadius),
                     onTap: () {
-                      callback();
-                      if (dayKey == "1") {
-                        controller.currentTimeSlots = controller.friSlots;
-                      } else {
-                        controller.currentTimeSlots =
-                            controller.monToThursSlots;
-                      }
-                      controller.getLectures(key: dayKey);
-                      obs.value = true;
+                      // callback();
+                      // callback();
+
+                      controller.getPapers(date: date);
+                      // stateVariable = true;
+                      controller.giveValue(date: date);
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(day,
                             style: Theme.of(context).textTheme.titleMedium),
-                        controller.lecturesCount[dayKey] == "null"
-                            ? const SpinKitFadingCircle(
-                                color: primaryColor,
-                              )
-                            : Text(
-                                controller.datesForDayList[int.parse(dayKey)][1]
-                                    .toString(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(fontWeight: FontWeight.normal),
-                              ),
-                        int.parse(controller.lecturesCount[dayKey.toString()]
-                                    .toString()) ==
-                                0
-                            ? Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: Constants.defaultPadding * 3),
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  width: double.infinity,
-                                  height: 5,
-                                  decoration: const BoxDecoration(
-                                      gradient: LinearGradient(
-                                          colors: successGradient)),
-                                ),
-                              )
-                            : Wrap(
-                                alignment: WrapAlignment.center,
-                                children: [
-                                  ...List.generate(
-                                      int.parse(controller.lecturesCount[dayKey]
-                                          .toString()),
-                                      (index) => Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 1),
-                                            child: Container(
-                                              width: 6,
-                                              height: 6,
-                                              decoration: BoxDecoration(
-                                                  color: colorList[index],
-                                                  shape: BoxShape.circle),
-                                            ),
-                                          ))
-                                ],
-                              ),
+                        Text(
+                          controller.datesForDayList[int.parse(index)][1]
+                              .toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(fontWeight: FontWeight.normal),
+                        ),
+                        // controller.lecturesCount.isEmpty
+                        //     ? Padding(
+                        //         padding: EdgeInsets.symmetric(
+                        //             horizontal: Constants.defaultPadding * 3),
+                        //         child: Container(
+                        //           alignment: Alignment.center,
+                        //           width: double.infinity,
+                        //           height: 5,
+                        //           decoration: const BoxDecoration(
+                        //               gradient: LinearGradient(
+                        //                   colors: successGradient)),
+                        //         ),
+                        //       )
+                        //     :
+                        Wrap(
+                          alignment: WrapAlignment.center,
+                          children: [
+                            ...List.generate(
+                                controller.lecturesCount[date]!,
+                                (index) => Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 1),
+                                      child: Container(
+                                        width: 6,
+                                        height: 6,
+                                        decoration: BoxDecoration(
+                                            color: colorList[index],
+                                            shape: BoxShape.circle),
+                                      ),
+                                    ))
+                          ],
+                        ),
                       ],
                     ),
                   ),

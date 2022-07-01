@@ -50,9 +50,11 @@ class StudentDatesheetView extends GetView<StudentDatesheetController> {
                               day: days[controller.datesForDayList[index][0]
                                   .toString()
                                   .toLowerCase()]!,
-                              dayKey: index.toString(), //! index as key
+                              index: index.toString(), //! index as key
+                              date: controller.datesForDayList[index][1],
                               callback: controller.allFalse,
-                              obs: controller.giveValue(index),
+                              stateVariable: controller.dayTilesSelection[
+                                  controller.datesForDayList[index][1]]!,
                             );
                           })
                         ])))),
@@ -67,7 +69,7 @@ class StudentDatesheetView extends GetView<StudentDatesheetController> {
                   child: Obx(() => FractionallySizedBox(
                         widthFactor: 1,
                         heightFactor: 1,
-                        child: controller.daywiseLectures.isEmpty
+                        child: controller.currentDayPapers.isEmpty
                             ? Center(
                                 child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -96,21 +98,28 @@ class StudentDatesheetView extends GetView<StudentDatesheetController> {
                               ))
                             : ListView.builder(
                                 physics: const BouncingScrollPhysics(),
-                                itemCount: controller.daywiseLectures.length,
+                                itemCount: controller.currentDayPapers.length,
                                 itemBuilder: (context, index) {
-                                  // return Card(
-                                  //   child: Text('hllleljasdlf'),
-                                  // );
                                   return LectureDetailsTile(
                                       date:
-                                          "${controller.daywiseLectures[index][3]}",
-                                      subject: controller.daywiseLectures[index]
-                                              [6]
+                                          "${controller.currentDayPapers[index][3]}",
+                                      subject: controller
+                                          .currentDayPapers[index][6]
                                           .toString(),
-                                      room: controller.daywiseLectures[index][5]
+                                      room: controller.currentDayPapers[index]
+                                              [5]
                                           .toString(),
-                                      time: controller.daywiseLectures[index][4]
+                                      time: controller.currentDayPapers[index]
+                                              [4]
                                           .toString());
+                                  // return LectureDetailsTile(
+                                  //     date: "${controller.papers[index][2]}",
+                                  //     subject: controller.papers[index][2]
+                                  //         .toString(),
+                                  //     room: controller.papers[index][2]
+                                  //         .toString(),
+                                  //     time: controller.papers[index][2]
+                                  //         .toString());
                                 },
                               ),
                       )),
