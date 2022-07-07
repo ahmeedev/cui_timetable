@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -17,6 +18,8 @@ class HomeController extends GetxController {
   final internet = true.obs;
   final newUpdate = false.obs;
   var isLarge = true;
+  final ValueNotifier<ThemeMode> notifier = ValueNotifier(ThemeMode.light);
+
   @override
   Future<void> onInit() async {
     super.onInit();

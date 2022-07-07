@@ -41,7 +41,10 @@ class TeacherDatesheetView extends GetView<TeacherDatesheetController> {
                           color: primaryColor,
                         )
                       : Row(children: [
-                          ...List.generate(5, (index) {
+                          ...List.generate(controller.daytilesLength, (index) {
+                            debugPrint(days[controller.datesForDayList[index][0]
+                                .toString()
+                                .toLowerCase()]!);
                             return DayTile(
                               day: days[controller.datesForDayList[index][0]
                                   .toString()

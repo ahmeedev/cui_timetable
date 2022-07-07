@@ -20,7 +20,7 @@ class SettingsController extends GetxController {
   }
 
   void _gettingValues() {
-    darkMode.value = box.get(DBSettings.darkMode, defaultValue: true);
+    darkMode.value = box.get(DBSettings.darkMode, defaultValue: false);
 
     carousel.value = box.get(DBSettings.carousel, defaultValue: true);
     latestNews.value = box.get(DBSettings.latestNews, defaultValue: true);
@@ -29,9 +29,12 @@ class SettingsController extends GetxController {
   void setDarkMode(value) {
     if (value) {
       box.put(DBSettings.darkMode, true);
+
       Get.changeTheme(ThemeData.dark());
+      Get.find<HomeController>().notifier.value = ThemeMode.dark;
     } else {
       box.put(DBSettings.darkMode, false);
+
       Get.changeTheme(lightTheme(isLarge: Get.find<HomeController>().isLarge));
     }
     darkMode.value = value;

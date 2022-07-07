@@ -21,20 +21,20 @@ class SettingsView extends GetView<SettingsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Preferences",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(color: Colors.black),
-              ),
-              kHeight,
-              _buildSettingTile(
-                  label: "Dark Mode",
-                  value: controller.darkMode,
-                  callback: controller.setDarkMode),
-              kHeight,
-              kHeight,
+              // Text(
+              //   "Preferences",
+              //   style: Theme.of(context)
+              //       .textTheme
+              //       .labelLarge!
+              //       .copyWith(color: Colors.black),
+              // ),
+              // kHeight,
+              // _buildSettingTile(
+              //     label: "Dark Mode",
+              //     value: controller.darkMode,
+              //     callback: controller.setDarkMode),
+              // kHeight,
+              // kHeight,
               Text(
                 "Home",
                 style: Theme.of(context)
