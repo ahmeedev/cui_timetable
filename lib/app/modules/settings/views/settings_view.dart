@@ -12,7 +12,7 @@ class SettingsView extends GetView<SettingsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
         centerTitle: true,
       ),
       body: Padding(
@@ -35,6 +35,35 @@ class SettingsView extends GetView<SettingsController> {
               //     callback: controller.setDarkMode),
               // kHeight,
               // kHeight,
+              Text(
+                "General",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(color: Colors.black),
+              ),
+              kHeight,
+              Card(
+                margin: EdgeInsets.zero,
+                child: ListTile(
+                  title: Row(
+                    children: [
+                      const Text("Search By"),
+                      const Spacer(),
+                      Container(color: primaryColor, child: const Text('List')),
+                      kWidth,
+                      Container(
+                          color: primaryColor, child: const Text('Section')),
+                    ],
+                  ),
+                ),
+              ),
+              // _buildSettingTile(
+              //     label: "Search By",
+              //     value: controller.darkMode,
+              //     callback: controller.setDarkMode),
+              kHeight,
+              kHeight,
               Text(
                 "Home",
                 style: Theme.of(context)
