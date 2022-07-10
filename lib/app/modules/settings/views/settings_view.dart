@@ -46,37 +46,39 @@ class SettingsView extends GetView<SettingsController> {
               Card(
                 margin: EdgeInsets.zero,
                 child: ListTile(
-                  title: Obx(() => Row(
-                        children: [
-                          const Text("Search By"),
-                          const Spacer(),
-                          buildButtonList(
-                            title: '   List   ',
-                            obs: controller.searchBy["list"],
-                          ),
-                          buildButtonList(
-                              title: 'Section',
-                              obs: controller.searchBy["section"],
-                              last: true),
-                          // kWidth,
-                          // Container(
-                          //     decoration: BoxDecoration(
-                          //         color: textFieldColor,
-                          //         borderRadius: BorderRadius.only(
-                          //           topRight:
-                          //               Radius.circular(Constants.defaultRadius),
-                          //           bottomRight:
-                          //               Radius.circular(Constants.defaultRadius),
-                          //         )),
-                          //     child: Padding(
-                          //       padding:
-                          //           EdgeInsets.all(Constants.defaultPadding - 2),
-                          //       child: const Text('Section'),
-                          //     )),
-                        ],
-                      )),
-                ),
+                    title: Obx(() => Row(
+                          children: [
+                            const Text("Search By"),
+                            const Spacer(),
+                            buildButtonList(
+                              context: context,
+                              title: '   List   ',
+                              obs: controller.searchBy["list"],
+                            ),
+                            buildButtonList(
+                                context: context,
+                                title: 'Section',
+                                obs: controller.searchBy["section"],
+                                last: true),
+                            // kWidth,
+                            // Container(
+                            //     decoration: BoxDecoration(
+                            //         color: textFieldColor,
+                            //         borderRadius: BorderRadius.only(
+                            //           topRight:
+                            //               Radius.circular(Constants.defaultRadius),
+                            //           bottomRight:
+                            //               Radius.circular(Constants.defaultRadius),
+                            //         )),
+                            //     child: Padding(
+                            //       padding:
+                            //           EdgeInsets.all(Constants.defaultPadding - 2),
+                            //       child: const Text('Section'),
+                            //     )),
+                          ],
+                        ))),
               ),
+
               // _buildSettingTile(
               //     label: "Search By",
               //     value: controller.darkMode,
@@ -105,7 +107,8 @@ class SettingsView extends GetView<SettingsController> {
     );
   }
 
-  InkWell buildButtonList({required String title, required obs, last = false}) {
+  InkWell buildButtonList(
+      {required context, required String title, required obs, last = false}) {
     return InkWell(
       onTap: () => controller.setSearchBy(),
       child: Container(
@@ -121,8 +124,16 @@ class SettingsView extends GetView<SettingsController> {
                       bottomLeft: Radius.circular(Constants.defaultRadius),
                     )),
           child: Padding(
-            padding: EdgeInsets.all(Constants.defaultPadding - 2),
-            child: Text(title),
+            padding: EdgeInsets.all(obs == true
+                ? Constants.defaultPadding
+                : Constants.defaultPadding - 1),
+            child: Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge!
+                  .copyWith(color: obs == true ? Colors.white : Colors.black),
+            ),
           )),
     );
   }

@@ -12,8 +12,15 @@ class StudentUIController extends GetxController {
   var listVisible = true.obs;
   var dialogHistoryList = [].obs;
 
-  var test = "One".obs;
   var searchBy = {}.obs;
+  var yearTokens = [];
+  var overallTokens = [];
+  var sectionTokens = [];
+  var sectionVariantsTokens = [];
+
+  var yearTokenSelected = ''.obs;
+  var sectionTokenSelected = ''.obs;
+  var sectionVariantsTokenSelected = ''.obs;
 
   @override
   Future<void> onInit() async {
@@ -34,6 +41,15 @@ class StudentUIController extends GetxController {
 
     var box2 = await Hive.openBox(DBNames.settings);
     searchBy.value = await box2.get(DBSettings.searchBy);
+    if (searchBy["list"] == true) {
+      final box3 = await Hive.openBox(DBNames.general);
+      yearTokens = await box3.get(DBGeneral.yearTokens);
+      overallTokens = await box3.get(DBGeneral.overallTokens);
+
+      yearTokenSelected.value = yearTokens[0];
+      changeSectionTokens(yearTokens[0]);
+      changeSectionVariantsTokens(sectionTokenSelected.value);
+    }
 
     super.onInit();
   }
@@ -42,5 +58,33 @@ class StudentUIController extends GetxController {
     final box = await Hive.openBox(DBNames.info);
     final list = box.get(DBInfo.sections);
     sections = list ?? [];
+  }
+
+  void changeSectionTokens(String value) {
+    sectionTokens.clear();
+    sectionVariantsTokens.clear();
+    final sections = <String>{};
+    for (var element in overallTokens) {
+      if (element[0].toString().contains(value)) {
+        sections.add(element[1]);
+      }
+    }
+
+    sectionTokens = sections.toList();
+    sectionTokenSelected.value = sectionTokens[0];
+
+    changeSectionVariantsTokens(sectionTokenSelected.value);
+  }
+
+  void changeSectionVariantsTokens(String value) {
+    sectionVariantsTokens.clear();
+    final sectionsVariants = <String>{};
+    for (var element in overallTokens) {
+      if (element[0] == yearTokenSelected.value && element[1] == value) {
+        sectionsVariants.add(element[2]);
+      }
+    }
+    sectionVariantsTokens = sectionsVariants.toList();
+    sectionVariantsTokenSelected.value = sectionVariantsTokens[0];
   }
 }

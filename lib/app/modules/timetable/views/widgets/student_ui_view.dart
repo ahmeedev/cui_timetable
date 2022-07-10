@@ -110,177 +110,154 @@ class StudentUIView extends GetView<StudentUIController> {
             SizedBox(
               height: Constants.defaultPadding,
             ),
-            TextFormField(
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontWeight: FontWeight.bold),
-                controller: controller.textController,
-                onChanged: (value) {
-                  controller.filteredList.value = controller.sections
-                      .where((element) => element
-                          .toString()
-                          .toLowerCase()
-                          .contains(value.toLowerCase()))
-                      .toList();
+            Obx(() => controller.searchBy["section"] == true
+                ? TextFormField(
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                    controller: controller.textController,
+                    onChanged: (value) {
+                      controller.filteredList.value = controller.sections
+                          .where((element) => element
+                              .toString()
+                              .toLowerCase()
+                              .contains(value.toLowerCase()))
+                          .toList();
 
-                  if (value.isEmpty || value.isEmpty) {
-                    controller.listVisible.value = false;
-                    controller.filteredList.clear();
-                  } else if (controller.filteredList.contains(value) &&
-                      controller.filteredList.length == 1) {
-                    controller.listVisible.value = false;
-                  } else {
-                    controller.listVisible.value = true;
-                  }
-                },
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        controller.textController.clear();
-                        controller.filteredList.value = [];
-                      },
-                      icon: const Icon(Icons.cancel, color: primaryColor)),
-                  fillColor: textFieldColor,
-                  filled: true,
-                  border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(Constants.defaultRadius),
-                      borderSide: const BorderSide(color: primaryColor)),
-                )),
-            // Obx(() => Row(
-            //       children: [
-            //         Flexible(
-            //           child: Container(
-            //             padding: EdgeInsets.symmetric(
-            //                 horizontal: Constants.defaultPadding,
-            //                 vertical: Constants.defaultPadding / 2),
-            //             decoration: BoxDecoration(
-            //                 color: textFieldColor,
-            //                 borderRadius:
-            //                     BorderRadius.circular(Constants.defaultRadius)),
-            //             child: DropdownButton<dynamic>(
-            //               focusColor: textFieldColor,
-            //               isExpanded: true,
-            //               borderRadius: BorderRadius.all(
-            //                   Radius.circular(Constants.defaultRadius)),
-            //               dropdownColor: widgetColor,
-            //               style: Theme.of(context).textTheme.titleMedium,
-            //               underline: Container(
-            //                 height: 2,
-            //                 color: primaryColor,
-            //               ),
-            //               value: controller.test.value,
-            //               items: [
-            //                 "One",
-            //                 "Two",
-            //                 "Three",
-            //                 "Four",
-            //                 "Five",
-            //                 "Six",
-            //                 "Seven",
-            //                 "Eight",
-            //                 "Nine",
-            //                 "Ten",
-            //               ]
-            //                   .map((e) =>
-            //                       DropdownMenuItem(value: e, child: Text(e)))
-            //                   .toList(),
-            //               onChanged: (_) {
-            //                 controller.test.value = _;
-            //               },
-            //             ),
-            //           ),
-            //         ),
-            //         kWidth,
-            //         Flexible(
-            //           child: Container(
-            //             padding: EdgeInsets.symmetric(
-            //                 horizontal: Constants.defaultPadding,
-            //                 vertical: Constants.defaultPadding / 2),
-            //             decoration: BoxDecoration(
-            //                 color: textFieldColor,
-            //                 borderRadius:
-            //                     BorderRadius.circular(Constants.defaultRadius)),
-            //             child: DropdownButton<dynamic>(
-            //               focusColor: textFieldColor,
-            //               isExpanded: true,
-            //               borderRadius: BorderRadius.all(
-            //                   Radius.circular(Constants.defaultRadius)),
-            //               dropdownColor: widgetColor,
-            //               style: Theme.of(context).textTheme.titleMedium,
-            //               underline: Container(
-            //                 height: 2,
-            //                 color: primaryColor,
-            //               ),
-            //               value: controller.test.value,
-            //               items: [
-            //                 "One",
-            //                 "Two",
-            //                 "Three",
-            //                 "Four",
-            //                 "Five",
-            //                 "Six",
-            //                 "Seven",
-            //                 "Eight",
-            //                 "Nine",
-            //                 "Ten",
-            //               ]
-            //                   .map((e) =>
-            //                       DropdownMenuItem(value: e, child: Text(e)))
-            //                   .toList(),
-            //               onChanged: (_) {
-            //                 controller.test.value = _;
-            //               },
-            //             ),
-            //           ),
-            //         ),
-            //         kWidth,
-            //         Flexible(
-            //           child: Container(
-            //             padding: EdgeInsets.symmetric(
-            //                 horizontal: Constants.defaultPadding,
-            //                 vertical: Constants.defaultPadding / 2),
-            //             decoration: BoxDecoration(
-            //                 color: textFieldColor,
-            //                 borderRadius:
-            //                     BorderRadius.circular(Constants.defaultRadius)),
-            //             child: DropdownButton<dynamic>(
-            //               focusColor: textFieldColor,
-            //               isExpanded: true,
-            //               borderRadius: BorderRadius.all(
-            //                   Radius.circular(Constants.defaultRadius)),
-            //               dropdownColor: widgetColor,
-            //               style: Theme.of(context).textTheme.titleMedium,
-            //               underline: Container(
-            //                 height: 2,
-            //                 color: primaryColor,
-            //               ),
-            //               value: controller.test.value,
-            //               items: [
-            //                 "One",
-            //                 "Two",
-            //                 "Three",
-            //                 "Four",
-            //                 "Five",
-            //                 "Six",
-            //                 "Seven",
-            //                 "Eight",
-            //                 "Nine",
-            //                 "Ten",
-            //               ]
-            //                   .map((e) =>
-            //                       DropdownMenuItem(value: e, child: Text(e)))
-            //                   .toList(),
-            //               onChanged: (_) {
-            //                 controller.test.value = _;
-            //               },
-            //             ),
-            //           ),
-            //         ),
-            //       ],
-            //     )),
+                      if (value.isEmpty || value.isEmpty) {
+                        controller.listVisible.value = false;
+                        controller.filteredList.clear();
+                      } else if (controller.filteredList.contains(value) &&
+                          controller.filteredList.length == 1) {
+                        controller.listVisible.value = false;
+                      } else {
+                        controller.listVisible.value = true;
+                      }
+                    },
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            controller.textController.clear();
+                            controller.filteredList.value = [];
+                          },
+                          icon: const Icon(Icons.cancel, color: primaryColor)),
+                      fillColor: textFieldColor,
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(Constants.defaultRadius),
+                          borderSide: const BorderSide(color: primaryColor)),
+                    ))
+                : Row(
+                    children: [
+                      Flexible(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Constants.defaultPadding,
+                              vertical: Constants.defaultPadding / 2),
+                          decoration: BoxDecoration(
+                              color: textFieldColor,
+                              borderRadius: BorderRadius.circular(
+                                  Constants.defaultRadius)),
+                          child: DropdownButton<dynamic>(
+                            focusColor: textFieldColor,
+                            isExpanded: true,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(Constants.defaultRadius)),
+                            dropdownColor: widgetColor,
+                            style: Theme.of(context).textTheme.titleMedium,
+                            underline: Container(
+                              height: 2,
+                              color: primaryColor,
+                            ),
+                            value: controller.yearTokenSelected.value,
+                            items: controller.yearTokens
+                                .map((e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text(
+                                      e,
+                                      // textAlign: TextAlign.center,
+                                    )))
+                                .toList(),
+                            onChanged: (_) {
+                              controller.yearTokenSelected.value = _;
+                              // debugPrint(_);
+                              controller.changeSectionTokens(_);
+                              // con
+                            },
+                          ),
+                        ),
+                      ),
+                      kWidth,
+                      Flexible(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Constants.defaultPadding,
+                              vertical: Constants.defaultPadding / 2),
+                          decoration: BoxDecoration(
+                              color: textFieldColor,
+                              borderRadius: BorderRadius.circular(
+                                  Constants.defaultRadius)),
+                          child: DropdownButton<dynamic>(
+                            focusColor: textFieldColor,
+                            isExpanded: true,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(Constants.defaultRadius)),
+                            dropdownColor: widgetColor,
+                            style: Theme.of(context).textTheme.titleMedium,
+                            underline: Container(
+                              height: 2,
+                              color: primaryColor,
+                            ),
+                            value: controller.sectionTokenSelected.value,
+                            items: controller.sectionTokens
+                                .map((e) =>
+                                    DropdownMenuItem(value: e, child: Text(e)))
+                                .toList(),
+                            onChanged: (value) {
+                              controller.sectionTokenSelected.value = value;
 
+                              controller.changeSectionVariantsTokens(value);
+                            },
+                          ),
+                        ),
+                      ),
+                      kWidth,
+                      Flexible(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Constants.defaultPadding,
+                              vertical: Constants.defaultPadding / 2),
+                          decoration: BoxDecoration(
+                              color: textFieldColor,
+                              borderRadius: BorderRadius.circular(
+                                  Constants.defaultRadius)),
+                          child: DropdownButton<dynamic>(
+                            focusColor: textFieldColor,
+                            isExpanded: true,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(Constants.defaultRadius)),
+                            dropdownColor: widgetColor,
+                            style: Theme.of(context).textTheme.titleMedium,
+                            underline: Container(
+                              height: 2,
+                              color: primaryColor,
+                            ),
+                            value:
+                                controller.sectionVariantsTokenSelected.value,
+                            items: controller.sectionVariantsTokens
+                                .map((e) =>
+                                    DropdownMenuItem(value: e, child: Text(e)))
+                                .toList(),
+                            onChanged: (_) {
+                              controller.sectionVariantsTokenSelected.value = _;
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
             SizedBox(
               height: Constants.defaultPadding / 2,
             ),
@@ -345,7 +322,14 @@ class StudentUIView extends GetView<StudentUIController> {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              final value = controller.textController.text.toString();
+              late final value;
+              if (controller.searchBy["section"] == true) {
+                value = controller.textController.text.toString();
+              } else {
+                value =
+                    "${controller.yearTokenSelected + "-"}${controller.sectionTokenSelected.value}-${controller.sectionVariantsTokenSelected.value}";
+              }
+
               if (controller.sections.contains(value)) {
                 // Storing the information for state persistency
                 final box1 = await Hive.openBox(DBNames.info);

@@ -71,15 +71,14 @@ class TimetableDatabase {
 
     // Hive.close();
     final yearTokens = [];
-    final sectionTokens = [];
-    final sectionVariantsTokens = [];
-    sections.forEach((element) {
-      // element = element.replaceAll("?", "-");
+    // final overallTokens = [];
 
+    final overall = [];
+    for (var element in sections) {
       final result = element.split("-");
       // debugPrint(result.toString());
       yearTokens.add(result[0]);
-      sectionTokens.add(result[1]);
+      // sectionTokens.add(result[1]);
       var value = "";
       for (var i = 2; i < result.length; i++) {
         value += result[i];
@@ -87,14 +86,20 @@ class TimetableDatabase {
           value += '-';
         }
       }
-      if (value.isNotEmpty) {
-        sectionVariantsTokens.add(value);
-      }
 
-      // print(sectionTokens);
-      // print(sectionVariantsTokens);
-    });
-    print(yearTokens.toSet());
+      overall.add([result[0], result[1], value]);
+    }
+    yearTokens.sort();
+    debugPrint(overall.toString());
+    // print(yearTokens.toSet());
+    final box = await Hive.openBox(DBNames.general);
+    await box.put(DBGeneral.yearTokens, yearTokens.toSet().toList());
+
+    await box.put(DBGeneral.overallTokens, overall.toSet().toList());
+    // await box.put(DBGeneral.sectionTokens, sectionTokens.toSet().toList());
+    // await box.put(DBGeneral.sectionVariantsTokens,
+    //     sectionVariantsTokens.toSet().toList());
+
     // print(sections);
     return Future<int>.value(1);
   }

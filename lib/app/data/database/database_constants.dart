@@ -1,4 +1,6 @@
 class DBNames {
+  static const general = "general";
+
   static const info = "info";
   static const timeSlots = "timeSlots";
 
@@ -12,6 +14,13 @@ class DBNames {
   static const history = "history";
 
   static const settings = "settings";
+}
+
+class DBGeneral {
+  static const yearTokens = "yearTokens";
+  static const overallTokens = "overallTokens";
+  // static const sectionTokens = "sectionTokens";
+  // static const sectionVariantsTokens = "sectionVariantsTokenss";
 }
 
 class DBInfo {

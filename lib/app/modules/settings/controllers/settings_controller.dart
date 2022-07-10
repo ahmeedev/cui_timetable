@@ -7,9 +7,9 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class SettingsController extends GetxController {
-  late final box;
+  late final Box box;
 
-  final searchBy = {"list": false, "section": true}.obs;
+  var searchBy = <String, bool>{"list": false, "section": true}.obs;
 
   final darkMode = true.obs;
   final carousel = true.obs;
@@ -22,7 +22,11 @@ class SettingsController extends GetxController {
     _gettingValues();
   }
 
-  void _gettingValues() {
+  Future<void> _gettingValues() async {
+    // box.delete(DBSettings.searchBy);
+    searchBy.value = Map<String, bool>.from(await box.get(DBSettings.searchBy,
+        // ignore: invalid_use_of_protected_member
+        defaultValue: searchBy.value));
     darkMode.value = box.get(DBSettings.darkMode, defaultValue: false);
 
     carousel.value = box.get(DBSettings.carousel, defaultValue: true);
