@@ -12,6 +12,9 @@ class StudentUIController extends GetxController {
   var listVisible = true.obs;
   var dialogHistoryList = [].obs;
 
+  var test = "One".obs;
+  var searchBy = {}.obs;
+
   @override
   Future<void> onInit() async {
     await fetchSections();
@@ -28,6 +31,9 @@ class StudentUIController extends GetxController {
     }
 
     textController.text = string;
+
+    var box2 = await Hive.openBox(DBNames.settings);
+    searchBy.value = await box2.get(DBSettings.searchBy);
 
     super.onInit();
   }

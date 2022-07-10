@@ -8,6 +8,9 @@ import 'package:hive/hive.dart';
 
 class SettingsController extends GetxController {
   late final box;
+
+  final searchBy = {"list": false, "section": true}.obs;
+
   final darkMode = true.obs;
   final carousel = true.obs;
   final latestNews = true.obs;
@@ -24,6 +27,15 @@ class SettingsController extends GetxController {
 
     carousel.value = box.get(DBSettings.carousel, defaultValue: true);
     latestNews.value = box.get(DBSettings.latestNews, defaultValue: true);
+  }
+
+  Future<void> setSearchBy() async {
+    searchBy.forEach((key, value) {
+      searchBy[key] = !searchBy[key]!;
+    });
+    await box.put(DBSettings.searchBy, searchBy);
+
+    // print(box.get(DBSettings.searchBy));
   }
 
   void setDarkMode(value) {

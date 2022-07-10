@@ -52,6 +52,8 @@ class DBHistory {
 }
 
 class DBSettings {
+  static const searchBy = 'searchBy';
+
   static const darkMode = 'darkMode';
 
   static const carousel = 'carousel';

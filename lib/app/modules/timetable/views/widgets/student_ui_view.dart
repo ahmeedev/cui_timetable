@@ -1,3 +1,5 @@
+import 'package:cui_timetable/app/data/database/timetable_db/timetable_database.dart';
+import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -28,6 +30,12 @@ class StudentUIView extends GetView<StudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
+              ElevatedButton(
+                  onPressed: () async {
+                    final database = TimetableDatabase();
+                    await database.createDatabase();
+                  },
+                  child: Text('Test Me'))
             ],
           ),
         ));
@@ -54,12 +62,22 @@ class StudentUIView extends GetView<StudentUIController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Section Name',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontWeight: FontWeight.bold),
+                Obx(
+                  () => controller.searchBy["section"] == true
+                      ? Text(
+                          'Section Name',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        )
+                      : Text(
+                          'Select Section',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
                 ),
 
                 GestureDetector(
@@ -130,6 +148,139 @@ class StudentUIView extends GetView<StudentUIController> {
                           BorderRadius.circular(Constants.defaultRadius),
                       borderSide: const BorderSide(color: primaryColor)),
                 )),
+            // Obx(() => Row(
+            //       children: [
+            //         Flexible(
+            //           child: Container(
+            //             padding: EdgeInsets.symmetric(
+            //                 horizontal: Constants.defaultPadding,
+            //                 vertical: Constants.defaultPadding / 2),
+            //             decoration: BoxDecoration(
+            //                 color: textFieldColor,
+            //                 borderRadius:
+            //                     BorderRadius.circular(Constants.defaultRadius)),
+            //             child: DropdownButton<dynamic>(
+            //               focusColor: textFieldColor,
+            //               isExpanded: true,
+            //               borderRadius: BorderRadius.all(
+            //                   Radius.circular(Constants.defaultRadius)),
+            //               dropdownColor: widgetColor,
+            //               style: Theme.of(context).textTheme.titleMedium,
+            //               underline: Container(
+            //                 height: 2,
+            //                 color: primaryColor,
+            //               ),
+            //               value: controller.test.value,
+            //               items: [
+            //                 "One",
+            //                 "Two",
+            //                 "Three",
+            //                 "Four",
+            //                 "Five",
+            //                 "Six",
+            //                 "Seven",
+            //                 "Eight",
+            //                 "Nine",
+            //                 "Ten",
+            //               ]
+            //                   .map((e) =>
+            //                       DropdownMenuItem(value: e, child: Text(e)))
+            //                   .toList(),
+            //               onChanged: (_) {
+            //                 controller.test.value = _;
+            //               },
+            //             ),
+            //           ),
+            //         ),
+            //         kWidth,
+            //         Flexible(
+            //           child: Container(
+            //             padding: EdgeInsets.symmetric(
+            //                 horizontal: Constants.defaultPadding,
+            //                 vertical: Constants.defaultPadding / 2),
+            //             decoration: BoxDecoration(
+            //                 color: textFieldColor,
+            //                 borderRadius:
+            //                     BorderRadius.circular(Constants.defaultRadius)),
+            //             child: DropdownButton<dynamic>(
+            //               focusColor: textFieldColor,
+            //               isExpanded: true,
+            //               borderRadius: BorderRadius.all(
+            //                   Radius.circular(Constants.defaultRadius)),
+            //               dropdownColor: widgetColor,
+            //               style: Theme.of(context).textTheme.titleMedium,
+            //               underline: Container(
+            //                 height: 2,
+            //                 color: primaryColor,
+            //               ),
+            //               value: controller.test.value,
+            //               items: [
+            //                 "One",
+            //                 "Two",
+            //                 "Three",
+            //                 "Four",
+            //                 "Five",
+            //                 "Six",
+            //                 "Seven",
+            //                 "Eight",
+            //                 "Nine",
+            //                 "Ten",
+            //               ]
+            //                   .map((e) =>
+            //                       DropdownMenuItem(value: e, child: Text(e)))
+            //                   .toList(),
+            //               onChanged: (_) {
+            //                 controller.test.value = _;
+            //               },
+            //             ),
+            //           ),
+            //         ),
+            //         kWidth,
+            //         Flexible(
+            //           child: Container(
+            //             padding: EdgeInsets.symmetric(
+            //                 horizontal: Constants.defaultPadding,
+            //                 vertical: Constants.defaultPadding / 2),
+            //             decoration: BoxDecoration(
+            //                 color: textFieldColor,
+            //                 borderRadius:
+            //                     BorderRadius.circular(Constants.defaultRadius)),
+            //             child: DropdownButton<dynamic>(
+            //               focusColor: textFieldColor,
+            //               isExpanded: true,
+            //               borderRadius: BorderRadius.all(
+            //                   Radius.circular(Constants.defaultRadius)),
+            //               dropdownColor: widgetColor,
+            //               style: Theme.of(context).textTheme.titleMedium,
+            //               underline: Container(
+            //                 height: 2,
+            //                 color: primaryColor,
+            //               ),
+            //               value: controller.test.value,
+            //               items: [
+            //                 "One",
+            //                 "Two",
+            //                 "Three",
+            //                 "Four",
+            //                 "Five",
+            //                 "Six",
+            //                 "Seven",
+            //                 "Eight",
+            //                 "Nine",
+            //                 "Ten",
+            //               ]
+            //                   .map((e) =>
+            //                       DropdownMenuItem(value: e, child: Text(e)))
+            //                   .toList(),
+            //               onChanged: (_) {
+            //                 controller.test.value = _;
+            //               },
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     )),
+
             SizedBox(
               height: Constants.defaultPadding / 2,
             ),

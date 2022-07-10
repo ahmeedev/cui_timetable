@@ -228,36 +228,34 @@ class HomeCarousel extends GetView<HomeController> {
                               );
                               // duration: const Duration(microseconds: 0));
                             },
-                            child: Hero(
-                              tag: 'img',
-                              child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  // margin: EdgeInsets.symmetric(horizontal: 2.0),
-                                  decoration: BoxDecoration(
-                                    // boxShadow: [
-                                    //   BoxShadow(color: Colors.black)
-                                    // ],
-                                    color: widgetColor,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            Constants.defaultRadius)),
+                            // child: Hero(
+                            // tag: 'img',
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                // margin: EdgeInsets.symmetric(horizontal: 2.0),
+                                decoration: BoxDecoration(
+                                  // boxShadow: [
+                                  //   BoxShadow(color: Colors.black)
+                                  // ],
+                                  color: widgetColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Constants.defaultRadius)),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Constants.defaultRadius)),
+                                  child: CachedNetworkImage(
+                                    imageUrl: e["img"]!,
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, string) {
+                                      return const SpinKitFadingCircle(
+                                        color: primaryColor,
+                                      );
+                                    },
                                   ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                            Constants.defaultRadius)),
-                                    child: CachedNetworkImage(
-                                      imageUrl: e["img"]!,
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, string) {
-                                        return const SpinKitFadingCircle(
-                                          color: primaryColor,
-                                        );
-                                      },
-                                    ),
-                                  )),
-                            ),
+                                )),
                           ),
+                          // ),
                           e["title"]!.isEmpty
                               ? const SizedBox()
                               : Positioned(

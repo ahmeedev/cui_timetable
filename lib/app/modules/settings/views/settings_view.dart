@@ -46,16 +46,35 @@ class SettingsView extends GetView<SettingsController> {
               Card(
                 margin: EdgeInsets.zero,
                 child: ListTile(
-                  title: Row(
-                    children: [
-                      const Text("Search By"),
-                      const Spacer(),
-                      Container(color: primaryColor, child: const Text('List')),
-                      kWidth,
-                      Container(
-                          color: primaryColor, child: const Text('Section')),
-                    ],
-                  ),
+                  title: Obx(() => Row(
+                        children: [
+                          const Text("Search By"),
+                          const Spacer(),
+                          buildButtonList(
+                            title: '   List   ',
+                            obs: controller.searchBy["list"],
+                          ),
+                          buildButtonList(
+                              title: 'Section',
+                              obs: controller.searchBy["section"],
+                              last: true),
+                          // kWidth,
+                          // Container(
+                          //     decoration: BoxDecoration(
+                          //         color: textFieldColor,
+                          //         borderRadius: BorderRadius.only(
+                          //           topRight:
+                          //               Radius.circular(Constants.defaultRadius),
+                          //           bottomRight:
+                          //               Radius.circular(Constants.defaultRadius),
+                          //         )),
+                          //     child: Padding(
+                          //       padding:
+                          //           EdgeInsets.all(Constants.defaultPadding - 2),
+                          //       child: const Text('Section'),
+                          //     )),
+                        ],
+                      )),
                 ),
               ),
               // _buildSettingTile(
@@ -83,6 +102,28 @@ class SettingsView extends GetView<SettingsController> {
                   callback: controller.setLatestNews),
             ]),
       ),
+    );
+  }
+
+  InkWell buildButtonList({required String title, required obs, last = false}) {
+    return InkWell(
+      onTap: () => controller.setSearchBy(),
+      child: Container(
+          decoration: BoxDecoration(
+              color: obs == true ? primaryColor : textFieldColor,
+              borderRadius: last == true
+                  ? BorderRadius.only(
+                      topRight: Radius.circular(Constants.defaultRadius),
+                      bottomRight: Radius.circular(Constants.defaultRadius),
+                    )
+                  : BorderRadius.only(
+                      topLeft: Radius.circular(Constants.defaultRadius),
+                      bottomLeft: Radius.circular(Constants.defaultRadius),
+                    )),
+          child: Padding(
+            padding: EdgeInsets.all(Constants.defaultPadding - 2),
+            child: Text(title),
+          )),
     );
   }
 

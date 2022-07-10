@@ -27,6 +27,8 @@ class TimetableDatabase {
     final teachers = <String>{};
 
     for (var item in data) {
+      // debugPrint(item[0].trim().replaceAll(' ', '').replaceAll('?', '-'));
+      // sections.add(item[0].trim().replaceAll(' ', '').replaceAll('?', '-'));
       sections.add(item[0].trim());
       teachers.add(item[4].trim());
     }
@@ -68,7 +70,32 @@ class TimetableDatabase {
     await box3.close();
 
     // Hive.close();
+    final yearTokens = [];
+    final sectionTokens = [];
+    final sectionVariantsTokens = [];
+    sections.forEach((element) {
+      // element = element.replaceAll("?", "-");
 
+      final result = element.split("-");
+      // debugPrint(result.toString());
+      yearTokens.add(result[0]);
+      sectionTokens.add(result[1]);
+      var value = "";
+      for (var i = 2; i < result.length; i++) {
+        value += result[i];
+        if (i != result.length - 1) {
+          value += '-';
+        }
+      }
+      if (value.isNotEmpty) {
+        sectionVariantsTokens.add(value);
+      }
+
+      // print(sectionTokens);
+      // print(sectionVariantsTokens);
+    });
+    print(yearTokens.toSet());
+    // print(sections);
     return Future<int>.value(1);
   }
 
