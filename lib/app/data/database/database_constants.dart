@@ -14,6 +14,9 @@ class DBNames {
   static const history = "history";
 
   static const settings = "settings";
+
+  // Cashing system //
+  static const timetableCache = "timetableCache";
 }
 
 class DBGeneral {
@@ -67,4 +70,12 @@ class DBSettings {
 
   static const carousel = 'carousel';
   static const latestNews = 'latestNews';
+}
+
+class DBTimetableCache {
+  static const studentSection = 'studentSection';
+
+  static const studentYearToken = 'studentYearToken';
+  static const studentSecToken = 'studentSecToken';
+  static const studentSecVToken = 'studentSecVToken';
 }

@@ -180,10 +180,10 @@ class StudentUIView extends GetView<StudentUIController> {
                                       // textAlign: TextAlign.center,
                                     )))
                                 .toList(),
-                            onChanged: (_) {
-                              controller.yearTokenSelected.value = _;
+                            onChanged: (value) {
+                              controller.yearTokenSelected.value = value;
                               // debugPrint(_);
-                              controller.changeSectionTokens(_);
+                              controller.changeSectionTokens(value);
                               // con
                             },
                           ),
@@ -322,34 +322,58 @@ class StudentUIView extends GetView<StudentUIController> {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              late final value;
+              var value;
               if (controller.searchBy["section"] == true) {
                 value = controller.textController.text.toString();
+
+                if (controller.sections.contains(value)) {
+                  // Storing the information for state persistency
+
+                  // final box2 = await Hive.openBox(DBNames.history);
+                  // List list =
+                  //     box2.get(DBHistory.studentTimetable, defaultValue: []);
+                  // if (list.length != 6) {
+                  //   Set result = list.toSet();
+                  //   result.add(value);
+                  //   box2.put(DBHistory.studentTimetable, result.toList());
+                  //   // await box2.close();
+                  // }
+                  List tokens = value.split("-");
+                  var result = "";
+                  for (var i = 2; i < tokens.length; i++) {
+                    result += tokens[i];
+                    if (i != tokens.length - 1) {
+                      result += '-';
+                    }
+                  }
+                  _cacheData(
+                      value: value,
+                      yearToken: tokens[0].trim(),
+                      sectionToken: tokens[1].trim(),
+                      sectionVariantToken: result.trim());
+                  Get.toNamed(Routes.STUDENT_TIMETABLE, arguments: [value]);
+                } else {
+                  GetXUtilities.snackbar(
+                      title: 'Not Found!!',
+                      message: 'Enter Valid Section Name',
+                      gradient: primaryGradient);
+                }
               } else {
                 value =
-                    "${controller.yearTokenSelected + "-"}${controller.sectionTokenSelected.value}-${controller.sectionVariantsTokenSelected.value}";
-              }
-
-              if (controller.sections.contains(value)) {
-                // Storing the information for state persistency
-                final box1 = await Hive.openBox(DBNames.info);
-                box1.put(DBInfo.searchSection, value);
-
-                final box2 = await Hive.openBox(DBNames.history);
-                List list =
-                    box2.get(DBHistory.studentTimetable, defaultValue: []);
-                if (list.length != 6) {
-                  Set result = list.toSet();
-                  result.add(value);
-                  box2.put(DBHistory.studentTimetable, result.toList());
-                  // await box2.close();
+                    "${controller.yearTokenSelected.value}-${controller.sectionTokenSelected.value}";
+                if (controller.sectionVariantsTokenSelected.value != '') {
+                  value =
+                      "$value-${controller.sectionVariantsTokenSelected.value}";
                 }
+
+                _cacheData(
+                    value: value,
+                    yearToken: controller.yearTokenSelected.value,
+                    sectionToken: controller.sectionTokenSelected.value,
+                    sectionVariantToken:
+                        controller.sectionVariantsTokenSelected.value);
+
                 Get.toNamed(Routes.STUDENT_TIMETABLE, arguments: [value]);
-              } else {
-                GetXUtilities.snackbar(
-                    title: 'Not Found!!',
-                    message: 'Enter Valid Section Name',
-                    gradient: primaryGradient);
               }
             },
             child: Padding(
@@ -364,5 +388,21 @@ class StudentUIView extends GetView<StudentUIController> {
             )),
       ),
     );
+  }
+
+  _cacheData(
+      {required String value,
+      required yearToken,
+      required sectionToken,
+      required sectionVariantToken}) async {
+    final box1 = await Hive.openBox(DBNames.timetableCache);
+    await box1.put(DBTimetableCache.studentSection, value);
+
+    // storing the list information
+    await box1.put(DBTimetableCache.studentYearToken, yearToken);
+
+    await box1.put(DBTimetableCache.studentSecToken, sectionToken);
+
+    await box1.put(DBTimetableCache.studentSecVToken, sectionVariantToken);
   }
 }

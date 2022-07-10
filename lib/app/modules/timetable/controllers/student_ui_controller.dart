@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/modules/settings/controllers/settings_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -27,9 +28,9 @@ class StudentUIController extends GetxController {
     await fetchSections();
     var string = '';
 
-    final box = await Hive.openBox(DBNames.info);
+    final box = await Hive.openBox(DBNames.timetableCache);
     try {
-      String value = box.get(DBInfo.searchSection, defaultValue: "");
+      String value = box.get(DBTimetableCache.studentSection, defaultValue: "");
       if (value.isNotEmpty) {
         string = value.toString();
       }
@@ -39,16 +40,29 @@ class StudentUIController extends GetxController {
 
     textController.text = string;
 
-    var box2 = await Hive.openBox(DBNames.settings);
-    searchBy.value = await box2.get(DBSettings.searchBy);
+    searchBy.value = Get.find<SettingsController>().searchBy;
     if (searchBy["list"] == true) {
       final box3 = await Hive.openBox(DBNames.general);
       yearTokens = await box3.get(DBGeneral.yearTokens);
       overallTokens = await box3.get(DBGeneral.overallTokens);
 
-      yearTokenSelected.value = yearTokens[0];
-      changeSectionTokens(yearTokens[0]);
-      changeSectionVariantsTokens(sectionTokenSelected.value);
+      // fetching cached tokens
+      final box4 = await Hive.openBox(DBNames.timetableCache);
+      var yearToken = await box4.get(DBTimetableCache.studentYearToken,
+          defaultValue: yearTokens[0]);
+      var secToken =
+          await box4.get(DBTimetableCache.studentSecToken, defaultValue: "");
+      var secVToken =
+          await box4.get(DBTimetableCache.studentSecVToken, defaultValue: "");
+
+      print("Year token  $yearToken");
+      print("sec token  $secToken");
+      print("secb token  $secVToken");
+
+      yearTokenSelected.value = yearToken;
+
+      changeSectionTokens(yearToken,
+          sectionToken: secToken, sectionVariantToken: secVToken);
     }
 
     super.onInit();
@@ -60,7 +74,8 @@ class StudentUIController extends GetxController {
     sections = list ?? [];
   }
 
-  void changeSectionTokens(String value) {
+  void changeSectionTokens(String value,
+      {sectionToken = "", sectionVariantToken = ""}) async {
     sectionTokens.clear();
     sectionVariantsTokens.clear();
     final sections = <String>{};
@@ -71,12 +86,16 @@ class StudentUIController extends GetxController {
     }
 
     sectionTokens = sections.toList();
-    sectionTokenSelected.value = sectionTokens[0];
+    sectionTokenSelected.value =
+        sectionToken == "" ? sectionTokens[0] : sectionToken;
 
-    changeSectionVariantsTokens(sectionTokenSelected.value);
+    changeSectionVariantsTokens(
+        sectionVariantToken == "" ? sectionTokenSelected.value : sectionToken,
+        sectionVariantToken: sectionVariantToken);
   }
 
-  void changeSectionVariantsTokens(String value) {
+  void changeSectionVariantsTokens(String value,
+      {sectionVariantToken = ""}) async {
     sectionVariantsTokens.clear();
     final sectionsVariants = <String>{};
     for (var element in overallTokens) {
@@ -85,6 +104,8 @@ class StudentUIController extends GetxController {
       }
     }
     sectionVariantsTokens = sectionsVariants.toList();
-    sectionVariantsTokenSelected.value = sectionVariantsTokens[0];
+    sectionVariantsTokenSelected.value = sectionVariantToken == ""
+        ? sectionVariantsTokens[0]
+        : sectionVariantToken;
   }
 }
