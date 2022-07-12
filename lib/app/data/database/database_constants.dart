@@ -78,4 +78,6 @@ class DBTimetableCache {
   static const studentYearToken = 'studentYearToken';
   static const studentSecToken = 'studentSecToken';
   static const studentSecVToken = 'studentSecVToken';
+
+  static const history = "history";
 }

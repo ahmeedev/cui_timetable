@@ -30,12 +30,6 @@ class StudentUIView extends GetView<StudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
-              ElevatedButton(
-                  onPressed: () async {
-                    final database = TimetableDatabase();
-                    await database.createDatabase();
-                  },
-                  child: Text('Test Me'))
             ],
           ),
         ));
@@ -82,12 +76,14 @@ class StudentUIView extends GetView<StudentUIController> {
 
                 GestureDetector(
                   onTap: () async {
-                    final box = await Hive.openBox(DBNames.history);
+                    final box = await Hive.openBox(DBNames.timetableCache);
                     final List result =
-                        box.get(DBHistory.studentTimetable, defaultValue: []);
+                        box.get(DBTimetableCache.history, defaultValue: []);
                     controller.dialogHistoryList.value = result;
                     GetXUtilities.historyDialog(
-                        context: context, content: result, student: true);
+                        context: context,
+                        content: controller.dialogHistoryList,
+                        student: true);
                   },
                   child: Container(
                     // color: Colors.red,
@@ -329,15 +325,6 @@ class StudentUIView extends GetView<StudentUIController> {
                 if (controller.sections.contains(value)) {
                   // Storing the information for state persistency
 
-                  // final box2 = await Hive.openBox(DBNames.history);
-                  // List list =
-                  //     box2.get(DBHistory.studentTimetable, defaultValue: []);
-                  // if (list.length != 6) {
-                  //   Set result = list.toSet();
-                  //   result.add(value);
-                  //   box2.put(DBHistory.studentTimetable, result.toList());
-                  //   // await box2.close();
-                  // }
                   List tokens = value.split("-");
                   var result = "";
                   for (var i = 2; i < tokens.length; i++) {
@@ -404,5 +391,16 @@ class StudentUIView extends GetView<StudentUIController> {
     await box1.put(DBTimetableCache.studentSecToken, sectionToken);
 
     await box1.put(DBTimetableCache.studentSecVToken, sectionVariantToken);
+
+    // cache the history
+    final box2 = await Hive.openBox(DBNames.timetableCache);
+    List list = box2.get(DBTimetableCache.history, defaultValue: []);
+    print(list);
+    if (list.length != 6) {
+      Set result = list.toSet();
+      result.add(value);
+      box2.put(DBTimetableCache.history, result.toList());
+      // await box2.close();
+    }
   }
 }
