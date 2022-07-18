@@ -77,8 +77,8 @@ class StudentUIView extends GetView<StudentUIController> {
                 GestureDetector(
                   onTap: () async {
                     final box = await Hive.openBox(DBNames.timetableCache);
-                    final List result =
-                        box.get(DBTimetableCache.history, defaultValue: []);
+                    final List result = box
+                        .get(DBTimetableCache.studentHistory, defaultValue: []);
                     controller.dialogHistoryList.value = result;
                     GetXUtilities.historyDialog(
                         context: context,
@@ -394,12 +394,12 @@ class StudentUIView extends GetView<StudentUIController> {
 
     // cache the history
     final box2 = await Hive.openBox(DBNames.timetableCache);
-    List list = box2.get(DBTimetableCache.history, defaultValue: []);
+    List list = box2.get(DBTimetableCache.studentHistory, defaultValue: []);
     print(list);
     if (list.length != 6) {
       Set result = list.toSet();
       result.add(value);
-      box2.put(DBTimetableCache.history, result.toList());
+      box2.put(DBTimetableCache.studentHistory, result.toList());
       // await box2.close();
     }
   }

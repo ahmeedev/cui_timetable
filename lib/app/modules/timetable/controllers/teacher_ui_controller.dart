@@ -10,6 +10,8 @@ class TeacherUIController extends GetxController {
   final TextEditingController textController = TextEditingController();
   var filteredList = [].obs;
   var listVisible = true.obs;
+  var dialogHistoryList = [].obs;
+
   @override
   Future<void> onInit() async {
     await fetchTeachers();
@@ -17,7 +19,7 @@ class TeacherUIController extends GetxController {
 
     final box = await Hive.openBox(DBNames.info);
     try {
-      String value = box.get(DBInfo.searchTeacher, defaultValue: '');
+      String value = box.get(DBTimetableCache.teacherName, defaultValue: '');
       if (value.isNotEmpty) {
         string = value.toString();
       }

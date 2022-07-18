@@ -34,8 +34,8 @@ class DBInfo {
   static const datesheetSections = 'datesheetSections';
   static const datesheetTeachers = 'datesheetTeachers';
 
-  static const searchSection = 'searchSection';
-  static const searchTeacher = 'searchTeacher';
+  // static const searchSection = 'searchSection';
+  // static const searchTeacher = 'searchTeacher';
   static const searchComparisonTeacher = 'searchComparisonTeacher';
 
   static const datesheetSearchSection = 'datesheetSearchSection';
@@ -79,5 +79,8 @@ class DBTimetableCache {
   static const studentSecToken = 'studentSecToken';
   static const studentSecVToken = 'studentSecVToken';
 
-  static const history = "history";
+  static const studentHistory = "studentHistory";
+
+  static const teacherName = 'teacherName';
+  static const teacherHistory = "teacherHistory";
 }

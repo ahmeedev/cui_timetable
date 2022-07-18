@@ -67,11 +67,14 @@ class TeacherUIView extends GetView<TeacherUIController> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    final box = await Hive.openBox(DBNames.history);
-                    final List result =
-                        box.get(DBHistory.teacherTimetable, defaultValue: []);
+                    final box = await Hive.openBox(DBNames.timetableCache);
+                    final List result = box
+                        .get(DBTimetableCache.teacherHistory, defaultValue: []);
+                    controller.dialogHistoryList.value = result;
                     GetXUtilities.historyDialog(
-                        context: context, content: result, student: false);
+                        context: context,
+                        content: controller.dialogHistoryList,
+                        student: false);
                   },
                   child: Container(
                     // color: Colors.red,
@@ -195,19 +198,7 @@ class TeacherUIView extends GetView<TeacherUIController> {
               final value = controller.textController.text.toString();
               if (controller.teachers.contains(value)) {
                 // Storing the information for state persistency
-                final box1 = await Hive.openBox(DBNames.info);
-                box1.put(DBInfo.searchTeacher,
-                    controller.textController.text.toString());
-
-                final box2 = await Hive.openBox(DBNames.history);
-                List list =
-                    box2.get(DBHistory.teacherTimetable, defaultValue: []);
-                if (list.length != 6) {
-                  Set result = list.toSet();
-                  result.add(value);
-                  box2.put(DBHistory.teacherTimetable, result.toList());
-                  // await box2.close();
-                }
+                await _cacheData(value);
 
                 Get.toNamed(Routes.TEACHER_TIMETABLE, arguments: [value]);
               } else {
@@ -229,5 +220,22 @@ class TeacherUIView extends GetView<TeacherUIController> {
             )),
       ),
     );
+  }
+
+  Future<void> _cacheData(String value) async {
+    final box1 = await Hive.openBox(DBNames.info);
+    box1.put(DBTimetableCache.teacherName,
+        controller.textController.text.toString());
+
+    // cache the history
+    final box2 = await Hive.openBox(DBNames.timetableCache);
+    List list = box2.get(DBTimetableCache.teacherHistory, defaultValue: []);
+    print(list);
+    if (list.length != 6) {
+      Set result = list.toSet();
+      result.add(value);
+      box2.put(DBTimetableCache.teacherHistory, result.toList());
+      // await box2.close();
+    }
   }
 }

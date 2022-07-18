@@ -129,12 +129,17 @@ class GetXUtilities {
                           if (newIndex > oldIndex) newIndex--;
                           final item = content.value.removeAt(oldIndex);
                           content.insert(newIndex, item);
-
                           final box2 =
                               await Hive.openBox(DBNames.timetableCache);
-
-                          box2.delete(DBTimetableCache.history);
-                          box2.put(DBTimetableCache.history, content.value);
+                          if (student) {
+                            box2.delete(DBTimetableCache.studentHistory);
+                            box2.put(
+                                DBTimetableCache.studentHistory, content.value);
+                          } else {
+                            box2.delete(DBTimetableCache.teacherHistory);
+                            box2.put(
+                                DBTimetableCache.teacherHistory, content.value);
+                          }
                         },
                         children: [
                           ...List.generate(
@@ -177,7 +182,7 @@ class GetXUtilities {
                                                 DBNames.timetableCache);
 
                                             List list = box2.get(
-                                                DBTimetableCache.history,
+                                                DBTimetableCache.studentHistory,
                                                 defaultValue: []);
 
                                             list.removeAt(index);
@@ -193,7 +198,8 @@ class GetXUtilities {
                                             }
 
                                             box2.put(
-                                                DBTimetableCache.history, list);
+                                                DBTimetableCache.studentHistory,
+                                                list);
                                           }
                                         },
                                         child: Icon(
