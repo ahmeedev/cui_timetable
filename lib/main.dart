@@ -1,14 +1,14 @@
 import 'dart:developer' as devlog;
 import 'dart:io';
 
-import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
-import 'package:cui_timetable/app/modules/screen.dart';
-import 'package:cui_timetable/app/modules/settings/controllers/settings_controller.dart';
-import 'package:cui_timetable/app/routes/app_pages.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:cui_timetable/app/theme/light_theme.dart';
-import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
-import 'package:cui_timetable/firebase_options.dart';
+import 'app/modules/home/controllers/home_controller.dart';
+import 'app/modules/screen.dart';
+import 'app/modules/settings/controllers/settings_controller.dart';
+import 'app/routes/app_pages.dart';
+import 'app/theme/app_constants.dart';
+import 'app/theme/light_theme.dart';
+import 'app/utilities/location/loc_utilities.dart';
+import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/modules/timetable/controllers/student_ui_controller.dart';
+import '../data/database/database_constants.dart';
+import '../modules/timetable/controllers/student_ui_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/routes/app_pages.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import '../routes/app_pages.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_constants.dart';
 import 'package:hive/hive.dart';
 
 // Dart imports:

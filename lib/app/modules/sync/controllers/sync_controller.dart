@@ -3,14 +3,14 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
-import 'package:cui_timetable/app/data/database/datesheet_db/datesheet_database.dart';
-import 'package:cui_timetable/app/data/database/freerooms_db/freerooms_database.dart';
-import 'package:cui_timetable/app/data/database/timeslots_db/timeslots_database.dart';
-import 'package:cui_timetable/app/data/database/timetable_db/timetable_database.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import '../../../data/database/database_constants.dart';
+import '../../../data/database/database_utilities_methods.dart';
+import '../../../data/database/datesheet_db/datesheet_database.dart';
+import '../../../data/database/freerooms_db/freerooms_database.dart';
+import '../../../data/database/timeslots_db/timeslots_database.dart';
+import '../../../data/database/timetable_db/timetable_database.dart';
+import '../../../theme/app_colors.dart';
+import '../../../widgets/get_widgets.dart';
 
 class SyncController extends GetxController {
   var syncFile = 0.obs; //! crontroll the sync action of multiple files

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:cui_timetable/app/modules/ui/about_us/widgets/about_us_tile.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'widgets/about_us_tile.dart';
+import '../../../theme/app_constants.dart';
 
 // Flutter imports:
 

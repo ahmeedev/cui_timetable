@@ -1,5 +1,5 @@
-import 'package:cui_timetable/app/modules/remainder/controllers/student_ui_controlller.dart';
-import 'package:cui_timetable/app/modules/remainder/controllers/teacher_ui_controller.dart';
+import '../controllers/student_ui_controlller.dart';
+import '../controllers/teacher_ui_controller.dart';
 import 'package:get/get.dart';
 
 import '../controllers/remainder_controller.dart';

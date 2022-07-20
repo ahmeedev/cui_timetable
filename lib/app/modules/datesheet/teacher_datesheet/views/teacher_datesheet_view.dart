@@ -1,6 +1,6 @@
-import 'package:cui_timetable/app/modules/datesheet/teacher_datesheet/views/widgets/teacher_datesheet_widgets.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'widgets/teacher_datesheet_widgets.dart';
+import '../../../../theme/app_colors.dart';
+import '../../../../theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 

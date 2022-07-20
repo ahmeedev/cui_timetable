@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/modules/portals/views/widgets/portal_widgets.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'widgets/portal_widgets.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_constants.dart';
 
 import '../controllers/portals_controller.dart';
 

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/modules/timetable/student_timetable/views/widgets/student_timetable_widgets.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'widgets/student_timetable_widgets.dart';
+import '../../../../theme/app_colors.dart';
+import '../../../../theme/app_constants.dart';
 
 import '../controllers/student_timetable_controller.dart';
 

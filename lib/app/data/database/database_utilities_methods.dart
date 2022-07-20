@@ -3,12 +3,12 @@ import 'dart:developer' as devlog;
 import 'dart:io';
 
 import 'package:csv/csv.dart';
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
-import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'database_constants.dart';
+import '../../modules/home/controllers/home_controller.dart';
+import '../../modules/sync/controllers/sync_controller.dart';
+import '../../theme/app_colors.dart';
+import '../../utilities/location/loc_utilities.dart';
+import '../../widgets/get_widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/modules/datesheet/views/widgets/student_ui.dart';
-import 'package:cui_timetable/app/modules/datesheet/views/widgets/teacher_ui.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'widgets/student_ui.dart';
+import 'widgets/teacher_ui.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_constants.dart';
 
 import '../controllers/datesheet_controller.dart';
 

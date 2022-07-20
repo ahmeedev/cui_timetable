@@ -1,9 +1,9 @@
-import 'package:cui_timetable/app/modules/remainder/controllers/student_ui_controlller.dart';
-import 'package:cui_timetable/app/modules/remainder/models/user.dart';
-import 'package:cui_timetable/objectbox.g.dart';
+import '../../controllers/student_ui_controlller.dart';
+import '../../models/user.dart';
+import '../../../../../objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import '../../../../theme/app_colors.dart';
+import '../../../../theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

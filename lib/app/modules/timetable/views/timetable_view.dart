@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/modules/timetable/controllers/timetable_controller.dart';
-import 'package:cui_timetable/app/modules/timetable/views/widgets/comparison_ui_view.dart';
-import 'package:cui_timetable/app/modules/timetable/views/widgets/student_ui_view.dart';
-import 'package:cui_timetable/app/modules/timetable/views/widgets/teacher_ui_view.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import '../controllers/timetable_controller.dart';
+import 'widgets/comparison_ui_view.dart';
+import 'widgets/student_ui_view.dart';
+import 'widgets/teacher_ui_view.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_constants.dart';
 
 // ignore: use_key_in_widget_constructors
 class TimetableView extends GetView<TimetableController> {

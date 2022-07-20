@@ -1,12 +1,12 @@
-import 'package:cui_timetable/app/modules/timetable/teacher_timetable/controllers/teacher_timetable_controller.dart';
+import '../controllers/teacher_timetable_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/modules/timetable/teacher_timetable/views/widgets/teacher_timetable_widgets.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'widgets/teacher_timetable_widgets.dart';
+import '../../../../theme/app_colors.dart';
+import '../../../../theme/app_constants.dart';
 
 class TeacherTimetableView extends GetView<TeacherTimetableController> {
   TeacherTimetableView({Key? key}) : super(key: key);

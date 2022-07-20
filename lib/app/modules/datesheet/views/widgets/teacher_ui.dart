@@ -1,7 +1,7 @@
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/modules/datesheet/controllers/teacher_ui_controller.dart';
-import 'package:cui_timetable/app/routes/app_pages.dart';
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import '../../../../data/database/database_constants.dart';
+import '../../controllers/teacher_ui_controller.dart';
+import '../../../../routes/app_pages.dart';
+import '../../../../widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

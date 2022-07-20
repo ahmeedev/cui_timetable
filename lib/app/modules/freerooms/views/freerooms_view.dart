@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/modules/freerooms/views/widgets/freerooms_widgets.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
+import '../../../data/database/database_constants.dart';
+import 'widgets/freerooms_widgets.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_constants.dart';
 
 import '../controllers/freerooms_controller.dart';
 

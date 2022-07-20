@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
 
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/data/database/database_utilities_methods.dart';
+import '../database_constants.dart';
+import '../database_utilities_methods.dart';
 
 // Flutter imports:
 

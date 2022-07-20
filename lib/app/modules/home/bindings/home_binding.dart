@@ -1,5 +1,5 @@
-import 'package:cui_timetable/app/modules/settings/controllers/settings_controller.dart';
-import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
+import '../../settings/controllers/settings_controller.dart';
+import '../../sync/controllers/sync_controller.dart';
 import 'package:get/get.dart';
 
 class HomeBinding extends Bindings {

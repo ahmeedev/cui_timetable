@@ -1,13 +1,15 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:cui_timetable/app/widgets/global_widgets.dart';
+import 'home/views/widgets/home_widgets.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_constants.dart';
+import '../widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 class Screen extends StatelessWidget {
   const Screen({Key? key}) : super(key: key);
@@ -98,26 +100,44 @@ class Screen extends StatelessWidget {
                     Positioned(
                       left: 20,
                       bottom: 30,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            color: successColor,
-                            width: 5,
-                            height: 30,
-                          ),
-                          kWidth,
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.60,
-                              child: AutoSizeText(
-                                "Student of sahiwal and rawalpindi" * 2,
-                                softWrap: true,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: textTheme.bodySmall!
-                                    .copyWith(color: Colors.white),
-                              ))
-                        ],
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(const Scaffold());
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          // mainAxisAlignment: MainAxisAlignment.,
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    // secondaryColor,
+                                    successColor,
+                                    successColor2,
+                                  ],
+                                ),
+                              ),
+                              // color: successColor,
+                              width: 5,
+                              height: MediaQuery.of(context).size.height *
+                                  0.30 *
+                                  0.12,
+                            ),
+                            kWidth,
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.80,
+                                child: AutoSizeText(
+                                  "Notice for the Accused Students of Unfair Means Cases, Terminal Exams SP'22 Semester ",
+                                  softWrap: true,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.bodySmall!
+                                      .copyWith(color: Colors.white),
+                                ))
+                          ],
+                        ),
                       ),
                     )
                   ]),
@@ -130,6 +150,7 @@ class Screen extends StatelessWidget {
                 // mainAxisAlignment: ,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const HomeCarousel(),
                   Text(
                     'Events',
                     style: textTheme.titleMedium!.copyWith(
@@ -200,17 +221,14 @@ class Screen extends StatelessWidget {
                           _buildTile(context, blank: true),
                         ]),
                   ),
+                  const Spacer(),
+                  const HomeBottomWidget()
                 ],
               ),
             ),
           )
         ],
       ),
-      bottomNavigationBar:
-          BottomNavigationBar(backgroundColor: primaryColor, items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Ghr"),
-      ]),
     );
   }
 
@@ -228,10 +246,22 @@ class Screen extends StatelessWidget {
             IntrinsicWidth(
               child: Container(
                 decoration: BoxDecoration(
-                  color: blank == true ? Colors.transparent : primaryColor,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(Constants.defaultRadius),
                       topRight: Radius.circular(Constants.defaultRadius)),
+                  gradient: LinearGradient(
+                    end: Alignment.bottomRight,
+                    colors: blank == true
+                        ? [
+                            Colors.transparent,
+                            Colors.transparent,
+                          ]
+                        : [
+                            // secondaryColor,
+                            primaryColor,
+                            forGradient,
+                          ],
+                  ),
                 ),
                 child: FittedBox(
                   fit: BoxFit.scaleDown,

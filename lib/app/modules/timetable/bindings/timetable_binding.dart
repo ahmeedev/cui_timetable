@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
-import 'package:cui_timetable/app/modules/timetable/controllers/comparison_ui_controller.dart';
-import 'package:cui_timetable/app/modules/timetable/controllers/student_ui_controller.dart';
-import 'package:cui_timetable/app/modules/timetable/controllers/teacher_ui_controller.dart';
+import '../controllers/comparison_ui_controller.dart';
+import '../controllers/student_ui_controller.dart';
+import '../controllers/teacher_ui_controller.dart';
 
 class TimetableBinding extends Bindings {
   @override

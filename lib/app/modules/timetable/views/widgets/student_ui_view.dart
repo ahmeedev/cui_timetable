@@ -1,16 +1,16 @@
-import 'package:cui_timetable/app/data/database/timetable_db/timetable_database.dart';
-import 'package:cui_timetable/app/widgets/global_widgets.dart';
+import '../../../../data/database/timetable_db/timetable_database.dart';
+import '../../../../widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/modules/timetable/controllers/student_ui_controller.dart';
-import 'package:cui_timetable/app/routes/app_pages.dart';
-import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import '../../../../data/database/database_constants.dart';
+import '../../controllers/student_ui_controller.dart';
+import '../../../../routes/app_pages.dart';
+import '../../../../theme/app_colors.dart';
+import '../../../../theme/app_constants.dart';
+import '../../../../widgets/get_widgets.dart';
 
 class StudentUIView extends GetView<StudentUIController> {
   const StudentUIView({Key? key}) : super(key: key);
