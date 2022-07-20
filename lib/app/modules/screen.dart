@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
@@ -16,6 +17,7 @@ class Screen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
+      backgroundColor: textFieldColor,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -97,21 +99,23 @@ class Screen extends StatelessWidget {
                       left: 20,
                       bottom: 30,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            color: Colors.white,
+                            color: successColor,
                             width: 5,
                             height: 30,
                           ),
                           kWidth,
-                          Container(
+                          SizedBox(
                               width: MediaQuery.of(context).size.width * 0.60,
-                              child: FittedBox(
-                                child: AutoSizeText(
-                                  "Student of sahiwal and rawalpindi" * 2,
-                                  softWrap: true,
-                                  maxLines: 2,
-                                ),
+                              child: AutoSizeText(
+                                "Student of sahiwal and rawalpindi" * 2,
+                                softWrap: true,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: textTheme.bodySmall!
+                                    .copyWith(color: Colors.white),
                               ))
                         ],
                       ),
@@ -224,7 +228,7 @@ class Screen extends StatelessWidget {
             IntrinsicWidth(
               child: Container(
                 decoration: BoxDecoration(
-                  color: blank == true ? Colors.transparent : secondaryColor,
+                  color: blank == true ? Colors.transparent : primaryColor,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(Constants.defaultRadius),
                       topRight: Radius.circular(Constants.defaultRadius)),
@@ -255,7 +259,7 @@ class Screen extends StatelessWidget {
                       bottomRight: Radius.circular(Constants.defaultRadius),
                     )),
                     margin: EdgeInsets.zero,
-                    color: widgetColor,
+                    color: shadowColor,
                     child: InkWell(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(Constants.defaultRadius),
@@ -276,7 +280,7 @@ class Screen extends StatelessWidget {
                             child: ImageIcon(
                               AssetImage(iconLocation),
                               size: Constants.iconSize,
-                              color: secondaryColor,
+                              color: primaryColor,
                             ),
                           ),
                         ],
