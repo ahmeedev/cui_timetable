@@ -1,25 +1,33 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'home/views/widgets/home_widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_constants.dart';
 import '../widgets/global_widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
+import 'home/views/widgets/home_drawer.dart';
+import 'home/views/widgets/home_widgets.dart';
 
 class Screen extends StatelessWidget {
-  const Screen({Key? key}) : super(key: key);
+  Screen({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
+      key: _key,
       backgroundColor: textFieldColor,
+      drawer: Drawer(
+        width: width / 1.5,
+        child: Container(
+          color: scaffoldColor,
+          child: Column(
+            children: const [Header(), ButtonList()],
+          ),
+        ),
+      ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -59,7 +67,15 @@ class Screen extends StatelessWidget {
             //         // bottomLeft: Radius.circular(30),
             //         bottomRight: Radius.circular(Constants.defaultRadius * 20))),
             // automaticallyImplyLeading: true,
-            leading: const Icon(Icons.menu),
+            leading: InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                //  hoverColor: Colors.tra
+
+                onTap: () {
+                  _key.currentState!.openDrawer();
+                },
+                child: const ImageIcon(AssetImage('assets/drawer/menu.png'))),
             // actions: [Icon(Icons.menu)],
             expandedHeight: height * 0.25,
             flexibleSpace: ClipRRect(

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,26 +14,88 @@ class Header extends StatelessWidget {
   const Header({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return UserAccountsDrawerHeader(
-      decoration: const BoxDecoration(color: primaryColor),
-      currentAccountPictureSize: const Size.square(80),
-      accountName: const Text(""),
-      accountEmail: Text(
-        "No details available",
-        style: Theme.of(context)
-            .textTheme
-            .titleMedium!
-            .copyWith(color: Colors.white),
-      ),
-      currentAccountPicture: CircleAvatar(
-        backgroundColor: Theme.of(context).secondaryHeaderColor,
-        child: const Text(
-          "A",
-          style: TextStyle(fontSize: 40.0),
+    // return UserAccountsDrawerHeader(
+    //   decoration: const BoxDecoration(
+    //     gradient: LinearGradient(
+    //       end: Alignment.bottomRight,
+    //       colors: [
+    //         // secondaryColor,
+    //         primaryColor,
+    //         forGradient,
+    //       ],
+    //     ),
+    //   ),
+    //   currentAccountPictureSize: Size.square(80),
+    //   accountName: const Text(""),
+    //   accountEmail: Text(
+    //     "No details available",
+    //     style: Theme.of(context)
+    //         .textTheme
+    //         .titleMedium!
+    //         .copyWith(color: Colors.white),
+    //   ),
+    //   currentAccountPicture: CircleAvatar(
+    //     backgroundColor: Theme.of(context).secondaryHeaderColor,
+    //     child: const Text(
+    //       "A",
+    //       style: TextStyle(fontSize: 40.0),
+    //     ),
+    //   ),
+    // );
+
+    return SafeArea(
+      child: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          end: Alignment.bottomRight,
+          colors: [
+            // secondaryColor,
+            primaryColor,
+            forGradient,
+          ],
+        )),
+        height: MediaQuery.of(context).size.height * 0.25,
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: Constants.defaultPadding,
+                ),
+                child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(width: 3, color: Colors.white)),
+                    child: Padding(
+                        padding: EdgeInsets.all(Constants.defaultPadding / 3),
+                        child: Container(
+                          width: Constants.imageWidth + 20,
+                          height: Constants.imageHeight + 20,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage('assets/about_us/ahmad.jpg'),
+                              )),
+                        ))),
+              ),
+              kHeight,
+              kHeight,
+              Text(
+                // "No details Available",
+                "Welcome, FA19-BSE-003",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       ),
     );
-
     // return Container(
     //   height: MediaQuery.of(context).size.height / 5.1,
     //   decoration: const BoxDecoration(
