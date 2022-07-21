@@ -1,15 +1,17 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_constants.dart';
-import '../widgets/global_widgets.dart';
-import 'home/views/widgets/home_drawer.dart';
-import 'home/views/widgets/home_widgets.dart';
 
-class Screen extends StatelessWidget {
-  Screen({Key? key}) : super(key: key);
+import '../../../routes/app_pages.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_constants.dart';
+import '../../../widgets/global_widgets.dart';
+import '../controllers/home_controller.dart';
+import 'widgets/home_drawer.dart';
+import 'widgets/home_widgets.dart';
+
+class HomeView2 extends GetView<HomeController> {
+  HomeView2({Key? key}) : super(key: key);
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class Screen extends StatelessWidget {
         ),
       ),
       body: CustomScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           SliverAppBar(
             backgroundColor: Colors.transparent,
@@ -116,44 +119,109 @@ class Screen extends StatelessWidget {
                     Positioned(
                       left: 20,
                       bottom: 30,
-                      child: InkWell(
-                        onTap: () {
-                          Get.to(const Scaffold());
-                        },
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          // mainAxisAlignment: MainAxisAlignment.,
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    // secondaryColor,
-                                    successColor,
-                                    successColor2,
-                                  ],
-                                ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        // mainAxisAlignment: MainAxisAlignment.,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(Constants.defaultRadius),
                               ),
-                              // color: successColor,
-                              width: 5,
-                              height: MediaQuery.of(context).size.height *
-                                  0.30 *
-                                  0.12,
+                              gradient: const LinearGradient(
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  // secondaryColor,
+                                  successColor,
+                                  successColor2,
+                                ],
+                              ),
                             ),
-                            kWidth,
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.80,
-                                child: AutoSizeText(
-                                  "Notice for the Accused Students of Unfair Means Cases, Terminal Exams SP'22 Semester ",
-                                  softWrap: true,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: textTheme.bodySmall!
-                                      .copyWith(color: Colors.white),
-                                ))
-                          ],
-                        ),
+                            // color: successColor,
+                            width: Constants.defaultPadding / 2,
+                            height: MediaQuery.of(context).size.height *
+                                0.30 *
+                                0.12,
+                          ),
+                          kWidth,
+                          StreamBuilder(
+                            stream: controller.getNewsStream(),
+                            // initialData: initialData,
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasData) {
+                                if (snapshot.data.length == 0) {
+                                  return const Text(
+                                      'Connect to the Internet to fetch News...');
+                                }
+
+                                return SizedBox(
+                                  // alignment: Alignment.centerLeft,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.80,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.30 *
+                                      0.12,
+                                  child: DefaultTextStyle(
+                                    // softWrap: true,
+
+                                    maxLines: 2,
+                                    textAlign: TextAlign.start,
+                                    style: textTheme.bodySmall!
+                                        .copyWith(color: Colors.white),
+                                    child: AnimatedTextKit(
+                                      animatedTexts: [
+                                        ...snapshot.data.map((e) {
+                                          return RotateAnimatedText(
+                                            e['title'],
+                                            alignment: Alignment.centerLeft,
+                                            transitionHeight: 0,
+                                            // rotateOut: false,
+
+                                            duration:
+                                                const Duration(seconds: 5),
+                                          );
+                                        })
+
+                                        //  RotateAnimatedText(
+                                        //   'Admission open for new students',
+                                        //   duration:
+                                        //       const Duration(seconds: 5),
+                                        // ),
+                                      ],
+                                      onTap: () {
+                                        Get.toNamed(Routes.NEWS,
+                                            arguments: snapshot.data);
+                                      },
+                                      repeatForever: true,
+                                    ),
+                                  ),
+                                );
+                              }
+                              // return Obx(() => Column(
+                              //       children: [
+                              //         const SpinKitFadingCircle(
+                              //           color: primaryColor,
+                              //         ),
+                              //         controller.internet.value
+                              //             ? Text(
+                              //                 'Fetching News From Internet',
+                              //                 style: Theme.of(context)
+                              //                     .textTheme
+                              //                     .labelMedium,
+                              //               )
+                              //             : Text(
+                              //                 'Fetching News From Cache',
+                              //                 style: Theme.of(context)
+                              //                     .textTheme
+                              //                     .labelMedium,
+                              //               )
+                              //       ],
+                              //     ));
+                              return const SizedBox();
+                            },
+                          ),
+                        ],
                       ),
                     )
                   ]),
@@ -167,6 +235,7 @@ class Screen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const HomeCarousel(),
+                  const UpdateTile(),
                   Text(
                     'Events',
                     style: textTheme.titleMedium!.copyWith(
@@ -193,51 +262,61 @@ class Screen extends StatelessWidget {
                   ),
                   kHeight,
                   kHeight,
-                  Text(
-                    'General',
-                    style: textTheme.titleMedium!.copyWith(
-                        color: Colors.black, fontWeight: FontWeight.w900),
+                  Expanded(
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        Text(
+                          'General',
+                          style: textTheme.titleMedium!.copyWith(
+                              color: Colors.black, fontWeight: FontWeight.w900),
+                        ),
+                        kHeight,
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: Constants.defaultPadding / 2),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                _buildTile(context,
+                                    title: "Timetable",
+                                    ontap: () => Get.toNamed(Routes.TIMETABLE),
+                                    iconLocation: "assets/home/timetable.png"),
+                                _buildTile(context,
+                                    title: "Datesheet",
+                                    ontap: () => Get.toNamed(Routes.DATESHEET),
+                                    iconLocation: "assets/home/datesheet.png"),
+                                _buildTile(context,
+                                    title: "Freerooms",
+                                    ontap: () => Get.toNamed(Routes.FREEROOMS),
+                                    iconLocation: "assets/home/room.png"),
+                                _buildTile(context,
+                                    title: "Comparision",
+                                    iconLocation: "assets/home/menu.png"),
+                              ]),
+                        ),
+                        kHeight,
+                        kHeight,
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: Constants.defaultPadding / 2),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                _buildTile(context,
+                                    title: "Booking",
+                                    iconLocation: "assets/drawer/bookings.png"),
+                                _buildTile(context,
+                                    title: "Feedback",
+                                    iconLocation: "assets/drawer/feedback.png"),
+                                _buildTile(context, blank: true),
+                                _buildTile(context, blank: true),
+                              ]),
+                        ),
+                      ],
+                    ),
                   ),
-                  kHeight,
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: Constants.defaultPadding / 2),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildTile(context,
-                              title: "Timetable",
-                              iconLocation: "assets/home/timetable.png"),
-                          _buildTile(context,
-                              title: "Datesheet",
-                              iconLocation: "assets/home/datesheet.png"),
-                          _buildTile(context,
-                              title: "Freerooms",
-                              iconLocation: "assets/home/room.png"),
-                          _buildTile(context,
-                              title: "Comparision",
-                              iconLocation: "assets/home/menu.png"),
-                        ]),
-                  ),
-                  kHeight,
-                  kHeight,
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: Constants.defaultPadding / 2),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildTile(context,
-                              title: "Timetable",
-                              iconLocation: "assets/home/timetable.png"),
-                          _buildTile(context,
-                              title: "Datesheet",
-                              iconLocation: "assets/home/datesheet.png"),
-                          _buildTile(context, blank: true),
-                          _buildTile(context, blank: true),
-                        ]),
-                  ),
-                  const Spacer(),
+                  // const Spacer(),
                   const HomeBottomWidget()
                 ],
               ),
@@ -249,7 +328,7 @@ class Screen extends StatelessWidget {
   }
 
   _buildTile(context,
-      {String title = "", String iconLocation = "", blank = false}) {
+      {String title = "", String iconLocation = "", ontap, blank = false}) {
     final textTheme = Theme.of(context).textTheme;
     return Flexible(
       child: FractionallySizedBox(
@@ -313,7 +392,7 @@ class Screen extends StatelessWidget {
                       ),
                       splashColor: selectionColor,
                       highlightColor: Colors.transparent,
-                      onTap: () {},
+                      onTap: ontap,
                       child: Column(
                         children: [
                           Padding(

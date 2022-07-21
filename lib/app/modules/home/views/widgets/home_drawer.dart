@@ -163,19 +163,19 @@ class ButtonList extends StatelessWidget {
               title: 'Remainder', onTap: () {
             Get.toNamed(Routes.REMAINDER);
           }),
-          buildButton(context,
-              icon: const AssetImage('assets/drawer/bookings.png'),
-              title: 'Bookings',
-              onTap: () {}),
+          // buildButton(context,
+          //     icon: const AssetImage('assets/drawer/bookings.png'),
+          //     title: 'Bookings',
+          //     onTap: () {}),
           buildButton(context,
               icon: const AssetImage('assets/drawer/sync.png'),
               title: 'Synchronized', onTap: () {
             Get.toNamed(Routes.SYNC);
           }),
-          buildButton(context,
-              icon: const AssetImage('assets/drawer/feedback.png'),
-              title: 'Feedback / Report an Issue',
-              onTap: () {}),
+          // buildButton(context,
+          //     icon: const AssetImage('assets/drawer/feedback.png'),
+          //     title: 'Feedback / Report an Issue',
+          //     onTap: () {}),
           buildButton(context,
               icon: const AssetImage('assets/drawer/settings.png'),
               title: 'Settings', onTap: () {

@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/modules/ui/news/news.dart';
 import 'package:get/get.dart';
 
 import '../modules/datesheet/bindings/datesheet_binding.dart';
@@ -10,6 +11,7 @@ import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/home/views/home_view2.dart';
 import '../modules/portals/bindings/portals_binding.dart';
 import '../modules/portals/views/portals_view.dart';
 import '../modules/remainder/bindings/remainder_binding.dart';
@@ -44,7 +46,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => const HomeView(),
+      page: () => HomeView2(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -54,6 +56,10 @@ class AppPages {
     GetPage(
       name: _Paths.DIRECTOR_VISION,
       page: () => const DirectorVisionView(),
+    ),
+    GetPage(
+      name: _Paths.NEWS,
+      page: () => const News(),
     ),
     GetPage(
       name: _Paths.TIMETABLE,

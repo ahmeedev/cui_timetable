@@ -115,48 +115,7 @@ class HomeBody extends GetView<HomeController> {
                 fit: FlexFit.tight,
                 child: Column(
                   children: [
-                    Obx(
-                      () => controller.newUpdate.value
-                          ? Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: Constants.defaultPadding),
-                              child: Card(
-                                  // color: widgetColor,
-                                  elevation: Constants.defaultElevation,
-                                  shadowColor: shadowColor,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(
-                                              Constants.defaultRadius))),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(
-                                                Constants.defaultRadius)),
-                                        gradient: const LinearGradient(
-                                          colors: successGradient,
-                                        )),
-                                    child: ListTile(
-                                      title: Text('Update Available! ',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium),
-                                      trailing: ElevatedButton(
-                                        child: Text('Sync Now',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge),
-                                        onPressed: () async {
-                                          Get.toNamed(Routes.SYNC);
-                                        },
-                                      ),
-                                      // subtitle: Text('Click here to Update',
-                                      //     style: Theme.of(context).textTheme.bodyMedium),
-                                    ),
-                                  )),
-                            )
-                          : const SizedBox(),
-                    ),
+                    UpdateTile(),
                     Obx(
                       () =>
                           Get.find<SettingsController>().carousel.value == true
@@ -180,6 +139,51 @@ class HomeBody extends GetView<HomeController> {
             ],
           ),
         ));
+  }
+}
+
+class UpdateTile extends GetView<HomeController> {
+  const UpdateTile({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => controller.newUpdate.value
+          ? Padding(
+              padding: EdgeInsets.only(bottom: Constants.defaultPadding),
+              child: Card(
+                  // color: widgetColor,
+                  elevation: Constants.defaultElevation,
+                  shadowColor: shadowColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(Constants.defaultRadius))),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(Constants.defaultRadius)),
+                        gradient: const LinearGradient(
+                          colors: successGradient,
+                        )),
+                    child: ListTile(
+                      title: Text('Update Available! ',
+                          style: Theme.of(context).textTheme.titleMedium),
+                      trailing: ElevatedButton(
+                        child: Text('Sync Now',
+                            style: Theme.of(context).textTheme.labelLarge),
+                        onPressed: () async {
+                          Get.toNamed(Routes.SYNC);
+                        },
+                      ),
+                      // subtitle: Text('Click here to Update',
+                      //     style: Theme.of(context).textTheme.bodyMedium),
+                    ),
+                  )),
+            )
+          : const SizedBox(),
+    );
   }
 }
 

@@ -2,7 +2,7 @@ import 'dart:developer' as devlog;
 import 'dart:io';
 
 import 'app/modules/home/controllers/home_controller.dart';
-import 'app/modules/screen.dart';
+import 'app/modules/home/views/home_view2.dart';
 import 'app/modules/settings/controllers/settings_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'app/theme/app_constants.dart';
@@ -106,9 +106,9 @@ class MyApp extends GetView<HomeController> {
       defaultTransition: Transition.cupertino,
       transitionDuration: const Duration(milliseconds: 300),
       title: 'CUI TIMETABLE',
-      // initialRoute: AppPages.INITIAL,
-      // getPages: AppPages.routes,
-      home: Screen(),
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
+      // home: HomeView2(),
     );
   }
 }
