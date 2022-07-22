@@ -368,7 +368,7 @@ class HomeView2 extends GetView<HomeController> {
                   fit: BoxFit.scaleDown,
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: Constants.defaultPadding,
+                      horizontal: Constants.defaultPadding - 2,
                       vertical: Constants.defaultPadding / 2,
                     ),
                     child: Text(

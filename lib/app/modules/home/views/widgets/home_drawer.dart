@@ -212,7 +212,8 @@ class ButtonList extends StatelessWidget {
       color: scaffoldColor,
       child: InkWell(
         onTap: onTap,
-        splashColor: primaryColor,
+        splashColor: selectionColor,
+        highlightColor: Colors.transparent,
         child: ListTile(
             // dense: true,
             // contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
