@@ -163,8 +163,6 @@ class HomeView2 extends GetView<HomeController> {
                                       0.30 *
                                       0.12,
                                   child: DefaultTextStyle(
-                                    // softWrap: true,
-
                                     maxLines: 2,
                                     textAlign: TextAlign.start,
                                     style: textTheme.bodySmall!
@@ -190,14 +188,22 @@ class HomeView2 extends GetView<HomeController> {
                                         // ),
                                       ],
                                       onTap: () {
-                                        Get.toNamed(Routes.NEWS,
-                                            arguments: snapshot.data);
+                                        Get.toNamed(
+                                          Routes.NEWS,
+                                          arguments: snapshot.data,
+                                        );
                                       },
                                       repeatForever: true,
                                     ),
                                   ),
                                 );
                               }
+                              return Text(
+                                'Fetching news...',
+                                style: textTheme.bodySmall!
+                                    .copyWith(color: Colors.white),
+                              );
+
                               // return Obx(() => Column(
                               //       children: [
                               //         const SpinKitFadingCircle(
@@ -262,15 +268,15 @@ class HomeView2 extends GetView<HomeController> {
                   ),
                   kHeight,
                   kHeight,
+                  Text(
+                    'General',
+                    style: textTheme.titleMedium!.copyWith(
+                        color: Colors.black, fontWeight: FontWeight.w900),
+                  ),
                   Expanded(
                     child: ListView(
                       padding: EdgeInsets.zero,
                       children: [
-                        Text(
-                          'General',
-                          style: textTheme.titleMedium!.copyWith(
-                              color: Colors.black, fontWeight: FontWeight.w900),
-                        ),
                         kHeight,
                         Padding(
                           padding: EdgeInsets.only(

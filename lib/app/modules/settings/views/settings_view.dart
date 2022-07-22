@@ -57,7 +57,7 @@ class SettingsView extends GetView<SettingsController> {
                             ),
                             buildButtonList(
                                 context: context,
-                                title: 'Section',
+                                title: 'Name',
                                 obs: controller.searchBy["section"],
                                 last: true),
                             // kWidth,
@@ -85,23 +85,23 @@ class SettingsView extends GetView<SettingsController> {
               //     callback: controller.setDarkMode),
               kHeight,
               kHeight,
-              Text(
-                "Home",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(color: Colors.black),
-              ),
-              kHeight,
-              _buildSettingTile(
-                  label: "Show Carousel",
-                  value: controller.carousel,
-                  callback: controller.setCarousel),
-              kHeight,
-              _buildSettingTile(
-                  label: "Show News",
-                  value: controller.latestNews,
-                  callback: controller.setLatestNews),
+              // Text(
+              //   "Home",
+              //   style: Theme.of(context)
+              //       .textTheme
+              //       .labelLarge!
+              //       .copyWith(color: Colors.black),
+              // ),
+              // kHeight,
+              // _buildSettingTile(
+              //     label: "Show Carousel",
+              //     value: controller.carousel,
+              //     callback: controller.setCarousel),
+              // kHeight,
+              // _buildSettingTile(
+              //     label: "Show News",
+              //     value: controller.latestNews,
+              //     callback: controller.setLatestNews),
             ]),
       ),
     );

@@ -4,8 +4,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 import 'widgets/comparison_widgets.dart';
-import '../../../../theme/app_colors.dart';
-import '../../../../theme/app_constants.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_constants.dart';
 
 import '../controllers/comparison_controller.dart';
 

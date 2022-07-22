@@ -123,7 +123,7 @@ _fetchNewsFromInternet(location) async {
   var result = _purifyNoticeboardNews(
       string: html2.querySelector(".notice_board >ul >li")!.text.toString());
 
-  list.add({"title": "Noticeboard #${list.length}", "description": result});
+  list.add({"title": "Noticeboard #${list.length - 1}", "description": result});
 
   result = _purifyNoticeboardNews(
       string: result = html2
@@ -132,7 +132,7 @@ _fetchNewsFromInternet(location) async {
           .text
           .toString());
 
-  list.add({"title": "Noticeboard #${list.length}", "description": result});
+  list.add({"title": "Noticeboard #${list.length - 1}", "description": result});
 
   // putting into box for cache purpose\
   Hive.init(location);

@@ -82,7 +82,7 @@ class Header extends StatelessWidget {
                         ))),
               ),
               kHeight,
-              kHeight,
+              // kHeight,
               Text(
                 // "No details Available",
                 "Welcome, FA19-BSE-003",
@@ -142,7 +142,7 @@ class ButtonList extends StatelessWidget {
   const ButtonList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Flexible(
+    return Expanded(
       child: ListView(
         padding: EdgeInsets.zero,
         physics: BouncingScrollPhysics(),

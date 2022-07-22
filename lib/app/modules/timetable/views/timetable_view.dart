@@ -14,7 +14,7 @@ class TimetableView extends GetView<TimetableController> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: CustomScrollView(
@@ -26,7 +26,6 @@ class TimetableView extends GetView<TimetableController> {
                 children: [
                   StudentUIView(),
                   TeacherUIView(),
-                  ComparisonUiView()
                 ],
               ),
             )
@@ -63,11 +62,11 @@ class TimetableView extends GetView<TimetableController> {
               'Teacher',
               style: Theme.of(context).textTheme.labelLarge,
             )),
-            Tab(
-                child: Text(
-              'Compare',
-              style: Theme.of(context).textTheme.labelLarge,
-            )),
+            // Tab(
+            //     child: Text(
+            //   'Compare',
+            //   style: Theme.of(context).textTheme.labelLarge,
+            // )),
           ],
         ));
   }
