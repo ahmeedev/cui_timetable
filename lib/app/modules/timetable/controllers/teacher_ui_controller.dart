@@ -33,8 +33,8 @@ class TeacherUIController extends GetxController {
   }
 
   Future<void> fetchTeachers() async {
-    final box = await Hive.openBox(DBNames.info);
-    final list = box.get(DBInfo.teachers);
+    final box = await Hive.openBox(DBNames.timetableData);
+    final list = box.get(DBTimetableData.teachers);
     teachers = list ?? [];
   }
 }

@@ -19,7 +19,7 @@ class ComparisonUiController extends GetxController {
   @override
   Future<void> onInit() async {
     await fetchTeachers();
-    box = await Hive.openBox(DBNames.teachersDB);
+    box = await Hive.openBox(DBNames.timetableData);
 
     var string = '';
 
@@ -39,8 +39,8 @@ class ComparisonUiController extends GetxController {
   }
 
   Future<void> fetchTeachers() async {
-    final box = await Hive.openBox(DBNames.info);
-    final list = box.get(DBInfo.teachers);
+    final box = await Hive.openBox(DBNames.timetableData);
+    final list = box.get(DBTimetableData.sections);
     teachers = list ?? [];
   }
 
@@ -55,13 +55,14 @@ class ComparisonUiController extends GetxController {
           TextPosition(offset: textController.text.length));
       listVisible.value = false;
 
-      List list =
-          box.get(filteredList[index].toString().toLowerCase()).toList();
+      List list = box.get(DBTimetableData.teachersData)[
+          filteredList[index].toString().toLowerCase()];
       for (var element in list) {
         sections.add(element[0]);
       }
     } else {
-      List list = box.get(initialData.toLowerCase()).toList();
+      List list =
+          box.get(DBTimetableData.teachersData)[initialData.toLowerCase()];
       for (var element in list) {
         sections.add(element[0]);
       }

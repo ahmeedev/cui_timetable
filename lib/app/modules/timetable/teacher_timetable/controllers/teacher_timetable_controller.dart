@@ -59,8 +59,8 @@ class TeacherTimetableController extends GetxController {
 
   // Methods for controlling LectureTile
   openBox({required String teacher}) async* {
-    box = await Hive.openBox(DBNames.teachersDB);
-    final list = box.get(teacher.toLowerCase());
+    box = await Hive.openBox(DBNames.timetableData);
+    final list = box.get(DBTimetableData.teachersData)[teacher.toLowerCase()];
     await _setLectures(list: list, key: "10000");
     await _setLectures(list: list, key: "1000");
     await _setLectures(list: list, key: "100");

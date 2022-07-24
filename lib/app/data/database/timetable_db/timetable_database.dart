@@ -34,68 +34,71 @@ class TimetableDatabase {
     }
 
     //  =====  creating students database  ===== //
-    final box1 = await Hive.openBox(DBNames.studentsDB);
-
+    final box1 = await Hive.openBox(DBNames.timetableData);
+    Map<String, dynamic> result = {};
     for (var i in sections) {
       var lectures = data
           .toList()
           .where((element) =>
               element[0].toString().toLowerCase() == i.toLowerCase())
           .toList();
-      await box1.put(i.toLowerCase(), lectures);
+      result[i.toLowerCase()] = lectures;
     }
-    await Future.delayed(const Duration(milliseconds: 500));
-    await box1.close();
+    await box1.put(DBTimetableData.studentsData, result);
+    await Future.delayed(const Duration(milliseconds: 100));
+    // await box1.close();
 
     //  =====  creating teachers database  ===== //
-    final box2 = await Hive.openBox(DBNames.teachersDB);
-
+    // final box2 = await Hive.openBox(DBNames.teachersDB);
+    result.clear();
     for (var i in teachers) {
       var lectures = data
           .toList()
           .where((element) =>
               element[4].toString().toLowerCase() == i.toLowerCase())
           .toList();
-      await box2.put(i.toLowerCase(), lectures);
+      result[i.toLowerCase()] = lectures;
+      // result.add({i.toLowerCase(): lectures});
     }
-    await Future.delayed(const Duration(milliseconds: 500));
-    await box2.close();
+    await box1.put(DBTimetableData.teachersData, result);
+    await Future.delayed(const Duration(milliseconds: 100));
+    // await box2.close();
 
     //  =====  storing  students and teachers list  ===== //
-    final box3 = await Hive.openBox(DBNames.info);
-    await box3.put(DBInfo.sections, sections.toList());
-    await box3.put(DBInfo.teachers, teachers.toList());
-    await Future.delayed(const Duration(milliseconds: 500));
+    // final box3 = await Hive.openBox(DBNames.info);
+    await box1.put(DBTimetableData.sections, sections.toList());
+    await box1.put(DBTimetableData.teachers, teachers.toList());
+    await Future.delayed(const Duration(milliseconds: 200));
 
-    await box3.close();
+    await box1.close();
 
     // Hive.close();
-    final yearTokens = [];
     // final overallTokens = [];
 
-    final overall = [];
-    for (var element in sections) {
-      final result = element.split("-");
-      // debugPrint(result.toString());
-      yearTokens.add(result[0]);
-      // sectionTokens.add(result[1]);
-      var value = "";
-      for (var i = 2; i < result.length; i++) {
-        value += result[i];
-        if (i != result.length - 1) {
-          value += '-';
-        }
-      }
+    // final yearTokens = [];
+    // final overall = [];
+    // for (var element in sections) {
+    //   final result = element.split("-");
+    //   // debugPrint(result.toString());
+    //   yearTokens.add(result[0]);
+    //   // sectionTokens.add(result[1]);
+    //   var value = "";
+    //   for (var i = 2; i < result.length; i++) {
+    //     value += result[i];
+    //     if (i != result.length - 1) {
+    //       value += '-';
+    //     }
+    //   }
 
-      overall.add([result[0], result[1], value]);
-    }
-    yearTokens.sort();
-    debugPrint(overall.toString());
-    // print(yearTokens.toSet());
-    final box = await Hive.openBox(DBNames.general);
-    await box.put(DBGeneral.yearTokens, yearTokens.toSet().toList());
+    // //   overall.add([result[0], result[1], value]);
+    // }
+    // yearTokens.sort();
+    // debugPrint(overall.toString());
+    // // print(yearTokens.toSet());
+    // final box = await Hive.openBox(DBNames.general);
+    // await box.put(DBGeneral.yearTokens, yearTokens.toSet().toList());
 
-    await box.put(DBGeneral.overallTokens, overall.toSet().toList());
+    // await box.put(DBGeneral.overallTokens, overall.toSet().toList());
     // await box.put(DBGeneral.sectionTokens, sectionTokens.toSet().toList());
     // await box.put(DBGeneral.sectionVariantsTokens,
     //     sectionVariantsTokens.toSet().toList());
@@ -105,22 +108,8 @@ class TimetableDatabase {
   }
 
   Future<void> deleteData() async {
-    var box = await Hive.openBox(DBNames.info);
-    try {
-      var sections = box.get(DBInfo.sections);
-      for (var i in sections) {
-        // final box = await Hive.openBox(i);
-        Hive.deleteBoxFromDisk(i);
-      }
-      var teachers = box.get(DBInfo.teachers);
-      for (var i in teachers) {
-        Hive.deleteBoxFromDisk(i);
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    } finally {
-      box.deleteAll([DBInfo.sections, DBInfo.teachers]);
-      await Future.delayed(const Duration(milliseconds: 1000));
-    }
+    var box = await Hive.openBox(DBNames.timetableData);
+    await box.clear();
+    await Future.delayed(const Duration(milliseconds: 50));
   }
 }

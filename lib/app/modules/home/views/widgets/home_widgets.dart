@@ -119,7 +119,7 @@ class HomeBody extends GetView<HomeController> {
                     Obx(
                       () =>
                           Get.find<SettingsController>().carousel.value == true
-                              ? const HomeCarousel()
+                              ? HomeCarousel()
                               : const SizedBox(),
                     ),
                     Obx(
@@ -189,7 +189,7 @@ class UpdateTile extends GetView<HomeController> {
 
 /// Carousel for home screen
 class HomeCarousel extends GetView<HomeController> {
-  const HomeCarousel({Key? key}) : super(key: key);
+  HomeCarousel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -206,17 +206,18 @@ class HomeCarousel extends GetView<HomeController> {
                   padding: EdgeInsets.all(Constants.defaultPadding / 2),
                   child: CarouselSlider(
                     options: CarouselOptions(
-                        autoPlay: true,
-                        clipBehavior: Clip.antiAlias,
-                        viewportFraction: 1,
-                        // padEnds: false,
-                        // pageSnapping: true,
+                      autoPlay: true,
+                      clipBehavior: Clip.antiAlias,
+                      viewportFraction: 1,
+                      // padEnds: false,
+                      // pageSnapping: true,
 
-                        enlargeCenterPage: true,
-                        autoPlayAnimationDuration: const Duration(seconds: 3),
-                        autoPlayInterval: const Duration(seconds: 5),
-                        scrollPhysics: const BouncingScrollPhysics(),
-                        height: MediaQuery.of(context).size.height / 6),
+                      enlargeCenterPage: true,
+                      autoPlayAnimationDuration: const Duration(seconds: 3),
+                      autoPlayInterval: const Duration(seconds: 5),
+                      scrollPhysics: const BouncingScrollPhysics(),
+                      height: MediaQuery.of(context).size.height * 0.15,
+                    ),
                     items: snapshot.data!.map((e) {
                       return Stack(
                         children: [
@@ -227,7 +228,7 @@ class HomeCarousel extends GetView<HomeController> {
                                 arguments: [
                                   'Image Detail',
                                   e["img"]!,
-                                  e["title"]!
+                                  e["title"]!,
                                 ],
                               );
                               // duration: const Duration(microseconds: 0));
@@ -235,12 +236,14 @@ class HomeCarousel extends GetView<HomeController> {
                             // child: Hero(
                             // tag: 'img',
                             child: Container(
+                                clipBehavior: Clip.antiAlias,
                                 width: MediaQuery.of(context).size.width,
                                 // margin: EdgeInsets.symmetric(horizontal: 2.0),
                                 decoration: BoxDecoration(
                                   // boxShadow: [
                                   //   BoxShadow(color: Colors.black)
                                   // ],
+
                                   color: widgetColor,
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(Constants.defaultRadius)),
@@ -248,14 +251,17 @@ class HomeCarousel extends GetView<HomeController> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(Constants.defaultRadius)),
-                                  child: CachedNetworkImage(
-                                    imageUrl: e["img"]!,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, string) {
-                                      return const SpinKitFadingCircle(
-                                        color: primaryColor,
-                                      );
-                                    },
+                                  child: Hero(
+                                    tag: 'hero',
+                                    child: CachedNetworkImage(
+                                      imageUrl: e["img"]!,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, string) {
+                                        return const SpinKitFadingCircle(
+                                          color: primaryColor,
+                                        );
+                                      },
+                                    ),
                                   ),
                                 )),
                           ),

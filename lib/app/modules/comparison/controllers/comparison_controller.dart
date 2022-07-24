@@ -8,8 +8,8 @@ class ComparisonController extends GetxController {
   var monToThursSlots = [];
   var friSlots = [];
   var currentTimeSlots = [];
-  late final Box studentsDB;
-  late final Box teachersDB;
+  late final Box timetable;
+  // late final Box teachersDB;
 
   var mon = true.obs; //! mon is selected by default
   var tue = false.obs;
@@ -33,8 +33,7 @@ class ComparisonController extends GetxController {
     currentTimeSlots = monToThursSlots = await box.get(DBTimeSlots.monToThur);
     friSlots = await box.get(DBTimeSlots.fri);
 
-    teachersDB = await Hive.openBox(DBNames.teachersDB);
-    studentsDB = await Hive.openBox(DBNames.studentsDB);
+    timetable = await Hive.openBox(DBNames.timetableData);
 
     await openBox();
   }
@@ -98,10 +97,10 @@ class ComparisonController extends GetxController {
   }
 
   List _calculateLecturesSlot({required String dayKey}) {
-    final List teachers =
-        teachersDB.get(Get.arguments[0].toString().toLowerCase());
-    final List students =
-        studentsDB.get(Get.arguments[1].toString().toLowerCase());
+    final List teachers = timetable.get(DBTimetableData.teachersData)[
+        Get.arguments[0].toString().toLowerCase()];
+    final List students = timetable.get(DBTimetableData.studentsData)[
+        Get.arguments[1].toString().toLowerCase()];
 
     final result1 =
         teachers.where((element) => element[3].toString() == dayKey);

@@ -1,6 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/data/database/timetable_db/timetable_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../theme/app_colors.dart';
@@ -9,6 +12,8 @@ import '../../../widgets/global_widgets.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/home_drawer.dart';
 import 'widgets/home_widgets.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:http/http.dart' as http;
 
 class HomeView2 extends GetView<HomeController> {
   HomeView2({Key? key}) : super(key: key);
@@ -180,12 +185,6 @@ class HomeView2 extends GetView<HomeController> {
                                                 const Duration(seconds: 5),
                                           );
                                         })
-
-                                        //  RotateAnimatedText(
-                                        //   'Admission open for new students',
-                                        //   duration:
-                                        //       const Duration(seconds: 5),
-                                        // ),
                                       ],
                                       onTap: () {
                                         Get.toNamed(
@@ -203,28 +202,6 @@ class HomeView2 extends GetView<HomeController> {
                                 style: textTheme.bodySmall!
                                     .copyWith(color: Colors.white),
                               );
-
-                              // return Obx(() => Column(
-                              //       children: [
-                              //         const SpinKitFadingCircle(
-                              //           color: primaryColor,
-                              //         ),
-                              //         controller.internet.value
-                              //             ? Text(
-                              //                 'Fetching News From Internet',
-                              //                 style: Theme.of(context)
-                              //                     .textTheme
-                              //                     .labelMedium,
-                              //               )
-                              //             : Text(
-                              //                 'Fetching News From Cache',
-                              //                 style: Theme.of(context)
-                              //                     .textTheme
-                              //                     .labelMedium,
-                              //               )
-                              //       ],
-                              //     ));
-                              return const SizedBox();
                             },
                           ),
                         ],
@@ -240,7 +217,7 @@ class HomeView2 extends GetView<HomeController> {
                 // mainAxisAlignment: ,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const HomeCarousel(),
+                  HomeCarousel(),
                   const UpdateTile(),
                   Text(
                     'Events',
@@ -256,7 +233,17 @@ class HomeView2 extends GetView<HomeController> {
                         children: [
                           _buildTile(context,
                               title: "Sports",
-                              iconLocation: "assets/home/timetable.png"),
+                              iconLocation: "assets/home/timetable.png",
+                              ontap: () async {
+                            // final database = TimetableDatabase();
+                            // database.createDatabase();
+
+                            final box =
+                                await Hive.openBox(DBNames.timetableData);
+                            debugPrint(box
+                                .get(DBTimetableData.studentsData)
+                                .toString());
+                          }),
                           _buildTile(context,
                               title: "Meetups",
                               iconLocation: "assets/home/datesheet.png"),

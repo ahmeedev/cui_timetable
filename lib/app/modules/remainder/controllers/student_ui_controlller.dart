@@ -37,8 +37,8 @@ class RemainderStudentUIController extends GetxController {
   }
 
   Future<void> fetchSections() async {
-    final box = await Hive.openBox(DBNames.info);
-    final list = await box.get(DBInfo.sections);
+    final box = await Hive.openBox(DBNames.timetableData);
+    final list = await box.get(DBTimetableData.sections);
 
     sections = list ?? [];
   }

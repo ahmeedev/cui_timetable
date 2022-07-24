@@ -31,8 +31,8 @@ class RemainderTeacherUIController extends GetxController {
   }
 
   Future<void> fetchTeachers() async {
-    final box = await Hive.openBox(DBNames.info);
-    final list = await box.get(DBInfo.teachers);
+    final box = await Hive.openBox(DBNames.timetableData);
+    final list = await box.get(DBTimetableData.teachers);
     teachers = list ?? [];
   }
 }

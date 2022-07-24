@@ -4,8 +4,9 @@ class DBNames {
   static const info = "info";
   static const timeSlots = "timeSlots";
 
-  static const studentsDB = "studentsDB";
-  static const teachersDB = "teachersDB";
+  static const timetableData = "timetableData";
+  // static const studentsDB = "studentsDB";
+  // static const teachersDB = "teachersDB";
 
   static const freerooms = "freerooms";
   static const datesheetStudentsDB = "datesheetStudentsDB";
@@ -29,13 +30,11 @@ class DBGeneral {
 class DBInfo {
   static const version = "version";
   static const lastUpdate = "lastUpdate";
-  static const sections = 'sections';
-  static const teachers = 'teachers';
+  // static const sections = 'sections';
+  // static const teachers = 'teachers';
   static const datesheetSections = 'datesheetSections';
   static const datesheetTeachers = 'datesheetTeachers';
 
-  // static const searchSection = 'searchSection';
-  // static const searchTeacher = 'searchTeacher';
   static const searchComparisonTeacher = 'searchComparisonTeacher';
 
   static const datesheetSearchSection = 'datesheetSearchSection';
@@ -43,6 +42,27 @@ class DBInfo {
 
   static const newUser = 'newUser';
   static const news = 'news';
+}
+
+class DBTimetableData {
+  static const sections = "sections";
+  static const teachers = "teachers";
+
+  static const studentsData = "studentsData";
+  static const teachersData = "teachersData";
+}
+
+class DBTimetableCache {
+  static const studentSection = 'studentSection';
+
+  static const studentYearToken = 'studentYearToken';
+  static const studentSecToken = 'studentSecToken';
+  static const studentSecVToken = 'studentSecVToken';
+
+  static const studentHistory = "studentHistory";
+
+  static const teacherName = 'teacherName';
+  static const teacherHistory = "teacherHistory";
 }
 
 class DBTimeSlots {
@@ -70,17 +90,4 @@ class DBSettings {
 
   static const carousel = 'carousel';
   static const latestNews = 'latestNews';
-}
-
-class DBTimetableCache {
-  static const studentSection = 'studentSection';
-
-  static const studentYearToken = 'studentYearToken';
-  static const studentSecToken = 'studentSecToken';
-  static const studentSecVToken = 'studentSecVToken';
-
-  static const studentHistory = "studentHistory";
-
-  static const teacherName = 'teacherName';
-  static const teacherHistory = "teacherHistory";
 }

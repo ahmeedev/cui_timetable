@@ -7,6 +7,8 @@ import '../../controllers/student_timetable_controller.dart';
 import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_constants.dart';
 
+// import 'package:awesome_extensions/awesome_extensions.dart';
+
 class DayTile extends GetView<StudentTimetableController> {
   late final String day;
   late final String dayKey;
@@ -140,13 +142,15 @@ class LectureDetailsTile extends StatelessWidget {
   final String teacher;
   final String room;
   final dynamic time;
+  final bool lab;
 
   const LectureDetailsTile(
       {Key? key,
       required this.subject,
       required this.teacher,
       required this.room,
-      required this.time})
+      required this.time,
+      this.lab = false})
       : super(key: key);
 
   @override
@@ -154,123 +158,162 @@ class LectureDetailsTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(Constants.defaultPadding / 2, 0,
           Constants.defaultPadding / 2, Constants.defaultPadding / 2),
-      child: Card(
-        // color: widgetColor,
-        // elevation: Constants.defaultElevation,
-        // shadowColor: shadowColor,
-        // shape: RoundedRectangleBorder(
-        //     borderRadius:
-        //         BorderRadius.all(Radius.circular(Constants.defaultRadius))),
-        child: Padding(
-          padding: EdgeInsets.all(Constants.defaultPadding),
-          child: IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
+      child: Stack(
+        children: [
+          Card(
+            // color: widgetColor,
+            // elevation: Constants.defaultElevation,
+            // shadowColor: shadowColor,
+            // shape: RoundedRectangleBorder(
+            //     borderRadius:
+            //         BorderRadius.all(Radius.circular(Constants.defaultRadius))),
+            child: Padding(
+              padding: EdgeInsets.all(Constants.defaultPadding),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      time.toString().split('-')[0],
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    const Text('|'),
-                    const Text('|'),
-                    Text(
-                      time.toString().split('-')[1],
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                const VerticalDivider(
-                  color: primaryColor,
-                  thickness: 2.0,
-                  // indent: 4,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: Constants.defaultPadding / 2,
-                        right: Constants.defaultPadding / 2),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: textFieldColor,
-                              borderRadius: BorderRadius.circular(
-                                  Constants.defaultRadius)),
-                          child: Padding(
-                            padding: EdgeInsets.all(Constants.defaultPadding),
-                            child: Text(
-                              subject.toString(),
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .fontSize! +
-                                          2),
-                            ),
-                          ),
+                        Text(
+                          time.toString().split('-')[0],
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          children: [
-                            const ImageIcon(
-                              AssetImage('assets/home/room.png'),
-                              color: primaryColor,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(room.toString(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            const ImageIcon(
-                              AssetImage('assets/timetable/professor.png'),
-                              color: primaryColor,
-                            ),
-                            const SizedBox(width: 5),
-                            Flexible(
-                              child: Text(teacher.toString(),
-                                  overflow: TextOverflow.visible,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(fontWeight: FontWeight.bold)),
-                            ),
-                          ],
-                        ),
+                        const Text('|'),
+                        const Text('|'),
+                        Text(
+                          time.toString().split('-')[1],
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        )
                       ],
                     ),
-                  ),
+                    const VerticalDivider(
+                      color: primaryColor,
+                      thickness: 2.0,
+                      // indent: 4,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: Constants.defaultPadding / 2,
+                            right: Constants.defaultPadding / 2),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: textFieldColor,
+                                  borderRadius: BorderRadius.circular(
+                                      Constants.defaultRadius)),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.all(Constants.defaultPadding),
+                                child: Text(
+                                  subject.toString(),
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                          fontStyle: FontStyle.italic,
+                                          fontSize: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .fontSize! +
+                                              2),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Row(
+                              children: [
+                                const ImageIcon(
+                                  AssetImage('assets/home/room.png'),
+                                  color: primaryColor,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(room.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                const ImageIcon(
+                                  AssetImage('assets/timetable/professor.png'),
+                                  color: primaryColor,
+                                ),
+                                const SizedBox(width: 5),
+                                Flexible(
+                                  child: Text(teacher.toString(),
+                                      overflow: TextOverflow.visible,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold)),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+          lab == false
+              ? const SizedBox()
+              : Positioned(
+                  // top: 4,
+                  right: 4,
+                  bottom: 3,
+
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(Constants.defaultRadius),
+                          bottomRight: Radius.circular(Constants.defaultRadius),
+                        )),
+                    height: Constants.defaultPadding * 4,
+                    // width: context.width * 0.4,
+                    // height: context.height,
+                    child: RotatedBox(
+                      quarterTurns: 3,
+                      child: Padding(
+                        padding: EdgeInsets.all(Constants.defaultPadding / 2),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text('Lab',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(color: Colors.white)),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+        ],
       ),
     );
   }
