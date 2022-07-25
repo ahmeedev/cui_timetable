@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:logger/logger.dart';
 
 import '../../../../data/database/database_constants.dart';
 import '../../../../data/models/timetable/student_timetable/student_timetable.dart';

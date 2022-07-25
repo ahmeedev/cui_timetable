@@ -60,7 +60,8 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
               child: Obx(() => FractionallySizedBox(
                     widthFactor: 1,
                     heightFactor: 1,
-                    child: controller.daywiseLectures.isEmpty
+                    child: controller.daywiseLectures["lectures"] == null ||
+                            controller.daywiseLectures["lectures"].isEmpty
                         ? Center(
                             child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,

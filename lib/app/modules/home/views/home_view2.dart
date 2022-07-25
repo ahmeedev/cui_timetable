@@ -244,9 +244,9 @@ class HomeView2 extends GetView<HomeController> {
 
                             // final box =
                             //     await Hive.openBox(DBNames.timetableData);
-                            // final result = box.get(DBTimetableData
-                            //     .teachersData)["cve engr. bilal rafiq"][0];
-                            // print(result.teacher);
+                            // final result =
+                            //     box.get(DBTimetableData.teachersData);
+                            // print(result);
                             // var logger = Logger();
                             // logger.w("Here");
 

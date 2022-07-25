@@ -65,7 +65,8 @@ class TeacherTimetableView extends GetView<TeacherTimetableController> {
               child: Obx(() => FractionallySizedBox(
                     widthFactor: 1,
                     heightFactor: 1,
-                    child: controller.daywiseLectures.isEmpty
+                    child: controller.daywiseLectures["lectures"] == null ||
+                            controller.daywiseLectures["lectures"].isEmpty
                         ? Center(
                             child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -94,23 +95,103 @@ class TeacherTimetableView extends GetView<TeacherTimetableController> {
                           ))
                         : ListView.builder(
                             physics: const BouncingScrollPhysics(),
-                            itemCount: controller.daywiseLectures.length,
+                            itemCount:
+                                controller.daywiseLectures["lectures"].length,
                             itemBuilder: (context, index) {
-                              return LectureDetailsTile(
-                                section: controller.daywiseLectures[index][0],
-                                subject: controller.daywiseLectures[index][1],
-                                room: controller.daywiseLectures[index][5],
-                                time: controller.currentTimeSlots[int.parse(
-                                            controller.daywiseLectures[index][2]
-                                                .toString()) -
-                                        1]
-                                    .toString(),
-                              );
+                              if (controller.daywiseLectures["combineIndexes"]
+                                  .contains(index)) {
+                                if (controller
+                                    .daywiseLectures["actualTileIndexes"]
+                                    .contains(index)) {
+                                  if (controller
+                                          .daywiseLectures["subjectAndTime"] ==
+                                      true) {
+                                    return LectureDetailsTile(
+                                      lab: true,
+                                      section: controller
+                                              .daywiseLectures["lectures"]
+                                                  [index]
+                                              .section +
+                                          ",\n" +
+                                          controller
+                                              .daywiseLectures["lectures"]
+                                                  [index + 1]
+                                              .section,
+                                      subject: controller
+                                          .daywiseLectures["lectures"][index]
+                                          .subject,
+                                      room: controller
+                                          .daywiseLectures["lectures"][index]
+                                          .room,
+                                      time: controller
+                                          .currentTimeSlots[int.parse(controller
+                                                  .daywiseLectures["lectures"]
+                                                      [index]
+                                                  .slot
+                                                  .toString()) -
+                                              1]
+                                          .toString(),
+                                    );
+                                  }
+                                  // subjectAndSection=true
+                                  String time = _fetchNewTime(index: index);
+                                  return LectureDetailsTile(
+                                      lab: true,
+                                      section: controller
+                                          .daywiseLectures["lectures"][index]
+                                          .section,
+                                      subject: controller
+                                          .daywiseLectures["lectures"][index]
+                                          .subject,
+                                      room: controller
+                                          .daywiseLectures["lectures"][index]
+                                          .room,
+                                      time: time);
+
+                                  // String time = _fetchNewTime(index: index);
+
+                                } else {
+                                  return const SizedBox();
+                                }
+                              } else {
+                                return LectureDetailsTile(
+                                  section: controller
+                                      .daywiseLectures["lectures"][index]
+                                      .section,
+                                  subject: controller
+                                      .daywiseLectures["lectures"][index]
+                                      .subject,
+                                  room: controller
+                                      .daywiseLectures["lectures"][index].room,
+                                  time: controller.currentTimeSlots[int.parse(
+                                              controller
+                                                  .daywiseLectures["lectures"]
+                                                      [index]
+                                                  .slot
+                                                  .toString()) -
+                                          1]
+                                      .toString(),
+                                );
+                              }
                             },
                           ),
                   )),
             ),
           ],
         ));
+  }
+
+  String _fetchNewTime({required index}) {
+    final time1 = controller.currentTimeSlots[int.parse(
+                controller.daywiseLectures["lectures"][index].slot.toString()) -
+            1]
+        .toString()
+        .split('-');
+    final time2 = controller.currentTimeSlots[int.parse(
+            controller.daywiseLectures["lectures"][index].slot.toString())]
+        .toString()
+        .split("-");
+
+    return '${time1[0].trim()}-${time2[1].trim()}';
   }
 }
