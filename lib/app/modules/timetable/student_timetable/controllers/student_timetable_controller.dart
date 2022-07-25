@@ -1,8 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:logger/logger.dart';
 
 import '../../../../data/database/database_constants.dart';
+import '../../../../data/models/timetable/student_timetable/student_timetable.dart';
 
 class StudentTimetableController extends GetxController {
   var monToThursSlots = [];
@@ -18,8 +20,7 @@ class StudentTimetableController extends GetxController {
   var daywiseLectures = {}.obs; //* Current day lectures.
 
   var monLectures = {};
-  // var tueLectures = [];
-  Map tueLectures = {};
+  var tueLectures = {};
   var wedLectures = {};
   var thuLectures = {};
   var friLectures = {};
@@ -60,7 +61,10 @@ class StudentTimetableController extends GetxController {
   openBox({required String section}) async* {
     final box = await Hive.openBox(DBNames.timetableData);
 
-    final list = box.get(DBTimetableData.studentsData)[section.toLowerCase()];
+    List<StudentTimetable> list =
+        List.from(box.get(DBTimetableData.studentsData)[section.toLowerCase()]);
+    // final log = Logger();
+    // log.d(list.runtimeType);
     await _setLectures(list: list, key: "10000");
     await _setLectures(list: list, key: "1000");
     await _setLectures(list: list, key: "100");
@@ -72,11 +76,12 @@ class StudentTimetableController extends GetxController {
     yield lecturesCount;
   }
 
-  _setLectures({required list, required String key}) {
+  _setLectures({required List<StudentTimetable> list, required String key}) {
     if (key == "10000") {
-      List lectures =
-          list.where((element) => element[3].toString() == key).toList();
-      lectures.sort((a, b) => a[2].compareTo(b[2]));
+      List<StudentTimetable> lectures =
+          list.where((element) => element.day == key).toList();
+
+      lectures.sort((a, b) => a.slot.compareTo(b.slot));
       final result = _calculateCombineIndexes(lectures);
 
       monLectures['lectures'] = lectures;
@@ -85,10 +90,9 @@ class StudentTimetableController extends GetxController {
       lecturesCount[key] =
           "${lectures.length - result['actualTileIndexes'].length}";
     } else if (key == "1000") {
-      List lectures =
-          list.where((element) => element[3].toString() == key).toList();
-      debugPrint(lectures[0][2].runtimeType.toString());
-      lectures.sort((a, b) => a[2].compareTo(b[2]));
+      List<StudentTimetable> lectures =
+          list.where((element) => element.day.toString() == key).toList();
+      lectures.sort((a, b) => a.slot.compareTo(b.slot));
 
       final result = _calculateCombineIndexes(lectures);
 
@@ -100,9 +104,9 @@ class StudentTimetableController extends GetxController {
       lecturesCount[key] =
           "${lectures.length - result['actualTileIndexes'].length}";
     } else if (key == "100") {
-      List lectures =
-          list.where((element) => element[3].toString() == key).toList();
-      lectures.sort((a, b) => a[2].compareTo(b[2]));
+      List<StudentTimetable> lectures =
+          list.where((element) => element.day.toString() == key).toList();
+      lectures.sort((a, b) => a.slot.compareTo(b.slot));
       final result = _calculateCombineIndexes(lectures);
       wedLectures['lectures'] = lectures;
       wedLectures['combineIndexes'] = result['combineIndexes'];
@@ -110,9 +114,9 @@ class StudentTimetableController extends GetxController {
       lecturesCount[key] =
           "${lectures.length - result['actualTileIndexes'].length}";
     } else if (key == "10") {
-      List lectures =
-          list.where((element) => element[3].toString() == key).toList();
-      lectures.sort((a, b) => a[2].compareTo(b[2]));
+      List<StudentTimetable> lectures =
+          list.where((element) => element.day.toString() == key).toList();
+      lectures.sort((a, b) => a.slot.compareTo(b.slot));
 
       final result = _calculateCombineIndexes(lectures);
 
@@ -122,28 +126,29 @@ class StudentTimetableController extends GetxController {
       lecturesCount[key] =
           "${lectures.length - result['actualTileIndexes'].length}";
     } else if (key == "1") {
-      List lectures =
-          list.where((element) => element[3].toString() == key).toList();
+      List<StudentTimetable> lectures =
+          list.where((element) => element.day.toString() == key).toList();
+      lectures.sort((a, b) => a.slot.compareTo(b.slot));
 
       final result = _calculateCombineIndexes(lectures);
 
       friLectures['lectures'] = lectures;
       friLectures['combineIndexes'] = result['combineIndexes'];
       friLectures['actualTileIndexes'] = result['actualTileIndexes'];
-      lectures.sort((a, b) => a[2].compareTo(b[2]));
       lecturesCount[key] =
           "${lectures.length - result['actualTileIndexes'].length}";
     }
   }
 
-  Map<String, dynamic> _calculateCombineIndexes(List<dynamic> lectures) {
+  Map<String, dynamic> _calculateCombineIndexes(
+      List<StudentTimetable> lectures) {
     var list1 = [];
     var actualTileIndexes = [];
     // list2.contains(2);
     for (var i = 0; i < lectures.length; i++) {
       if (i != lectures.length - 1) {
-        if (lectures[i][1] == lectures[i + 1][1] &&
-            lectures[i][4] == lectures[i + 1][4]) {
+        if (lectures[i].subject == lectures[i + 1].subject &&
+            lectures[i].teacher == lectures[i + 1].teacher) {
           list1.add(i);
           actualTileIndexes.add(i);
           list1.add(i + 1);

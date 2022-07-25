@@ -100,15 +100,15 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                                   String time = _fetchNewTime(index: index);
                                   return LectureDetailsTile(
                                       lab: true,
-                                      subject:
-                                          controller.daywiseLectures["lectures"]
-                                              [index][1],
-                                      teacher:
-                                          controller.daywiseLectures["lectures"]
-                                              [index][4],
-                                      room:
-                                          controller.daywiseLectures["lectures"]
-                                              [index][5],
+                                      subject: controller
+                                          .daywiseLectures["lectures"][index]
+                                          .subject,
+                                      teacher: controller
+                                          .daywiseLectures["lectures"][index]
+                                          .teacher,
+                                      room: controller
+                                          .daywiseLectures["lectures"][index]
+                                          .room,
                                       time: time);
                                 } else {
                                   return const SizedBox();
@@ -116,15 +116,19 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                               } else {
                                 return LectureDetailsTile(
                                     subject: controller
-                                        .daywiseLectures["lectures"][index][1],
+                                        .daywiseLectures["lectures"][index]
+                                        .subject,
                                     teacher: controller
-                                        .daywiseLectures["lectures"][index][4],
-                                    room: controller.daywiseLectures["lectures"]
-                                        [index][5],
+                                        .daywiseLectures["lectures"][index]
+                                        .teacher,
+                                    room: controller
+                                        .daywiseLectures["lectures"][index]
+                                        .room,
                                     time: controller.currentTimeSlots[int.parse(
                                                 controller
                                                     .daywiseLectures["lectures"]
-                                                        [index][2]
+                                                        [index]
+                                                    .slot
                                                     .toString()) -
                                             1]
                                         .toString());
@@ -139,12 +143,12 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
 
   String _fetchNewTime({required index}) {
     final time1 = controller.currentTimeSlots[int.parse(
-                controller.daywiseLectures["lectures"][index][2].toString()) -
+                controller.daywiseLectures["lectures"][index].slot.toString()) -
             1]
         .toString()
         .split('-');
     final time2 = controller.currentTimeSlots[int.parse(
-            controller.daywiseLectures["lectures"][index][2].toString())]
+            controller.daywiseLectures["lectures"][index].slot.toString())]
         .toString()
         .split("-");
 

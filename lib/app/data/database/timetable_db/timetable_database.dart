@@ -1,7 +1,10 @@
+import 'package:cui_timetable/app/data/models/timetable/teacher_timetable/teacher_timetable.dart';
+import 'package:cui_timetable/main.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
 
+import '../../models/timetable/student_timetable/student_timetable.dart';
 import '../database_constants.dart';
 import '../database_utilities_methods.dart';
 
@@ -21,6 +24,7 @@ class TimetableDatabase {
   Future<Future<int>> insertTimetableData(
       {required String filePath, required List<dynamic> data}) async {
     Hive.init(filePath); // initialize the data, bcz of their separate isolate.
+    initlializeHiveAdapters();
     await deleteData();
     // fetch sections as well as teachers.
     final sections = <String>{};
@@ -42,7 +46,20 @@ class TimetableDatabase {
           .where((element) =>
               element[0].toString().toLowerCase() == i.toLowerCase())
           .toList();
-      result[i.toLowerCase()] = lectures;
+      List<StudentTimetable> studentsData = [];
+      for (var element in lectures) {
+        final studentTimetable = StudentTimetable(
+          section: element[0].toString(),
+          subject: element[1].toString(),
+          slot: int.parse(element[2].toString()),
+          day: element[3].toString(),
+          teacher: element[4].toString(),
+          room: element[5].toString(),
+        );
+        studentsData.add(studentTimetable);
+      }
+
+      result[i.toLowerCase()] = studentsData;
     }
     await box1.put(DBTimetableData.studentsData, result);
     await Future.delayed(const Duration(milliseconds: 100));
@@ -57,7 +74,22 @@ class TimetableDatabase {
           .where((element) =>
               element[4].toString().toLowerCase() == i.toLowerCase())
           .toList();
-      result[i.toLowerCase()] = lectures;
+
+      List<TeacherTimetable> teachersData = [];
+      for (var element in lectures) {
+        final teacherTimetable = TeacherTimetable(
+          section: element[0].toString(),
+          subject: element[1].toString(),
+          slot: int.parse(element[2].toString()),
+          day: element[3].toString(),
+          teacher: element[4].toString(),
+          room: element[5].toString(),
+        );
+        teachersData.add(teacherTimetable);
+      }
+
+      result[i.toLowerCase()] = teachersData;
+
       // result.add({i.toLowerCase(): lectures});
     }
     await box1.put(DBTimetableData.teachersData, result);

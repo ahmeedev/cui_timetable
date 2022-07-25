@@ -55,10 +55,6 @@ class StudentUIController extends GetxController {
       var secVToken =
           await box4.get(DBTimetableCache.studentSecVToken, defaultValue: "");
 
-      print("Year token  $yearToken");
-      print("sec token  $secToken");
-      print("secb token  $secVToken");
-
       yearTokenSelected.value = yearToken;
 
       changeSectionTokens(yearToken,

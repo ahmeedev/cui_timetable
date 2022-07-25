@@ -1,4 +1,3 @@
-import '../../../../objectbox.g.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,11 +12,9 @@ class RemainderStudentUIController extends GetxController {
   var listVisible = true.obs;
   // var dialogHistoryList = [].obs;
 
-  late Store store;
   @override
   Future<void> onInit() async {
     await fetchSections();
-    store = await openStore();
 
     // var string = '';
 

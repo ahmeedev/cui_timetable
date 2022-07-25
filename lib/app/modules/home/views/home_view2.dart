@@ -1,10 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cui_timetable/app/data/database/database_constants.dart';
-import 'package:cui_timetable/app/data/database/timetable_db/timetable_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import '../../../data/database/timetable_db/timetable_database.dart';
 import '../../../routes/app_pages.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_constants.dart';
@@ -12,8 +12,6 @@ import '../../../widgets/global_widgets.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/home_drawer.dart';
 import 'widgets/home_widgets.dart';
-import 'package:html/dom.dart' as dom;
-import 'package:http/http.dart' as http;
 
 class HomeView2 extends GetView<HomeController> {
   HomeView2({Key? key}) : super(key: key);
@@ -83,7 +81,13 @@ class HomeView2 extends GetView<HomeController> {
                 onTap: () {
                   _key.currentState!.openDrawer();
                 },
-                child: const ImageIcon(AssetImage('assets/drawer/menu.png'))),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: ImageIcon(
+                    const AssetImage('assets/drawer/menu.png'),
+                    size: Constants.iconSize,
+                  ),
+                )),
             // actions: [Icon(Icons.menu)],
             expandedHeight: height * 0.25,
             flexibleSpace: ClipRRect(
@@ -238,11 +242,19 @@ class HomeView2 extends GetView<HomeController> {
                             // final database = TimetableDatabase();
                             // database.createDatabase();
 
-                            final box =
-                                await Hive.openBox(DBNames.timetableData);
-                            debugPrint(box
-                                .get(DBTimetableData.studentsData)
-                                .toString());
+                            // final box =
+                            //     await Hive.openBox(DBNames.timetableData);
+                            // final result = box.get(DBTimetableData
+                            //     .teachersData)["cve engr. bilal rafiq"][0];
+                            // print(result.teacher);
+                            // var logger = Logger();
+                            // logger.w("Here");
+
+                            // final result =
+                            //     box.get(DBTimetableData.studentsData);
+                            // final a = result['fa21-bscve-b5'];
+                            // final b = List<StudentTimetable>.from(a);
+                            // debugPrint(b.runtimeType.toString());
                           }),
                           _buildTile(context,
                               title: "Meetups",
@@ -397,7 +409,7 @@ class HomeView2 extends GetView<HomeController> {
                             //     top: Constants.defaultPadding / 2),
                             child: ImageIcon(
                               AssetImage(iconLocation),
-                              size: Constants.iconSize,
+                              // size: Constants.iconSize,
                               color: primaryColor,
                             ),
                           ),

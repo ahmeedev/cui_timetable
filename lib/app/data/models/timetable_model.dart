@@ -1,9 +1,9 @@
-class Timetable {
+class TimetableSlots {
   Lectures? lectures;
 
-  Timetable({this.lectures});
+  TimetableSlots({this.lectures});
 
-  Timetable.fromJson(Map<String, dynamic> json) {
+  TimetableSlots.fromJson(Map<String, dynamic> json) {
     lectures =
         json['lectures'] != null ? Lectures?.fromJson(json['lectures']) : null;
   }

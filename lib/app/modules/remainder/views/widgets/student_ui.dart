@@ -1,7 +1,4 @@
 import '../../controllers/student_ui_controlller.dart';
-import '../../models/user.dart';
-import '../../../../../objectbox.g.dart';
-import 'package:objectbox/objectbox.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_constants.dart';
 import 'package:flutter/material.dart';

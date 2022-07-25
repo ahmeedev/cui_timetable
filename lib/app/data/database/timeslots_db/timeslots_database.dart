@@ -23,7 +23,7 @@ void insertTimeslotsData(
   Hive.init(filePath); // initialize the data, bcz of their separate isolate.
   await deleteData();
   final json = jsonDecode(data);
-  final timetable = Timetable.fromJson(json);
+  final timetable = TimetableSlots.fromJson(json);
   final lectures = timetable.lectures;
   final monToThursList = [
     lectures!.monToThurs!.s1.toString(),
