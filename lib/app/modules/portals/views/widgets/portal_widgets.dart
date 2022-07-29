@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_constructors_in_immutables, prefer_typing_uninitialized_variables
 
+import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
+import 'package:hive/hive.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // ignore_for_file: must_call_super
@@ -25,19 +27,104 @@ class _StudentPortalState extends State<StudentPortal>
   };
 
   final UniqueKey _key = UniqueKey();
+  var isLoading = true;
+  late final _webViewController;
+  late final Box box;
+  final detailsMap = {"roll": '', "pass": ''};
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    init() async {
+      box = await Hive.openBox(DBNames.portals);
+    }
+
+    init();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WebView(
-        key: _key,
-        initialUrl: 'https://swl-cms.comsats.edu.pk:8082/',
-        javascriptMode: JavascriptMode.unrestricted,
-        gestureRecognizers: gestureRecognizers,
-        zoomEnabled: true,
-        onPageFinished: (value) {
-          // CookieManager().setCookie(WebViewCookie(name: name, value: value, domain: domain))
-        },
+      body: Stack(
+        children: [
+          WebView(
+            key: _key,
+            initialUrl: 'https://swl-cms.comsats.edu.pk:8082/',
+            javascriptMode: JavascriptMode.unrestricted,
+            gestureRecognizers: gestureRecognizers,
+            zoomEnabled: true,
+            onWebViewCreated: (WebViewController controller) async {
+              _webViewController = controller;
+            },
+            javascriptChannels: {
+              JavascriptChannel(
+                  name: 'rollNo',
+                  onMessageReceived: (message) async {
+                    print("${message.message} roll#");
+                    detailsMap["roll"] = message.message.toString().trim();
+                    print(detailsMap);
+                  }),
+              JavascriptChannel(
+                  name: 'pass',
+                  onMessageReceived: (message) async {
+                    print("${message.message} roll#");
+
+                    detailsMap["pass"] = message.message.toString();
+                    print(detailsMap);
+                  }),
+              JavascriptChannel(
+                  name: 'login',
+                  onMessageReceived: (message) async {
+                    print("${message.message} login#");
+                    await box.put(DBPortals.studentData, detailsMap);
+                  }),
+            },
+            onPageFinished: (value) async {
+              // CookieManager().setCookie(WebViewCookie(name: name, value: value, domain: domain))
+              setState(() {
+                isLoading = false;
+              });
+
+              // change the background color
+              _webViewController.evaluateJavascript("""
+                document.body.style.backgroundColor = "#d4dfed";
+                """);
+
+              final result = await box.get(DBPortals.studentData,
+                  defaultValue: {"roll": '', "pass": ''});
+              print(result);
+              _webViewController.evaluateJavascript(
+                  """document.querySelector('#MaskedRegNo').value='${result['roll']}';
+                  document.querySelector('#Password').value='${result['pass']}';""");
+
+              _webViewController.evaluateJavascript(
+                """
+const element = document.querySelector("#MaskedRegNo");
+element.addEventListener("input", () => {
+window.rollNo.postMessage(document.querySelector("#MaskedRegNo").value);
+                });
+const element2 = document.querySelector("#Password");
+
+element2.addEventListener("input", () => {
+window.pass.postMessage(document.querySelector("#Password").value);
+                });
+
+const element3 = document.querySelector("#LoginSubmit");
+element3.addEventListener("click", () => {
+window.login.postMessage("store");
+                });
+                """,
+              ).then((value) => print(value + "hello"));
+            },
+          ),
+          isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: primaryColor,
+                  ),
+                )
+              : Stack(),
+        ],
       ),
     );
   }

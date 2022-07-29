@@ -6,8 +6,8 @@ import '../../../../data/database/database_constants.dart';
 import '../../../../data/models/timetable/student_timetable/student_timetable.dart';
 
 class StudentTimetableController extends GetxController {
-  var monToThursSlots = [];
-  var friSlots = [];
+  var monToThursSlots = <String>[];
+  var friSlots = <String>[];
   var currentTimeSlots = [];
 
   var mon = true.obs; //* mon is selected by default
@@ -28,9 +28,6 @@ class StudentTimetableController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    final box = await Hive.openBox(DBNames.timeSlots);
-    currentTimeSlots = monToThursSlots = await box.get(DBTimeSlots.monToThur);
-    friSlots = await box.get(DBTimeSlots.fri);
   }
 
   // Methods for Controlling DayTile.
@@ -58,6 +55,10 @@ class StudentTimetableController extends GetxController {
 
   // Methods for controlling LectureTile
   openBox({required String section}) async* {
+    final boxx = await Hive.openBox(DBNames.timeSlots);
+    monToThursSlots = boxx.get(DBTimeSlots.monToThur);
+    friSlots = boxx.get(DBTimeSlots.fri);
+    currentTimeSlots = monToThursSlots;
     final box = await Hive.openBox(DBNames.timetableData);
 
     List<StudentTimetable> list =
@@ -71,7 +72,6 @@ class StudentTimetableController extends GetxController {
     await _setLectures(list: list, key: "1");
 
     daywiseLectures.value = monLectures; //* For default purpose
-
     yield lecturesCount;
   }
 

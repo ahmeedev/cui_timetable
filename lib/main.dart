@@ -6,6 +6,7 @@ import 'app/data/models/timetable/teacher_timetable/teacher_timetable.dart';
 import 'app/modules/home/controllers/home_controller.dart';
 import 'app/modules/home/views/home_view2.dart';
 import 'app/modules/settings/controllers/settings_controller.dart';
+import 'app/modules/sync/controllers/sync_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'app/theme/app_constants.dart';
 import 'app/theme/light_theme.dart';
@@ -49,6 +50,10 @@ Future<void> _initialized() async {
   );
   Get.put<SettingsController>(
     SettingsController(),
+  );
+
+  Get.put<SyncController>(
+    SyncController(),
   );
 }
 

@@ -125,12 +125,10 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                                     room: controller
                                         .daywiseLectures["lectures"][index]
                                         .room,
-                                    time: controller.currentTimeSlots[int.parse(
-                                                controller
-                                                    .daywiseLectures["lectures"]
-                                                        [index]
-                                                    .slot
-                                                    .toString()) -
+                                    time: controller.currentTimeSlots[controller
+                                                .daywiseLectures["lectures"]
+                                                    [index]
+                                                .slot -
                                             1]
                                         .toString());
                               }

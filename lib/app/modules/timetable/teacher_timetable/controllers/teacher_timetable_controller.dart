@@ -30,9 +30,6 @@ class TeacherTimetableController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    final box = await Hive.openBox(DBNames.timeSlots);
-    currentTimeSlots = monToThursSlots = box.get(DBTimeSlots.monToThur);
-    friSlots = box.get(DBTimeSlots.fri);
     super.onInit();
   }
 
@@ -61,6 +58,10 @@ class TeacherTimetableController extends GetxController {
 
   // Methods for controlling LectureTile
   openBox({required String teacher}) async* {
+    final boxx = await Hive.openBox(DBNames.timeSlots);
+    currentTimeSlots = monToThursSlots = boxx.get(DBTimeSlots.monToThur);
+    friSlots = boxx.get(DBTimeSlots.fri);
+
     box = await Hive.openBox(DBNames.timetableData);
     List<TeacherTimetable> list =
         List.from(box.get(DBTimetableData.teachersData)[teacher.toLowerCase()]);

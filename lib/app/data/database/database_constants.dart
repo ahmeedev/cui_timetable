@@ -5,12 +5,12 @@ class DBNames {
   static const timeSlots = "timeSlots";
 
   static const timetableData = "timetableData";
-  // static const studentsDB = "studentsDB";
-  // static const teachersDB = "teachersDB";
 
   static const freerooms = "freerooms";
   static const datesheetStudentsDB = "datesheetStudentsDB";
   static const datesheetTeachersDB = "datesheetTeachersDB";
+
+  static const portals = "portals";
 
   static const history = "history";
 
@@ -90,4 +90,9 @@ class DBSettings {
 
   static const carousel = 'carousel';
   static const latestNews = 'latestNews';
+}
+
+class DBPortals {
+  static const studentData = "studentData";
+  static const teacherData = "teacherData";
 }
