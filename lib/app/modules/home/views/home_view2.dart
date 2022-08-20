@@ -41,31 +41,7 @@ class HomeView2 extends GetView<HomeController> {
             actions: [
               Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding * 2),
-                child: DefaultTextStyle(
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: shadowColor, fontStyle: FontStyle.italic),
-                  child: AnimatedTextKit(
-                    animatedTexts: [
-                      TypewriterAnimatedText('BE AWESOME'),
-                      TypewriterAnimatedText('BE OPTIMISTIC'),
-                      TypewriterAnimatedText('BE DIFFERENT'),
-                      TypewriterAnimatedText('BE CONSISTENT'),
-                      TypewriterAnimatedText('YOU MATTER'),
-                      TypewriterAnimatedText('YOU CAN'),
-                      TypewriterAnimatedText('TAKE RISK'),
-                      TypewriterAnimatedText('ACCEPT YOURSELF'),
-                      TypewriterAnimatedText('TRUST YOURSELF'),
-                      TypewriterAnimatedText('STAY FOCUSED'),
-                      TypewriterAnimatedText('STAY POSITIVE'),
-                      TypewriterAnimatedText('STAY CURIOUS'),
-                      TypewriterAnimatedText('MOVE FORWARD'),
-                      TypewriterAnimatedText('TRY AGAIN'),
-                      TypewriterAnimatedText('ENJOY LIFE'),
-                    ],
-                    repeatForever: true,
-                    pause: const Duration(milliseconds: 2000),
-                  ),
-                ),
+                child: TypeWriterText(),
               )
             ],
             // shape: ContinuousRectangleBorder(
@@ -421,6 +397,43 @@ class HomeView2 extends GetView<HomeController> {
                   ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TypeWriterText extends StatelessWidget {
+  const TypeWriterText({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTextStyle(
+      style: Theme.of(context)
+          .textTheme
+          .titleMedium!
+          .copyWith(color: shadowColor, fontStyle: FontStyle.italic),
+      child: AnimatedTextKit(
+        animatedTexts: [
+          TypewriterAnimatedText('BE AWESOME'),
+          TypewriterAnimatedText('BE OPTIMISTIC'),
+          TypewriterAnimatedText('BE DIFFERENT'),
+          TypewriterAnimatedText('BE CONSISTENT'),
+          TypewriterAnimatedText('YOU MATTER'),
+          TypewriterAnimatedText('YOU CAN'),
+          TypewriterAnimatedText('TAKE RISK'),
+          TypewriterAnimatedText('ACCEPT YOURSELF'),
+          TypewriterAnimatedText('TRUST YOURSELF'),
+          TypewriterAnimatedText('STAY FOCUSED'),
+          TypewriterAnimatedText('STAY POSITIVE'),
+          TypewriterAnimatedText('STAY CURIOUS'),
+          TypewriterAnimatedText('MOVE FORWARD'),
+          TypewriterAnimatedText('TRY AGAIN'),
+          TypewriterAnimatedText('ENJOY LIFE'),
+        ],
+        repeatForever: true,
+        pause: const Duration(milliseconds: 2000),
       ),
     );
   }

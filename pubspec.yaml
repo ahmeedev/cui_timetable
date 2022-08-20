@@ -44,6 +44,10 @@ dependencies:
   # google_nav_bar: ^5.0.6
   awesome_extensions: ^2.0.2
   logger: ^1.1.0
+  flutter_soul: 
+    git:
+      url: https://github.com/ahmadbintariq4u/flutter_soul.git
+      ref: main # branch name
 
 
 dev_dependencies: 

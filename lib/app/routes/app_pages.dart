@@ -12,6 +12,7 @@ import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/home/views/home_view2.dart';
+import '../modules/home/views/home_view3.dart';
 import '../modules/portals/bindings/portals_binding.dart';
 import '../modules/portals/views/portals_view.dart';
 import '../modules/remainder/bindings/remainder_binding.dart';
@@ -46,7 +47,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => HomeView2(),
+      page: () => HomeView3(),
       binding: HomeBinding(),
     ),
     GetPage(
