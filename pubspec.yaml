@@ -48,6 +48,7 @@ dependencies:
     git:
       url: https://github.com/ahmadbintariq4u/flutter_soul.git
       ref: main # branch name
+  rive: ^0.9.1
 
 
 dev_dependencies: 
@@ -71,6 +72,7 @@ flutter:
 
   assets: 
     - assets/
+    - assets/animations/
     - assets/drawer/
     - assets/about_us/
     - assets/timetable/

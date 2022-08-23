@@ -19,7 +19,7 @@ class StudentUIView extends GetView<StudentUIController> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: scaffoldColor,
+        // backgroundColor: se,
         body: Padding(
           padding: EdgeInsets.all(Constants.defaultPadding),
           child: Column(

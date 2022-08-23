@@ -1,6 +1,7 @@
-import 'package:cui_timetable/app/modules/ui/news/news.dart';
 import 'package:get/get.dart';
 
+import '../modules/comparison/bindings/comparision_binding.dart';
+import '../modules/comparison/views/comparison_view.dart';
 import '../modules/datesheet/bindings/datesheet_binding.dart';
 import '../modules/datesheet/student_datesheet/bindings/student_datesheet_binding.dart';
 import '../modules/datesheet/student_datesheet/views/student_datesheet_view.dart';
@@ -10,20 +11,22 @@ import '../modules/datesheet/views/datesheet_view.dart';
 import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/controllers/home_controller.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/home/views/home_view2.dart';
 import '../modules/home/views/home_view3.dart';
+import '../modules/news/bindings/news_binding.dart';
+import '../modules/news/views/news_view.dart';
 import '../modules/portals/bindings/portals_binding.dart';
 import '../modules/portals/views/portals_view.dart';
 import '../modules/remainder/bindings/remainder_binding.dart';
 import '../modules/remainder/views/remainder_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
+import '../modules/settings/views/settings_view2.dart';
 import '../modules/sync/bindings/sync_binding.dart';
 import '../modules/sync/views/sync_view.dart';
 import '../modules/timetable/bindings/timetable_binding.dart';
-import '../modules/comparison/bindings/comparision_binding.dart';
-import '../modules/comparison/views/comparison_view.dart';
 import '../modules/timetable/student_timetable/bindings/student_timetable_binding.dart';
 import '../modules/timetable/student_timetable/views/student_timetable_view.dart';
 import '../modules/timetable/teacher_timetable/bindings/teacher_timetable_binding.dart';
@@ -31,6 +34,7 @@ import '../modules/timetable/teacher_timetable/views/teacher_timetable_view.dart
 import '../modules/timetable/views/timetable_view.dart';
 import '../modules/ui/about_us/about_us_view.dart';
 import '../modules/ui/director_vision/director_vision.dart';
+import '../modules/ui/news/news.dart';
 
 // Package imports:
 
@@ -61,6 +65,13 @@ class AppPages {
     GetPage(
       name: _Paths.NEWS,
       page: () => const News(),
+      children: [
+        GetPage(
+          name: _Paths.NEWS,
+          page: () => NewsView(),
+          binding: NewsBinding(),
+        ),
+      ],
     ),
     GetPage(
       name: _Paths.TIMETABLE,
@@ -123,7 +134,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SETTINGS,
-      page: () => SettingsView(),
+      page: () => SettingsView2(),
       binding: SettingsBinding(),
     ),
   ];

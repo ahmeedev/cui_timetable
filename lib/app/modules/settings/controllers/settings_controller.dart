@@ -47,7 +47,7 @@ class SettingsController extends GetxController {
       box.put(DBSettings.darkMode, true);
 
       Get.changeTheme(ThemeData.dark());
-      Get.find<HomeController>().notifier.value = ThemeMode.dark;
+      // Get.find<HomeController>().notifier.value = ThemeMode.dark;
     } else {
       box.put(DBSettings.darkMode, false);
 

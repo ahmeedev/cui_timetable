@@ -153,11 +153,11 @@ class ButtonList extends StatelessWidget {
               title: 'Director Vision', onTap: () {
             Get.toNamed(Routes.DIRECTOR_VISION);
           }),
-          buildButton(context,
-              icon: const AssetImage('assets/drawer/about_us.png'),
-              title: 'About Us', onTap: () {
-            Get.toNamed(Routes.ABOUT_US);
-          }),
+          // buildButton(context,
+          //     icon: const AssetImage('assets/drawer/about_us.png'),
+          //     title: 'About Us', onTap: () {
+          //   Get.toNamed(Routes.ABOUT_US);
+          // }),
           buildButton(context,
               icon: const AssetImage('assets/drawer/remainder.png'),
               title: 'Remainder', onTap: () {
@@ -176,11 +176,11 @@ class ButtonList extends StatelessWidget {
           //     icon: const AssetImage('assets/drawer/feedback.png'),
           //     title: 'Feedback / Report an Issue',
           //     onTap: () {}),
-          buildButton(context,
-              icon: const AssetImage('assets/drawer/settings.png'),
-              title: 'Settings', onTap: () {
-            Get.toNamed(Routes.SETTINGS);
-          }),
+          // buildButton(context,
+          //     icon: const AssetImage('assets/drawer/settings.png'),
+          //     title: 'Settings', onTap: () {
+          //   Get.toNamed(Routes.SETTINGS);
+          // }),
           buildButton(context,
               icon: const AssetImage('assets/drawer/sign_in.png'),
               title: 'Sign In',

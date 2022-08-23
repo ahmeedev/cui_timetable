@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_declarations
 
+import 'package:cui_timetable/app/modules/home/views/home_view3.dart';
+import 'package:cui_timetable/app/modules/news/views/news_view.dart';
+import 'package:cui_timetable/app/modules/settings/views/settings_view2.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -15,10 +18,19 @@ import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart'
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
 
 class HomeController extends GetxController {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   final internet = true.obs;
   final newUpdate = false.obs;
   var isLarge = true;
-  final ValueNotifier<ThemeMode> notifier = ValueNotifier(ThemeMode.light);
+  // final ValueNotifier<ThemeMode> notifier = ValueNotifier(ThemeMode.light);
+  final isHome = true.obs;
+  final isSetting = false.obs;
+  final isNews = false.obs;
+
+  final pageLabels = ['News', 'CUI SAHIWAL', 'Settings'];
+  final pageWidget = [NewsView(), HomeViewWidget(), SettingsView2()];
+  final pageIndex = 1.obs;
 
   @override
   Future<void> onInit() async {
@@ -84,6 +96,13 @@ class HomeController extends GetxController {
       internet.value = false;
     }
     // yield list;
+  }
+
+  /// set the navigationBar container color.
+  void setToFalse() {
+    isHome.value = false;
+    isSetting.value = false;
+    isNews.value = false;
   }
 }
 

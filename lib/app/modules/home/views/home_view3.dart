@@ -1,45 +1,30 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
+import 'package:cui_timetable/app/modules/news/views/news_view.dart';
+import 'package:cui_timetable/app/modules/settings/views/settings_view2.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_soul/flutter_soul.dart' as flutterSoul;
 import 'package:get/get.dart';
+import 'package:rive/rive.dart' as rive;
 
 import '../../../routes/app_pages.dart';
 import 'widgets/home_drawer.dart';
+import 'widgets/home_widgets.dart';
 
-class HomeView3 extends StatefulWidget {
-  const HomeView3({Key? key}) : super(key: key);
-
-  @override
-  State<HomeView3> createState() => _HomeView3State();
-}
-
-class _HomeView3State extends State<HomeView3> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
+class HomeView3 extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textTheme = Theme.of(context).textTheme;
-    const colorizeColors = [
-      // Colors.purple,
-      // Colors.blue,
-      // Colors.yellow,
-      // Colors.red,
-      primaryColor,
-      secondaryColor,
-      selectionColor,
-      widgetColor
-    ];
 
-    const colorizeTextStyle = TextStyle(
-      fontSize: 50.0,
-      fontFamily: 'Horizon',
-    );
     return SafeArea(
       child: Scaffold(
-          key: _key,
+          key: controller.scaffoldKey,
+          backgroundColor: selectionColor,
+          drawerEnableOpenDragGesture: true,
           drawer: Drawer(
             width: width / 1.5,
             child: Container(
@@ -60,17 +45,17 @@ class _HomeView3State extends State<HomeView3> {
                   decoration: const BoxDecoration(
                       // color: primaryColor,
                       gradient: LinearGradient(colors: primaryGradient)),
-                  child: Text(
-                    'CUI SAHIWAL',
-                    style: textTheme.titleLarge!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: Theme.of(context)
-                                .textTheme
-                                .headlineMedium!
-                                .fontSize! +
-                            4.0),
-                  ),
+                  child: Obx(() => Text(
+                        controller.pageLabels[controller.pageIndex.value],
+                        style: textTheme.titleLarge!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .fontSize! +
+                                4.0),
+                      )),
                 ),
               ),
               Column(
@@ -82,9 +67,9 @@ class _HomeView3State extends State<HomeView3> {
                     padding: EdgeInsets.all(Constants.defaultPadding),
                     child: Container(
                       width: width,
-                      height: height * 0.52,
+                      height: height * 0.52 + 15,
                       decoration: BoxDecoration(
-                        color: widgetColor,
+                        color: onScaffoldColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(Constants.defaultRadius),
                         ),
@@ -98,7 +83,8 @@ class _HomeView3State extends State<HomeView3> {
                       ),
                       padding: EdgeInsets.all(Constants.defaultPadding),
                       child: SingleChildScrollView(
-                          child: WidgetArea(textTheme: textTheme)),
+                          child: Obx(() => controller
+                              .pageWidget[controller.pageIndex.value])),
                     ),
                   ),
                 ],
@@ -113,19 +99,19 @@ class _HomeView3State extends State<HomeView3> {
                         //  hoverColor: Colors.tra
 
                         onTap: () {
-                          _key.currentState!.openDrawer();
+                          controller.scaffoldKey.currentState!.openDrawer();
                         },
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: selectionColor,
+                              // color: selectionColor,
                               borderRadius: BorderRadius.all(
                                 Radius.circular(Constants.defaultRadius),
                               ),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(Constants.defaultPadding),
                               child: ImageIcon(
                                 const AssetImage('assets/drawer/menu2.png'),
                                 color: Colors.white,
@@ -142,7 +128,7 @@ class _HomeView3State extends State<HomeView3> {
             ],
           ),
           bottomNavigationBar: Padding(
-            padding: EdgeInsets.all(Constants.defaultPadding),
+            padding: EdgeInsets.all(Constants.defaultPadding).copyWith(top: 0),
             child: Card(
               margin: EdgeInsets.zero,
               shape: RoundedRectangleBorder(
@@ -171,53 +157,99 @@ class _HomeView3State extends State<HomeView3> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(Constants.defaultRadius),
-                          ),
-                          // color: selectionColor,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(Constants.defaultPadding),
-                          child: Icon(
-                            Icons.newspaper,
-                            size: Constants.iconSize,
-                            color: Colors.white,
-                          ),
-                        ),
+                      InkWell(
+                        onTap: () {
+                          if (Get.find<HomeController>().isNews.value ==
+                              false) {
+                            Get.find<HomeController>().setToFalse();
+                            Get.find<HomeController>().isNews.value = true;
+                            Get.find<HomeController>().pageIndex.value = 0;
+                          }
+                        },
+                        child: Obx(() => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(Constants.defaultRadius),
+                                ),
+                                color:
+                                    Get.find<HomeController>().isNews.value ==
+                                            true
+                                        ? selectionColor
+                                        : Colors.transparent,
+                              ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.all(Constants.defaultPadding),
+                                child: Icon(
+                                  Icons.newspaper,
+                                  size: Constants.iconSize,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(Constants.defaultRadius),
-                          ),
-                          color: selectionColor,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(Constants.defaultPadding),
-                          child: Icon(
-                            Icons.home,
-                            size: Constants.iconSize,
-                            color: Colors.white,
-                          ),
-                        ),
+                      InkWell(
+                        onTap: () {
+                          if (Get.find<HomeController>().isHome.value ==
+                              false) {
+                            Get.find<HomeController>().setToFalse();
+                            Get.find<HomeController>().isHome.value = true;
+                            Get.find<HomeController>().pageIndex.value = 1;
+                          }
+                        },
+                        child: Obx(() => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(Constants.defaultRadius),
+                                ),
+                                color:
+                                    Get.find<HomeController>().isHome.value ==
+                                            true
+                                        ? selectionColor
+                                        : Colors.transparent,
+                              ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.all(Constants.defaultPadding),
+                                child: Icon(
+                                  Icons.home,
+                                  size: Constants.iconSize,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(Constants.defaultRadius),
-                          ),
-                          // color: selectionColor,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(Constants.defaultPadding),
-                          child: Icon(
-                            Icons.settings,
-                            size: Constants.iconSize,
-                            color: Colors.white,
-                          ),
-                        ),
+                      InkWell(
+                        onTap: () {
+                          if (Get.find<HomeController>().isSetting.value ==
+                              false) {
+                            Get.find<HomeController>().setToFalse();
+                            Get.find<HomeController>().isSetting.value = true;
+                            Get.find<HomeController>().pageIndex.value = 2;
+                          }
+                        },
+                        child: Obx(() => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(Constants.defaultRadius),
+                                ),
+                                color: Get.find<HomeController>()
+                                            .isSetting
+                                            .value ==
+                                        true
+                                    ? selectionColor
+                                    : Colors.transparent,
+                              ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.all(Constants.defaultPadding),
+                                child: Icon(
+                                  Icons.settings,
+                                  size: Constants.iconSize,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )),
                       ),
                       // Icon(Icons.home, size: Constants.iconSize),
                       // Icon(Icons.home, size: Constants.iconSize),
@@ -232,16 +264,15 @@ class _HomeView3State extends State<HomeView3> {
   }
 }
 
-class WidgetArea extends StatelessWidget {
-  const WidgetArea({
+class HomeViewWidget extends StatelessWidget {
+  const HomeViewWidget({
     Key? key,
-    required this.textTheme,
   }) : super(key: key);
-
-  final TextTheme textTheme;
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -274,6 +305,7 @@ class WidgetArea extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
                 title: "Timetable",
                 ontap: () => Get.toNamed(Routes.TIMETABLE),
@@ -294,10 +326,10 @@ class WidgetArea extends StatelessWidget {
           ],
         ),
         SizedBox(height: Constants.defaultPadding),
-
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
                 title: "Timetable",
                 ontap: () => Get.toNamed(Routes.TIMETABLE),
@@ -324,6 +356,7 @@ class WidgetArea extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
                 title: "Feedback",
                 // ontap: () => Get.toNamed(Routes.TIMETABLE),
@@ -331,7 +364,7 @@ class WidgetArea extends StatelessWidget {
             SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
                 title: "About Us",
-                // ontap: () => Get.toNamed(Routes.DATESHEET),
+                ontap: () => Get.toNamed(Routes.ABOUT_US),
                 iconLocation: "assets/home/datesheet.png"),
             SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
@@ -343,45 +376,42 @@ class WidgetArea extends StatelessWidget {
                 title: "Contribute", iconLocation: "assets/home/menu.png"),
           ],
         ),
-        // SizedBox(height: Constants.defaultPadding),
+        SizedBox(height: Constants.defaultPadding + 5),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Load More...",
+              style: textTheme.labelLarge!.copyWith(color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        )
+        // Row(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: [
+        //     SizedBox(width: Constants.defaultPadding),
+        //     _buildTile(context,
+        //         title: "Feedback",
+        //         // ontap: () => Get.toNamed(Routes.TIMETABLE),
+        //         iconLocation: "assets/home/timetable.png"),
+        //     SizedBox(width: Constants.defaultPadding),
+        //     _buildTile(context,
+        //         title: "About Us",
+        //         // ontap: () => Get.toNamed(Routes.DATESHEET),
+        //         iconLocation: "assets/home/datesheet.png"),
+        //     SizedBox(width: Constants.defaultPadding),
+        //     _buildTile(context,
+        //         title: "Donation",
+        //         // ontap: () => Get.toNamed(Routes.FREEROOMS),
+        //         iconLocation: "assets/home/room.png"),
+        //     SizedBox(width: Constants.defaultPadding),
+        //     _buildTile(context,
+        //         title: "Contribute", iconLocation: "assets/home/menu.png"),
+        //   ],
+        // ),
       ],
-    );
-  }
-}
-
-class TypeWriterText extends StatelessWidget {
-  const TypeWriterText({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: Theme.of(context)
-          .textTheme
-          .titleMedium!
-          .copyWith(color: shadowColor, fontStyle: FontStyle.italic),
-      child: AnimatedTextKit(
-        animatedTexts: [
-          TypewriterAnimatedText('BE AWESOME'),
-          TypewriterAnimatedText('BE OPTIMISTIC'),
-          TypewriterAnimatedText('BE DIFFERENT'),
-          TypewriterAnimatedText('BE CONSISTENT'),
-          TypewriterAnimatedText('YOU MATTER'),
-          TypewriterAnimatedText('YOU CAN'),
-          TypewriterAnimatedText('TAKE RISK'),
-          TypewriterAnimatedText('ACCEPT YOURSELF'),
-          TypewriterAnimatedText('TRUST YOURSELF'),
-          TypewriterAnimatedText('STAY FOCUSED'),
-          TypewriterAnimatedText('STAY POSITIVE'),
-          TypewriterAnimatedText('STAY CURIOUS'),
-          TypewriterAnimatedText('MOVE FORWARD'),
-          TypewriterAnimatedText('TRY AGAIN'),
-          TypewriterAnimatedText('ENJOY LIFE'),
-        ],
-        repeatForever: true,
-        pause: const Duration(milliseconds: 2000),
-      ),
     );
   }
 }
@@ -443,7 +473,8 @@ _buildTile(context,
                     bottomRight: Radius.circular(Constants.defaultRadius),
                   )),
                   margin: EdgeInsets.zero,
-                  color: scaffoldColor,
+                  // color: Color(0xffB0CAEC),
+                  color: widgetColor,
                   child: InkWell(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(Constants.defaultRadius),
