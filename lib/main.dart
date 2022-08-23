@@ -1,10 +1,14 @@
 import 'dart:developer' as devlog;
 import 'dart:io';
 
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
+
 import 'app/data/models/timetable/student_timetable/student_timetable.dart';
 import 'app/data/models/timetable/teacher_timetable/teacher_timetable.dart';
 import 'app/modules/home/controllers/home_controller.dart';
 import 'app/modules/home/views/home_view2.dart';
+import 'app/modules/news/controllers/news_controller.dart';
 import 'app/modules/settings/controllers/settings_controller.dart';
 import 'app/modules/sync/controllers/sync_controller.dart';
 import 'app/routes/app_pages.dart';
@@ -21,6 +25,7 @@ import 'package:hive/hive.dart';
 
 Future<void> main() async {
   await _initialized();
+
   runApp(MyApp());
 }
 
@@ -55,6 +60,10 @@ Future<void> _initialized() async {
   Get.put<SyncController>(
     SyncController(),
   );
+
+  Get.lazyPut<NewsController>(
+    () => NewsController(),
+  );
 }
 
 initlializeHiveAdapters() {
@@ -80,7 +89,8 @@ class MyApp extends GetView<HomeController> {
               IWidth: 80.0,
               IHeight: 80.0);
           controller.isLarge = false;
-          return getMaterialApp(theme: lightTheme(isLarge: false));
+          return getMaterialApp(
+              theme: lightTheme(isLarge: false), context: context);
         } else {
           Constants.initializeFields(
               elevation: 10.0,
@@ -98,13 +108,14 @@ class MyApp extends GetView<HomeController> {
                   // Get.find<SettingsController>().darkMode.value
                   //     ? ThemeData.dark()
                   //     :
-                  lightTheme(isLarge: true));
+                  lightTheme(isLarge: true),
+              context: context);
         }
       },
     );
   }
 
-  getMaterialApp({required theme}) {
+  getMaterialApp({required theme, required context}) {
     return GetMaterialApp(
       theme: theme,
       // darkTheme: ThemeData.dark(),
@@ -113,6 +124,7 @@ class MyApp extends GetView<HomeController> {
       title: 'CUI TIMETABLE',
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+
       // home: HomeView2(),
     );
   }

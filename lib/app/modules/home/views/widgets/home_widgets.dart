@@ -322,51 +322,51 @@ class HomeNews extends GetView<HomeController> {
             ),
           ),
         ]),
-        StreamBuilder(
-          stream: controller.getNewsStream(),
-          // initialData: initialData,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data.length == 0) {
-                return const Text('Connect to the Internet to fetch News...');
-              }
+        // StreamBuilder(
+        //   stream: controller.getNewsStream(),
+        //   // initialData: initialData,
+        //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+        //     if (snapshot.hasData) {
+        //       if (snapshot.data.length == 0) {
+        //         return const Text('Connect to the Internet to fetch News...');
+        //       }
 
-              return Expanded(
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      child: buildNews(context,
-                          // expanded: index == 0 ? true : false,  //! true for initial expanded
-                          expanded: false,
-                          title: snapshot.data[index]['title'],
-                          description: snapshot.data[index]['description']),
-                    );
-                  },
-                ),
-              );
-            }
-            return Obx(() => Column(
-                  children: [
-                    const SpinKitFadingCircle(
-                      color: primaryColor,
-                    ),
-                    controller.internet.value
-                        ? Text(
-                            'Fetching News From Internet',
-                            style: Theme.of(context).textTheme.labelMedium,
-                          )
-                        : Text(
-                            'Fetching News From Cache',
-                            style: Theme.of(context).textTheme.labelMedium,
-                          )
-                  ],
-                ));
-          },
-        ),
+        //       return Expanded(
+        //         child: ListView.builder(
+        //           padding: EdgeInsets.zero,
+        //           shrinkWrap: true,
+        //           physics: const BouncingScrollPhysics(),
+        //           itemCount: snapshot.data.length,
+        //           itemBuilder: (BuildContext context, int index) {
+        //             return Container(
+        //               child: buildNews(context,
+        //                   // expanded: index == 0 ? true : false,  //! true for initial expanded
+        //                   expanded: false,
+        //                   title: snapshot.data[index]['title'],
+        //                   description: snapshot.data[index]['description']),
+        //             );
+        //           },
+        //         ),
+        //       );
+        //     }
+        //     return Obx(() => Column(
+        //           children: [
+        //             const SpinKitFadingCircle(
+        //               color: primaryColor,
+        //             ),
+        //             controller.internet.value
+        //                 ? Text(
+        //                     'Fetching News From Internet',
+        //                     style: Theme.of(context).textTheme.labelMedium,
+        //                   )
+        //                 : Text(
+        //                     'Fetching News From Cache',
+        //                     style: Theme.of(context).textTheme.labelMedium,
+        //                   )
+        //           ],
+        //         ));
+        //   },
+        // ),
       ]),
     );
   }

@@ -7,6 +7,7 @@ import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_soul/flutter_soul.dart' as flutterSoul;
 import 'package:get/get.dart';
+import 'package:particles_flutter/particles_flutter.dart';
 import 'package:rive/rive.dart' as rive;
 
 import '../../../routes/app_pages.dart';
@@ -18,6 +19,7 @@ class HomeView3 extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    final widgetsPlaceholderHeight = height * 0.52 + 15;
     final textTheme = Theme.of(context).textTheme;
 
     return SafeArea(
@@ -38,24 +40,54 @@ class HomeView3 extends GetView<HomeController> {
             clipBehavior: Clip.none,
             children: [
               Positioned(
-                child: Container(
-                  alignment: Alignment.center,
-                  width: width,
-                  height: height * 0.4,
-                  decoration: const BoxDecoration(
-                      // color: primaryColor,
-                      gradient: LinearGradient(colors: primaryGradient)),
-                  child: Obx(() => Text(
-                        controller.pageLabels[controller.pageIndex.value],
-                        style: textTheme.titleLarge!.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .fontSize! +
-                                4.0),
-                      )),
+                child: Stack(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      width: width,
+                      height: height * 0.4,
+                      decoration: const BoxDecoration(
+                          // color: primaryColor,
+                          gradient: LinearGradient(colors: primaryGradient)),
+                      child: Obx(() => Text(
+                            controller.pageLabels[controller.pageIndex.value],
+                            style: textTheme.titleLarge!.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium!
+                                        .fontSize! +
+                                    4.0),
+                          )),
+                    ),
+                    CircularParticle(
+                      key: UniqueKey(),
+                      awayRadius: 80,
+                      numberOfParticles: 10,
+                      speedOfParticles: 1,
+                      width: width,
+                      height: height * 0.4,
+                      onTapAnimation: true,
+                      particleColor: Colors.white.withAlpha(150),
+                      awayAnimationDuration: const Duration(milliseconds: 500),
+                      maxParticleSize: 5,
+                      isRandSize: true,
+                      isRandomColor: true,
+                      randColorList: [
+                        Colors.purple,
+                        Colors.amber,
+                        Colors.red,
+                        // Colors.black,
+                        Colors.orange,
+                      ],
+                      awayAnimationCurve: Curves.easeInOutBack,
+                      enableHover: true,
+                      hoverColor: Colors.white,
+                      hoverRadius: 90,
+                      connectDots: false, //not recommended
+                    ),
+                  ],
                 ),
               ),
               Column(
@@ -67,7 +99,7 @@ class HomeView3 extends GetView<HomeController> {
                     padding: EdgeInsets.all(Constants.defaultPadding),
                     child: Container(
                       width: width,
-                      height: height * 0.52 + 15,
+                      height: widgetsPlaceholderHeight,
                       decoration: BoxDecoration(
                         color: onScaffoldColor,
                         borderRadius: BorderRadius.all(
@@ -456,7 +488,7 @@ _buildTile(context,
                   ),
                   child: Text(
                     title,
-                    style: textTheme.labelMedium!.copyWith(
+                    style: textTheme.labelSmall!.copyWith(
                         fontWeight: FontWeight.w900, color: Colors.white),
                     textAlign: TextAlign.center,
                   ),

@@ -20,6 +20,8 @@ import '../modules/news/views/news_view.dart';
 import '../modules/portals/bindings/portals_binding.dart';
 import '../modules/portals/views/portals_view.dart';
 import '../modules/remainder/bindings/remainder_binding.dart';
+import '../modules/remainder/student_remainder/bindings/student_remainder_binding.dart';
+import '../modules/remainder/student_remainder/views/student_remainder_view.dart';
 import '../modules/remainder/views/remainder_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
@@ -131,6 +133,13 @@ class AppPages {
       name: _Paths.REMAINDER,
       page: () => const RemainderView(),
       binding: RemainderBinding(),
+      children: [
+        GetPage(
+          name: _Paths.STUDENT_REMAINDER,
+          page: () => const StudentRemainderView(),
+          binding: StudentRemainderBinding(),
+        ),
+      ],
     ),
     GetPage(
       name: _Paths.SETTINGS,

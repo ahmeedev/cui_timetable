@@ -101,92 +101,92 @@ class HomeView2 extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    Positioned(
-                      left: 20,
-                      bottom: 30,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        // mainAxisAlignment: MainAxisAlignment.,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(Constants.defaultRadius),
-                              ),
-                              gradient: const LinearGradient(
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  // secondaryColor,
-                                  successColor,
-                                  successColor2,
-                                ],
-                              ),
-                            ),
-                            // color: successColor,
-                            width: Constants.defaultPadding / 2,
-                            height: MediaQuery.of(context).size.height *
-                                0.30 *
-                                0.12,
-                          ),
-                          kWidth,
-                          StreamBuilder(
-                            stream: controller.getNewsStream(),
-                            // initialData: initialData,
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                if (snapshot.data.length == 0) {
-                                  return const Text(
-                                      'Connect to the Internet to fetch News...');
-                                }
+                    // Positioned(
+                    //   left: 20,
+                    //   bottom: 30,
+                    //   child: Row(
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     // mainAxisAlignment: MainAxisAlignment.,
+                    //     children: [
+                    //       Container(
+                    //         decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.all(
+                    //             Radius.circular(Constants.defaultRadius),
+                    //           ),
+                    //           gradient: const LinearGradient(
+                    //             end: Alignment.bottomRight,
+                    //             colors: [
+                    //               // secondaryColor,
+                    //               successColor,
+                    //               successColor2,
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         // color: successColor,
+                    //         width: Constants.defaultPadding / 2,
+                    //         height: MediaQuery.of(context).size.height *
+                    //             0.30 *
+                    //             0.12,
+                    //       ),
+                    //       kWidth,
+                    //       StreamBuilder(
+                    //         stream: controller.getNewsStream(),
+                    //         // initialData: initialData,
+                    //         builder:
+                    //             (BuildContext context, AsyncSnapshot snapshot) {
+                    //           if (snapshot.hasData) {
+                    //             if (snapshot.data.length == 0) {
+                    //               return const Text(
+                    //                   'Connect to the Internet to fetch News...');
+                    //             }
 
-                                return SizedBox(
-                                  // alignment: Alignment.centerLeft,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.80,
-                                  height: MediaQuery.of(context).size.height *
-                                      0.30 *
-                                      0.12,
-                                  child: DefaultTextStyle(
-                                    maxLines: 2,
-                                    textAlign: TextAlign.start,
-                                    style: textTheme.bodySmall!
-                                        .copyWith(color: Colors.white),
-                                    child: AnimatedTextKit(
-                                      animatedTexts: [
-                                        ...snapshot.data.map((e) {
-                                          return RotateAnimatedText(
-                                            e['title'],
-                                            alignment: Alignment.centerLeft,
-                                            transitionHeight: 0,
-                                            // rotateOut: false,
+                    //             return SizedBox(
+                    //               // alignment: Alignment.centerLeft,
+                    //               width:
+                    //                   MediaQuery.of(context).size.width * 0.80,
+                    //               height: MediaQuery.of(context).size.height *
+                    //                   0.30 *
+                    //                   0.12,
+                    //               child: DefaultTextStyle(
+                    //                 maxLines: 2,
+                    //                 textAlign: TextAlign.start,
+                    //                 style: textTheme.bodySmall!
+                    //                     .copyWith(color: Colors.white),
+                    //                 child: AnimatedTextKit(
+                    //                   animatedTexts: [
+                    //                     ...snapshot.data.map((e) {
+                    //                       return RotateAnimatedText(
+                    //                         e['title'],
+                    //                         alignment: Alignment.centerLeft,
+                    //                         transitionHeight: 0,
+                    //                         // rotateOut: false,
 
-                                            duration:
-                                                const Duration(seconds: 5),
-                                          );
-                                        })
-                                      ],
-                                      onTap: () {
-                                        Get.toNamed(
-                                          Routes.NEWS,
-                                          arguments: snapshot.data,
-                                        );
-                                      },
-                                      repeatForever: true,
-                                    ),
-                                  ),
-                                );
-                              }
-                              return Text(
-                                'Fetching news...',
-                                style: textTheme.bodySmall!
-                                    .copyWith(color: Colors.white),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    )
+                    //                         duration:
+                    //                             const Duration(seconds: 5),
+                    //                       );
+                    //                     })
+                    //                   ],
+                    //                   onTap: () {
+                    //                     Get.toNamed(
+                    //                       Routes.NEWS,
+                    //                       arguments: snapshot.data,
+                    //                     );
+                    //                   },
+                    //                   repeatForever: true,
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           }
+                    //           return Text(
+                    //             'Fetching news...',
+                    //             style: textTheme.bodySmall!
+                    //                 .copyWith(color: Colors.white),
+                    //           );
+                    //         },
+                    //       ),
+                    //     ],
+                    //   ),
+                    // )
                   ]),
             ),
           ),

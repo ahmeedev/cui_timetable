@@ -1,3 +1,5 @@
+import '../../../../routes/app_pages.dart';
+import '../../../../widgets/get_widgets.dart';
 import '../../controllers/student_ui_controlller.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_constants.dart';
@@ -181,19 +183,16 @@ class StudentUI extends GetView<RemainderStudentUIController> {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              // final value = controller.textController.text.toString();
-              // if (controller.sections.contains(value)) {
-              //   // Storing the information for state persistency
-              //   final box1 = await Hive.openBox(DBNames.info);
-              //   box1.put(DBInfo.datesheetSearchSection, value);
-
-              //   Get.toNamed(Routes.STUDENT_DATESHEET, arguments: [value]);
-              // } else {
-              //   GetXUtilities.snackbar(
-              //       title: 'Not Found!!',
-              //       message: 'Enter Valid Section Name',
-              //       gradient: primaryGradient);
-              // }
+              final value = controller.textController.text.toString();
+              if (controller.sections.contains(value)) {
+                Get.toNamed(Routes.STUDENT_REMAINDER,
+                    arguments: {"section": value});
+              } else {
+                GetXUtilities.snackbar(
+                    title: 'Not Found!!',
+                    message: 'Enter Valid Section Name',
+                    gradient: primaryGradient);
+              }
             },
             child: Padding(
               padding: EdgeInsets.all(Constants.defaultPadding),

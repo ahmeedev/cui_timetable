@@ -49,6 +49,8 @@ dependencies:
       url: https://github.com/ahmadbintariq4u/flutter_soul.git
       ref: main # branch name
   rive: ^0.9.1
+  particles_flutter: ^0.1.4
+  device_preview: ^1.1.0
 
 
 dev_dependencies: 
