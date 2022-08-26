@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_declarations
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cui_timetable/app/modules/home/views/home_view3.dart';
 import 'package:cui_timetable/app/modules/news/views/news_view.dart';
 import 'package:cui_timetable/app/modules/settings/views/settings_view2.dart';
@@ -35,6 +36,7 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+
     FlutterNativeSplash.remove();
   }
 

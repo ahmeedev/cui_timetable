@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../routes/app_pages.dart';
 import '../../../../widgets/get_widgets.dart';
 import '../../controllers/student_ui_controlller.dart';
@@ -24,21 +26,12 @@ class StudentUI extends GetView<RemainderStudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
-              // ElevatedButton(
-              //   onPressed: () async {
-              //     final box = controller.store.box<User>();
-              //     final user = User();
-              //     user.name = "Tina";
-              //     user.id = 0;
-              //     final id = box.put(user); // Create
-              //     print(id);
-              //     // person.lastName = "Black";
-              //     // box.put(person); // Update
-
-              //     // box.remove(person.id); // Delete
-              //   },
-              //   child: const Text('Store'),
-              // ),
+              ElevatedButton(
+                onPressed: () async {
+                  log('your message here');
+                },
+                child: const Text('Store'),
+              ),
               // ElevatedButton(
               //   onPressed: () async {
               //     Box box = controller.store.box<User>();

@@ -1,6 +1,9 @@
 import 'dart:developer' as devlog;
 import 'dart:io';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cui_timetable/app/constants/notification_constants.dart';
+import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 
@@ -43,7 +46,7 @@ Future<void> _initialized() async {
     name: 'cui-timetable',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  await initializeLocalNotifications();
   devlog.log("Firebase Initialized...", name: 'FIREBASE');
 
   Hive.init(LocationUtilities.defaultpath);
@@ -69,6 +72,27 @@ Future<void> _initialized() async {
 initlializeHiveAdapters() {
   Hive.registerAdapter(StudentTimetableAdapter());
   Hive.registerAdapter(TeacherTimetableAdapter());
+}
+
+initializeLocalNotifications() {
+  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    if (!isAllowed) {
+      Get.defaultDialog(title: "Hello");
+      // AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+  });
+  AwesomeNotifications().initialize(
+      // 'resource://drawable/res_app_icon',
+      null,
+      [
+        NotificationChannel(
+            channelKey: channelRemainderKey,
+            channelName: channelRemainder,
+            channelDescription: channelRemainderDescription,
+            defaultColor: primaryColor,
+            ledColor: Colors.red)
+      ],
+      debug: true);
 }
 
 /// Root Widget of the application.
