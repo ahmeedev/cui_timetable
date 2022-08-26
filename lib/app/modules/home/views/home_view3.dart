@@ -61,32 +61,7 @@ class HomeView3 extends GetView<HomeController> {
                                     4.0),
                           )),
                     ),
-                    CircularParticle(
-                      key: UniqueKey(),
-                      awayRadius: 80,
-                      numberOfParticles: 10,
-                      speedOfParticles: 1,
-                      width: width,
-                      height: height * 0.4,
-                      onTapAnimation: true,
-                      particleColor: Colors.white.withAlpha(150),
-                      awayAnimationDuration: const Duration(milliseconds: 500),
-                      maxParticleSize: 5,
-                      isRandSize: true,
-                      isRandomColor: true,
-                      randColorList: [
-                        Colors.purple,
-                        Colors.amber,
-                        Colors.red,
-                        // Colors.black,
-                        Colors.orange,
-                      ],
-                      awayAnimationCurve: Curves.easeInOutBack,
-                      enableHover: true,
-                      hoverColor: Colors.white,
-                      hoverRadius: 90,
-                      connectDots: false, //not recommended
-                    ),
+                    _buildParticles(width, height),
                   ],
                 ),
               ),
@@ -292,6 +267,35 @@ class HomeView3 extends GetView<HomeController> {
           // .roundAll(Constants.defaultRadius * 2)
           // .paddingAll(Constants.defaultPadding)
           ),
+    );
+  }
+
+  CircularParticle _buildParticles(double width, double height) {
+    return CircularParticle(
+      key: UniqueKey(),
+      awayRadius: 80,
+      numberOfParticles: 10,
+      speedOfParticles: 1,
+      width: width,
+      height: height * 0.4,
+      onTapAnimation: true,
+      particleColor: Colors.white.withAlpha(150),
+      awayAnimationDuration: const Duration(milliseconds: 500),
+      maxParticleSize: 5,
+      isRandSize: true,
+      isRandomColor: true,
+      randColorList: [
+        Colors.purple,
+        Colors.amber,
+        Colors.red,
+        // Colors.black,
+        Colors.orange,
+      ],
+      awayAnimationCurve: Curves.easeInOutBack,
+      enableHover: true,
+      hoverColor: Colors.white,
+      hoverRadius: 90,
+      connectDots: false, //not recommended
     );
   }
 }

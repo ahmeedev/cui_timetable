@@ -35,7 +35,11 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
                             .copyWith(color: Colors.black),
                       ),
                       ElevatedButton(
-                          onPressed: () {}, child: const Text('Set All'))
+                          onPressed: () {
+                            int a = 12;
+                            debugPrint('helo');
+                          },
+                          child: const Text('Set All'))
                     ],
                   ),
                 ),

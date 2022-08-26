@@ -13,14 +13,6 @@ import '../theme/app_colors.dart';
 import '../theme/app_constants.dart';
 import 'package:hive/hive.dart';
 
-// Dart imports:
-
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
 class GetXUtilities {
   static void snackbar(
       {required String title, required String message, required gradient}) {
