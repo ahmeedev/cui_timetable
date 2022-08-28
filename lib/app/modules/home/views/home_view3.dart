@@ -492,8 +492,10 @@ _buildTile(context,
                   ),
                   child: Text(
                     title,
-                    style: textTheme.labelSmall!.copyWith(
-                        fontWeight: FontWeight.w900, color: Colors.white),
+                    style: textTheme.labelLarge!.copyWith(
+                        fontSize: textTheme.labelLarge!.fontSize! - 2,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ),

@@ -16,19 +16,19 @@ class RemainderStudentUIController extends GetxController {
   Future<void> onInit() async {
     await fetchSections();
 
-    // var string = '';
+    var string = '';
 
-    // final box = await Hive.openBox(DBNames.info);
-    // try {
-    //   String value = box.get(DBInfo.datesheetSearchSection, defaultValue: "");
-    //   if (value.isNotEmpty) {
-    //     string = value.toString();
-    //   }
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // }
+    final box = await Hive.openBox(DBNames.remainderCache);
+    try {
+      String value = box.get(DBRemainderCache.studentSection, defaultValue: "");
+      if (value.isNotEmpty) {
+        string = value.toString();
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
 
-    // textController.text = string;
+    textController.text = string;
 
     super.onInit();
   }

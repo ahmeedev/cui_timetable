@@ -75,12 +75,6 @@ initlializeHiveAdapters() {
 }
 
 initializeLocalNotifications() {
-  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-    if (!isAllowed) {
-      Get.defaultDialog(title: "Hello");
-      // AwesomeNotifications().requestPermissionToSendNotifications();
-    }
-  });
   AwesomeNotifications().initialize(
       // 'resource://drawable/res_app_icon',
       null,

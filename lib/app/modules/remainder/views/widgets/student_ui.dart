@@ -1,7 +1,13 @@
 import 'dart:developer';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cui_timetable/app/constants/notification_constants.dart';
+import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:hive/hive.dart';
+
 import '../../../../routes/app_pages.dart';
 import '../../../../widgets/get_widgets.dart';
+import '../../../../widgets/global_widgets.dart';
 import '../../controllers/student_ui_controlller.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_constants.dart';
@@ -28,7 +34,39 @@ class StudentUI extends GetView<RemainderStudentUIController> {
               _buildButton(context),
               ElevatedButton(
                 onPressed: () async {
-                  log('your message here');
+                  AwesomeNotifications().cancelAllSchedules();
+                  log(DateTime.parse('2022-08-26 17:40:00Z')
+                      .toLocal()
+                      .toString());
+                  String localTimeZone =
+                      await AwesomeNotifications().getLocalTimeZoneIdentifier();
+                  AwesomeNotifications().createNotification(
+                    // actionButtons: [],
+                    // schedule: NotificationInterval(
+                    //     interval: 3, timeZone: localTimeZone),
+                    schedule: NotificationCalendar(
+                        weekday: 5,
+                        hour: 17,
+                        minute: 48,
+                        second: 0,
+                        millisecond: 0,
+                        timeZone: localTimeZone
+                        // timeZone: localTimeZone,
+                        ),
+                    content: NotificationContent(
+                      id: 1,
+                      channelKey: channelRemainderKey,
+                      notificationLayout: NotificationLayout.BigText,
+                      title: 'Remainder!',
+                      wakeUpScreen: true,
+                      category: NotificationCategory.Reminder,
+                      // backgroundColor: Colors.red,
+                      // color: Colors.green,
+                      summary: "Get ready for your next lecture",
+                      body:
+                          'your next lecture started at 10:00 am of Financial Accounting at A1',
+                    ),
+                  );
                 },
                 child: const Text('Store'),
               ),
@@ -180,6 +218,10 @@ class StudentUI extends GetView<RemainderStudentUIController> {
               if (controller.sections.contains(value)) {
                 Get.toNamed(Routes.STUDENT_REMAINDER,
                     arguments: {"section": value});
+
+                final box = await Hive.openBox(DBNames.remainderCache);
+                box.put(DBRemainderCache.studentSection, value);
+                await box.close();
               } else {
                 GetXUtilities.snackbar(
                     title: 'Not Found!!',

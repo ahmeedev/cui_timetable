@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:cui_timetable/app/modules/remainder/student_remainder/views/widgets/student_remainder_widgets.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:get/get.dart';
 
@@ -24,6 +27,7 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
             children: [
               Card(
                 color: successColor,
+                // color: widgetColor,
                 child: Padding(
                   padding: EdgeInsets.all(Constants.defaultPadding / 2),
                   child: Row(
@@ -36,8 +40,7 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            int a = 12;
-                            debugPrint('helo');
+                            log("${controller.sectionDetails.toList()}");
                           },
                           child: const Text('Set All'))
                     ],
@@ -46,16 +49,32 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
               ),
               kHeight,
               Expanded(
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    ...List.generate(
-                        5,
-                        (index) => LectureDetailsTile(
-                              time: "09:00 - 10:00",
-                            )),
-                  ],
-                ),
+                child: FutureBuilder<List>(
+                    // stream: null,
+                    future: controller.getDetails(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const SpinKitPouringHourGlass(
+                          color: primaryColor,
+                          // shape: BoxShape.rectangle,
+
+                          // size: 20,
+                        );
+                      }
+                      return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return LectureDetailsTile(
+                            subject: snapshot.data![index][0],
+                            teacher: snapshot.data![index][1],
+                            counter: index + 1,
+                            isSet: index == 1 ? false : true,
+                            // isSet: false,
+                          );
+                        },
+                      );
+                    }),
               )
             ],
           ),

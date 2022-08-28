@@ -16,8 +16,11 @@ class DBNames {
 
   static const settings = "settings";
 
+  static const remainder = "remainder";
+
   // Cashing system //
   static const timetableCache = "timetableCache";
+  static const remainderCache = "remainderCache";
 }
 
 class DBGeneral {
@@ -95,4 +98,10 @@ class DBSettings {
 class DBPortals {
   static const studentData = "studentData";
   static const teacherData = "teacherData";
+}
+
+class DBRemainder {}
+
+class DBRemainderCache {
+  static const studentSection = 'section';
 }
