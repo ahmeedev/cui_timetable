@@ -9,7 +9,7 @@ import '../../../../../theme/app_constants.dart';
 class LectureDetailsTile extends GetView<StudentRemainderController> {
   final String subject;
   final String teacher;
-  final int counter;
+  final int counter; // we can use this one for the index of remainder buttons.
   final bool isSet;
 
   const LectureDetailsTile(
@@ -99,10 +99,12 @@ class LectureDetailsTile extends GetView<StudentRemainderController> {
                           const SizedBox(
                             height: 8,
                           ),
-                          isSet
+                          isSet == false
                               ? ElevatedButton(
                                   onPressed: () {
-                                    controller.setRemainder(subject: subject);
+                                    controller.setRemainder(
+                                        subject: subject, index: counter - 1);
+                                    // controller.setRemainder(subject: subject);
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +128,10 @@ class LectureDetailsTile extends GetView<StudentRemainderController> {
                               : ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       primary: errorColor1),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    controller.revokeRemainder(
+                                        subject: subject, index: counter - 1);
+                                  },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [

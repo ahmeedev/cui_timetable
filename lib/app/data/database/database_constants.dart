@@ -104,4 +104,7 @@ class DBRemainder {}
 
 class DBRemainderCache {
   static const studentSection = 'section';
+  static const teacherName = 'teacher';
+
+  static const sectionNotiRemainder = "sectionNotiRemainder";
 }

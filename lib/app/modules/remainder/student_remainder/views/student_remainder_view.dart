@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cui_timetable/app/modules/remainder/student_remainder/views/widgets/student_remainder_widgets.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -38,18 +36,28 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
                         style: textTheme.titleMedium!
                             .copyWith(color: Colors.black),
                       ),
-                      ElevatedButton(
-                          onPressed: () {
-                            log("${controller.sectionDetails.toList()}");
-                          },
-                          child: const Text('Set All'))
+                      Obx(() => controller.allSet == false
+                          ? ElevatedButton(
+                              onPressed: () {
+                                // log("${controller.sectionDetails.toList()}");
+                                controller.setAll();
+                              },
+                              child: const Text('Set All'))
+                          : ElevatedButton(
+                              onPressed: () {
+                                // log("${controller.sectionDetails.toList()}");
+                                controller.revokeAll();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  primary: errorColor1),
+                              child: const Text('Revoke All')))
                     ],
                   ),
                 ),
               ),
               kHeight,
               Expanded(
-                child: FutureBuilder<List>(
+                child: FutureBuilder<Map>(
                     // stream: null,
                     future: controller.getDetails(),
                     builder: (context, snapshot) {
@@ -63,15 +71,21 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
                       }
                       return ListView.builder(
                         physics: const BouncingScrollPhysics(),
-                        itemCount: snapshot.data!.length,
+                        itemCount: snapshot.data!["filteredData"].length,
                         itemBuilder: (BuildContext context, int index) {
-                          return LectureDetailsTile(
-                            subject: snapshot.data![index][0],
-                            teacher: snapshot.data![index][1],
-                            counter: index + 1,
-                            isSet: index == 1 ? false : true,
-                            // isSet: false,
-                          );
+                          return Obx(() => LectureDetailsTile(
+                                subject: snapshot.data!["filteredData"][index]
+                                    [0],
+                                teacher: snapshot.data!["filteredData"][index]
+                                    [1],
+                                counter: index + 1,
+                                isSet:
+                                    // snapshot.data!["notiRemainder"][index] == 0
+                                    controller.notiRemainder[index] == 0
+                                        ? false
+                                        : true,
+                                // isSet: false,
+                              ));
                         },
                       );
                     }),

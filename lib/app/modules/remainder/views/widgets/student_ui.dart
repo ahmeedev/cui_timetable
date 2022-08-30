@@ -7,7 +7,6 @@ import 'package:hive/hive.dart';
 
 import '../../../../routes/app_pages.dart';
 import '../../../../widgets/get_widgets.dart';
-import '../../../../widgets/global_widgets.dart';
 import '../../controllers/student_ui_controlller.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_constants.dart';
@@ -15,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StudentUI extends GetView<RemainderStudentUIController> {
-  StudentUI({Key? key}) : super(key: key);
+  const StudentUI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +44,10 @@ class StudentUI extends GetView<RemainderStudentUIController> {
                     // schedule: NotificationInterval(
                     //     interval: 3, timeZone: localTimeZone),
                     schedule: NotificationCalendar(
-                        weekday: 5,
-                        hour: 17,
-                        minute: 48,
-                        second: 0,
+                        weekday: 2,
+                        hour: 22,
+                        minute: 5,
+                        second: 30,
                         millisecond: 0,
                         timeZone: localTimeZone
                         // timeZone: localTimeZone,

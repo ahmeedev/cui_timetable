@@ -1,7 +1,4 @@
-import 'dart:developer' as dev;
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
@@ -12,6 +9,16 @@ class StudentRemainderController extends GetxController {
   var monToThursSlots = <String>[];
   var friSlots = <String>[];
   var currentTimeSlots = [];
+  var notiRemainder = [].obs;
+  // final days = {
+  //   "10000": "Monday",
+  //   "1000": "Tuesday",
+  //   "100": "Wednesday",
+  //   "10": "Thursday",
+  //   "1": "Friday"
+  // };
+
+  final days = {"10000": 1, "1000": 2, "100": 3, "10": 4, "1": 5};
   List<StudentTimetable> sectionDetails = [];
   @override
   Future<void> onInit() async {
@@ -19,13 +26,19 @@ class StudentRemainderController extends GetxController {
     monToThursSlots = boxx.get(DBTimeSlots.monToThur);
     friSlots = boxx.get(DBTimeSlots.fri);
     currentTimeSlots = monToThursSlots;
+    print(Get.arguments["section"]);
     super.onInit();
   }
 
   // return [List] of the [StudentTimetable].
-  Future<List> getDetails() async {
-    // print("Running");
+  Future<Map> getDetails() async {
+    final box0 = await Hive.openBox(DBNames.remainderCache);
+    notiRemainder.value =
+        box0.get(DBRemainderCache.sectionNotiRemainder, defaultValue: []);
+    _checkAllSet();
+
     final box = await Hive.openBox(DBNames.timetableData);
+
     List<StudentTimetable> list = sectionDetails = List.from(box.get(
         DBTimetableData.studentsData)[Get.arguments["section"].toLowerCase()]);
 
@@ -40,7 +53,11 @@ class StudentRemainderController extends GetxController {
       }
     }
     // await Future.delayed(const Duration(seconds: 10));
-    return Future.value(filteredData);
+    if (notiRemainder.isEmpty) {
+      notiRemainder.value = List.filled(filteredData.length, 0);
+    }
+    return Future.value(
+        {"filteredData": filteredData, "notiRemainder": notiRemainder});
   }
 
   /// return [bool] if the required data is available in list.
@@ -57,14 +74,134 @@ class StudentRemainderController extends GetxController {
     return true;
   }
 
-  setRemainder({required String subject}) {
-    //TODO: set the current time slot when they are friday. rememeber.
-    dev.log(currentTimeSlots.toString());
+  setRemainder({required String subject, required int index}) async {
+    notiRemainder[index] = 1;
+    await _cacheNotiRemainder();
+    _checkAllSet();
     for (var element in sectionDetails) {
       if (element.subject.toLowerCase().compareTo(subject.toLowerCase()) == 0) {
-        // dev.log(element.day);
-        dev.log(currentTimeSlots[element.slot - 1].toString());
+        //  AwesomeNotifications().cancelAllSchedules();
+        // log("Weekday${days[element.day.toString()]}");
+        // log("Hour${days[element.day.toString()]}");
+        // log("Minute${days[element.day.toString()]}");
+        if (int.parse(element.day) == 5) {
+          currentTimeSlots = friSlots;
+        } else {
+          currentTimeSlots = monToThursSlots;
+        }
+        String localTimeZone =
+            await AwesomeNotifications().getLocalTimeZoneIdentifier();
+
+        _parseTimeSlots(currentTimeSlots[element.slot - 1].toString())
+            .then((value) {
+          // log("Hour ${value['hours']}");
+          // log("Minutes ${value['minutes']}");
+
+          // AwesomeNotifications().createNotification(
+          //   // actionButtons: [],
+          //   // schedule: NotificationInterval(
+          //   //     interval: 3, timeZone: localTimeZone),
+          //   schedule: NotificationCalendar(
+          //       weekday: days[element.day.toString()],
+          //       hour: value['minutes'],
+          //       minute: value['minutes']-2,
+          //       second: 0,
+          //       millisecond: 0,
+          //       timeZone: localTimeZone
+          //       // timeZone: localTimeZone,
+          //       ),
+          //   content: NotificationContent(
+          //     id: channelRemainderId,
+          //     channelKey: channelRemainderKey,
+          //     notificationLayout: NotificationLayout.BigText,
+          //     title: 'Remainder!',
+          //     wakeUpScreen: true,
+          //     category: NotificationCategory.Reminder,
+          //     // backgroundColor: Colors.red,
+          //     // color: Colors.green,
+          //     summary: "Get ready for your next lecture",
+          //     body:
+          //         'your next lecture started at 10:00 am of Financial Accounting at A1',
+          //   ),
+          // );
+        });
+        // log(
+        //     "Day ${days[element.day.toString()].toString()} Time $value"));
+
+        // dev.log(currentTimeSlots[element.slot - 1].toString());
+
       }
     }
+  }
+
+  Future<Map> _parseTimeSlots(String time) {
+    time = time.toLowerCase();
+    // log("initial $time");
+    final map = <String, int>{};
+    final tokens = time.split('-');
+    for (var element in tokens) {
+      if (element.toString().contains('am')) {
+        // log(element.toString().trim());
+        final time = element.replaceAll("am", '').trim();
+        // log(time);
+        final hoursAndMinutes = time.split(":");
+        map['hours'] = int.parse(hoursAndMinutes[0]);
+        map['minutes'] = int.parse(hoursAndMinutes[1]);
+        // log("am$map");
+        return Future.value(map);
+      } else {
+        if (element.toString().contains('pm')) {
+          final time = element.toString().replaceAll("pm", '').trim();
+          // log(time);
+          final hoursAndMinutes = time.split(":");
+          map['hours'] = int.parse(hoursAndMinutes[0]) + 12;
+          map['minutes'] = int.parse(hoursAndMinutes[1]);
+          // log("pm$map");
+          return Future.value(map);
+        }
+      }
+    }
+    return Future.value({});
+    // log(tokens.toString());
+  }
+
+  revokeRemainder({required String subject, required int index}) async {
+    notiRemainder[index] = 0;
+    await _cacheNotiRemainder();
+    _checkAllSet();
+  }
+
+  var allSet = false.obs;
+  setAll() async {
+    AwesomeNotifications().cancelAllSchedules();
+    notiRemainder.value = List.filled(sectionDetails.length, 1);
+    await _cacheNotiRemainder();
+    allSet.value = true;
+  }
+
+  revokeAll() async {
+    notiRemainder.value = List.filled(sectionDetails.length, 0);
+    await _cacheNotiRemainder();
+    allSet.value = false;
+  }
+
+  _checkAllSet() {
+    bool flag = false;
+    for (var element in notiRemainder) {
+      if (element == 0) {
+        flag = true;
+        break; // means, still have something unset
+      }
+    }
+    if (flag) {
+      allSet.value = false;
+    } else {
+      allSet.value = true;
+    }
+  }
+
+  Future<void> _cacheNotiRemainder() async {
+    final box0 = await Hive.openBox(DBNames.remainderCache);
+    box0.put(DBRemainderCache.sectionNotiRemainder, notiRemainder);
   }
 }
