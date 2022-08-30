@@ -10,6 +10,7 @@ class RemainderStudentUIController extends GetxController {
   final TextEditingController textController = TextEditingController();
   var filteredList = [].obs;
   var listVisible = true.obs;
+  var sectionHistory = [].obs;
   // var dialogHistoryList = [].obs;
 
   @override

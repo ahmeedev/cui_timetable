@@ -1,14 +1,9 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
-import 'package:cui_timetable/app/modules/news/views/news_view.dart';
-import 'package:cui_timetable/app/modules/settings/views/settings_view2.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_soul/flutter_soul.dart' as flutterSoul;
 import 'package:get/get.dart';
 import 'package:particles_flutter/particles_flutter.dart';
-import 'package:rive/rive.dart' as rive;
 
 import '../../../routes/app_pages.dart';
 import 'widgets/home_drawer.dart';
@@ -284,7 +279,7 @@ class HomeView3 extends GetView<HomeController> {
       maxParticleSize: 5,
       isRandSize: true,
       isRandomColor: true,
-      randColorList: [
+      randColorList: const [
         Colors.purple,
         Colors.amber,
         Colors.red,
@@ -367,13 +362,13 @@ class HomeViewWidget extends StatelessWidget {
           children: [
             SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
-                title: "Timetable",
-                ontap: () => Get.toNamed(Routes.TIMETABLE),
-                iconLocation: "assets/home/timetable.png"),
+                title: "Transport",
+                // ontap: () => Get.toNamed(Routes.TIMETABLE),
+                iconLocation: "assets/home/transport.png"),
             SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
-                title: "Datesheet",
-                ontap: () => Get.toNamed(Routes.DATESHEET),
+                title: "Fee Structure",
+                // ontap: () => Get.toNamed(Routes.DATESHEET),
                 iconLocation: "assets/home/datesheet.png"),
             SizedBox(width: Constants.defaultPadding),
             _buildTile(context, blank: true),
@@ -396,20 +391,20 @@ class HomeViewWidget extends StatelessWidget {
             _buildTile(context,
                 title: "Feedback",
                 // ontap: () => Get.toNamed(Routes.TIMETABLE),
-                iconLocation: "assets/home/timetable.png"),
+                iconLocation: "assets/home/feedback.png"),
             SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
                 title: "About Us",
                 ontap: () => Get.toNamed(Routes.ABOUT_US),
-                iconLocation: "assets/home/datesheet.png"),
+                iconLocation: "assets/home/about_us.png"),
             SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
                 title: "Donation",
                 // ontap: () => Get.toNamed(Routes.FREEROOMS),
-                iconLocation: "assets/home/room.png"),
+                iconLocation: "assets/home/donation.png"),
             SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
-                title: "Contribute", iconLocation: "assets/home/menu.png"),
+                title: "Developer", iconLocation: "assets/home/developer.png"),
           ],
         ),
         SizedBox(height: Constants.defaultPadding + 5),

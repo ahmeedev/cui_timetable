@@ -1,7 +1,3 @@
-import 'dart:developer';
-
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:hive/hive.dart';
 
@@ -18,6 +14,7 @@ class StudentUI extends GetView<RemainderStudentUIController> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: scaffoldColor,
@@ -31,52 +28,43 @@ class StudentUI extends GetView<RemainderStudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
-              ElevatedButton(
-                onPressed: () async {
-                  AwesomeNotifications().cancelAllSchedules();
-                  log(DateTime.parse('2022-08-26 17:40:00Z')
-                      .toLocal()
-                      .toString());
-                  String localTimeZone =
-                      await AwesomeNotifications().getLocalTimeZoneIdentifier();
-                  AwesomeNotifications().createNotification(
-                    // actionButtons: [],
-                    // schedule: NotificationInterval(
-                    //     interval: 3, timeZone: localTimeZone),
-                    schedule: NotificationCalendar(
-                        weekday: 2,
-                        hour: 22,
-                        minute: 5,
-                        second: 30,
-                        millisecond: 0,
-                        timeZone: localTimeZone
-                        // timeZone: localTimeZone,
-                        ),
-                    content: NotificationContent(
-                      id: 1,
-                      channelKey: channelRemainderKey,
-                      notificationLayout: NotificationLayout.BigText,
-                      title: 'Remainder!',
-                      wakeUpScreen: true,
-                      category: NotificationCategory.Reminder,
-                      // backgroundColor: Colors.red,
-                      // color: Colors.green,
-                      summary: "Get ready for your next lecture",
-                      body:
-                          'your next lecture started at 10:00 am of Financial Accounting at A1',
-                    ),
-                  );
-                },
-                child: const Text('Store'),
-              ),
               // ElevatedButton(
               //   onPressed: () async {
-              //     Box box = controller.store.box<User>();
-              //     var user = box.getAll(); // Read
-              //     // print(user.toString());
-              //     print(user);
+              //     AwesomeNotifications().cancelAllSchedules();
+              //     log(DateTime.parse('2022-08-26 17:40:00Z')
+              //         .toLocal()
+              //         .toString());
+              //     String localTimeZone =
+              //         await AwesomeNotifications().getLocalTimeZoneIdentifier();
+              //     AwesomeNotifications().createNotification(
+              //       // actionButtons: [],
+              //       // schedule: NotificationInterval(
+              //       //     interval: 3, timeZone: localTimeZone),
+              //       schedule: NotificationCalendar(
+              //           weekday: 2,
+              //           hour: 22,
+              //           minute: 5,
+              //           second: 30,
+              //           millisecond: 0,
+              //           timeZone: localTimeZone
+              //           // timeZone: localTimeZone,
+              //           ),
+              //       content: NotificationContent(
+              //         id: 1,
+              //         channelKey: channelRemainderKey,
+              //         notificationLayout: NotificationLayout.BigText,
+              //         title: 'Remainder!',
+              //         wakeUpScreen: true,
+              //         category: NotificationCategory.Reminder,
+              //         // backgroundColor: Colors.red,
+              //         // color: Colors.green,
+              //         summary: "Get ready for your next lecture",
+              //         body:
+              //             'your next lecture started at 10:00 am of Financial Accounting at A1',
+              //       ),
+              //     );
               //   },
-              //   child: Text('Retrieved'),
+              //   child: const Text('Store'),
               // ),
             ],
           ),
@@ -101,12 +89,39 @@ class StudentUI extends GetView<RemainderStudentUIController> {
             SizedBox(
               height: Constants.defaultPadding,
             ),
-            Text(
-              'Section Name',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(fontWeight: FontWeight.w900),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Section Name',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w900),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    final box = await Hive.openBox(DBNames.remainderCache);
+                    final List result = box
+                        .get(DBRemainderCache.sectionHistory, defaultValue: []);
+                    controller.sectionHistory.value = result;
+                    GetXUtilities.remainderHistory(context,
+                        content: controller.sectionHistory);
+                  },
+                  child: Container(
+                    // color: Colors.red,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Constants.defaultPadding / 2,
+                        vertical: Constants.defaultPadding / 3),
+                    // color: Colors.red,
+                    child: Icon(
+                      Icons.history,
+                      size: Constants.iconSize + 2,
+                      color: primaryColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: Constants.defaultPadding,
@@ -221,6 +236,7 @@ class StudentUI extends GetView<RemainderStudentUIController> {
                 final box = await Hive.openBox(DBNames.remainderCache);
                 box.put(DBRemainderCache.studentSection, value);
                 await box.close();
+                _cacheSectionHistory(value);
               } else {
                 GetXUtilities.snackbar(
                     title: 'Not Found!!',
@@ -240,5 +256,16 @@ class StudentUI extends GetView<RemainderStudentUIController> {
             )),
       ),
     );
+  }
+
+  _cacheSectionHistory(value) async {
+    final box2 = await Hive.openBox(DBNames.remainderCache);
+    List list = box2.get(DBRemainderCache.sectionHistory, defaultValue: []);
+    if (list.length != 6) {
+      Set result = list.toSet();
+      result.add(value);
+      box2.put(DBRemainderCache.sectionHistory, result.toList());
+      // await box2.close();
+    }
   }
 }

@@ -6,10 +6,12 @@ import '../../../../data/database/database_constants.dart';
 import '../../../../data/models/timetable/student_timetable/student_timetable.dart';
 
 class StudentRemainderController extends GetxController {
+  final section = Get.arguments["section"];
   var monToThursSlots = <String>[];
   var friSlots = <String>[];
   var currentTimeSlots = [];
   var notiRemainder = [].obs;
+
   // final days = {
   //   "10000": "Monday",
   //   "1000": "Tuesday",
@@ -26,21 +28,21 @@ class StudentRemainderController extends GetxController {
     monToThursSlots = boxx.get(DBTimeSlots.monToThur);
     friSlots = boxx.get(DBTimeSlots.fri);
     currentTimeSlots = monToThursSlots;
-    print(Get.arguments["section"]);
+
     super.onInit();
   }
 
   // return [List] of the [StudentTimetable].
   Future<Map> getDetails() async {
     final box0 = await Hive.openBox(DBNames.remainderCache);
-    notiRemainder.value =
-        box0.get(DBRemainderCache.sectionNotiRemainder, defaultValue: []);
+    notiRemainder.value = await box0.get(section, defaultValue: []);
+    print(notiRemainder);
     _checkAllSet();
 
     final box = await Hive.openBox(DBNames.timetableData);
 
-    List<StudentTimetable> list = sectionDetails = List.from(box.get(
-        DBTimetableData.studentsData)[Get.arguments["section"].toLowerCase()]);
+    List<StudentTimetable> list = sectionDetails =
+        List.from(box.get(DBTimetableData.studentsData)[section.toLowerCase()]);
 
     final filteredData = [];
     for (var i = 0; i < list.length; i++) {
@@ -186,22 +188,24 @@ class StudentRemainderController extends GetxController {
   }
 
   _checkAllSet() {
-    bool flag = false;
-    for (var element in notiRemainder) {
-      if (element == 0) {
-        flag = true;
-        break; // means, still have something unset
+    if (notiRemainder.isNotEmpty) {
+      bool flag = false;
+      for (var element in notiRemainder) {
+        if (element == 0) {
+          flag = true;
+          break; // means, still have something unset
+        }
       }
-    }
-    if (flag) {
-      allSet.value = false;
-    } else {
-      allSet.value = true;
+      if (flag) {
+        allSet.value = false;
+      } else {
+        allSet.value = true;
+      }
     }
   }
 
   Future<void> _cacheNotiRemainder() async {
     final box0 = await Hive.openBox(DBNames.remainderCache);
-    box0.put(DBRemainderCache.sectionNotiRemainder, notiRemainder);
+    box0.put(section, notiRemainder);
   }
 }
