@@ -23,39 +23,58 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
           padding: EdgeInsets.all(Constants.defaultPadding),
           child: Column(
             children: [
-              Card(
-                color: successColor,
-                // color: widgetColor,
-                child: Padding(
-                  padding: EdgeInsets.all(Constants.defaultPadding / 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        "Set all the slots as remainder?",
-                        style: textTheme.titleMedium!
-                            .copyWith(color: Colors.black),
+              Obx(() => Card(
+                    color: controller.allSet.value == true
+                        ? errorColor1
+                        : successColor,
+                    // color: widgetColor,
+                    child: Padding(
+                      padding: EdgeInsets.all(Constants.defaultPadding / 2),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              controller.allSet.value == true
+                                  ? "Revoke all the slots from remainder?"
+                                  : "Set all the slots as remainder?",
+                              style: textTheme.titleMedium!
+                                  .copyWith(color: Colors.black),
+                            ),
+                          ),
+                          controller.allSet.value == false
+                              ? AbsorbPointer(
+                                  absorbing: controller.absorbing.value,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        // log("${controller.sectionDetails.toList()}");
+                                        controller.setAll();
+                                      },
+                                      child: const Text('Set All')),
+                                )
+                              : AbsorbPointer(
+                                  absorbing: controller.absorbing.value,
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        // log("${controller.sectionDetails.toList()}");
+                                        controller.revokeAll();
+                                      },
+                                      // style: ElevatedButton.styleFrom(
+                                      //     primary: errorColor1),
+                                      child: const Text('Revoke All')),
+                                )
+                        ],
                       ),
-                      Obx(() => controller.allSet == false
-                          ? ElevatedButton(
-                              onPressed: () {
-                                // log("${controller.sectionDetails.toList()}");
-                                controller.setAll();
-                              },
-                              child: const Text('Set All'))
-                          : ElevatedButton(
-                              onPressed: () {
-                                // log("${controller.sectionDetails.toList()}");
-                                controller.revokeAll();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  primary: errorColor1),
-                              child: const Text('Revoke All')))
-                    ],
-                  ),
-                ),
-              ),
+                    ),
+                  )),
               kHeight,
+              Obx(() => controller.absorbing.value
+                  ? SpinKitThreeBounce(
+                      color: primaryColor,
+                      size: Constants.iconSize,
+                    )
+                  : const SizedBox()),
               Expanded(
                 child: FutureBuilder<Map>(
                     // stream: null,

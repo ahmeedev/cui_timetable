@@ -1,7 +1,12 @@
+import 'dart:developer';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import '../../../../constants/notification_constants.dart';
 import '../../../../data/database/database_constants.dart';
 import '../../../../data/models/timetable/student_timetable/student_timetable.dart';
 
@@ -10,7 +15,10 @@ class StudentRemainderController extends GetxController {
   var monToThursSlots = <String>[];
   var friSlots = <String>[];
   var currentTimeSlots = [];
+  final filteredData = [];
   var notiRemainder = [].obs;
+
+  var absorbing = false.obs;
 
   // final days = {
   //   "10000": "Monday",
@@ -36,6 +44,7 @@ class StudentRemainderController extends GetxController {
   Future<Map> getDetails() async {
     final box0 = await Hive.openBox(DBNames.remainderCache);
     notiRemainder.value = await box0.get(section, defaultValue: []);
+    // box0.clear();
     print(notiRemainder);
     _checkAllSet();
 
@@ -44,13 +53,15 @@ class StudentRemainderController extends GetxController {
     List<StudentTimetable> list = sectionDetails =
         List.from(box.get(DBTimetableData.studentsData)[section.toLowerCase()]);
 
-    final filteredData = [];
     for (var i = 0; i < list.length; i++) {
       if (i == 0) {
         filteredData.add([list[i].subject, list[i].teacher]);
       } else {
         if (_checkData(value: list[i].subject, list: filteredData)) {
           filteredData.add([list[i].subject, list[i].teacher]);
+          filteredData.sort(
+            (a, b) => a[0].compareTo(b[0]),
+          );
         }
       }
     }
@@ -77,6 +88,10 @@ class StudentRemainderController extends GetxController {
   }
 
   setRemainder({required String subject, required int index}) async {
+    absorbing.value = true;
+    // log("pressed");
+    // await Future.delayed(const Duration(seconds: 2));
+
     notiRemainder[index] = 1;
     await _cacheNotiRemainder();
     _checkAllSet();
@@ -98,34 +113,48 @@ class StudentRemainderController extends GetxController {
             .then((value) {
           // log("Hour ${value['hours']}");
           // log("Minutes ${value['minutes']}");
-
-          // AwesomeNotifications().createNotification(
-          //   // actionButtons: [],
-          //   // schedule: NotificationInterval(
-          //   //     interval: 3, timeZone: localTimeZone),
-          //   schedule: NotificationCalendar(
-          //       weekday: days[element.day.toString()],
-          //       hour: value['minutes'],
-          //       minute: value['minutes']-2,
-          //       second: 0,
-          //       millisecond: 0,
-          //       timeZone: localTimeZone
-          //       // timeZone: localTimeZone,
-          //       ),
-          //   content: NotificationContent(
-          //     id: channelRemainderId,
-          //     channelKey: channelRemainderKey,
-          //     notificationLayout: NotificationLayout.BigText,
-          //     title: 'Remainder!',
-          //     wakeUpScreen: true,
-          //     category: NotificationCategory.Reminder,
-          //     // backgroundColor: Colors.red,
-          //     // color: Colors.green,
-          //     summary: "Get ready for your next lecture",
-          //     body:
-          //         'your next lecture started at 10:00 am of Financial Accounting at A1',
-          //   ),
-          // );
+          final String time;
+          final String minutes;
+          if (value['minutes'] == 0) {
+            minutes = "00";
+          } else {
+            minutes = value['minutes'].toString();
+          }
+          if (value['hours'] == 12) {
+            time = "${value['hours']}:$minutes PM";
+          } else if (value['hours'] > 12) {
+            time = "${value['hours'] - 12}:$minutes PM";
+          } else {
+            time = "${value['hours']}:$minutes AM";
+          }
+          log(time);
+          AwesomeNotifications().createNotification(
+            // actionButtons: [],
+            // schedule: NotificationInterval(
+            //     interval: 3, timeZone: localTimeZone),
+            schedule: NotificationCalendar(
+                weekday: days[element.day.toString()],
+                hour: value['hours'],
+                minute: value['minutes'] - 2,
+                second: 0,
+                millisecond: 0,
+                timeZone: localTimeZone
+                // timeZone: localTimeZone,
+                ),
+            content: NotificationContent(
+              id: channelRemainderId,
+              channelKey: channelRemainderKey,
+              notificationLayout: NotificationLayout.BigText,
+              title: 'Remainder!',
+              wakeUpScreen: true,
+              category: NotificationCategory.Reminder,
+              // backgroundColor: Colors.red,
+              // color: Colors.green,
+              summary: "Get ready for your next lecture",
+              body:
+                  'your next lecture started at ${value['minutes']} of ${element.subject} at ${element.room} with ${element.teacher}',
+            ),
+          );
         });
         // log(
         //     "Day ${days[element.day.toString()].toString()} Time $value"));
@@ -134,6 +163,11 @@ class StudentRemainderController extends GetxController {
 
       }
     }
+    absorbing.value = false;
+    GetXUtilities.snackbar(
+        title: "Scheduling",
+        message: "Your remainder set successfully!!",
+        gradient: successGradient);
   }
 
   Future<Map> _parseTimeSlots(String time) {
@@ -169,20 +203,38 @@ class StudentRemainderController extends GetxController {
 
   revokeRemainder({required String subject, required int index}) async {
     notiRemainder[index] = 0;
+    absorbing.value = true;
+    await Future.delayed(const Duration(seconds: 2));
     await _cacheNotiRemainder();
     _checkAllSet();
+    absorbing.value = false;
+    GetXUtilities.snackbar(
+        title: "Scheduling",
+        message: "Your remainder revoked successfully!!",
+        gradient: errorGradient);
   }
 
   var allSet = false.obs;
   setAll() async {
-    AwesomeNotifications().cancelAllSchedules();
-    notiRemainder.value = List.filled(sectionDetails.length, 1);
+    // first cancel all the scheuled notifications
+    // AwesomeNotifications().cancelAllSchedules();
+
+    // change the button states
+    for (var i = 0; i < notiRemainder.length; i++) {
+      if (notiRemainder[i] == 0) {
+        notiRemainder[i] = 1;
+      }
+      // notiRemainder[i] = 1;
+    }
+
     await _cacheNotiRemainder();
     allSet.value = true;
   }
 
   revokeAll() async {
-    notiRemainder.value = List.filled(sectionDetails.length, 0);
+    for (var i = 0; i < notiRemainder.length; i++) {
+      notiRemainder[i] = 0;
+    }
     await _cacheNotiRemainder();
     allSet.value = false;
   }

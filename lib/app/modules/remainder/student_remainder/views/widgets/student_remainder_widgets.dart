@@ -100,57 +100,69 @@ class LectureDetailsTile extends GetView<StudentRemainderController> {
                             height: 8,
                           ),
                           isSet == false
-                              ? ElevatedButton(
-                                  onPressed: () {
-                                    controller.setRemainder(
-                                        subject: subject, index: counter - 1);
-                                    // controller.setRemainder(subject: subject);
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Schedule Remainder",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge,
-                                      ),
-                                      SizedBox(
-                                        width: Constants.defaultPadding / 2,
-                                      ),
-                                      const Icon(
-                                        Icons.notification_add_outlined,
-                                        color: widgetColor,
-                                      )
-                                    ],
-                                  ).paddingVertical(Constants.defaultPadding),
-                                )
-                              : ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: errorColor1),
-                                  onPressed: () {
-                                    controller.revokeRemainder(
-                                        subject: subject, index: counter - 1);
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Revoke Remainder",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge,
-                                      ),
-                                      SizedBox(
-                                        width: Constants.defaultPadding / 2,
-                                      ),
-                                      const Icon(
-                                        Icons.notifications_off_outlined,
-                                        color: widgetColor,
-                                      )
-                                    ],
-                                  ).paddingVertical(Constants.defaultPadding),
-                                )
+                              ? Obx(() => AbsorbPointer(
+                                    absorbing: controller.absorbing.value,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        controller.setRemainder(
+                                            subject: subject,
+                                            index: counter - 1);
+                                        // controller.setRemainder(subject: subject);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Schedule Remainder",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          SizedBox(
+                                            width: Constants.defaultPadding / 2,
+                                          ),
+                                          const Icon(
+                                            Icons.notification_add_outlined,
+                                            color: widgetColor,
+                                          )
+                                        ],
+                                      ).paddingVertical(
+                                          Constants.defaultPadding),
+                                    ),
+                                  ))
+                              : Obx(() => AbsorbPointer(
+                                    absorbing: controller.absorbing.value,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: errorColor1),
+                                      onPressed: () {
+                                        controller.revokeRemainder(
+                                            subject: subject,
+                                            index: counter - 1);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Revoke Remainder",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          SizedBox(
+                                            width: Constants.defaultPadding / 2,
+                                          ),
+                                          const Icon(
+                                            Icons.notifications_off_outlined,
+                                            color: widgetColor,
+                                          )
+                                        ],
+                                      ).paddingVertical(
+                                          Constants.defaultPadding),
+                                    ),
+                                  ))
                         ],
                       ),
                     ),

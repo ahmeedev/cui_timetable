@@ -59,6 +59,7 @@ class DayTile extends GetView<StudentTimetableController> {
               child: Container(
                 decoration: BoxDecoration(
                     color: obs.value ? selectionColor : widgetColor,
+                    // gradient: const LinearGradient(colors: primaryGradient),
                     borderRadius:
                         BorderRadius.circular(Constants.defaultRadius)),
                 child: Material(
@@ -161,121 +162,136 @@ class LectureDetailsTile extends StatelessWidget {
       child: Stack(
         children: [
           Card(
-            // color: widgetColor,
+            // color: Colors.amber,
             // elevation: Constants.defaultElevation,
             // shadowColor: shadowColor,
             // shape: RoundedRectangleBorder(
             //     borderRadius:
             //         BorderRadius.all(Radius.circular(Constants.defaultRadius))),
-            child: Padding(
-              padding: EdgeInsets.all(Constants.defaultPadding),
-              child: IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          time.toString().split('-')[0],
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        const Text('|'),
-                        const Text('|'),
-                        Text(
-                          time.toString().split('-')[1],
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    const VerticalDivider(
+            child: Container(
+              // color: Colors.red,
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: Constants.defaultElevation / 2,
                       color: primaryColor,
-                      thickness: 2.0,
-                      // indent: 4,
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: Constants.defaultPadding / 2,
-                            right: Constants.defaultPadding / 2),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: textFieldColor,
-                                  borderRadius: BorderRadius.circular(
-                                      Constants.defaultRadius)),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.all(Constants.defaultPadding),
-                                child: Text(
-                                  subject.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium!
-                                                  .fontSize! +
-                                              2),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              children: [
-                                const ImageIcon(
-                                  AssetImage('assets/home/room.png'),
-                                  color: primaryColor,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(room.toString(),
+                    )
+                  ],
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(Constants.defaultRadius)),
+                  gradient: const LinearGradient(colors: primaryGradient)),
+              child: Padding(
+                padding: EdgeInsets.all(Constants.defaultPadding),
+                child: IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            time.toString().split('-')[0],
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          const Text('|'),
+                          const Text('|'),
+                          Text(
+                            time.toString().split('-')[1],
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                      const VerticalDivider(
+                        color: primaryColor,
+                        thickness: 2.0,
+                        // indent: 4,
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: Constants.defaultPadding / 2,
+                              right: Constants.defaultPadding / 2),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: textFieldColor,
+                                    borderRadius: BorderRadius.circular(
+                                        Constants.defaultRadius)),
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.all(Constants.defaultPadding),
+                                  child: Text(
+                                    subject.toString(),
+                                    textAlign: TextAlign.center,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyLarge!
-                                        .copyWith(fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                const ImageIcon(
-                                  AssetImage('assets/timetable/professor.png'),
-                                  color: primaryColor,
+                                        .titleMedium!
+                                        .copyWith(
+                                            fontStyle: FontStyle.italic,
+                                            fontSize: Theme.of(context)
+                                                    .textTheme
+                                                    .titleMedium!
+                                                    .fontSize! +
+                                                2),
+                                  ),
                                 ),
-                                const SizedBox(width: 5),
-                                Flexible(
-                                  child: Text(teacher.toString(),
-                                      overflow: TextOverflow.visible,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Row(
+                                children: [
+                                  const ImageIcon(
+                                    AssetImage('assets/home/room.png'),
+                                    color: primaryColor,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(room.toString(),
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge!
                                           .copyWith(
                                               fontWeight: FontWeight.bold)),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  const ImageIcon(
+                                    AssetImage(
+                                        'assets/timetable/professor.png'),
+                                    color: primaryColor,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Flexible(
+                                    child: Text(teacher.toString(),
+                                        overflow: TextOverflow.visible,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold)),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

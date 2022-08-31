@@ -22,6 +22,7 @@ abstract class Routes {
   static const REMAINDER = _Paths.REMAINDER;
   static const SETTINGS = _Paths.SETTINGS;
   static const STUDENT_REMAINDER = _Paths.REMAINDER + _Paths.STUDENT_REMAINDER;
+  static const DEVELOPER = _Paths.DEVELOPER;
 }
 
 abstract class _Paths {
@@ -43,4 +44,5 @@ abstract class _Paths {
   static const REMAINDER = '/remainder';
   static const SETTINGS = '/settings';
   static const STUDENT_REMAINDER = '/student-remainder';
+  static const DEVELOPER = '/developer';
 }
