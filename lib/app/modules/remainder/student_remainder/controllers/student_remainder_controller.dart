@@ -36,7 +36,9 @@ class StudentRemainderController extends GetxController {
     monToThursSlots = boxx.get(DBTimeSlots.monToThur);
     friSlots = boxx.get(DBTimeSlots.fri);
     currentTimeSlots = monToThursSlots;
-
+    AwesomeNotifications().createdStream.listen((event) {
+      print(event.toMap().toString());
+    });
     super.onInit();
   }
 
@@ -114,6 +116,7 @@ class StudentRemainderController extends GetxController {
           // log("Hour ${value['hours']}");
           // log("Minutes ${value['minutes']}");
           final String time;
+          final int hours;
           final String minutes;
           if (value['minutes'] == 0) {
             minutes = "00";
@@ -127,20 +130,28 @@ class StudentRemainderController extends GetxController {
           } else {
             time = "${value['hours']}:$minutes AM";
           }
-          log(time);
+          log('''
+day:  ${days[element.day.toString()]},
+hour: ${value['hours']},
+minute: ${value['minutes'] - 2},
+
+''');
           AwesomeNotifications().createNotification(
             // actionButtons: [],
             // schedule: NotificationInterval(
             //     interval: 3, timeZone: localTimeZone),
             schedule: NotificationCalendar(
-                weekday: days[element.day.toString()],
-                hour: value['hours'],
-                minute: value['minutes'] - 2,
-                second: 0,
-                millisecond: 0,
-                timeZone: localTimeZone
-                // timeZone: localTimeZone,
-                ),
+              // weekday: days[element.day.toString()],
+              // hour: value['hours'],
+              // minute: value['minutes'] - 2,
+
+              weekday: 5,
+              hour: 0,
+              minute: 0,
+              second: 0,
+              millisecond: 0,
+              // timeZone: localTimeZone,
+            ),
             content: NotificationContent(
               id: channelRemainderId,
               channelKey: channelRemainderKey,
