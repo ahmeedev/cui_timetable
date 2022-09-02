@@ -146,8 +146,8 @@ minute: ${value['minutes'] - 2},
               // minute: value['minutes'] - 2,
 
               weekday: 5,
-              hour: 0,
-              minute: 0,
+              hour: value['hours'],
+              minute: value['minutes'],
               second: 0,
               millisecond: 0,
               // timeZone: localTimeZone,
@@ -163,7 +163,7 @@ minute: ${value['minutes'] - 2},
               // color: Colors.green,
               summary: "Get ready for your next lecture",
               body:
-                  'your next lecture started at ${value['minutes']} of ${element.subject} at ${element.room} with ${element.teacher}',
+                  'your next lecture started at $time  of ${element.subject} at ${element.room} with ${element.teacher}',
             ),
           );
         });

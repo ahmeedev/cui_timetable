@@ -183,8 +183,9 @@ class ButtonList extends StatelessWidget {
           // }),
           buildButton(context,
               icon: const AssetImage('assets/drawer/sign_in.png'),
-              title: 'Sign In',
-              onTap: () {}),
+              title: 'Sign In', onTap: () {
+            Get.toNamed(Routes.SIGNIN);
+          }),
           // buildButton(context,
           //     icon: const AssetImage('assets/drawer/settings.png'),
           //     title: 'Settings', onTap: () {

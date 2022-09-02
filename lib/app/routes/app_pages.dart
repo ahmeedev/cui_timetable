@@ -28,6 +28,8 @@ import '../modules/remainder/views/remainder_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
 import '../modules/settings/views/settings_view2.dart';
+import '../modules/signin/bindings/signin_binding.dart';
+import '../modules/signin/views/signin_view.dart';
 import '../modules/sync/bindings/sync_binding.dart';
 import '../modules/sync/views/sync_view.dart';
 import '../modules/timetable/bindings/timetable_binding.dart';
@@ -152,6 +154,11 @@ class AppPages {
       name: _Paths.DEVELOPER,
       page: () => const DeveloperView(),
       binding: DeveloperBinding(),
+    ),
+    GetPage(
+      name: _Paths.SIGNIN,
+      page: () => const SigninView(),
+      binding: SigninBinding(),
     ),
   ];
 }
