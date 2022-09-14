@@ -4,13 +4,10 @@ import 'dart:io';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 
 import 'app/data/models/timetable/student_timetable/student_timetable.dart';
 import 'app/data/models/timetable/teacher_timetable/teacher_timetable.dart';
 import 'app/modules/home/controllers/home_controller.dart';
-import 'app/modules/home/views/home_view2.dart';
 import 'app/modules/news/controllers/news_controller.dart';
 import 'app/modules/settings/controllers/settings_controller.dart';
 import 'app/modules/sync/controllers/sync_controller.dart';
@@ -27,9 +24,17 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 Future<void> main() async {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    // systemNavigationBarColor: Color(0xFF000000),
+    // systemNavigationBarIconBrightness: Brightness.light,
+    // systemNavigationBarDividerColor: null,
+    statusBarColor: statusBarColor,
+    // statusBarIconBrightness: Brightness.light,
+    // statusBarBrightness: Brightness.dark,
+  ));
   await _initialized();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 Future<void> _initialized() async {

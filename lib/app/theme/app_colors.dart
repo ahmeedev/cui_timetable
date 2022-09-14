@@ -6,6 +6,8 @@ const forGradient = Color(0XFF1b4373);
 const scaffoldColor = Color(0xffd4dfed);
 const onScaffoldColor = Color(0xffD1E6FF);
 const shadowColor = Color(0Xffd4dfed);
+const statusBarColor = forGradient;
+
 // const scaffoldColor = Color(0xffD8E8FC);
 const widgetColor = Color(0xffe9eff6);
 // const widgetColor = Color(0xffEBF4FF);
