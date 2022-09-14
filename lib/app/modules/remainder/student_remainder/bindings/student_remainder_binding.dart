@@ -5,8 +5,8 @@ import '../controllers/student_remainder_controller.dart';
 class StudentRemainderBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<StudentRemainderController>(
-      () => StudentRemainderController(),
+    Get.put<StudentRemainderController>(
+      StudentRemainderController(),
     );
   }
 }

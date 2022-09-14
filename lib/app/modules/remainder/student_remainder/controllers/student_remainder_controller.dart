@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -36,10 +37,14 @@ class StudentRemainderController extends GetxController {
     monToThursSlots = boxx.get(DBTimeSlots.monToThur);
     friSlots = boxx.get(DBTimeSlots.fri);
     currentTimeSlots = monToThursSlots;
-    AwesomeNotifications().createdStream.listen((event) {
-      print(event.toMap().toString());
-    });
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    // stream.cancel();
+    log("on close Caleed");
   }
 
   // return [List] of the [StudentTimetable].
@@ -47,7 +52,7 @@ class StudentRemainderController extends GetxController {
     final box0 = await Hive.openBox(DBNames.remainderCache);
     notiRemainder.value = await box0.get(section, defaultValue: []);
     // box0.clear();
-    print(notiRemainder);
+
     _checkAllSet();
 
     final box = await Hive.openBox(DBNames.timetableData);
@@ -71,6 +76,7 @@ class StudentRemainderController extends GetxController {
     if (notiRemainder.isEmpty) {
       notiRemainder.value = List.filled(filteredData.length, 0);
     }
+    log(filteredData.toString());
     return Future.value(
         {"filteredData": filteredData, "notiRemainder": notiRemainder});
   }
@@ -140,18 +146,20 @@ minute: ${value['minutes'] - 2},
             // actionButtons: [],
             // schedule: NotificationInterval(
             //     interval: 3, timeZone: localTimeZone),
-            schedule: NotificationCalendar(
-              // weekday: days[element.day.toString()],
-              // hour: value['hours'],
-              // minute: value['minutes'] - 2,
+            // schedule: NotificationCalendar(
+            //   // weekday: days[element.day.toString()],
+            //   // hour: value['hours'],
+            //   // minute: value['minutes'] - 2,
 
-              weekday: 5,
-              hour: value['hours'],
-              minute: value['minutes'],
-              second: 0,
-              millisecond: 0,
-              // timeZone: localTimeZone,
-            ),
+            //   weekday: 5,
+            //   hour: 12,
+            //   minute: 35,
+            //   second: 10,
+            //   millisecond: 0,
+            //   // timeZone: localTimeZone,
+            // ),
+            schedule: NotificationCalendar.fromDate(
+                date: DateTime(2022, 9, 14, 14, 0, 0, 0, 0)),
             content: NotificationContent(
               id: channelRemainderId,
               channelKey: channelRemainderKey,

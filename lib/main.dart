@@ -87,11 +87,15 @@ initializeLocalNotifications() {
             ledColor: Colors.red)
       ],
       debug: true);
+
+  AwesomeNotifications().createdStream.listen((event) {
+    print(event.toMap().toString());
+  });
 }
 
 /// Root Widget of the application.
 class MyApp extends GetView<HomeController> {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
