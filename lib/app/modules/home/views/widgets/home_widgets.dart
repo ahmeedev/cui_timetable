@@ -88,7 +88,7 @@ class HomeBody extends GetView<HomeController> {
                 fit: FlexFit.tight,
                 child: Column(
                   children: [
-                    UpdateTile(),
+                    const UpdateTile(),
                     Obx(
                       () =>
                           Get.find<SettingsController>().carousel.value == true
@@ -141,7 +141,7 @@ class UpdateTile extends GetView<HomeController> {
                           colors: successGradient,
                         )),
                     child: ListTile(
-                      title: Text('Update Available! ',
+                      title: Text('New Timetable Available! ',
                           style: Theme.of(context).textTheme.titleMedium),
                       trailing: ElevatedButton(
                         child: Text('Sync Now',
@@ -162,7 +162,7 @@ class UpdateTile extends GetView<HomeController> {
 
 /// Carousel for home screen
 class HomeCarousel extends GetView<HomeController> {
-  HomeCarousel({Key? key}) : super(key: key);
+  const HomeCarousel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cui_timetable/app/modules/remainder/student_remainder/views/widgets/student_remainder_widgets.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:get/get.dart';
-import 'package:jiffy/jiffy.dart';
 
 import '../controllers/student_remainder_controller.dart';
 
@@ -24,9 +21,10 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
           actions: [
             IconButton(
                 onPressed: () {
-                  final date =
-                      Jiffy(DateTime(2022, 9, 14, 13, 40, 10, 0, 0)).dateTime;
-                  log("date is $date");
+                  // final date =
+                  //     Jiffy(DateTime(2022, 9, 20, 13, 40, 10, 0, 0)).dateTime;
+
+                  // log("date is $date");
                 },
                 icon: const Text("Click me"))
           ],

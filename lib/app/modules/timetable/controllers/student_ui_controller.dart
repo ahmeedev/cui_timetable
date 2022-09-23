@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import '../../settings/controllers/settings_controller.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
@@ -42,21 +43,23 @@ class StudentUIController extends GetxController {
 
     searchBy.value = Get.find<SettingsController>().searchBy;
     if (searchBy["list"] == true) {
-      final box3 = await Hive.openBox(DBNames.general);
-      yearTokens = await box3.get(DBGeneral.yearTokens);
-      overallTokens = await box3.get(DBGeneral.overallTokens);
+      // final box3 = await Hive.openBox(DBNames.general);
+      // log(box3.values.toString());
+      // yearTokens = await box3.get(DBGeneral.yearTokens);
+      // overallTokens = await box3.get(DBGeneral.overallTokens);
 
       // fetching cached tokens
       final box4 = await Hive.openBox(DBNames.timetableCache);
-      var yearToken = await box4.get(DBTimetableCache.studentYearToken,
-          defaultValue: yearTokens[0]);
+      var yearToken =
+          await box4.get(DBTimetableCache.studentYearToken, defaultValue: "");
       var secToken =
           await box4.get(DBTimetableCache.studentSecToken, defaultValue: "");
       var secVToken =
           await box4.get(DBTimetableCache.studentSecVToken, defaultValue: "");
-
+      // log(secVToken.toString());
       yearTokenSelected.value = yearToken;
-
+      // log(yearTokenSelected.value.toString());
+      log(yearTokens.toString());
       changeSectionTokens(yearToken,
           sectionToken: secToken, sectionVariantToken: secVToken);
     }

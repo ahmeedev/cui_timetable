@@ -75,10 +75,4 @@ class SettingsController extends GetxController {
     }
     latestNews.value = value;
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-    box.close();
-  }
 }

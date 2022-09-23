@@ -158,8 +158,14 @@ minute: ${value['minutes'] - 2},
             //   millisecond: 0,
             //   // timeZone: localTimeZone,
             // ),
-            schedule: NotificationCalendar.fromDate(
-                date: DateTime(2022, 9, 14, 14, 0, 0, 0, 0)),
+            schedule: NotificationCalendar(
+              // weekday : notificationSchedule.dayOfTheWeek ,
+              hour: value['hours'],
+              minute: value['minutes'] - 2,
+              second: 0,
+              millisecond: 0,
+              repeats: true,
+            ),
             content: NotificationContent(
               id: channelRemainderId,
               channelKey: channelRemainderKey,

@@ -37,21 +37,21 @@ class AboutUsView extends StatelessWidget {
               description: 'CUI Computer Science Student',
             ),
 
-            //           AboutUsTile(
-            //             pic: 'shah.jpeg',
-            //             name: 'Syed',
-            //             subName: 'Muhammad Nawaz Shah',
-            //             position: 'Developer',
-            //             description: 'CUI Computer Science Student',
-            //           ),
+            AboutUsTile(
+              pic: 'shah.jpeg',
+              name: 'Syed',
+              subName: 'Muhammad Nawaz Shah',
+              position: 'Developer',
+              description: 'CUI Computer Science Student',
+            ),
 
-            // AboutUsTile(
-            //             pic: 'naeem.jpg',
-            //             name: 'Naeem',
-            //             subName: 'Yousaf Khokhar',
-            //             position: 'Developer',
-            //             description: 'CUI Computer Science Student',
-            //           ),
+            AboutUsTile(
+              pic: 'rao.jpg',
+              name: 'Rao',
+              subName: 'Muhammad Bilal',
+              position: 'Shortlisted Developer',
+              description: 'CUI Computer Science Student',
+            ),
             // AboutUsTile(
             //   pic: 'ramay.JPG',
             //   name: 'Hamza',

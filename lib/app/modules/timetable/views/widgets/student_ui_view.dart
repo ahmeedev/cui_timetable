@@ -77,6 +77,7 @@ class StudentUIView extends GetView<StudentUIController> {
                 GestureDetector(
                   onTap: () async {
                     final box = await Hive.openBox(DBNames.timetableCache);
+
                     final List result = box
                         .get(DBTimetableCache.studentHistory, defaultValue: []);
                     controller.dialogHistoryList.value = result;
@@ -318,7 +319,7 @@ class StudentUIView extends GetView<StudentUIController> {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              var value;
+              String value;
               if (controller.searchBy["section"] == true) {
                 value = controller.textController.text.toString();
 

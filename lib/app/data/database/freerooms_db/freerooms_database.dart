@@ -5,12 +5,6 @@ import 'package:hive/hive.dart';
 import '../database_constants.dart';
 import '../database_utilities_methods.dart';
 
-// Flutter imports:
-
-// Package imports:
-
-// Project imports:
-
 class FreeRoomsDatabase {
   Future<bool> createDatabase({required lastEntity}) async {
     await downloadFile(

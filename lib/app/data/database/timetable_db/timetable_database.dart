@@ -1,6 +1,5 @@
 import 'package:cui_timetable/app/data/models/timetable/teacher_timetable/teacher_timetable.dart';
 import 'package:cui_timetable/main.dart';
-import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
 
@@ -104,16 +103,18 @@ class TimetableDatabase {
 
     await box1.close();
 
-    // Hive.close();
+    Hive.close();
     // final overallTokens = [];
-
     // final yearTokens = [];
+    // final sectionTokens = [];
+    // final sectionVariantsTokens = [];
     // final overall = [];
     // for (var element in sections) {
     //   final result = element.split("-");
     //   // debugPrint(result.toString());
     //   yearTokens.add(result[0]);
-    //   // sectionTokens.add(result[1]);
+    //   sectionTokens.add(result[1]);
+    //   // sectionVariantsTokens.add(result[2]);
     //   var value = "";
     //   for (var i = 2; i < result.length; i++) {
     //     value += result[i];
@@ -122,17 +123,18 @@ class TimetableDatabase {
     //     }
     //   }
 
-    // //   overall.add([result[0], result[1], value]);
+    //   overall.add([result[0], result[1], value]);
     // }
     // yearTokens.sort();
     // debugPrint(overall.toString());
-    // // print(yearTokens.toSet());
-    // final box = await Hive.openBox(DBNames.general);
-    // await box.put(DBGeneral.yearTokens, yearTokens.toSet().toList());
+    // print(yearTokens.toSet());
+    // final box = await Hive.openBox(DBNames.timetableData);
+    // await box.put(DBTimetableData.yearTokens, yearTokens.toSet().toList());
 
-    // await box.put(DBGeneral.overallTokens, overall.toSet().toList());
-    // await box.put(DBGeneral.sectionTokens, sectionTokens.toSet().toList());
-    // await box.put(DBGeneral.sectionVariantsTokens,
+    // await box.put(DBTimetableData.overallTokens, overall.toSet().toList());
+    // await box.put(
+    //     DBTimetableData.sectionTokens, sectionTokens.toSet().toList());
+    // await box.put(DBTimetableData.sectionVariantsTokens,
     //     sectionVariantsTokens.toSet().toList());
 
     // print(sections);

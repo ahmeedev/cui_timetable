@@ -24,8 +24,8 @@ class DBNames {
 }
 
 class DBGeneral {
-  static const yearTokens = "yearTokens";
-  static const overallTokens = "overallTokens";
+  // static const yearTokens = "yearTokens";
+  // static const overallTokens = "overallTokens";
   // static const sectionTokens = "sectionTokens";
   // static const sectionVariantsTokens = "sectionVariantsTokenss";
 }
@@ -53,6 +53,11 @@ class DBTimetableData {
 
   static const studentsData = "studentsData";
   static const teachersData = "teachersData";
+
+  static const overallTokens = "overallTokens";
+  static const yearTokens = "yearTokens";
+  static const sectionTokens = "sectionTokens";
+  static const sectionVariantsTokens = "sectionVariantsTokens";
 }
 
 class DBTimetableCache {

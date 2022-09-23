@@ -307,6 +307,7 @@ class HomeViewWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const UpdateTile(),
         Text(
           "Events",
           style: textTheme.titleMedium!
@@ -362,9 +363,9 @@ class HomeViewWidget extends StatelessWidget {
           children: [
             SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
-                title: "Transport",
+                title: "Booking",
                 // ontap: () => Get.toNamed(Routes.TIMETABLE),
-                iconLocation: "assets/home/transport.png"),
+                iconLocation: "assets/home/booking.png"),
             SizedBox(width: Constants.defaultPadding),
             _buildTile(context,
                 title: "Fee Structure",
@@ -415,12 +416,12 @@ class HomeViewWidget extends StatelessWidget {
 
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Load More...",
-              style: textTheme.labelLarge!.copyWith(color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
+          children: const [
+            // Text(
+            //   "Load More...",
+            //   style: textTheme.labelLarge!.copyWith(color: Colors.black),
+            //   textAlign: TextAlign.center,
+            // ),
           ],
         )
         // Row(

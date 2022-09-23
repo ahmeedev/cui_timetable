@@ -171,15 +171,17 @@ class LectureDetailsTile extends StatelessWidget {
             child: Container(
               // color: Colors.red,
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: Constants.defaultElevation / 2,
-                      color: primaryColor,
-                    )
-                  ],
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     blurRadius: Constants.defaultElevation / 2,
+                  //     // color: primaryColor,
+                  //   )
+                  // ],
                   borderRadius: BorderRadius.all(
                       Radius.circular(Constants.defaultRadius)),
-                  gradient: const LinearGradient(colors: primaryGradient)),
+                  color: widgetColor
+                  // gradient: const LinearGradient(colors: primaryGradient)
+                  ),
               child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),
                 child: IntrinsicHeight(
