@@ -30,6 +30,12 @@ class StudentUIView extends GetView<StudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
+              ElevatedButton(
+                  onPressed: () {
+                    final database = TimetableDatabase();
+                    database.createDatabase();
+                  },
+                  child: const Text("Test"))
             ],
           ),
         ));

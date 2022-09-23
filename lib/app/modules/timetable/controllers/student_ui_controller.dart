@@ -43,25 +43,22 @@ class StudentUIController extends GetxController {
 
     searchBy.value = Get.find<SettingsController>().searchBy;
     if (searchBy["list"] == true) {
-      // final box3 = await Hive.openBox(DBNames.general);
-      // log(box3.values.toString());
-      // yearTokens = await box3.get(DBGeneral.yearTokens);
-      // overallTokens = await box3.get(DBGeneral.overallTokens);
-
       // fetching cached tokens
-      final box4 = await Hive.openBox(DBNames.timetableCache);
-      var yearToken =
-          await box4.get(DBTimetableCache.studentYearToken, defaultValue: "");
-      var secToken =
-          await box4.get(DBTimetableCache.studentSecToken, defaultValue: "");
-      var secVToken =
-          await box4.get(DBTimetableCache.studentSecVToken, defaultValue: "");
-      // log(secVToken.toString());
-      yearTokenSelected.value = yearToken;
+      final box4 = await Hive.openBox(DBNames.timetableData);
+      yearTokens = await box4.get(DBTimetableData.yearTokens, defaultValue: []);
+      sectionTokens =
+          await box4.get(DBTimetableData.sectionTokens, defaultValue: "");
+      sectionVariantsTokens = await box4
+          .get(DBTimetableData.sectionVariantsTokens, defaultValue: "");
+
+      yearTokenSelected.value = yearTokens[0];
       // log(yearTokenSelected.value.toString());
       log(yearTokens.toString());
-      changeSectionTokens(yearToken,
-          sectionToken: secToken, sectionVariantToken: secVToken);
+      log(sectionTokens.toString());
+      log(sectionVariantsTokens.toString());
+      changeSectionTokens(yearTokens[0],
+          sectionToken: sectionTokens[0],
+          sectionVariantToken: sectionVariantsTokens[0]);
     }
 
     super.onInit();
