@@ -1,4 +1,3 @@
-import '../../../../data/database/timetable_db/timetable_database.dart';
 import '../../../../widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -30,12 +29,20 @@ class StudentUIView extends GetView<StudentUIController> {
                 height: Constants.defaultPadding,
               ),
               _buildButton(context),
-              ElevatedButton(
-                  onPressed: () {
-                    final database = TimetableDatabase();
-                    database.createDatabase();
-                  },
-                  child: const Text("Test"))
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       final db = TimetableDatabase();
+              //       db.createDatabase();
+              //     },
+              //     child: const Text("Test")),
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       final box4 = await Hive.openBox(DBNames.timetableData);
+              //       log(box4
+              //           .get(DBTimetableData.sectionVariantsTokens)
+              //           .toString());
+              //     },
+              //     child: const Text("Test")),
             ],
           ),
         ));
@@ -178,9 +185,12 @@ class StudentUIView extends GetView<StudentUIController> {
                             items: controller.yearTokens
                                 .map((e) => DropdownMenuItem(
                                     value: e,
-                                    child: Text(
-                                      e,
-                                      // textAlign: TextAlign.center,
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        e,
+                                        // textAlign: TextAlign.center,
+                                      ),
                                     )))
                                 .toList(),
                             onChanged: (value) {

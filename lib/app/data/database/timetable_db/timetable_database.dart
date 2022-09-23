@@ -114,8 +114,8 @@ class TimetableDatabase {
     for (var element in sections) {
       final result = element.split("-");
       // debugPrint(result.toString());
-      yearTokens.add(result[0]);
-      sectionTokens.add(result[1]);
+      yearTokens.add(result[0].trim());
+      sectionTokens.add(result[1].trim());
       // sectionVariantsTokens.add(result[2]);
       var value = "";
       for (var i = 2; i < result.length; i++) {
@@ -125,7 +125,7 @@ class TimetableDatabase {
         }
       }
       if (value.isNotEmpty) {
-        sectionVariantsTokens.add(value);
+        sectionVariantsTokens.add(value.trim());
       }
       overall.add([result[0], result[1], value]);
     }
@@ -142,6 +142,7 @@ class TimetableDatabase {
     log(yearTokens.toString());
     log(sectionTokens.toString());
     log(sectionVariantsTokens.toString());
+    await box.close();
 
     // print(sections);
     await Future.delayed(const Duration(seconds: 5));
