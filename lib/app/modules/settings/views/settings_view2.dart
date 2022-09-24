@@ -1,19 +1,15 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_soul/flutter_soul.dart' as flutterSoul;
 import 'package:get/get.dart';
-import 'package:rive/rive.dart' as rive;
 
-import '../../../routes/app_pages.dart';
 import '../../../widgets/global_widgets.dart';
 import '../controllers/settings_controller.dart';
 
 class SettingsView2 extends GetView<SettingsController> {
   const SettingsView2({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -62,38 +58,10 @@ class SettingsView2 extends GetView<SettingsController> {
                             title: 'Section',
                             obs: controller.searchBy["section"],
                             last: true),
-                        // kWidth,
-                        // Container(
-                        //     decoration: BoxDecoration(
-                        //         color: textFieldColor,
-                        //         borderRadius: BorderRadius.only(
-                        //           topRight:
-                        //               Radius.circular(Constants.defaultRadius),
-                        //           bottomRight:
-                        //               Radius.circular(Constants.defaultRadius),
-                        //         )),
-                        //     child: Padding(
-                        //       padding:
-                        //           EdgeInsets.all(Constants.defaultPadding - 2),
-                        //       child: const Text('Section'),
-                        //     )),
                       ],
                     ))),
           ),
 
-          // _buildSettingTile(
-          //     label: "Search By",
-          //     value: controller.darkMode,
-          //     callback: controller.setDarkMode),
-          kHeight,
-          kHeight,
-          // Text(
-          //   "Home",
-          //   style: Theme.of(context)
-          //       .textTheme
-          //       .labelLarge!
-          //       .copyWith(color: Colors.black),
-          // ),
           // kHeight,
           // _buildSettingTile(
           //     label: "Show Carousel",
@@ -104,6 +72,23 @@ class SettingsView2 extends GetView<SettingsController> {
           //     label: "Show News",
           //     value: controller.latestNews,
           //     callback: controller.setLatestNews),
+          kHeight,
+          kHeight,
+          Text(
+            "Miscellaneous",
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(color: Colors.black),
+          ),
+          kHeight,
+          Card(
+            child: ListTile(
+              title: const Text('Clear cache'),
+              trailing:
+                  ElevatedButton(onPressed: () {}, child: const Text("Clear")),
+            ),
+          )
         ]);
   }
 

@@ -1,6 +1,7 @@
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:particles_flutter/particles_flutter.dart';
@@ -37,26 +38,58 @@ class HomeView3 extends GetView<HomeController> {
               Positioned(
                 child: Stack(
                   children: [
-                    Container(
-                      alignment: Alignment.center,
-                      width: width,
-                      height: height * 0.4,
-                      decoration: const BoxDecoration(
-                          // color: primaryColor,
-                          gradient: LinearGradient(colors: primaryGradient)),
-                      child: Obx(() => Text(
-                            controller.pageLabels[controller.pageIndex.value],
-                            style: textTheme.titleLarge!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium!
-                                        .fontSize! +
-                                    4.0),
-                          )),
-                    ),
-                    _buildParticles(width, height),
+                    Obx(() => AnimatedContainer(
+                          duration: const Duration(seconds: 1),
+                          curve: Curves.easeInOut,
+                          alignment: controller.pageIndex.value == 0
+                              ? const Alignment(-0.9, -0.6)
+                              : Alignment.center,
+                          width: width,
+                          height: height * 0.4,
+                          decoration: const BoxDecoration(
+                              // color: primaryColor,
+                              gradient:
+                                  LinearGradient(colors: primaryGradient)),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: Constants.defaultPadding,
+                                horizontal: Constants.defaultPadding * 2),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                kHeight,
+                                kHeight,
+                                Text(
+                                  controller
+                                      .pageLabels[controller.pageIndex.value],
+                                  style: textTheme.titleLarge!.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: Theme.of(context)
+                                              .textTheme
+                                              .headlineMedium!
+                                              .fontSize! +
+                                          4.0),
+                                ),
+                                // Container(
+                                //   width: double.infinity,
+                                //   height: 150,
+                                //   color: Colors.green,
+                                // )
+                                kHeight,
+                                controller.pageIndex.value == 0
+                                    ? const HomeCarousel()
+                                    : const SizedBox()
+                              ],
+                            ),
+                          ),
+                        )),
+                    Obx(
+                      () => controller.pageIndex.value == 0
+                          ? const SizedBox()
+                          : _buildParticles(width, height),
+                    )
                   ],
                 ),
               ),

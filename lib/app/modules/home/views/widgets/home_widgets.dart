@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import '../../controllers/home_controller.dart';
 import 'carousel_screen.dart';
 import '../../../settings/controllers/settings_controller.dart';
@@ -92,7 +93,7 @@ class HomeBody extends GetView<HomeController> {
                     Obx(
                       () =>
                           Get.find<SettingsController>().carousel.value == true
-                              ? HomeCarousel()
+                              ? const HomeCarousel()
                               : const SizedBox(),
                     ),
                     Obx(
@@ -166,135 +167,144 @@ class HomeCarousel extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => controller.internet.value
-        ? StreamBuilder<List<Map<String, String>>>(
-            stream: controller.getCarouselStream(),
-            // initialData: initialData,
-            builder: (BuildContext context,
-                AsyncSnapshot<List<Map<String, String>>> snapshot) {
-              if (snapshot.hasError) {}
+    final theme = Theme.of(context);
+    return StreamBuilder<List<Map<String, String>>>(
+        stream: controller.getCarouselStream(),
+        // initialData: initialData,
+        builder: (BuildContext context,
+            AsyncSnapshot<List<Map<String, String>>> snapshot) {
+          if (snapshot.hasError) {}
 
-              if (snapshot.hasData) {
-                return Padding(
-                  padding: EdgeInsets.all(Constants.defaultPadding / 2),
-                  child: CarouselSlider(
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      clipBehavior: Clip.antiAlias,
-                      viewportFraction: 1,
-                      // padEnds: false,
-                      // pageSnapping: true,
+          if (snapshot.hasData) {
+            return Padding(
+              padding: EdgeInsets.all(Constants.defaultPadding / 2),
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  autoPlay: true,
+                  clipBehavior: Clip.antiAlias,
+                  viewportFraction: 1,
+                  // padEnds: false,
+                  // pageSnapping: true,
 
-                      enlargeCenterPage: true,
-                      autoPlayAnimationDuration: const Duration(seconds: 3),
-                      autoPlayInterval: const Duration(seconds: 5),
-                      scrollPhysics: const BouncingScrollPhysics(),
-                      height: MediaQuery.of(context).size.height * 0.15,
-                    ),
-                    items: snapshot.data!.map((e) {
-                      return Stack(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(
-                                () => const CarouselImageDetails(),
-                                arguments: [
-                                  'Image Detail',
-                                  e["img"]!,
-                                  e["title"]!,
-                                ],
-                              );
-                              // duration: const Duration(microseconds: 0));
-                            },
-                            // child: Hero(
-                            // tag: 'img',
-                            child: Container(
-                                clipBehavior: Clip.antiAlias,
-                                width: MediaQuery.of(context).size.width,
-                                // margin: EdgeInsets.symmetric(horizontal: 2.0),
-                                decoration: BoxDecoration(
-                                  // boxShadow: [
-                                  //   BoxShadow(color: Colors.black)
-                                  // ],
+                  enlargeCenterPage: true,
+                  autoPlayAnimationDuration: const Duration(seconds: 3),
+                  autoPlayInterval: const Duration(seconds: 5),
+                  scrollPhysics: const BouncingScrollPhysics(),
+                  height: MediaQuery.of(context).size.height * 0.16,
+                ),
+                items: snapshot.data!.map((e) {
+                  return Stack(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(
+                            () => const CarouselImageDetails(),
+                            arguments: [
+                              'Image Detail',
+                              e["img"]!,
+                              e["title"]!,
+                            ],
+                          );
+                          // duration: const Duration(microseconds: 0));
+                        },
+                        // child: Hero(
+                        // tag: 'img',
+                        child: Container(
+                            clipBehavior: Clip.antiAlias,
+                            width: MediaQuery.of(context).size.width,
+                            // margin: EdgeInsets.symmetric(horizontal: 2.0),
+                            decoration: BoxDecoration(
+                              // boxShadow: [
+                              //   BoxShadow(color: Colors.black)
+                              // ],
 
-                                  color: widgetColor,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(Constants.defaultRadius)),
+                              color: widgetColor,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(Constants.defaultRadius)),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(Constants.defaultRadius)),
+                              child: Hero(
+                                tag: 'hero',
+                                child: CachedNetworkImage(
+                                  imageUrl: e["img"]!,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, string) {
+                                    return const SpinKitFadingCircle(
+                                      color: Colors.white,
+                                    );
+                                  },
                                 ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(Constants.defaultRadius)),
-                                  child: Hero(
-                                    tag: 'hero',
-                                    child: CachedNetworkImage(
-                                      imageUrl: e["img"]!,
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, string) {
-                                        return const SpinKitFadingCircle(
-                                          color: primaryColor,
-                                        );
-                                      },
+                              ),
+                            )),
+                      ),
+                      // ),
+                      e["title"]!.isEmpty
+                          ? const SizedBox()
+                          : Positioned(
+                              // alignment: Alignment.center,
+                              // left: 2,
+                              // top: 10,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          // secondaryColor,
+                                          primaryColor,
+                                          forGradient,
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(
+                                            Constants.defaultRadius),
+                                        bottomLeft: Radius.circular(
+                                            Constants.defaultRadius),
+                                      )
+                                      // border:
+                                      //     Border.all(width: 3, color: Colors.white),
+                                      ),
+
+                                  // color: primaryColor,
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: Constants.defaultPadding,
+                                        vertical: Constants.defaultPadding / 2),
+                                    child: FittedBox(
+                                      child: Text(
+                                        e["title"]!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(color: Colors.white),
+                                      ),
                                     ),
-                                  ),
-                                )),
-                          ),
-                          // ),
-                          e["title"]!.isEmpty
-                              ? const SizedBox()
-                              : Positioned(
-                                  // alignment: Alignment.center,
-                                  // left: 2,
-                                  // top: 10,
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          gradient: const LinearGradient(
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              // secondaryColor,
-                                              primaryColor,
-                                              forGradient,
-                                            ],
-                                          ),
-                                          borderRadius: BorderRadius.only(
-                                            bottomRight: Radius.circular(
-                                                Constants.defaultRadius),
-                                            bottomLeft: Radius.circular(
-                                                Constants.defaultRadius),
-                                          )
-                                          // border:
-                                          //     Border.all(width: 3, color: Colors.white),
-                                          ),
+                                  ))),
+                    ],
+                  );
+                }).toList(),
+              ),
+            );
+          }
 
-                                      // color: primaryColor,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                Constants.defaultPadding,
-                                            vertical:
-                                                Constants.defaultPadding / 2),
-                                        child: FittedBox(
-                                          child: Text(
-                                            e["title"]!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .copyWith(color: Colors.white),
-                                          ),
-                                        ),
-                                      ))),
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                );
-              }
-
-              return const SpinKitFadingCircle(
-                color: primaryColor,
-              );
-            },
-          )
-        : const SizedBox());
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              kHeight,
+              const SpinKitFadingCircle(
+                color: Colors.white,
+              ),
+              kHeight,
+              Text(
+                'Fetching images..',
+                textAlign: TextAlign.center,
+                style: theme.textTheme.labelLarge!
+                    .copyWith(fontWeight: FontWeight.w900, color: Colors.white),
+              ),
+            ],
+          );
+        });
   }
 }
 

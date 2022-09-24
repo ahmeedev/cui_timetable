@@ -56,9 +56,9 @@ class StudentUIController extends GetxController {
       sectionVariantsTokens = await box2
           .get(DBTimetableData.sectionVariantsTokens, defaultValue: []);
 
-      // log(yearTokens.toString());
-      // log(sectionTokens.toString());
-      // log(sectionVariantsTokens.toString());
+      log(yearTokens.toString());
+      log(sectionTokens.toString());
+      log(sectionVariantsTokens.toString());
 
       yearTokenSelected.value = await box1
           .get(DBTimetableCache.studentYearToken, defaultValue: yearTokens[0]);
@@ -73,8 +73,7 @@ class StudentUIController extends GetxController {
       log(sectionTokenSelected.value);
       log(sectionVariantsTokenSelected.value);
       changeSectionTokens(yearTokens[0],
-          sectionToken: sectionTokenSelected.value,
-          sectionVariantToken: sectionVariantsTokenSelected.value);
+          sectionToken: "", sectionVariantToken: "");
     }
 
     super.onInit();

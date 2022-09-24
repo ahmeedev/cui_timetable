@@ -1,12 +1,10 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../routes/app_pages.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_constants.dart';
-import '../../home/views/widgets/home_widgets.dart';
 import '../controllers/news_controller.dart';
 
 class NewsView extends GetView<NewsController> {
@@ -27,9 +25,26 @@ class NewsView extends GetView<NewsController> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.length == 0) {
-            return const Text('Connect to the Internet to fetch News...');
+            return Center(
+              child: Column(
+                children: [
+                  kHeight,
+                  Icon(
+                    Icons.wifi_off_outlined,
+                    size: Constants.iconSize * 2,
+                  ),
+                  kHeight,
+                  Text(
+                    'No Internet. ',
+                    textAlign: TextAlign.center,
+                    style: textTheme.labelLarge!.copyWith(
+                        fontWeight: FontWeight.w900, color: Colors.black),
+                  ),
+                ],
+              ),
+            );
           }
-          print(snapshot.data);
+          // print(snapshot.data);
           return SizedBox(
             width: width,
             height: widgetsPlaceholderHeight,
