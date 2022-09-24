@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -80,9 +81,7 @@ class Header extends StatelessWidget {
                               )),
                         ))),
               ),
-              SizedBox(
-                height: context.height * 0.035,
-              ),
+              kHeight,
               Text(
                 // "No details Available",
                 "Welcome, FA19-BSE-003",
