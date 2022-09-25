@@ -23,13 +23,6 @@ class DBNames {
   static const remainderCache = "remainderCache";
 }
 
-class DBGeneral {
-  // static const yearTokens = "yearTokens";
-  // static const overallTokens = "overallTokens";
-  // static const sectionTokens = "sectionTokens";
-  // static const sectionVariantsTokens = "sectionVariantsTokenss";
-}
-
 class DBInfo {
   static const version = "version";
   static const lastUpdate = "lastUpdate";
@@ -113,4 +106,9 @@ class DBRemainderCache {
 
   static const sectionHistory = "sectionHistory";
   static const sectionNotiRemainder = "sectionNotiRemainder";
+
+  static const totalIds = "totalIds";
+
+  // dynamically ids are stored w.r.t to the cache section.
+
 }

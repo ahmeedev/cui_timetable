@@ -85,8 +85,11 @@ class SettingsView2 extends GetView<SettingsController> {
           Card(
             child: ListTile(
               title: const Text('Clear cache'),
-              trailing:
-                  ElevatedButton(onPressed: () {}, child: const Text("Clear")),
+              trailing: ElevatedButton(
+                  onPressed: () {
+                    controller.clearCache();
+                  },
+                  child: const Text("Clear")),
             ),
           )
         ]);

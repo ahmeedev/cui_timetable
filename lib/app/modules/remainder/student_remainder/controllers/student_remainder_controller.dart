@@ -20,7 +20,8 @@ class StudentRemainderController extends GetxController {
   var notiRemainder = [].obs;
 
   var absorbing = false.obs;
-
+  late final Future<Map> future;
+  var futureStatus = false.obs;
   // final days = {
   //   "10000": "Monday",
   //   "1000": "Tuesday",
@@ -31,26 +32,27 @@ class StudentRemainderController extends GetxController {
 
   final days = {"10000": 1, "1000": 2, "100": 3, "10": 4, "1": 5};
   List<StudentTimetable> sectionDetails = [];
+  // late final Box remainderBox;
+  late final Box remainderCacheBox;
   @override
   Future<void> onInit() async {
     final boxx = await Hive.openBox(DBNames.timeSlots);
+    // remainderBox = await Hive.openBox(DBNames.remainder);
+    remainderCacheBox = await Hive.openBox(DBNames.remainderCache);
     monToThursSlots = boxx.get(DBTimeSlots.monToThur);
     friSlots = boxx.get(DBTimeSlots.fri);
     currentTimeSlots = monToThursSlots;
-    super.onInit();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-    // stream.cancel();
-    log("on close Caleed");
+    future = getDetails();
+    futureStatus.value = true;
+    super.onInit();
   }
 
   // return [List] of the [StudentTimetable].
   Future<Map> getDetails() async {
-    final box0 = await Hive.openBox(DBNames.remainderCache);
-    notiRemainder.value = await box0.get(section, defaultValue: []);
+    // final box0 = await Hive.openBox(DBNames.remainderCache);
+    notiRemainder.value =
+        await remainderCacheBox.get(section, defaultValue: []);
     // box0.clear();
 
     _checkAllSet();
@@ -76,7 +78,26 @@ class StudentRemainderController extends GetxController {
     if (notiRemainder.isEmpty) {
       notiRemainder.value = List.filled(filteredData.length, 0);
     }
-    log(filteredData.toString());
+    final labs = [];
+    var actualTileIndexes = [];
+    list.sort((a, b) => a.day.compareTo(b.day));
+    // list2.contains(2);
+    for (var i = 0; i < list.length; i++) {
+      if (i != list.length - 1) {
+        if (list[i].subject == list[i + 1].subject &&
+            list[i].teacher == list[i + 1].teacher) {
+          labs.add(i);
+          actualTileIndexes.add(i);
+          labs.add(i + 1);
+        }
+      }
+    }
+    // log(labs.toString());
+    // log(actualTileIndexes.toString());
+    // remove the labs from the list
+    for (var element in actualTileIndexes) {
+      list.removeAt(element);
+    }
     return Future.value(
         {"filteredData": filteredData, "notiRemainder": notiRemainder});
   }
@@ -136,12 +157,33 @@ class StudentRemainderController extends GetxController {
           } else {
             time = "${value['hours']}:$minutes AM";
           }
-          log('''
-day:  ${days[element.day.toString()]},
-hour: ${value['hours']},
-minute: ${value['minutes'] - 2},
 
-''');
+          log('''
+                  day:  ${days[element.day.toString()]},
+                  hour: ${value['hours']},
+                  minute: ${value['minutes'] - 2},
+              ''');
+
+          // increase the counter in db.
+          final counter = remainderCacheBox.get(DBRemainderCache.totalIds,
+                  defaultValue: 0) +
+              1;
+          remainderCacheBox.put(DBRemainderCache.totalIds, counter);
+          // cache the notification channel ids.
+          var channelIds = remainderCacheBox.get(
+              section.toString().toLowerCase(),
+              defaultValue: <String, List>{});
+          channelIds = channelIds.cast<String, List>();
+          if (channelIds.isEmpty) {
+            channelIds[subject.toLowerCase()] = [counter];
+          } else if (channelIds[subject.toLowerCase()] == null) {
+            channelIds[subject.toLowerCase()] = [counter];
+          } else {
+            channelIds[subject.toLowerCase()]!.add(counter);
+          }
+          remainderCacheBox.put(section.toString().toLowerCase(), channelIds);
+
+          log(channelIds.toString());
           AwesomeNotifications().createNotification(
             // actionButtons: [],
             // schedule: NotificationInterval(
@@ -158,16 +200,21 @@ minute: ${value['minutes'] - 2},
             //   millisecond: 0,
             //   // timeZone: localTimeZone,
             // ),
-            schedule: NotificationCalendar(
-              // weekday : notificationSchedule.dayOfTheWeek ,
-              hour: value['hours'],
-              minute: value['minutes'] - 2,
-              second: 0,
-              millisecond: 0,
-              repeats: true,
-            ),
+            // schedule: NotificationCalendar(
+            //   // weekday : notificationSchedule.dayOfTheWeek ,
+            //   hour: value['hours'],
+            //   minute: value['minutes'] - 2,
+            //   second: 0,
+            //   millisecond: 0,
+            //   repeats: true,
+            // ),
+
+            schedule: NotificationCalendar.fromDate(
+                date: DateTime(
+                    2022, 9, 26, value['hours'], value['minutes'] - 2)),
+
             content: NotificationContent(
-              id: channelRemainderId,
+              id: counter,
               channelKey: channelRemainderKey,
               notificationLayout: NotificationLayout.BigText,
               title: 'Remainder!',
@@ -181,6 +228,7 @@ minute: ${value['minutes'] - 2},
             ),
           );
         });
+
         // log(
         //     "Day ${days[element.day.toString()].toString()} Time $value"));
 
@@ -282,7 +330,7 @@ minute: ${value['minutes'] - 2},
   }
 
   Future<void> _cacheNotiRemainder() async {
-    final box0 = await Hive.openBox(DBNames.remainderCache);
-    box0.put(section, notiRemainder);
+    // final box0 = await Hive.openBox(DBNames.remainderCache);
+    remainderCacheBox.put(section, notiRemainder);
   }
 }

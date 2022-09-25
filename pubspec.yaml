@@ -52,6 +52,7 @@ dependencies:
   device_preview: ^1.1.0
   awesome_notifications: ^0.6.21
   font_awesome_flutter: ^10.2.1
+  dart_date: ^1.1.1
 
 
 dev_dependencies: 

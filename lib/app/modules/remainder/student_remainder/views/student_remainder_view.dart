@@ -11,6 +11,7 @@ import '../controllers/student_remainder_controller.dart';
 
 class StudentRemainderView extends GetView<StudentRemainderController> {
   const StudentRemainderView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -18,16 +19,18 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
         appBar: AppBar(
           title: Text(Get.arguments["section"]),
           centerTitle: true,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  // final date =
-                  //     Jiffy(DateTime(2022, 9, 20, 13, 40, 10, 0, 0)).dateTime;
-
-                  // log("date is $date");
-                },
-                icon: const Text("Click me"))
-          ],
+          // actions: [
+          //   IconButton(
+          //       onPressed: () {
+          //         // log(DateTime.now().isSaturday.toString());
+          //         // final date = DateTime.now().add(const Duration());
+          //         // log(DateTime.sunday.toString());
+          //         // print(controller.notiRemainder.toString());
+          //         final map = <String, List>{};
+          //         log(map["hello"].toString());
+          //       },
+          //       icon: const Text("Click me"))
+          // ],
         ),
         body: Padding(
           padding: EdgeInsets.all(Constants.defaultPadding),
@@ -50,7 +53,7 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
                                   ? "Revoke all the slots from remainder?"
                                   : "Set all the slots as remainder?",
                               style: textTheme.titleMedium!
-                                  .copyWith(color: Colors.black),
+                                  .copyWith(color: Colors.white),
                             ),
                           ),
                           controller.allSet.value == false
@@ -85,40 +88,46 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
                       size: Constants.iconSize,
                     )
                   : const SizedBox()),
-              Expanded(
-                child: FutureBuilder<Map>(
-                    // stream: null,
-                    future: controller.getDetails(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const SpinKitPouringHourGlass(
+              Obx(() => controller.futureStatus.value == false
+                  ? const Expanded(
+                      child: Center(
+                        child: SpinKitPouringHourGlass(
                           color: primaryColor,
-                          // shape: BoxShape.rectangle,
-
-                          // size: 20,
-                        );
-                      }
-                      return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: snapshot.data!["filteredData"].length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Obx(() => LectureDetailsTile(
-                                subject: snapshot.data!["filteredData"][index]
-                                    [0],
-                                teacher: snapshot.data!["filteredData"][index]
-                                    [1],
-                                counter: index + 1,
-                                isSet:
-                                    // snapshot.data!["notiRemainder"][index] == 0
-                                    controller.notiRemainder[index] == 0
-                                        ? false
-                                        : true,
-                                // isSet: false,
-                              ));
-                        },
-                      );
-                    }),
-              )
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: FutureBuilder<Map>(
+                          // stream: null,
+                          future: controller.future,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const SpinKitPouringHourGlass(
+                                color: primaryColor,
+                              );
+                            }
+                            return ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: snapshot.data!["filteredData"].length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Obx(() => LectureDetailsTile(
+                                      subject: snapshot.data!["filteredData"]
+                                          [index][0],
+                                      teacher: snapshot.data!["filteredData"]
+                                          [index][1],
+                                      counter: index + 1,
+                                      isSet:
+                                          // snapshot.data!["notiRemainder"][index] == 0
+                                          controller.notiRemainder[index] == 0
+                                              ? false
+                                              : true,
+                                      // isSet: false,
+                                    ));
+                              },
+                            );
+                          }),
+                    )),
             ],
           ),
         ));
