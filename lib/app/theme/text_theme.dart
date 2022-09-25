@@ -15,7 +15,7 @@ TextTheme getTextTheme({required double scaleFactor}) {
         color: Colors.black),
     titleLarge: TextStyle(
         fontSize: 22 - scaleFactor,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w900,
         color: Colors.white),
 
     // body
