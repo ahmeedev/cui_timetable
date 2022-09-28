@@ -3,7 +3,9 @@ import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:cui_timetable/app/utilities/extensions.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:dart_date/dart_date.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
@@ -34,6 +36,10 @@ class StudentRemainderController extends GetxController {
   List<StudentTimetable> sectionDetails = [];
   // late final Box remainderBox;
   late final Box remainderCacheBox;
+
+  late final DateTime startdate;
+  late final DateTime lastDate;
+  late final int dateDiff;
   @override
   Future<void> onInit() async {
     final boxx = await Hive.openBox(DBNames.timeSlots);
@@ -45,6 +51,12 @@ class StudentRemainderController extends GetxController {
 
     future = getDetails();
     futureStatus.value = true;
+
+    // set start and last date.
+    startdate = DateTime.now();
+    lastDate = DateTime.now().add(const Duration(days: 7));
+    dateDiff = lastDate.difference(startdate).inDays;
+    // print(lastDate.difference(startdate).inDays);
     super.onInit();
   }
 
@@ -78,6 +90,7 @@ class StudentRemainderController extends GetxController {
     if (notiRemainder.isEmpty) {
       notiRemainder.value = List.filled(filteredData.length, 0);
     }
+
     final labs = [];
     var actualTileIndexes = [];
     list.sort((a, b) => a.day.compareTo(b.day));
@@ -116,6 +129,36 @@ class StudentRemainderController extends GetxController {
     return true;
   }
 
+  DateTime? findRespDates(element) {
+    // final dates = [];
+    DateTime? currentDay;
+    final lecDay = days[element.day.toString()];
+    switch (lecDay) {
+      case 1:
+        currentDay = startdate.next(1);
+        break;
+      case 2:
+        currentDay = startdate.next(2);
+        break;
+      case 3:
+        currentDay = startdate.next(3);
+        break;
+      case 4:
+        currentDay = startdate.next(4);
+        break;
+      case 5:
+        currentDay = startdate.next(5);
+        break;
+      default:
+        currentDay = null;
+    }
+    return currentDay;
+// log(days[element.day.toString()].toString());
+    // for (var i = 0; i < dateDiff; i++) {
+    //   if(startdate.nextDay.)
+    // }
+  }
+
   setRemainder({required String subject, required int index}) async {
     absorbing.value = true;
     // log("pressed");
@@ -126,6 +169,8 @@ class StudentRemainderController extends GetxController {
     _checkAllSet();
     for (var element in sectionDetails) {
       if (element.subject.toLowerCase().compareTo(subject.toLowerCase()) == 0) {
+        // log(findRespDates(element).toString());
+
         //  AwesomeNotifications().cancelAllSchedules();
         // log("Weekday${days[element.day.toString()]}");
         // log("Hour${days[element.day.toString()]}");
@@ -183,7 +228,12 @@ class StudentRemainderController extends GetxController {
           }
           remainderCacheBox.put(section.toString().toLowerCase(), channelIds);
 
-          log(channelIds.toString());
+          // log(channelIds.toString());
+          // log(days[element.day.toString()].toString());
+          final date = findRespDates(element);
+          date!.setHour(value['hours']);
+          date.setHour(value['minutes'] - 2);
+
           AwesomeNotifications().createNotification(
             // actionButtons: [],
             // schedule: NotificationInterval(
@@ -209,9 +259,7 @@ class StudentRemainderController extends GetxController {
             //   repeats: true,
             // ),
 
-            schedule: NotificationCalendar.fromDate(
-                date: DateTime(
-                    2022, 9, 26, value['hours'], value['minutes'] - 2)),
+            schedule: NotificationCalendar.fromDate(date: date),
 
             content: NotificationContent(
               id: counter,

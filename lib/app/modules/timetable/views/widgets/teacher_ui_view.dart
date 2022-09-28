@@ -63,7 +63,7 @@ class TeacherUIView extends GetView<TeacherUIController> {
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
-                      .copyWith(fontWeight: FontWeight.bold),
+                      .copyWith(fontWeight: FontWeight.w900),
                 ),
                 GestureDetector(
                   onTap: () async {

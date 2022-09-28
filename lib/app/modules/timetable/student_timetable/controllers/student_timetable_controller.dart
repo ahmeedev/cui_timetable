@@ -9,7 +9,7 @@ class StudentTimetableController extends GetxController {
   var friSlots = <String>[];
   var currentTimeSlots = [];
 
-  var mon = true.obs; //* mon is selected by default
+  var mon = false.obs; //* mon is selected by default
   var tue = false.obs;
   var wed = false.obs;
   var thu = false.obs;
@@ -24,9 +24,61 @@ class StudentTimetableController extends GetxController {
   var friLectures = {};
   var lecturesCount = <String, String>{}.obs;
 
+  late final stream;
+  String lectureKey = "10000";
+  // var isLoading = true.obs;
+
   @override
   Future<void> onInit() async {
+    stream = openBox(section: Get.arguments[0].toString());
+    await selectDateWiseTile();
+    // isLoading.value = false;
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    getLectures(key: lectureKey);
+    super.onReady();
+  }
+
+  selectDateWiseTile() {
+    final now = DateTime.now().weekday;
+    switch (now) {
+      case 1:
+        mon.value = true;
+        lectureKey = "10000";
+        // daywiseLectures.value = monLectures;
+        break;
+      case 2:
+        tue.value = true;
+        lectureKey = "1000";
+        // daywiseLectures.value = tueLectures;
+
+        break;
+      case 3:
+        wed.value = true;
+        lectureKey = "100";
+        // daywiseLectures.value = wedLectures;
+
+        break;
+      case 4:
+        thu.value = true;
+        lectureKey = "10";
+        // daywiseLectures.value = thuLectures;
+
+        break;
+      case 5:
+        fri.value = true;
+        lectureKey = "1";
+        // daywiseLectures.value = friLectures;
+
+        break;
+      default:
+        mon.value = true;
+        lectureKey = "10000";
+      // daywiseLectures.value = monLectures;
+    }
   }
 
   // Methods for Controlling DayTile.
@@ -70,7 +122,7 @@ class StudentTimetableController extends GetxController {
     await _setLectures(list: list, key: "10");
     await _setLectures(list: list, key: "1");
 
-    daywiseLectures.value = monLectures; //* For default purpose
+    // daywiseLectures.value = monLectures; //* For default purpose
     yield lecturesCount;
   }
 

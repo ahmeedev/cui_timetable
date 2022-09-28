@@ -79,10 +79,12 @@ class SettingsController extends GetxController {
   }
 
   Future<void> clearCache() async {
+    final timetableCache = await Hive.openBox(DBNames.timetableCache);
     final remainderCache = await Hive.openBox(DBNames.remainderCache);
-    final remainder = await Hive.openBox(DBNames.remainder);
+    // final remainder = await Hive.openBox(DBNames.remainder);
+    await timetableCache.clear();
     await remainderCache.clear();
-    await remainder.clear();
+    // await remainder.clear();
     GetXUtilities.snackbar(
         title: 'Cache removed!',
         message: "Your app is now reset.",

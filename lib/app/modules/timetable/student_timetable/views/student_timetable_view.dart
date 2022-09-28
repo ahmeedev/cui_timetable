@@ -32,8 +32,7 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                 widthFactor: 1,
                 heightFactor: 1,
                 child: StreamBuilder(
-                    stream: controller.openBox(
-                        section: Get.arguments[0].toString()),
+                    stream: controller.stream,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const SpinKitFadingCircle(

@@ -5,7 +5,7 @@ import '../../../data/database/database_constants.dart';
 import '../models/freerooms_model.dart';
 
 class FreeroomsController extends GetxController {
-  var mon = true.obs;
+  var mon = false.obs;
   var tue = false.obs;
   var wed = false.obs;
   var thu = false.obs;
@@ -24,13 +24,36 @@ class FreeroomsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-
+    selectDateWiseTile();
     final box1 = await Hive.openBox(DBNames.timeSlots);
     monToThursSlots = await box1.get(DBTimeSlots.monToThur);
     friSlots = await box1.get(DBTimeSlots.fri);
     freeroomsBox = await Hive.openBox(DBNames.freerooms);
 
     getFreerooms(day: "Mon"); // For default behaviour
+  }
+
+  selectDateWiseTile() {
+    final now = DateTime.now().weekday;
+    switch (now) {
+      case 1:
+        mon.value = true;
+        break;
+      case 2:
+        tue.value = true;
+        break;
+      case 3:
+        wed.value = true;
+        break;
+      case 4:
+        thu.value = true;
+        break;
+      case 5:
+        fri.value = true;
+        break;
+      default:
+        mon.value = true;
+    }
   }
 
   void allFalse() {

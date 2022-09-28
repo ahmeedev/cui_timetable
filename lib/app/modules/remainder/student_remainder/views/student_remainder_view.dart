@@ -19,18 +19,7 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
         appBar: AppBar(
           title: Text(Get.arguments["section"]),
           centerTitle: true,
-          // actions: [
-          //   IconButton(
-          //       onPressed: () {
-          //         // log(DateTime.now().isSaturday.toString());
-          //         // final date = DateTime.now().add(const Duration());
-          //         // log(DateTime.sunday.toString());
-          //         // print(controller.notiRemainder.toString());
-          //         final map = <String, List>{};
-          //         log(map["hello"].toString());
-          //       },
-          //       icon: const Text("Click me"))
-          // ],
+          actions: [IconButton(onPressed: () {}, icon: const Text("Click me"))],
         ),
         body: Padding(
           padding: EdgeInsets.all(Constants.defaultPadding),

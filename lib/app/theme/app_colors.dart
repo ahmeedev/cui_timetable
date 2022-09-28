@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// const primaryColor = Color(0xFF482369);
+// const forGradient = Color.fromARGB(255, 43, 20, 62);
+
 const primaryColor = Color(0xFF265FA4);
 const secondaryColor = Color(0xFF482369);
 const forGradient = Color(0XFF1b4373);

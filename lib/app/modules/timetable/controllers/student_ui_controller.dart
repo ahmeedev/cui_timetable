@@ -44,7 +44,6 @@ class StudentUIController extends GetxController {
     }
 
     textController.text = string;
-
     searchBy.value = Get.find<SettingsController>().searchBy;
     if (searchBy["list"] == true) {
       // fetching cached tokens
@@ -62,18 +61,17 @@ class StudentUIController extends GetxController {
 
       yearTokenSelected.value = await box1
           .get(DBTimetableCache.studentYearToken, defaultValue: yearTokens[0]);
-      sectionTokenSelected.value = await box1.get(
-          DBTimetableCache.studentSecToken,
-          defaultValue: sectionTokens[0]);
-      sectionVariantsTokenSelected.value = await box1.get(
-          DBTimetableCache.studentSecVToken,
-          defaultValue: sectionVariantsTokens[0]);
+      sectionTokenSelected.value =
+          await box1.get(DBTimetableCache.studentSecToken, defaultValue: "");
+      sectionVariantsTokenSelected.value =
+          await box1.get(DBTimetableCache.studentSecVToken, defaultValue: "");
 
       log(yearTokenSelected.value);
       log(sectionTokenSelected.value);
       log(sectionVariantsTokenSelected.value);
-      changeSectionTokens(yearTokens[0],
-          sectionToken: "", sectionVariantToken: "");
+      changeSectionTokens(yearTokenSelected.value,
+          sectionToken: sectionTokenSelected.value,
+          sectionVariantToken: sectionVariantsTokenSelected.value);
     }
 
     super.onInit();

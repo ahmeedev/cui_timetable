@@ -76,14 +76,14 @@ class StudentUIView extends GetView<StudentUIController> {
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
+                              .copyWith(fontWeight: FontWeight.w900),
                         )
                       : Text(
                           'Select Section',
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
+                              .copyWith(fontWeight: FontWeight.w900),
                         ),
                 ),
 
