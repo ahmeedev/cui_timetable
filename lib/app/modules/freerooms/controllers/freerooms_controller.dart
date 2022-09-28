@@ -21,16 +21,25 @@ class FreeroomsController extends GetxController {
   // ignore: prefer_typing_uninitialized_variables
   late var freeroomsBox;
 
+  String day = 'Mon';
+
   @override
   Future<void> onInit() async {
-    super.onInit();
-    selectDateWiseTile();
     final box1 = await Hive.openBox(DBNames.timeSlots);
     monToThursSlots = await box1.get(DBTimeSlots.monToThur);
     friSlots = await box1.get(DBTimeSlots.fri);
     freeroomsBox = await Hive.openBox(DBNames.freerooms);
 
-    getFreerooms(day: "Mon"); // For default behaviour
+    selectDateWiseTile();
+    super.onInit();
+
+    // getFreerooms(day: "Mon"); // For default behaviour
+  }
+
+  @override
+  void onReady() {
+    getFreerooms(day: day);
+    super.onReady();
   }
 
   selectDateWiseTile() {
@@ -38,21 +47,27 @@ class FreeroomsController extends GetxController {
     switch (now) {
       case 1:
         mon.value = true;
+        day = "Mon";
         break;
       case 2:
         tue.value = true;
+        day = "Tue";
         break;
       case 3:
         wed.value = true;
+        day = "Wed";
         break;
       case 4:
         thu.value = true;
+        day = "Thu";
         break;
       case 5:
         fri.value = true;
+        day = "Fri";
         break;
       default:
         mon.value = true;
+        day = "Mon";
     }
   }
 

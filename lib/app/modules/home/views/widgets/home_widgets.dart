@@ -143,7 +143,12 @@ class UpdateTile extends GetView<HomeController> {
                         )),
                     child: ListTile(
                       title: Text('New Timetable Available! ',
-                          style: Theme.of(context).textTheme.titleMedium),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900)),
                       trailing: ElevatedButton(
                         child: Text('Sync Now',
                             style: Theme.of(context).textTheme.labelLarge),
