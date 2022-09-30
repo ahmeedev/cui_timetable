@@ -230,9 +230,12 @@ class StudentRemainderController extends GetxController {
 
           // log(channelIds.toString());
           // log(days[element.day.toString()].toString());
-          final date = findRespDates(element);
-          date!.setHour(value['hours']);
-          date.setHour(value['minutes'] - 2);
+          var date = findRespDates(element);
+          var min = value['minutes'] - 2;
+          date = date!.setHour(value['hours'], min, 0, 0, 0);
+
+          log("Date is :$date");
+          log("Date is :$min");
 
           AwesomeNotifications().createNotification(
             // actionButtons: [],
@@ -272,7 +275,7 @@ class StudentRemainderController extends GetxController {
               // color: Colors.green,
               summary: "Get ready for your next lecture",
               body:
-                  'your next lecture started at $time  of ${element.subject} at ${element.room} with ${element.teacher}',
+                  'Your next lecture started at $time  of ${element.subject} at ${element.room} with ${element.teacher}',
             ),
           );
         });

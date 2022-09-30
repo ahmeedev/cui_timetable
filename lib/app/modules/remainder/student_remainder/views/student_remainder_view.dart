@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cui_timetable/app/modules/remainder/student_remainder/views/widgets/student_remainder_widgets.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -19,7 +20,14 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
         appBar: AppBar(
           title: Text(Get.arguments["section"]),
           centerTitle: true,
-          actions: [IconButton(onPressed: () {}, icon: const Text("Click me"))],
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  await AwesomeNotifications().cancelAllSchedules();
+                  print('done');
+                },
+                icon: const Text("Click me"))
+          ],
         ),
         body: Padding(
           padding: EdgeInsets.all(Constants.defaultPadding),
