@@ -56,50 +56,70 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
             ),
             Flexible(
               flex: Constants.lectureFlex,
-              child: Obx(() => FractionallySizedBox(
-                    widthFactor: 1,
-                    heightFactor: 1,
-                    child: controller.daywiseLectures["lectures"] == null ||
-                            controller.daywiseLectures["lectures"].isEmpty
-                        ? Center(
-                            child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const ImageIcon(
-                                AssetImage(
-                                    'assets/timetable/free_lectures.png'),
-                                size: 150,
-                                color: primaryColor,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'No Lecture Today',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall!
-                                    .copyWith(
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w900,
-                                      // fontSize:
-                                    ),
-                              )
-                            ],
-                          ))
-                        : ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            itemCount:
-                                controller.daywiseLectures["lectures"].length,
-                            itemBuilder: (context, index) {
-                              if (controller.daywiseLectures["combineIndexes"]
-                                  .contains(index)) {
-                                if (controller
-                                    .daywiseLectures["actualTileIndexes"]
+              child: Obx(() => controller.isLoading.value
+                  ? const SpinKitFadingCircle(
+                      size: 50,
+                      color: primaryColor,
+                    )
+                  : FractionallySizedBox(
+                      widthFactor: 1,
+                      heightFactor: 1,
+                      child: controller.daywiseLectures["lectures"] == null ||
+                              controller.daywiseLectures["lectures"].isEmpty
+                          ? Center(
+                              child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const ImageIcon(
+                                  AssetImage(
+                                      'assets/timetable/free_lectures.png'),
+                                  size: 150,
+                                  color: primaryColor,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  'No Lecture Today',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall!
+                                      .copyWith(
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w900,
+                                        // fontSize:
+                                      ),
+                                )
+                              ],
+                            ))
+                          : ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              itemCount:
+                                  controller.daywiseLectures["lectures"].length,
+                              itemBuilder: (context, index) {
+                                if (controller.daywiseLectures["combineIndexes"]
                                     .contains(index)) {
-                                  String time = _fetchNewTime(index: index);
+                                  if (controller
+                                      .daywiseLectures["actualTileIndexes"]
+                                      .contains(index)) {
+                                    String time = _fetchNewTime(index: index);
+                                    return LectureDetailsTile(
+                                        lab: true,
+                                        subject: controller
+                                            .daywiseLectures["lectures"][index]
+                                            .subject,
+                                        teacher: controller
+                                            .daywiseLectures["lectures"][index]
+                                            .teacher,
+                                        room: controller
+                                            .daywiseLectures["lectures"][index]
+                                            .room,
+                                        time: time);
+                                  } else {
+                                    return const SizedBox();
+                                  }
+                                } else {
                                   return LectureDetailsTile(
-                                      lab: true,
                                       subject: controller
                                           .daywiseLectures["lectures"][index]
                                           .subject,
@@ -109,31 +129,17 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                                       room: controller
                                           .daywiseLectures["lectures"][index]
                                           .room,
-                                      time: time);
-                                } else {
-                                  return const SizedBox();
+                                      time: controller
+                                          .currentTimeSlots[controller
+                                                  .daywiseLectures["lectures"]
+                                                      [index]
+                                                  .slot -
+                                              1]
+                                          .toString());
                                 }
-                              } else {
-                                return LectureDetailsTile(
-                                    subject: controller
-                                        .daywiseLectures["lectures"][index]
-                                        .subject,
-                                    teacher: controller
-                                        .daywiseLectures["lectures"][index]
-                                        .teacher,
-                                    room: controller
-                                        .daywiseLectures["lectures"][index]
-                                        .room,
-                                    time: controller.currentTimeSlots[controller
-                                                .daywiseLectures["lectures"]
-                                                    [index]
-                                                .slot -
-                                            1]
-                                        .toString());
-                              }
-                            },
-                          ),
-                  )),
+                              },
+                            ),
+                    )),
             ),
           ],
         ));

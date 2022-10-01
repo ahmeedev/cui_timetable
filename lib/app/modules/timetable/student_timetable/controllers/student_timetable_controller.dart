@@ -26,7 +26,7 @@ class StudentTimetableController extends GetxController {
 
   late final stream;
   String lectureKey = "10000";
-  // var isLoading = true.obs;
+  var isLoading = true.obs;
 
   @override
   Future<void> onInit() async {
@@ -39,6 +39,7 @@ class StudentTimetableController extends GetxController {
   @override
   void onReady() {
     getLectures(key: lectureKey);
+    isLoading.value = false;
     super.onReady();
   }
 
@@ -77,6 +78,7 @@ class StudentTimetableController extends GetxController {
       default:
         mon.value = true;
         lectureKey = "10000";
+        print("Default case");
       // daywiseLectures.value = monLectures;
     }
   }
@@ -209,16 +211,16 @@ class StudentTimetableController extends GetxController {
   }
 
   void getLectures({required String key}) {
-    if (key == "10000") {
+    if (key.compareTo("10000") == 0) {
       daywiseLectures.value = monLectures;
-    } else if (key == "1000") {
+    } else if (key.compareTo("1000") == 0) {
       // daywiseLectures.value = tueLectures;
       daywiseLectures.value = tueLectures;
-    } else if (key == "100") {
+    } else if (key.compareTo("100") == 0) {
       daywiseLectures.value = wedLectures;
-    } else if (key == "10") {
+    } else if (key.compareTo("10") == 0) {
       daywiseLectures.value = thuLectures;
-    } else if (key == "1") {
+    } else if (key.compareTo("1") == 0) {
       daywiseLectures.value = friLectures;
     }
   }

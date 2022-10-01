@@ -15,7 +15,7 @@ class HomeView3 extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    final widgetsPlaceholderHeight = height * 0.52 + 15;
+    final widgetsPlaceholderHeight = height * 0.52 + 0; //! add 15
     final textTheme = Theme.of(context).textTheme;
 
     return SafeArea(
@@ -104,7 +104,7 @@ class HomeView3 extends GetView<HomeController> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: height * 0.3,
+                        height: height * 0.31,
                       ),
                       Padding(
                         padding: EdgeInsets.all(Constants.defaultPadding),
