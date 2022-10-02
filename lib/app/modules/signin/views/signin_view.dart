@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
 import 'package:particles_flutter/particles_flutter.dart';
@@ -62,7 +63,17 @@ class SigninView extends GetView<SigninController> {
                     ),
                   ),
                 ),
-                _buildParticles(width, height)
+                _buildParticles(width, height),
+                InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(Constants.defaultPadding),
+                    child: Icon(Icons.arrow_back,
+                        color: Colors.white, size: Constants.iconSize + 10),
+                  ),
+                )
               ],
             ),
           ),
@@ -136,33 +147,138 @@ class SigninView extends GetView<SigninController> {
                         kHeight,
                         kHeight,
                         kHeight,
-                        ElevatedButton(
-                            onPressed: () {},
-                            child: Padding(
-                              padding:
-                                  EdgeInsets.all(Constants.defaultPadding * 2),
-                              child: Text('Sign in',
-                                  style:
-                                      Theme.of(context).textTheme.labelLarge),
-                            )),
+                        ClipRRect(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(Constants.defaultRadius)),
+                          child: ElevatedButton(
+                              onPressed: () {},
+                              child: Padding(
+                                padding: EdgeInsets.all(
+                                    Constants.defaultPadding * 2),
+                                child: Text('Sign in',
+                                    style:
+                                        Theme.of(context).textTheme.labelLarge),
+                              )),
+                        ),
                         kHeight,
                         kHeight,
                         kHeight,
                         kHeight,
-                        const Text("or, sign in with",
-                            textAlign: TextAlign.center),
+                        Text(
+                          "Or, Sign in with...",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(color: Colors.black),
+                        ),
                         kHeight,
                         kHeight,
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              Icon(Icons.facebook),
-                              Icon(Icons.facebook),
-                              Icon(Icons.facebook),
+                            children: [
+                              OutlinedButton(
+                                onPressed: null,
+                                style: ButtonStyle(
+                                  // foregroundColor:
+                                  //     MaterialStateProperty.all(Colors.blue),
+                                  side: MaterialStateProperty.all(
+                                      const BorderSide(
+                                          color: primaryColor,
+                                          width: 1.0,
+                                          style: BorderStyle.solid)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              Constants.defaultRadius))),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(
+                                      Constants.defaultPadding), // 16.0
+                                  child: Icon(
+                                    Icons.facebook,
+                                    color: Colors.blue,
+                                    size: Constants.iconSize,
+                                  ),
+                                ),
+                              ),
+                              OutlinedButton(
+                                onPressed: null,
+                                style: ButtonStyle(
+                                  // foregroundColor:
+                                  //     MaterialStateProperty.all(Colors.blue),
+                                  side: MaterialStateProperty.all(
+                                      const BorderSide(
+                                          color: primaryColor,
+                                          width: 1.0,
+                                          style: BorderStyle.solid)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              Constants.defaultRadius))),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(
+                                      Constants.defaultPadding), // 16.0
+                                  child: Icon(
+                                    FontAwesomeIcons.google,
+                                    color: Colors.red,
+                                    size: Constants.iconSize,
+                                  ),
+                                ),
+                              ),
+                              OutlinedButton(
+                                onPressed: null,
+                                style: ButtonStyle(
+                                  // foregroundColor:
+                                  //     MaterialStateProperty.all(Colors.blue),
+                                  side: MaterialStateProperty.all(
+                                      const BorderSide(
+                                          color: primaryColor,
+                                          width: 1.0,
+                                          style: BorderStyle.solid)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              Constants.defaultRadius))),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(
+                                      Constants.defaultPadding), // 16
+                                  child: Icon(
+                                    FontAwesomeIcons.github,
+                                    color: Colors.black,
+                                    size: Constants.iconSize,
+                                  ),
+                                ),
+                              ),
                             ]),
                         const Spacer(),
-                        const Text("new, to cui sahiwal, Register here",
-                            textAlign: TextAlign.center),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "New, to CUI SAHIWAL?  ",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(color: Colors.black),
+                            ),
+                            Text(
+                              // "Register yourself",
+                              "Sign up",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge!
+                                  .copyWith(
+                                    color: primaryColor,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ]),
 
                   // child: SingleChildScrollView(

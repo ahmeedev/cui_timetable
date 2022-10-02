@@ -99,6 +99,7 @@ flutter:
     - assets/home/
     - assets/freerooms/
     - assets/misc/
+    - assets/sign_in/
   fonts: 
     - family: Lato
       fonts: 
