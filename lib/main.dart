@@ -30,7 +30,7 @@ Future<void> main() async {
     // systemNavigationBarDividerColor: null,
     statusBarColor: statusBarColor,
     // statusBarIconBrightness: Brightness.light,
-    // statusBarBrightness: Brightness.dark,
+    // statusBarBrightness: Brightness.light,
   ));
   await _initialized();
 

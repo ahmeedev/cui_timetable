@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -15,45 +17,48 @@ class HomeView3 extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    final widgetsPlaceholderHeight = height * 0.52 + 0; //! add 15
+    // final widgetsPlaceholderHeight = height * 0.52 + 0; //! add 15
+    // final widgetsPlaceholderHeight = height * 0.5; //! add 15
+
     final textTheme = Theme.of(context).textTheme;
 
-    return SafeArea(
-      child: Scaffold(
-          key: controller.scaffoldKey,
-          backgroundColor: selectionColor,
-          drawerEnableOpenDragGesture: true,
-          drawer: Drawer(
-            width: width / 1.5,
-            child: Container(
-              color: scaffoldColor,
-              child: Column(
-                children: const [Header(), ButtonList()],
-              ),
+    return Scaffold(
+      // appBar: AppBar(),
+        key: controller.scaffoldKey,
+        backgroundColor: selectionColor,
+        drawerEnableOpenDragGesture: true,
+        drawer: Drawer(
+          width: width / 1.5,
+          child: Container(
+            color: scaffoldColor,
+            child: Column(
+              children: const [Header(), ButtonList()],
             ),
           ),
-          body: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                child: Stack(
-                  children: [
-                    Obx(() => AnimatedContainer(
-                          duration: const Duration(seconds: 1),
-                          curve: Curves.easeInOut,
-                          alignment: controller.pageIndex.value == 0
-                              ? const Alignment(-0.9, -0.6)
-                              : Alignment.center,
-                          width: width,
-                          height: height * 0.4,
-                          decoration: const BoxDecoration(
-                              // color: primaryColor,
-                              gradient:
-                                  LinearGradient(colors: primaryGradient)),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: Constants.defaultPadding,
-                                horizontal: Constants.defaultPadding * 2),
+        ),
+        body: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              child: Stack(
+                children: [
+                  Obx(() => AnimatedContainer(
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.easeInOut,
+                        alignment: controller.pageIndex.value == 0
+                            ? const Alignment(-0.9, -0.6)
+                            : Alignment.center,
+                        width: width,
+                        height: height * 0.4,
+                        decoration: const BoxDecoration(
+                            // color: primaryColor,
+                            gradient:
+                                LinearGradient(colors: primaryGradient)),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: Constants.defaultPadding,
+                              horizontal: Constants.defaultPadding * 2),
+                          child: SafeArea(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,58 +89,60 @@ class HomeView3 extends GetView<HomeController> {
                               ],
                             ),
                           ),
-                        )),
-                    Obx(
-                      () => controller.pageIndex.value == 0
-                          ? Container(
-                              color: Colors.red,
-                              width: 0,
-                            )
-                          : _buildParticles(width, height),
-                    )
+                        ),
+                      )),
+                  Obx(
+                    () => controller.pageIndex.value == 0
+                        ? Container(
+                            color: Colors.red,
+                            width: 0,
+                          )
+                        : _buildParticles(width, height),
+                  )
+                ],
+              ),
+            ),
+            SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Banner(
+                message: "Beta",
+                location: BannerLocation.topEnd,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: height * 0.3,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(Constants.defaultPadding).copyWith(bottom: 0),
+                      child: Container(
+                        width: width,
+                        height: height * 0.6 - (Constants.defaultPadding*3),
+                        decoration: BoxDecoration(
+                          color: onScaffoldColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(Constants.defaultRadius),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 10,
+                              spreadRadius: 4,
+                            ),
+                          ],
+                        ),
+                        padding: EdgeInsets.all(Constants.defaultPadding),
+                        child: SingleChildScrollView(
+                            // physics: const BouncingScrollPhysics(),
+                            child: Obx(() => controller
+                                .pageWidget[controller.pageIndex.value])),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                child: Banner(
-                  message: "Beta",
-                  location: BannerLocation.topEnd,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: height * 0.31,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Constants.defaultPadding),
-                        child: Container(
-                          width: width,
-                          height: widgetsPlaceholderHeight,
-                          decoration: BoxDecoration(
-                            color: onScaffoldColor,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(Constants.defaultRadius),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 10,
-                                spreadRadius: 4,
-                              ),
-                            ],
-                          ),
-                          padding: EdgeInsets.all(Constants.defaultPadding),
-                          child: SingleChildScrollView(
-                              // physics: const BouncingScrollPhysics(),
-                              child: Obx(() => controller
-                                  .pageWidget[controller.pageIndex.value])),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
+            ),
+            SafeArea(
+              child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),
                 child: Row(
                   children: [
@@ -143,7 +150,7 @@ class HomeView3 extends GetView<HomeController> {
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         //  hoverColor: Colors.tra
-
+                    
                         onTap: () {
                           controller.scaffoldKey.currentState!.openDrawer();
                         },
@@ -171,142 +178,144 @@ class HomeView3 extends GetView<HomeController> {
                   ],
                 ),
               ),
-            ],
-          ),
-          bottomNavigationBar: Padding(
-            padding: EdgeInsets.all(Constants.defaultPadding).copyWith(top: 0),
-            child: Card(
-              margin: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
+            ),
+          ],
+        ),
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.all(Constants.defaultPadding).copyWith(top: 0),
+          child: Card(
+            margin: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(Constants.defaultRadius * 2),
+              ),
+            ),
+            child: Container(
+              width: width,
+              height: height * 0.1,
+              // height: 0,
+
+              // padding: EdgeInsets.all(Constants.defaultPadding),
+              decoration: BoxDecoration(
+                // color: primaryColor.withOpacity(0.8),
                 borderRadius: BorderRadius.all(
                   Radius.circular(Constants.defaultRadius * 2),
                 ),
+                gradient: const LinearGradient(colors: primaryGradient),
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: Colors.black.withOpacity(0.2),
+                //     blurRadius: 10,
+                //     spreadRadius: 2,
+                //   ),
+                // ],
               ),
-              child: Container(
-                width: width,
-                height: height * 0.1,
-                // padding: EdgeInsets.all(Constants.defaultPadding),
-                decoration: BoxDecoration(
-                  // color: primaryColor.withOpacity(0.8),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(Constants.defaultRadius * 2),
-                  ),
-                  gradient: const LinearGradient(colors: primaryGradient),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.black.withOpacity(0.2),
-                  //     blurRadius: 10,
-                  //     spreadRadius: 2,
-                  //   ),
-                  // ],
-                ),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          if (Get.find<HomeController>().isNews.value ==
-                              false) {
-                            Get.find<HomeController>().setToFalse();
-                            Get.find<HomeController>().isNews.value = true;
-                            Get.find<HomeController>().pageIndex.value = 0;
-                          }
-                        },
-                        child: Obx(() => Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(Constants.defaultRadius),
-                                ),
-                                color:
-                                    Get.find<HomeController>().isNews.value ==
-                                            true
-                                        ? selectionColor
-                                        : Colors.transparent,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        if (Get.find<HomeController>().isNews.value ==
+                            false) {
+                          Get.find<HomeController>().setToFalse();
+                          Get.find<HomeController>().isNews.value = true;
+                          Get.find<HomeController>().pageIndex.value = 0;
+                        }
+                      },
+                      child: Obx(() => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(Constants.defaultRadius),
                               ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.all(Constants.defaultPadding),
-                                child: Icon(
-                                  Icons.newspaper,
-                                  size: Constants.iconSize,
-                                  color: Colors.white,
-                                ),
+                              color:
+                                  Get.find<HomeController>().isNews.value ==
+                                          true
+                                      ? selectionColor
+                                      : Colors.transparent,
+                            ),
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.all(Constants.defaultPadding),
+                              child: Icon(
+                                Icons.newspaper,
+                                size: Constants.iconSize,
+                                color: Colors.white,
                               ),
-                            )),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          if (Get.find<HomeController>().isHome.value ==
-                              false) {
-                            Get.find<HomeController>().setToFalse();
-                            Get.find<HomeController>().isHome.value = true;
-                            Get.find<HomeController>().pageIndex.value = 1;
-                          }
-                        },
-                        child: Obx(() => Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(Constants.defaultRadius),
-                                ),
-                                color:
-                                    Get.find<HomeController>().isHome.value ==
-                                            true
-                                        ? selectionColor
-                                        : Colors.transparent,
+                            ),
+                          )),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (Get.find<HomeController>().isHome.value ==
+                            false) {
+                          Get.find<HomeController>().setToFalse();
+                          Get.find<HomeController>().isHome.value = true;
+                          Get.find<HomeController>().pageIndex.value = 1;
+                        }
+                      },
+                      child: Obx(() => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(Constants.defaultRadius),
                               ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.all(Constants.defaultPadding),
-                                child: Icon(
-                                  Icons.home,
-                                  size: Constants.iconSize,
-                                  color: Colors.white,
-                                ),
+                              color:
+                                  Get.find<HomeController>().isHome.value ==
+                                          true
+                                      ? selectionColor
+                                      : Colors.transparent,
+                            ),
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.all(Constants.defaultPadding),
+                              child: Icon(
+                                Icons.home,
+                                size: Constants.iconSize,
+                                color: Colors.white,
                               ),
-                            )),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          if (Get.find<HomeController>().isSetting.value ==
-                              false) {
-                            Get.find<HomeController>().setToFalse();
-                            Get.find<HomeController>().isSetting.value = true;
-                            Get.find<HomeController>().pageIndex.value = 2;
-                          }
-                        },
-                        child: Obx(() => Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(Constants.defaultRadius),
-                                ),
-                                color: Get.find<HomeController>()
-                                            .isSetting
-                                            .value ==
-                                        true
-                                    ? selectionColor
-                                    : Colors.transparent,
+                            ),
+                          )),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (Get.find<HomeController>().isSetting.value ==
+                            false) {
+                          Get.find<HomeController>().setToFalse();
+                          Get.find<HomeController>().isSetting.value = true;
+                          Get.find<HomeController>().pageIndex.value = 2;
+                        }
+                      },
+                      child: Obx(() => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(Constants.defaultRadius),
                               ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.all(Constants.defaultPadding),
-                                child: Icon(
-                                  Icons.settings,
-                                  size: Constants.iconSize,
-                                  color: Colors.white,
-                                ),
+                              color: Get.find<HomeController>()
+                                          .isSetting
+                                          .value ==
+                                      true
+                                  ? selectionColor
+                                  : Colors.transparent,
+                            ),
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.all(Constants.defaultPadding),
+                              child: Icon(
+                                Icons.settings,
+                                size: Constants.iconSize,
+                                color: Colors.white,
                               ),
-                            )),
-                      ),
-                      // Icon(Icons.home, size: Constants.iconSize),
-                      // Icon(Icons.home, size: Constants.iconSize),
-                    ]),
-              ),
+                            ),
+                          )),
+                    ),
+                    // Icon(Icons.home, size: Constants.iconSize),
+                    // Icon(Icons.home, size: Constants.iconSize),
+                  ]),
             ),
-          )
-          // .roundAll(Constants.defaultRadius * 2)
-          // .paddingAll(Constants.defaultPadding)
           ),
-    );
+        )
+        // .roundAll(Constants.defaultRadius * 2)
+        // .paddingAll(Constants.defaultPadding)
+        );
   }
 
   CircularParticle _buildParticles(double width, double height) {
@@ -456,18 +465,8 @@ class HomeViewWidget extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: Constants.defaultPadding + 5),
+        // SizedBox(height: Constants.defaultPadding + 5),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            // Text(
-            //   "Load More...",
-            //   style: textTheme.labelLarge!.copyWith(color: Colors.black),
-            //   textAlign: TextAlign.center,
-            // ),
-          ],
-        )
         // Row(
         //   mainAxisSize: MainAxisSize.min,
         //   children: [

@@ -16,7 +16,6 @@ class NewsView extends GetView<NewsController> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    final widgetsPlaceholderHeight = height * 0.52 + 15;
     final textTheme = Theme.of(context).textTheme;
 
     return StreamBuilder(
@@ -47,7 +46,7 @@ class NewsView extends GetView<NewsController> {
           // print(snapshot.data);
           return SizedBox(
             width: width,
-            height: widgetsPlaceholderHeight,
+            height: height * 0.6 - (Constants.defaultPadding*3),
             child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) => buildNews(context,

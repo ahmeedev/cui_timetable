@@ -43,23 +43,24 @@ class Header extends StatelessWidget {
     //   ),
     // );
 
-    return SafeArea(
-      child: Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-          end: Alignment.bottomRight,
-          colors: [
-            // secondaryColor,
-            primaryColor,
-            forGradient,
-          ],
-        )),
-        height: MediaQuery.of(context).size.height * 0.25,
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
+    return Container(
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+        end: Alignment.bottomRight,
+        colors: [
+          // secondaryColor,
+          primaryColor,
+          forGradient,
+        ],
+      )),
+      height: MediaQuery.of(context).size.height * 0.30+Constants.defaultPadding,
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
+        child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            
             children: [
               Padding(
                 padding: EdgeInsets.only(
@@ -82,6 +83,8 @@ class Header extends StatelessWidget {
                         ))),
               ),
               kHeight,
+              kHeight,
+
               Text(
                 // "No details Available",
                 "Welcome, FA19-BSE-003",

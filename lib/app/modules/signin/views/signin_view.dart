@@ -23,48 +23,48 @@ class SigninView extends GetView<SigninController> {
       body: Stack(
         clipBehavior: Clip.none,
         children: [
-          SafeArea(
-            child: Stack(
-              children: [
-                AnimatedContainer(
-                  duration: const Duration(seconds: 1),
-                  curve: Curves.easeInOut,
-                  alignment: Alignment.center,
-                  // alignment: controller.pageIndex.value == 0
-                  //     ? const Alignment(-0.9, -0.6)
-                  //     : Alignment.center,
-                  width: width,
-                  height: height * 0.4,
-                  decoration: const BoxDecoration(
-                      // color: primaryColor,
-                      gradient: LinearGradient(colors: primaryGradient)),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: Constants.defaultPadding,
-                        horizontal: Constants.defaultPadding * 2),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        kHeight,
-                        kHeight,
-                        Text(
-                          'SIGN IN',
-                          style: textTheme.titleLarge!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .fontSize! +
-                                  4.0),
-                        ),
-                      ],
-                    ),
+          Stack(
+            children: [
+              AnimatedContainer(
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeInOut,
+                alignment: Alignment.center,
+                // alignment: controller.pageIndex.value == 0
+                //     ? const Alignment(-0.9, -0.6)
+                //     : Alignment.center,
+                width: width,
+                height: height * 0.4,
+                decoration: const BoxDecoration(
+                    // color: primaryColor,
+                    gradient: LinearGradient(colors: primaryGradient)),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: Constants.defaultPadding,
+                      horizontal: Constants.defaultPadding * 2),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      kHeight,
+                      kHeight,
+                      Text(
+                        'SIGN IN',
+                        style: textTheme.titleLarge!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .fontSize! +
+                                4.0),
+                      ),
+                    ],
                   ),
                 ),
-                _buildParticles(width, height),
-                InkWell(
+              ),
+              _buildParticles(width, height),
+              SafeArea(
+                child: InkWell(
                   onTap: () {
                     Get.back();
                   },
@@ -73,21 +73,21 @@ class SigninView extends GetView<SigninController> {
                     child: Icon(Icons.arrow_back,
                         color: Colors.white, size: Constants.iconSize + 10),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
             child: Column(
               children: [
                 Container(
-                  height: height * 0.4,
+                  height: height * 0.3,
                   // color: Colors.red,
                 ),
                 Container(
                   width: width,
-                  height: height * 0.6 - Constants.defaultPadding,
+                  height: height * 0.7 - Constants.defaultPadding,
 
                   decoration: BoxDecoration(
                     color: onScaffoldColor,
@@ -107,6 +107,8 @@ class SigninView extends GetView<SigninController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                         kHeight,
+                        kHeight,
                         TextFormField(
                             style: Theme.of(context)
                                 .textTheme
