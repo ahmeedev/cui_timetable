@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -23,7 +21,7 @@ class HomeView3 extends GetView<HomeController> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      // appBar: AppBar(),
+        // appBar: AppBar(),
         key: controller.scaffoldKey,
         backgroundColor: selectionColor,
         drawerEnableOpenDragGesture: true,
@@ -39,69 +37,56 @@ class HomeView3 extends GetView<HomeController> {
         body: Stack(
           clipBehavior: Clip.none,
           children: [
-            Positioned(
-              child: Stack(
-                children: [
-                  Obx(() => AnimatedContainer(
-                        duration: const Duration(seconds: 1),
-                        curve: Curves.easeInOut,
-                        alignment: controller.pageIndex.value == 0
-                            ? const Alignment(-0.9, -0.6)
-                            : Alignment.center,
-                        width: width,
-                        height: height * 0.4,
-                        decoration: const BoxDecoration(
-                            // color: primaryColor,
-                            gradient:
-                                LinearGradient(colors: primaryGradient)),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: Constants.defaultPadding,
-                              horizontal: Constants.defaultPadding * 2),
-                          child: SafeArea(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                kHeight,
-                                kHeight,
-                                Text(
-                                  controller
-                                      .pageLabels[controller.pageIndex.value],
-                                  style: textTheme.titleLarge!.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium!
-                                              .fontSize! +
-                                          4.0),
-                                ),
-                                // Container(
-                                //   width: double.infinity,
-                                //   height: 150,
-                                //   color: Colors.green,
-                                // )
-                                kHeight,
-                                controller.pageIndex.value == 0
-                                    ? const HomeCarousel()
-                                    : const SizedBox()
-                              ],
-                            ),
+            Obx(() => AnimatedContainer(
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.easeInOut,
+                  alignment: controller.pageIndex.value == 0
+                      ? const Alignment(-1, -0.7)
+                      : Alignment.center,
+                  width: width,
+                  height: height * 0.4,
+                  decoration: const BoxDecoration(
+                      // color: primaryColor,
+                      gradient: LinearGradient(colors: primaryGradient)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: Constants.defaultPadding,
+                        horizontal: Constants.defaultPadding * 2),
+                    child: SafeArea(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          kHeight,
+                          kHeight,
+                          Text(
+                            controller.pageLabels[controller.pageIndex.value],
+                            style: textTheme.titleLarge!.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: controller.pageIndex.value == 0
+                                    ? Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium!
+                                            .fontSize! -
+                                        4
+                                    : Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium!
+                                            .fontSize! +
+                                        4.0),
                           ),
-                        ),
-                      )),
-                  Obx(
-                    () => controller.pageIndex.value == 0
-                        ? Container(
-                            color: Colors.red,
-                            width: 0,
-                          )
-                        : _buildParticles(width, height),
-                  )
-                ],
-              ),
-            ),
+                          // Container(
+                          //   width: double.infinity,
+                          //   height: 150,
+                          //   color: Colors.green,
+                          // )
+                          kHeight,
+                        ],
+                      ),
+                    ),
+                  ),
+                )),
             SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               child: Banner(
@@ -110,13 +95,23 @@ class HomeView3 extends GetView<HomeController> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: height * 0.3,
+                      // color: Colors.red,
+                      height: height * 0.32,
+                      child: Obx(
+                        () => controller.pageIndex.value == 0
+                            ? Container(
+                                color: Colors.red,
+                                width: 0,
+                              )
+                            : _buildParticles(width, height),
+                      ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(Constants.defaultPadding).copyWith(bottom: 0),
+                      padding: EdgeInsets.all(Constants.defaultPadding)
+                          .copyWith(bottom: 0),
                       child: Container(
                         width: width,
-                        height: height * 0.6 - (Constants.defaultPadding*3),
+                        height: height * 0.58 - (Constants.defaultPadding * 3),
                         decoration: BoxDecoration(
                           color: onScaffoldColor,
                           borderRadius: BorderRadius.all(
@@ -141,6 +136,16 @@ class HomeView3 extends GetView<HomeController> {
                 ),
               ),
             ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              padding:
+                  EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
+              width: width,
+              height: height * 0.32,
+              child: Obx(() => controller.pageIndex.value == 0
+                  ? const HomeCarousel()
+                  : const SizedBox()),
+            ),
             SafeArea(
               child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),
@@ -150,7 +155,7 @@ class HomeView3 extends GetView<HomeController> {
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         //  hoverColor: Colors.tra
-                    
+
                         onTap: () {
                           controller.scaffoldKey.currentState!.openDrawer();
                         },
@@ -215,8 +220,7 @@ class HomeView3 extends GetView<HomeController> {
                   children: [
                     InkWell(
                       onTap: () {
-                        if (Get.find<HomeController>().isNews.value ==
-                            false) {
+                        if (Get.find<HomeController>().isNews.value == false) {
                           Get.find<HomeController>().setToFalse();
                           Get.find<HomeController>().isNews.value = true;
                           Get.find<HomeController>().pageIndex.value = 0;
@@ -227,15 +231,13 @@ class HomeView3 extends GetView<HomeController> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(Constants.defaultRadius),
                               ),
-                              color:
-                                  Get.find<HomeController>().isNews.value ==
-                                          true
-                                      ? selectionColor
-                                      : Colors.transparent,
+                              color: Get.find<HomeController>().isNews.value ==
+                                      true
+                                  ? selectionColor
+                                  : Colors.transparent,
                             ),
                             child: Padding(
-                              padding:
-                                  EdgeInsets.all(Constants.defaultPadding),
+                              padding: EdgeInsets.all(Constants.defaultPadding),
                               child: Icon(
                                 Icons.newspaper,
                                 size: Constants.iconSize,
@@ -246,8 +248,7 @@ class HomeView3 extends GetView<HomeController> {
                     ),
                     InkWell(
                       onTap: () {
-                        if (Get.find<HomeController>().isHome.value ==
-                            false) {
+                        if (Get.find<HomeController>().isHome.value == false) {
                           Get.find<HomeController>().setToFalse();
                           Get.find<HomeController>().isHome.value = true;
                           Get.find<HomeController>().pageIndex.value = 1;
@@ -258,15 +259,13 @@ class HomeView3 extends GetView<HomeController> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(Constants.defaultRadius),
                               ),
-                              color:
-                                  Get.find<HomeController>().isHome.value ==
-                                          true
-                                      ? selectionColor
-                                      : Colors.transparent,
+                              color: Get.find<HomeController>().isHome.value ==
+                                      true
+                                  ? selectionColor
+                                  : Colors.transparent,
                             ),
                             child: Padding(
-                              padding:
-                                  EdgeInsets.all(Constants.defaultPadding),
+                              padding: EdgeInsets.all(Constants.defaultPadding),
                               child: Icon(
                                 Icons.home,
                                 size: Constants.iconSize,
@@ -289,16 +288,14 @@ class HomeView3 extends GetView<HomeController> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(Constants.defaultRadius),
                               ),
-                              color: Get.find<HomeController>()
-                                          .isSetting
-                                          .value ==
-                                      true
-                                  ? selectionColor
-                                  : Colors.transparent,
+                              color:
+                                  Get.find<HomeController>().isSetting.value ==
+                                          true
+                                      ? selectionColor
+                                      : Colors.transparent,
                             ),
                             child: Padding(
-                              padding:
-                                  EdgeInsets.all(Constants.defaultPadding),
+                              padding: EdgeInsets.all(Constants.defaultPadding),
                               child: Icon(
                                 Icons.settings,
                                 size: Constants.iconSize,

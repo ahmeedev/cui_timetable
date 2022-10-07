@@ -53,14 +53,14 @@ class Header extends StatelessWidget {
           forGradient,
         ],
       )),
-      height: MediaQuery.of(context).size.height * 0.30+Constants.defaultPadding,
+      height:
+          MediaQuery.of(context).size.height * 0.30 + Constants.defaultPadding,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            
             children: [
               Padding(
                 padding: EdgeInsets.only(
@@ -84,7 +84,6 @@ class Header extends StatelessWidget {
               ),
               kHeight,
               kHeight,
-
               Text(
                 // "No details Available",
                 "Welcome, FA19-BSE-003",
@@ -186,9 +185,7 @@ class ButtonList extends StatelessWidget {
           buildButton(context,
               icon: const AssetImage('assets/drawer/sign_in.png'),
               title: 'Sign In', onTap: () {
-            Get.offAndToNamed(
-              Routes.SIGNIN,
-            );
+            // Get.toNamed(Routes.AUTHENTICATION);
           }),
           // buildButton(context,
           //     icon: const AssetImage('assets/drawer/settings.png'),

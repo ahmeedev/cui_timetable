@@ -46,9 +46,10 @@ class NewsView extends GetView<NewsController> {
           // print(snapshot.data);
           return SizedBox(
             width: width,
-            height: height * 0.6 - (Constants.defaultPadding*3),
+            height: height * 0.6 - (Constants.defaultPadding * 3),
             child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.zero,
                 itemBuilder: (context, index) => buildNews(context,
                     title: snapshot.data[index]['title'],
                     description: snapshot.data[index]['description'],

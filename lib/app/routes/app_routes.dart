@@ -23,7 +23,9 @@ abstract class Routes {
   static const SETTINGS = _Paths.SETTINGS;
   static const STUDENT_REMAINDER = _Paths.REMAINDER + _Paths.STUDENT_REMAINDER;
   static const DEVELOPER = _Paths.DEVELOPER;
-  static const SIGNIN = _Paths.SIGNIN;
+  // static const SIGNIN = _Paths.SIGNIN;
+  static const AUTHENTICATION = _Paths.AUTHENTICATION;
+  static const SIGN_IN = _Paths.AUTHENTICATION + _Paths.SIGN_IN;
 }
 
 abstract class _Paths {
@@ -46,5 +48,7 @@ abstract class _Paths {
   static const SETTINGS = '/settings';
   static const STUDENT_REMAINDER = '/student-remainder';
   static const DEVELOPER = '/developer';
-  static const SIGNIN = '/signin';
+  // static const SIGNIN = '/signin';
+  static const AUTHENTICATION = '/authentication';
+  static const SIGN_IN = '/sign-in';
 }

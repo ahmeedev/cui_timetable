@@ -13,9 +13,6 @@ import '../modules/developer/views/developer_view.dart';
 import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
-import '../modules/home/controllers/home_controller.dart';
-import '../modules/home/views/home_view.dart';
-import '../modules/home/views/home_view2.dart';
 import '../modules/home/views/home_view3.dart';
 import '../modules/news/bindings/news_binding.dart';
 import '../modules/news/views/news_view.dart';
@@ -26,10 +23,7 @@ import '../modules/remainder/student_remainder/bindings/student_remainder_bindin
 import '../modules/remainder/student_remainder/views/student_remainder_view.dart';
 import '../modules/remainder/views/remainder_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
-import '../modules/settings/views/settings_view.dart';
 import '../modules/settings/views/settings_view2.dart';
-import '../modules/signin/bindings/signin_binding.dart';
-import '../modules/signin/views/signin_view.dart';
 import '../modules/sync/bindings/sync_binding.dart';
 import '../modules/sync/views/sync_view.dart';
 import '../modules/timetable/bindings/timetable_binding.dart';
@@ -41,6 +35,9 @@ import '../modules/timetable/views/timetable_view.dart';
 import '../modules/ui/about_us/about_us_view.dart';
 import '../modules/ui/director_vision/director_vision.dart';
 import '../modules/ui/news/news.dart';
+
+// import '../modules/signin/bindings/signin_binding.dart';
+// import '../modules/signin/views/signin_view.dart';
 
 // Package imports:
 
@@ -74,7 +71,7 @@ class AppPages {
       children: [
         GetPage(
           name: _Paths.NEWS,
-          page: () => NewsView(),
+          page: () => const NewsView(),
           binding: NewsBinding(),
         ),
       ],
@@ -147,7 +144,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SETTINGS,
-      page: () => SettingsView2(),
+      page: () => const SettingsView2(),
       binding: SettingsBinding(),
     ),
     GetPage(
@@ -155,10 +152,10 @@ class AppPages {
       page: () => const DeveloperView(),
       binding: DeveloperBinding(),
     ),
-    GetPage(
-      name: _Paths.SIGNIN,
-      page: () => const SigninView(),
-      binding: SigninBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.SIGNIN,
+    //   page: () => const SigninView(),
+    //   binding: SigninBinding(),
+    // ),
   ];
 }

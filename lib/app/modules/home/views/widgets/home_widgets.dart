@@ -253,14 +253,15 @@ class HomeCarousel extends GetView<HomeController> {
                               // top: 10,
                               child: Container(
                                   decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          // secondaryColor,
-                                          primaryColor,
-                                          forGradient,
-                                        ],
-                                      ),
+                                      color: forGradient,
+                                      // gradient: const LinearGradient(
+                                      //   end: Alignment.bottomRight,
+                                      //   colors: [
+                                      //     // secondaryColor,
+                                      //     primaryColor,
+                                      //     forGradient,
+                                      //   ],
+                                      // ),
                                       borderRadius: BorderRadius.only(
                                         bottomRight: Radius.circular(
                                             Constants.defaultRadius),

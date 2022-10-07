@@ -30,6 +30,10 @@ ThemeData lightTheme({required isLarge}) {
           elevation: Constants.defaultElevation,
           shadowColor: shadowColor),
       textTheme: getTextTheme(scaleFactor: isLarge ? 0.0 : 3.0),
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: primaryColor,
+        //thereby
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(primary: primaryColor)));
+          style: ElevatedButton.styleFrom(backgroundColor: primaryColor)));
 }

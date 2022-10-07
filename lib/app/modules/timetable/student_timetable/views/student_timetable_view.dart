@@ -23,24 +23,26 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
           centerTitle: true,
           title: Text(Get.arguments[0]),
         ),
-        body: Column(
-          children: [
-            Flexible(
-              flex: 1,
-              fit: FlexFit.tight,
-              child: FractionallySizedBox(
-                widthFactor: 1,
-                heightFactor: 1,
-                child: StreamBuilder(
-                    stream: controller.stream,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const SpinKitFadingCircle(
-                          size: 50,
-                          color: primaryColor,
-                        );
-                      } else {
-                        return Row(children: [
+        body: StreamBuilder(
+            stream: controller.stream,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const SpinKitFadingCircle(
+                  size: 50,
+                  color: primaryColor,
+                );
+              }
+
+              if (snapshot.hasData) {
+                return Column(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: FractionallySizedBox(
+                        widthFactor: 1,
+                        heightFactor: 1,
+                        child: Row(children: [
                           ...List.generate(5, (index) {
                             return DayTile(
                               day: days[index].toString(),
@@ -49,100 +51,109 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                               obs: controller.giveValue(index),
                             );
                           })
-                        ]);
-                      }
-                    }),
-              ),
-            ),
-            Flexible(
-              flex: Constants.lectureFlex,
-              child: Obx(() => controller.isLoading.value
-                  ? const SpinKitFadingCircle(
-                      size: 50,
-                      color: primaryColor,
-                    )
-                  : FractionallySizedBox(
-                      widthFactor: 1,
-                      heightFactor: 1,
-                      child: controller.daywiseLectures["lectures"] == null ||
-                              controller.daywiseLectures["lectures"].isEmpty
-                          ? Center(
-                              child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const ImageIcon(
-                                  AssetImage(
-                                      'assets/timetable/free_lectures.png'),
-                                  size: 150,
-                                  color: primaryColor,
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  'No Lecture Today',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall!
-                                      .copyWith(
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.w900,
-                                        // fontSize:
+                        ]),
+                      ),
+                    ),
+                    Flexible(
+                      flex: Constants.lectureFlex,
+                      child: Obx(() => FractionallySizedBox(
+                            widthFactor: 1,
+                            heightFactor: 1,
+                            child: controller.daywiseLectures["lectures"] ==
+                                        null ||
+                                    controller
+                                        .daywiseLectures["lectures"].isEmpty
+                                ? Center(
+                                    child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const ImageIcon(
+                                        AssetImage(
+                                            'assets/timetable/free_lectures.png'),
+                                        size: 150,
+                                        color: primaryColor,
                                       ),
-                                )
-                              ],
-                            ))
-                          : ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              itemCount:
-                                  controller.daywiseLectures["lectures"].length,
-                              itemBuilder: (context, index) {
-                                if (controller.daywiseLectures["combineIndexes"]
-                                    .contains(index)) {
-                                  if (controller
-                                      .daywiseLectures["actualTileIndexes"]
-                                      .contains(index)) {
-                                    String time = _fetchNewTime(index: index);
-                                    return LectureDetailsTile(
-                                        lab: true,
-                                        subject: controller
-                                            .daywiseLectures["lectures"][index]
-                                            .subject,
-                                        teacher: controller
-                                            .daywiseLectures["lectures"][index]
-                                            .teacher,
-                                        room: controller
-                                            .daywiseLectures["lectures"][index]
-                                            .room,
-                                        time: time);
-                                  } else {
-                                    return const SizedBox();
-                                  }
-                                } else {
-                                  return LectureDetailsTile(
-                                      subject: controller
-                                          .daywiseLectures["lectures"][index]
-                                          .subject,
-                                      teacher: controller
-                                          .daywiseLectures["lectures"][index]
-                                          .teacher,
-                                      room: controller
-                                          .daywiseLectures["lectures"][index]
-                                          .room,
-                                      time: controller
-                                          .currentTimeSlots[controller
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        'No Lecture Today',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall!
+                                            .copyWith(
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.w900,
+                                              // fontSize:
+                                            ),
+                                      )
+                                    ],
+                                  ))
+                                : ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: controller
+                                        .daywiseLectures["lectures"].length,
+                                    itemBuilder: (context, index) {
+                                      if (controller
+                                          .daywiseLectures["combineIndexes"]
+                                          .contains(index)) {
+                                        if (controller.daywiseLectures[
+                                                "actualTileIndexes"]
+                                            .contains(index)) {
+                                          String time =
+                                              _fetchNewTime(index: index);
+                                          return LectureDetailsTile(
+                                              lab: true,
+                                              subject: controller
                                                   .daywiseLectures["lectures"]
                                                       [index]
-                                                  .slot -
-                                              1]
-                                          .toString());
-                                }
-                              },
-                            ),
-                    )),
-            ),
-          ],
-        ));
+                                                  .subject,
+                                              teacher: controller
+                                                  .daywiseLectures["lectures"]
+                                                      [index]
+                                                  .teacher,
+                                              room: controller
+                                                  .daywiseLectures["lectures"]
+                                                      [index]
+                                                  .room,
+                                              time: time);
+                                        } else {
+                                          return const SizedBox();
+                                        }
+                                      } else {
+                                        return LectureDetailsTile(
+                                            subject: controller
+                                                .daywiseLectures["lectures"]
+                                                    [index]
+                                                .subject,
+                                            teacher: controller
+                                                .daywiseLectures["lectures"]
+                                                    [index]
+                                                .teacher,
+                                            room: controller
+                                                .daywiseLectures["lectures"]
+                                                    [index]
+                                                .room,
+                                            time: controller
+                                                .currentTimeSlots[controller
+                                                        .daywiseLectures[
+                                                            "lectures"][index]
+                                                        .slot -
+                                                    1]
+                                                .toString());
+                                      }
+                                    },
+                                  ),
+                          )),
+                    ),
+                  ],
+                );
+              }
+
+              return const Center(
+                child: Text("Reload the page to get desired result."),
+              );
+            }));
   }
 
   String _fetchNewTime({required index}) {

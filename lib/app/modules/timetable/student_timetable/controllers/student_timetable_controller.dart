@@ -30,8 +30,9 @@ class StudentTimetableController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    selectDateWiseTile();
     stream = openBox(section: Get.arguments[0].toString());
-    await selectDateWiseTile();
+
     // isLoading.value = false;
     super.onInit();
   }
@@ -39,7 +40,6 @@ class StudentTimetableController extends GetxController {
   @override
   void onReady() {
     getLectures(key: lectureKey);
-    isLoading.value = false;
     super.onReady();
   }
 

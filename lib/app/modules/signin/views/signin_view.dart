@@ -82,12 +82,12 @@ class SigninView extends GetView<SigninController> {
             child: Column(
               children: [
                 Container(
-                  height: height * 0.3,
+                  height: height * 0.32,
                   // color: Colors.red,
                 ),
                 Container(
                   width: width,
-                  height: height * 0.7 - Constants.defaultPadding,
+                  height: height * 0.68 - Constants.defaultPadding,
 
                   decoration: BoxDecoration(
                     color: onScaffoldColor,
@@ -107,7 +107,7 @@ class SigninView extends GetView<SigninController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                         kHeight,
+                        kHeight,
                         kHeight,
                         TextFormField(
                             style: Theme.of(context)
@@ -115,16 +115,25 @@ class SigninView extends GetView<SigninController> {
                                 .titleMedium!
                                 .copyWith(fontWeight: FontWeight.bold),
                             decoration: InputDecoration(
-                              fillColor: textFieldColor,
+                              // fillColor: textFieldColor,
                               hintText: "Enter your email",
-                              // filled: true,
-                              prefixIcon: const Icon(Icons.email),
-                              border: OutlineInputBorder(
+                              suffixText: '@students.cuisahiwal.edu.pk',
+
+                              prefixIcon: const Icon(
+                                Icons.email,
+                                color: primaryColor,
+                              ),
+                              // focusColor: Colors.red,
+                              enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(
                                       Constants.defaultRadius),
                                   borderSide: const BorderSide(
-                                    color: primaryColor,
-                                  )),
+                                      color: primaryColor, width: 2)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      Constants.defaultRadius),
+                                  borderSide: const BorderSide(
+                                      color: primaryColor, width: 2)),
                             )),
                         kHeight,
                         kHeight,
@@ -134,16 +143,33 @@ class SigninView extends GetView<SigninController> {
                                 .titleMedium!
                                 .copyWith(fontWeight: FontWeight.bold),
                             decoration: InputDecoration(
-                              fillColor: textFieldColor,
+                              // focusColor: Colors.green,
+                              // suffixText: 'KG',
+
                               hintText: "Enter your passsword",
+
                               // filled: true,
-                              prefixIcon: const Icon(Icons.password),
-                              border: OutlineInputBorder(
+                              prefixIcon: const Icon(
+                                Icons.password,
+                                color: primaryColor,
+                              ),
+                              suffixIcon: const Icon(
+                                FontAwesomeIcons.eyeLowVision,
+                                color: primaryColor,
+                              ),
+
+                              // iconColor: Colors.grey,
+
+                              enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(
                                       Constants.defaultRadius),
                                   borderSide: const BorderSide(
-                                    color: primaryColor,
-                                  )),
+                                      color: primaryColor, width: 2)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      Constants.defaultRadius),
+                                  borderSide: const BorderSide(
+                                      color: primaryColor, width: 2)),
                             )),
                         kHeight,
                         kHeight,
@@ -167,7 +193,7 @@ class SigninView extends GetView<SigninController> {
                         kHeight,
                         kHeight,
                         Text(
-                          "Or, Sign in with...",
+                          "Or, SIGN IN WITH...",
                           textAlign: TextAlign.center,
                           style: Theme.of(context)
                               .textTheme
@@ -180,7 +206,7 @@ class SigninView extends GetView<SigninController> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               OutlinedButton(
-                                onPressed: null,
+                                onPressed: () {},
                                 style: ButtonStyle(
                                   // foregroundColor:
                                   //     MaterialStateProperty.all(Colors.blue),
@@ -205,7 +231,7 @@ class SigninView extends GetView<SigninController> {
                                 ),
                               ),
                               OutlinedButton(
-                                onPressed: null,
+                                onPressed: () {},
                                 style: ButtonStyle(
                                   // foregroundColor:
                                   //     MaterialStateProperty.all(Colors.blue),
@@ -219,18 +245,25 @@ class SigninView extends GetView<SigninController> {
                                           borderRadius: BorderRadius.circular(
                                               Constants.defaultRadius))),
                                 ),
+                                // child: Padding(
+                                //   padding: EdgeInsets.all(
+                                //       Constants.defaultPadding), // 16.0
+                                //   child: Icon(
+                                //     FontAwesomeIcons.google,
+                                //     color: Colors.red,
+                                //     size: Constants.iconSize,
+                                //   ),
+                                // ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(
-                                      Constants.defaultPadding), // 16.0
-                                  child: Icon(
-                                    FontAwesomeIcons.google,
-                                    color: Colors.red,
-                                    size: Constants.iconSize,
-                                  ),
-                                ),
+                                    padding: EdgeInsets.all(
+                                        Constants.defaultPadding),
+                                    child: Image.asset(
+                                      'assets/sign_in/google.png',
+                                      width: Constants.iconSize,
+                                    )),
                               ),
                               OutlinedButton(
-                                onPressed: null,
+                                onPressed: () {},
                                 style: ButtonStyle(
                                   // foregroundColor:
                                   //     MaterialStateProperty.all(Colors.blue),
