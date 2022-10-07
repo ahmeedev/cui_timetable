@@ -54,7 +54,7 @@ class Header extends StatelessWidget {
         ],
       )),
       height:
-          MediaQuery.of(context).size.height * 0.30 + Constants.defaultPadding,
+          MediaQuery.of(context).size.height * 0.25 + Constants.defaultPadding,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
@@ -185,7 +185,8 @@ class ButtonList extends StatelessWidget {
           buildButton(context,
               icon: const AssetImage('assets/drawer/sign_in.png'),
               title: 'Sign In', onTap: () {
-            // Get.toNamed(Routes.AUTHENTICATION);
+            //
+            Get.offAndToNamed(Routes.AUTHENTICATION);
           }),
           // buildButton(context,
           //     icon: const AssetImage('assets/drawer/settings.png'),

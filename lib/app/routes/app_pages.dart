@@ -1,5 +1,11 @@
 import 'package:get/get.dart';
 
+import '../modules/authentication/bindings/authentication_binding.dart';
+import '../modules/authentication/signIn/bindings/sign_in_binding.dart';
+import '../modules/authentication/signIn/views/sign_in_view.dart';
+import '../modules/authentication/signUp/bindings/sign_up_binding.dart';
+import '../modules/authentication/signUp/views/sign_up_view.dart';
+import '../modules/authentication/views/authentication_view.dart';
 import '../modules/comparison/bindings/comparision_binding.dart';
 import '../modules/comparison/views/comparison_view.dart';
 import '../modules/datesheet/bindings/datesheet_binding.dart';
@@ -157,5 +163,22 @@ class AppPages {
     //   page: () => const SigninView(),
     //   binding: SigninBinding(),
     // ),
+    GetPage(
+      name: _Paths.AUTHENTICATION,
+      page: () => const AuthenticationView(),
+      binding: AuthenticationBinding(),
+      children: [
+        GetPage(
+          name: _Paths.SIGN_IN,
+          page: () => const SignInView(),
+          binding: SignInBinding(),
+        ),
+        GetPage(
+          name: _Paths.SIGN_UP,
+          page: () => const SignUpView(),
+          binding: SignUpBinding(),
+        ),
+      ],
+    ),
   ];
 }
