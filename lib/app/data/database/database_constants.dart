@@ -21,6 +21,7 @@ class DBNames {
   // Cashing system //
   static const timetableCache = "timetableCache";
   static const remainderCache = "remainderCache";
+  static const authCache = 'authCache';
 }
 
 class DBInfo {
@@ -111,4 +112,9 @@ class DBRemainderCache {
 
   // dynamically ids are stored w.r.t to the cache section.
 
+}
+
+class DBAuthCache {
+  static const signInEmail = 'signInEmail';
+  static const signInPass = 'signInPass';
 }

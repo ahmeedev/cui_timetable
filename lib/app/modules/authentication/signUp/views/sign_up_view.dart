@@ -241,10 +241,9 @@ class SignUpView extends GetView<SignUpController> {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .labelMedium!
+                    .labelLarge!
                     .copyWith(color: Colors.black),
               ),
-              kWidth,
               InkWell(
                 onTap: () {
                   Get.find<AuthenticationController>().isSignIn.value =

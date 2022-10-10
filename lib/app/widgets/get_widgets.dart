@@ -15,7 +15,10 @@ import 'package:hive/hive.dart';
 
 class GetXUtilities {
   static void snackbar(
-      {required String title, required String message, required gradient}) {
+      {required String title,
+      required String message,
+      required gradient,
+      duration = 2}) {
     Get.closeAllSnackbars();
 
     if (Platform.isAndroid) {
@@ -27,7 +30,7 @@ class GetXUtilities {
         backgroundGradient:
             LinearGradient(end: Alignment.bottomRight, colors: gradient),
 
-        duration: const Duration(seconds: 2),
+        duration: Duration(seconds: duration),
         titleText: Text(title,
             style: const TextStyle(
                 fontSize: 18,
@@ -44,7 +47,7 @@ class GetXUtilities {
         "Default SnackBar",
         "This is the Getx default SnackBar",
         snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(milliseconds: 1500),
+        duration: Duration(milliseconds: duration),
         titleText: Text(title,
             style: const TextStyle(
                 fontSize: 16,

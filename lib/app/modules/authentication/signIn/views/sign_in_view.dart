@@ -20,6 +20,8 @@ class SignInView extends GetView<SignInController> {
           kHeight,
           kHeight,
           TextFormField(
+              onSaved: (value) {},
+              onChanged: (value) {},
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -63,7 +65,8 @@ class SignInView extends GetView<SignInController> {
               )),
           kHeight,
           kHeight,
-          TextFormField(
+          Obx(() => TextFormField(
+              obscureText: controller.isObscureText.value,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -79,10 +82,22 @@ class SignInView extends GetView<SignInController> {
                   Icons.password,
                   color: primaryColor,
                 ),
-                suffixIcon: const Icon(
-                  // FontAwesomeIcons.eyeLowVision,
-                  FontAwesomeIcons.eye,
-                  color: primaryColor,
+                suffixIcon: InkWell(
+                  onTap: () {
+                    controller.isObscureText.value =
+                        !controller.isObscureText.value;
+                  },
+                  child: controller.isObscureText.value
+                      ? const Icon(
+                          // FontAwesomeIcons.eyeLowVision,
+                          FontAwesomeIcons.eye,
+                          color: primaryColor,
+                        )
+                      : const Icon(
+                          // FontAwesomeIcons.eyeLowVision,
+                          FontAwesomeIcons.eyeLowVision,
+                          color: primaryColor,
+                        ),
                 ),
 
                 // iconColor: Colors.grey,
@@ -97,16 +112,29 @@ class SignInView extends GetView<SignInController> {
                         BorderRadius.circular(Constants.defaultRadius),
                     borderSide:
                         const BorderSide(color: primaryColor, width: 2)),
-              )),
+              ))),
           kHeight,
           kHeight,
+          Text(
+            "Forget Password?",
+            textAlign: TextAlign.right,
+            style: theme.textTheme.labelLarge!.copyWith(
+              color: primaryColor,
+              decoration: TextDecoration.underline,
+            ),
+          ),
           kHeight,
           kHeight,
           ClipRRect(
             borderRadius:
                 BorderRadius.all(Radius.circular(Constants.defaultRadius)),
             child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // controller.addNewUser(
+                  //     email: "inahmee77@gmail.com", password: 'aspire');
+                  controller.signInUser(
+                      email: 'inahmee77@gmail.com', password: 'aspire');
+                },
                 child: Padding(
                   padding: EdgeInsets.all(Constants.defaultPadding * 2),
                   child: Text('Sign In',
@@ -205,10 +233,10 @@ class SignInView extends GetView<SignInController> {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .labelMedium!
+                    .labelLarge!
                     .copyWith(color: Colors.black),
               ),
-              kWidth,
+
               // const Spacer(),
               InkWell(
                 onTap: () {
