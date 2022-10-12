@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/authentication/controllers/authentication_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,8 +21,11 @@ class SignInView extends GetView<SignInController> {
           kHeight,
           kHeight,
           TextFormField(
-              onSaved: (value) {},
-              onChanged: (value) {},
+              controller: controller.emailTextController,
+              // onSaved: (value) {},
+              onChanged: (value) {
+                controller.box!.put(DBAuthCache.signInEmail, value);
+              },
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -35,14 +39,19 @@ class SignInView extends GetView<SignInController> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        ' @students.cuisahiwal.edu.pk ',
-                        style: theme.textTheme.labelMedium!.copyWith(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                      Obx(() => Text(
+                            Get.find<AuthenticationController>()
+                                        .segmentedControlGroupValue
+                                        .value ==
+                                    1
+                                ? ' @cuisahiwal.edu.pk '
+                                : ' @students.cuisahiwal.edu.pk ',
+                            style: theme.textTheme.labelMedium!.copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          )),
                     ],
                   ),
                 ),
@@ -66,6 +75,8 @@ class SignInView extends GetView<SignInController> {
           kHeight,
           kHeight,
           Obx(() => TextFormField(
+              // initialValue: 'test',
+              controller: controller.passTextController,
               obscureText: controller.isObscureText.value,
               style: Theme.of(context)
                   .textTheme
@@ -115,13 +126,33 @@ class SignInView extends GetView<SignInController> {
               ))),
           kHeight,
           kHeight,
-          Text(
-            "Forget Password?",
-            textAlign: TextAlign.right,
-            style: theme.textTheme.labelLarge!.copyWith(
-              color: primaryColor,
-              decoration: TextDecoration.underline,
-            ),
+          Row(
+            children: [
+              Text("Remember me",
+                  textAlign: TextAlign.right,
+                  style: theme.textTheme.labelLarge!.copyWith(
+                    color: Colors.black,
+                  )),
+              Obx(() => Checkbox(
+                    value: controller.isRemeberMe.value,
+                    onChanged: (value) {
+                      controller.isRemeberMe.value =
+                          !controller.isRemeberMe.value;
+
+                      controller.box!.put(DBAuthCache.isRememberSignIn, value);
+                    },
+                    fillColor: MaterialStateProperty.all(primaryColor),
+                  )),
+              const Spacer(),
+              Text(
+                "Forget Password?",
+                textAlign: TextAlign.right,
+                style: theme.textTheme.labelLarge!.copyWith(
+                  color: primaryColor,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ],
           ),
           kHeight,
           kHeight,
@@ -133,7 +164,7 @@ class SignInView extends GetView<SignInController> {
                   // controller.addNewUser(
                   //     email: "inahmee77@gmail.com", password: 'aspire');
                   controller.signInUser(
-                      email: 'inahmee77@gmail.com', password: 'aspire');
+                      email: 'inahmee777@gmail.com', password: 'aspire');
                 },
                 child: Padding(
                   padding: EdgeInsets.all(Constants.defaultPadding * 2),

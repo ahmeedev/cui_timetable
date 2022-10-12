@@ -1,5 +1,6 @@
 import 'package:cui_timetable/app/modules/authentication/signIn/views/sign_in_view.dart';
 import 'package:cui_timetable/app/modules/authentication/signUp/views/sign_up_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ import 'package:particles_flutter/particles_flutter.dart';
 
 class AuthenticationView extends GetView<AuthenticationController> {
   const AuthenticationView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -80,15 +82,43 @@ class AuthenticationView extends GetView<AuthenticationController> {
               ),
               _buildParticles(width, height),
               SafeArea(
-                child: InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.all(Constants.defaultPadding),
-                    child: Icon(Icons.arrow_back,
-                        color: Colors.white, size: Constants.iconSize + 10),
-                  ),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(Constants.defaultPadding),
+                        child: Icon(Icons.arrow_back,
+                            color: Colors.white, size: Constants.iconSize + 10),
+                      ),
+                    ),
+                    const Spacer(),
+                    Obx(() => CupertinoSlidingSegmentedControl(
+                        backgroundColor: onScaffoldColor,
+                        thumbColor: primaryColor,
+
+                        // padding: EdgeInsets.all(Constants.defaultPadding / 2),
+                        groupValue: controller.segmentedControlGroupValue.value,
+                        children: controller.myTabs!,
+                        onValueChanged: (i) {
+                          // setState(() {
+                          //   segmentedControlGroupValue = i;
+                          // });
+                          controller.segmentedControlGroupValue.value =
+                              int.parse(i.toString());
+
+                          for (var i = 0; i < controller.styles.length; i++) {
+                            controller.styles[i] = controller.normalStyle;
+                          }
+                          controller.styles[controller
+                              .segmentedControlGroupValue
+                              .value] = controller.selectedStyle;
+                        })),
+                    kWidth,
+                    // kWidth,
+                  ],
                 ),
               )
             ],

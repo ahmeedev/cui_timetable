@@ -142,7 +142,10 @@ class SignUpView extends GetView<SignUpController> {
             borderRadius:
                 BorderRadius.all(Radius.circular(Constants.defaultRadius)),
             child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.signUpUser(
+                      email: 'inahmee777@gmail.com', password: 'aspire');
+                },
                 child: Padding(
                   padding: EdgeInsets.all(Constants.defaultPadding * 2),
                   child: Text('Sign Up',
