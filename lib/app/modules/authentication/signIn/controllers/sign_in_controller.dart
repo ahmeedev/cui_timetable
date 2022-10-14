@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/modules/authentication/controllers/authentication_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +15,12 @@ class SignInController extends GetxController {
 
   var emailTextController = TextEditingController();
   var passTextController = TextEditingController();
+
+  var respectedEmailSuffixes = [
+    '@students.cuisahiwal.edu.pk',
+    '@cuisahiwal.edu.pk',
+    '@cuisahiwal.edu.pk'
+  ];
 
   var isRemeberMe = false.obs;
   Box? box;
@@ -39,11 +46,16 @@ class SignInController extends GetxController {
         log("Email Verified");
         //login logic here
       } else {
-        GetXUtilities.snackbar(
-            duration: 3,
-            title: "Auth!",
-            message: "A verification email is sent, check your inbox.",
-            gradient: successGradient);
+        Get.find<AuthenticationController>()
+            .infoMsg
+            .add('A verification email is sent. check your inbox');
+
+        print(Get.find<AuthenticationController>().infoMsg);
+        // GetXUtilities.snackbar(
+        //     duration: 3,
+        //     title: "Auth!",
+        //     message: "A verification email is sent, check your inbox.",
+        //     gradient: successGradient);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

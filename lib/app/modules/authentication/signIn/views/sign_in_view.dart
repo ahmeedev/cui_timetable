@@ -40,12 +40,10 @@ class SignInView extends GetView<SignInController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Obx(() => Text(
-                            Get.find<AuthenticationController>()
-                                        .segmentedControlGroupValue
-                                        .value ==
-                                    1
-                                ? ' @cuisahiwal.edu.pk '
-                                : ' @students.cuisahiwal.edu.pk ',
+                            controller.respectedEmailSuffixes[
+                                Get.find<AuthenticationController>()
+                                    .segmentedControlGroupValue
+                                    .value],
                             style: theme.textTheme.labelMedium!.copyWith(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -132,8 +130,13 @@ class SignInView extends GetView<SignInController> {
                   textAlign: TextAlign.right,
                   style: theme.textTheme.labelLarge!.copyWith(
                     color: Colors.black,
-                  )),
+                  )).paddingOnly(left: 4),
               Obx(() => Checkbox(
+                    visualDensity: VisualDensity.compact,
+                    splashRadius: 20,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(Constants.defaultRadius / 2))),
                     value: controller.isRemeberMe.value,
                     onChanged: (value) {
                       controller.isRemeberMe.value =

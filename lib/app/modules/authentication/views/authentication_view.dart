@@ -120,9 +120,46 @@ class AuthenticationView extends GetView<AuthenticationController> {
                     // kWidth,
                   ],
                 ),
-              )
+              ),
             ],
           ),
+          SafeArea(
+              child: SizedBox(
+                  height: height * 0.28,
+                  child: Padding(
+                    padding: EdgeInsets.all(Constants.defaultPadding),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Obx(() => controller.infoMsg.isEmpty
+                            ? const SizedBox()
+                            : AnimatedSwitcher(
+                                duration: const Duration(seconds: 1),
+                                transitionBuilder: (child, animation) =>
+                                    ScaleTransition(
+                                  scale: animation,
+                                  child: child,
+                                ),
+                                child: Row(
+                                  key: ValueKey(controller.infoMsg.length),
+                                  children: [
+                                    Icon(Icons.info_outline_rounded,
+                                        color: Colors.white,
+                                        size: Constants.iconSize),
+                                    kWidth,
+                                    Text(
+                                      controller.infoMsg[
+                                              controller.infoMsg.length - 1]
+                                          .toString(),
+                                      style: textTheme.labelMedium!
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                      ],
+                    ),
+                  ))),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
             child: Column(

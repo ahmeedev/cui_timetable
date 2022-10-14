@@ -15,6 +15,7 @@ class AuthenticationController extends GetxController {
   Map<int, Widget>? myTabs;
   var styles = [].obs;
 
+  var infoMsg = <String>[].obs;
   @override
   void onInit() {
     styles.add(selectedStyle);
