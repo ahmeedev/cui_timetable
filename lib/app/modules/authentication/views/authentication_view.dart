@@ -24,6 +24,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
       // key: controller.scaffoldKey,
       backgroundColor: selectionColor,
       resizeToAvoidBottomInset: false,
+
       body: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -96,7 +97,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
                     ),
                     const Spacer(),
                     Obx(() => CupertinoSlidingSegmentedControl(
-                        backgroundColor: onScaffoldColor,
+                        backgroundColor: selectionColor,
                         thumbColor: primaryColor,
 
                         // padding: EdgeInsets.all(Constants.defaultPadding / 2),
@@ -133,29 +134,21 @@ class AuthenticationView extends GetView<AuthenticationController> {
                       children: [
                         Obx(() => controller.infoMsg.isEmpty
                             ? const SizedBox()
-                            : AnimatedSwitcher(
-                                duration: const Duration(seconds: 1),
-                                transitionBuilder: (child, animation) =>
-                                    ScaleTransition(
-                                  scale: animation,
-                                  child: child,
-                                ),
-                                child: Row(
-                                  key: ValueKey(controller.infoMsg.length),
-                                  children: [
-                                    Icon(Icons.info_outline_rounded,
-                                        color: Colors.white,
-                                        size: Constants.iconSize),
-                                    kWidth,
-                                    Text(
-                                      controller.infoMsg[
-                                              controller.infoMsg.length - 1]
-                                          .toString(),
-                                      style: textTheme.labelMedium!
-                                          .copyWith(color: Colors.white),
-                                    ),
-                                  ],
-                                ),
+                            : Row(
+                                // key: ValueKey(controller.infoMsg.length),
+                                children: [
+                                  Icon(Icons.info_outline_rounded,
+                                      color: Colors.white,
+                                      size: Constants.iconSize),
+                                  kWidth,
+                                  Text(
+                                    controller
+                                        .infoMsg[controller.infoMsg.length - 1]
+                                        .toString(),
+                                    style: textTheme.labelMedium!
+                                        .copyWith(color: Colors.white),
+                                  ),
+                                ],
                               )),
                       ],
                     ),

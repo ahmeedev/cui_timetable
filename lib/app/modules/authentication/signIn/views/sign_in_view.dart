@@ -1,6 +1,8 @@
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/authentication/controllers/authentication_controller.dart';
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
@@ -73,7 +75,13 @@ class SignInView extends GetView<SignInController> {
           kHeight,
           kHeight,
           Obx(() => TextFormField(
-              // initialValue: 'test',
+              // onChanged: (value) {
+              //   if (controller.isRemeberMe.value) {
+              //     controller.box!.put(DBAuthCache.signInPass, value);
+              //   } else {
+              //     controller.box!.delete(DBAuthCache.signInPass);
+              //   }
+              // },
               controller: controller.passTextController,
               obscureText: controller.isObscureText.value,
               style: Theme.of(context)
@@ -147,33 +155,76 @@ class SignInView extends GetView<SignInController> {
                     fillColor: MaterialStateProperty.all(primaryColor),
                   )),
               const Spacer(),
-              Text(
-                "Forget Password?",
-                textAlign: TextAlign.right,
-                style: theme.textTheme.labelLarge!.copyWith(
-                  color: primaryColor,
-                  decoration: TextDecoration.underline,
+              InkWell(
+                onTap: () {
+                  controller.forgetPassDialog();
+                  // controller.forgetPassword();
+                },
+                child: Text(
+                  "Forget Password?",
+                  textAlign: TextAlign.right,
+                  style: theme.textTheme.labelLarge!.copyWith(
+                    color: primaryColor,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ),
             ],
           ),
           kHeight,
           kHeight,
-          ClipRRect(
-            borderRadius:
-                BorderRadius.all(Radius.circular(Constants.defaultRadius)),
-            child: ElevatedButton(
-                onPressed: () {
-                  // controller.addNewUser(
-                  //     email: "inahmee77@gmail.com", password: 'aspire');
-                  controller.signInUser(
-                      email: 'inahmee777@gmail.com', password: 'aspire');
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(Constants.defaultPadding * 2),
-                  child: Text('Sign In',
-                      style: Theme.of(context).textTheme.labelLarge),
-                )),
+          Obx(
+            () => AnimatedSwitcher(
+                layoutBuilder: (currentChild, previousChildren) =>
+                    currentChild!,
+                transitionBuilder: (child, animation) => ScaleTransition(
+                      scale: animation,
+                      child: child,
+                    ),
+                duration: const Duration(milliseconds: 200),
+                child: controller.signInProgress.value == false
+                    ? ClipRRect(
+                        key: const ValueKey(6),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(Constants.defaultRadius)),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              // controller.addNewUser(
+                              //     email: "inahmee77@gmail.com", password: 'aspire');
+                              Get.find<AuthenticationController>()
+                                  .infoMsg
+                                  .clear();
+                              if (controller.emailTextController.text.isEmpty) {
+                                GetXUtilities.snackbar(
+                                    title: "Error!",
+                                    message: 'Invalid Email',
+                                    gradient: errorGradient);
+                              } else if (controller
+                                  .passTextController.text.isEmpty) {
+                                GetXUtilities.snackbar(
+                                    title: "Error!",
+                                    message: 'Password is empty!',
+                                    gradient: errorGradient);
+                              } else {
+                                controller.signInUser(
+                                    email: controller.emailTextController.text,
+                                    password:
+                                        controller.passTextController.text);
+                              }
+                            },
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.all(Constants.defaultPadding * 2),
+                              child: Text('Sign In',
+                                  style:
+                                      Theme.of(context).textTheme.labelLarge),
+                            )),
+                      )
+                    : const SpinKitFadingCircle(
+                        key: ValueKey(5),
+                        size: 50,
+                        color: primaryColor,
+                      )),
           ),
           kHeight,
           kHeight,
@@ -211,7 +262,10 @@ class SignInView extends GetView<SignInController> {
               ),
             ),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final result = await controller.signInWithGoogle();
+                print(result);
+              },
               style: ButtonStyle(
                 // foregroundColor:
                 //     MaterialStateProperty.all(Colors.blue),

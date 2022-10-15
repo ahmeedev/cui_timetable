@@ -2,12 +2,18 @@ import 'dart:developer';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/authentication/controllers/authentication_controller.dart';
+import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
+
+import '../../../../theme/app_constants.dart';
 
 class SignInController extends GetxController {
   var firebaseAuth = FirebaseAuth.instance;
@@ -37,25 +43,42 @@ class SignInController extends GetxController {
     super.onInit();
   }
 
+  cachePass() {
+    if (isRemeberMe.value) {
+      box!.put(DBAuthCache.signInPass, passTextController.text);
+    } else {
+      box!.delete(DBAuthCache.signInPass);
+    }
+  }
+
+  final signInProgress = false.obs;
   signInUser({required String email, required String password}) async {
+    signInProgress.value = true;
     try {
       await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
 
       if (firebaseAuth.currentUser!.emailVerified) {
         log("Email Verified");
+        cachePass();
+        box!.put(DBAuthCache.isSignIn, true);
+        Get.back();
+        Get.find<HomeController>().scaffoldKey.currentState!.openDrawer();
+        GetXUtilities.snackbar(
+            title: 'Sign In',
+            message: 'Sign in successfully!',
+            gradient: successGradient);
         //login logic here
       } else {
         Get.find<AuthenticationController>()
             .infoMsg
             .add('A verification email is sent. check your inbox');
 
-        print(Get.find<AuthenticationController>().infoMsg);
-        // GetXUtilities.snackbar(
-        //     duration: 3,
-        //     title: "Auth!",
-        //     message: "A verification email is sent, check your inbox.",
-        //     gradient: successGradient);
+        GetXUtilities.snackbar(
+            duration: 3,
+            title: "Auth!",
+            message: "A verification email is sent, check your inbox.",
+            gradient: successGradient);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -68,7 +91,19 @@ class SignInController extends GetxController {
         GetXUtilities.snackbar(
             duration: 3,
             title: "Auth!",
-            message: e.message.toString(),
+            message: "Password is incorrect",
+            gradient: errorGradient);
+      } else if (e.code == 'invalid-email') {
+        GetXUtilities.snackbar(
+            duration: 3,
+            title: "Error!",
+            message: "Email formatting is incorrect.",
+            gradient: errorGradient);
+      } else if (e.code == 'user-disabled') {
+        GetXUtilities.snackbar(
+            duration: 3,
+            title: "Error!",
+            message: "Email formatting is incorrect.",
             gradient: errorGradient);
       }
     } catch (e) {
@@ -77,6 +112,148 @@ class SignInController extends GetxController {
           title: "Error!",
           message: e.toString(),
           gradient: errorGradient);
+    } finally {
+      signInProgress.value = false;
     }
+  }
+
+  var forgetPassEmailController = TextEditingController();
+  final forgetPassProgress = false.obs;
+  forgetPassDialog() {
+    final theme = Theme.of(Get.context!);
+
+    Get.defaultDialog(
+        backgroundColor: onScaffoldColor,
+        title: 'Forget Password',
+        titleStyle: theme.textTheme.titleMedium!
+            .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
+        content: Column(children: [
+          TextFormField(
+              controller: forgetPassEmailController,
+              // onSaved: (value) {},
+
+              style: Theme.of(Get.context!)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontWeight: FontWeight.bold),
+              decoration: InputDecoration(
+                // fillColor: textFieldColor,
+                hintText: "Enter your email",
+                // suffixText: '@students.cuisahiwal.edu.pk',
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Obx(() => Text(
+                            respectedEmailSuffixes[
+                                Get.find<AuthenticationController>()
+                                    .segmentedControlGroupValue
+                                    .value],
+                            style: theme.textTheme.labelMedium!.copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          )),
+                    ],
+                  ),
+                ),
+
+                prefixIcon: const Icon(
+                  Icons.email,
+                  color: primaryColor,
+                ),
+                // focusColor: Colors.red,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(Constants.defaultRadius),
+                    borderSide:
+                        const BorderSide(color: primaryColor, width: 2)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(Constants.defaultRadius),
+                    borderSide:
+                        const BorderSide(color: primaryColor, width: 2)),
+              )),
+          kHeight,
+          Obx(() => AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                child: forgetPassProgress.value
+                    ? const SpinKitFadingCircle(
+                        key: ValueKey(5),
+                        size: 50,
+                        color: primaryColor,
+                      )
+                    : ElevatedButton(
+                        onPressed: () async {
+                          if (forgetPassEmailController.text.isEmpty) {
+                            GetXUtilities.snackbar(
+                                duration: 3,
+                                title: "Error!",
+                                message: "Email is empty",
+                                gradient: errorGradient);
+                            return;
+                          }
+                          forgetPassProgress.value = true;
+                          try {
+                            await firebaseAuth.sendPasswordResetEmail(
+                                email: forgetPassEmailController.text);
+                            Get.back();
+                            GetXUtilities.snackbar(
+                                duration: 3,
+                                title: "Email sent!",
+                                message:
+                                    "A recovery email is sent in your inbox.",
+                                gradient: successGradient);
+                          } on FirebaseAuthException catch (e) {
+                            if (e.code == 'invalid-email') {
+                              GetXUtilities.snackbar(
+                                  duration: 3,
+                                  title: "Error!",
+                                  message: "Email formatting is incorrect.",
+                                  gradient: errorGradient);
+                            } else if (e.code == 'user-not-found') {
+                              GetXUtilities.snackbar(
+                                  duration: 3,
+                                  title: "Auth!",
+                                  message:
+                                      "User with this email is not found. Register yourself",
+                                  gradient: errorGradient);
+                            }
+                          } catch (e) {
+                            GetXUtilities.snackbar(
+                                duration: 3,
+                                title: "Error!",
+                                message: e.toString(),
+                                gradient: errorGradient);
+                          } finally {
+                            // signInProgress.value = false;
+                            forgetPassProgress.value = false;
+                          }
+                        },
+                        child: const Text("Send Email").paddingSymmetric(
+                            horizontal: Constants.defaultPadding * 2,
+                            vertical: Constants.defaultPadding * 1.5)),
+              ))
+        ]));
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

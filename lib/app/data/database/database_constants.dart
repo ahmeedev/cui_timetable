@@ -117,6 +117,8 @@ class DBRemainderCache {
 class DBAuthCache {
   static const isRememberSignIn = 'isRememberSignIn';
 
+  static const isSignIn = 'isSignIn';
+
   static const signInEmail = 'signInEmail';
   static const signInPass = 'signInPass';
 }

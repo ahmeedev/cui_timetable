@@ -30,14 +30,19 @@ class HomeController extends GetxController {
   final isNews = false.obs;
 
   final pageLabels = ['News', 'CUI SAHIWAL', 'Settings'];
-  final pageWidget = [NewsView(), HomeViewWidget(), SettingsView2()];
+  final pageWidget = [
+    const NewsView(),
+    const HomeViewWidget(),
+    const SettingsView2()
+  ];
   final pageIndex = 1.obs;
 
+  late final Box authCache;
   @override
   Future<void> onInit() async {
-    super.onInit();
-
+    authCache = await Hive.openBox(DBNames.authCache);
     FlutterNativeSplash.remove();
+    super.onInit();
   }
 
   @override

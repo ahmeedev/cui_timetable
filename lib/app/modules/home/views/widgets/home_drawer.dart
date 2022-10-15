@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -8,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+
+import '../../controllers/home_controller.dart';
 
 /// Header of the Drawer.
 class Header extends StatelessWidget {
@@ -139,7 +144,7 @@ class Header extends StatelessWidget {
 }
 
 /// Button List for Drawer.
-class ButtonList extends StatelessWidget {
+class ButtonList extends GetView<HomeController> {
   const ButtonList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -182,12 +187,32 @@ class ButtonList extends StatelessWidget {
           //     title: 'Settings', onTap: () {
           //   Get.toNamed(Routes.SETTINGS);
           // }),
+          controller.authCache.get(DBAuthCache.isSignIn, defaultValue: false)
+              ? buildButton(context,
+                  icon: const AssetImage('assets/drawer/sign_out.png'),
+                  title: 'Sign out', onTap: () {
+                  controller.authCache.put(DBAuthCache.isSignIn, false);
+                  Get.back();
+                  GetXUtilities.snackbar(
+                      title: 'Sign Out',
+                      message: 'Sign out successfully!',
+                      gradient: successGradient);
+                  // Get.offAndToNamed(Routes.AUTHENTICATION);
+                })
+              : buildButton(context,
+                  icon: const AssetImage('assets/drawer/sign_in.png'),
+                  title: 'Sign In', onTap: () {
+                  //
+                  Get.offAndToNamed(Routes.AUTHENTICATION);
+                }),
+
           buildButton(context,
               icon: const AssetImage('assets/drawer/sign_in.png'),
               title: 'Sign In', onTap: () {
             //
-            Get.offAndToNamed(Routes.AUTHENTICATION);
+            print(FirebaseAuth.instance.currentUser!.photoURL);
           }),
+
           // buildButton(context,
           //     icon: const AssetImage('assets/drawer/settings.png'),
           //     title: 'Settings', onTap: () {
