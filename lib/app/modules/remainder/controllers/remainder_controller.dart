@@ -1,10 +1,6 @@
-import 'dart:developer';
-
-import 'package:cui_timetable/app/widgets/global_widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_constants.dart';
@@ -53,7 +49,7 @@ class RemainderController extends GetxController {
                                 Get.back();
                               },
                               style: ElevatedButton.styleFrom(
-                                  primary: errorColor1),
+                                  backgroundColor: errorColor1),
                               child: const Text('Cancel')
                                   .paddingAll(Constants.defaultPadding))
                           .marginSymmetric(
@@ -64,8 +60,8 @@ class RemainderController extends GetxController {
                                 .requestPermissionToSendNotifications();
                             Get.back();
                           },
-                          style:
-                              ElevatedButton.styleFrom(primary: successColor),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: successColor),
                           child: const Text('Allow')
                               .paddingAll(Constants.defaultPadding)),
                     ],

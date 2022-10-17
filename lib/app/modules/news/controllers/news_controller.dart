@@ -11,11 +11,6 @@ import 'package:http/http.dart' as http;
 class NewsController extends GetxController {
   final internet = true.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   /// Stream for the News.
   Stream<dynamic> getNewsStream() async* {
     final ConnectivityResult result = await Connectivity().checkConnectivity();

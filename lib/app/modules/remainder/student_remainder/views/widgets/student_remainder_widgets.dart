@@ -135,7 +135,7 @@ class LectureDetailsTile extends GetView<StudentRemainderController> {
                                     absorbing: controller.absorbing.value,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          primary: errorColor1),
+                                          backgroundColor: errorColor1),
                                       onPressed: () {
                                         controller.revokeRemainder(
                                             subject: subject,

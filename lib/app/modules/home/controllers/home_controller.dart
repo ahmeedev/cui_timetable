@@ -1,9 +1,7 @@
-// ignore_for_file: prefer_const_declarations
-
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cui_timetable/app/modules/home/views/home_view3.dart';
 import 'package:cui_timetable/app/modules/news/views/news_view.dart';
 import 'package:cui_timetable/app/modules/settings/views/settings_view2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -38,9 +36,18 @@ class HomeController extends GetxController {
   final pageIndex = 1.obs;
 
   late final Box authCache;
+
+  var isUserSignIn = false.obs;
   @override
   Future<void> onInit() async {
-    authCache = await Hive.openBox(DBNames.authCache);
+    // authCache = await Hive.openBox(DBNames.authCache);
+
+    if (FirebaseAuth.instance.currentUser?.uid == null) {
+      isUserSignIn.value = false;
+    } else {
+      isUserSignIn.value = true;
+    }
+
     FlutterNativeSplash.remove();
     super.onInit();
   }
@@ -95,7 +102,7 @@ class HomeController extends GetxController {
 
 // Carousel Methods
 Future<List<Map<String, String>>> _fetchImgFromInternet(location) async {
-  final src = "https://sahiwal.comsats.edu.pk/";
+  const src = "https://sahiwal.comsats.edu.pk/";
   var url = Uri.parse(src);
   var response = await http.get(url);
   dom.Document html = dom.Document.html(response.body);

@@ -24,7 +24,6 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
             IconButton(
                 onPressed: () async {
                   await AwesomeNotifications().cancelAllSchedules();
-                  print('done');
                 },
                 icon: const Text("Click me"))
           ],

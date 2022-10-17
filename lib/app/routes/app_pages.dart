@@ -60,7 +60,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => HomeView3(),
+      page: () => const HomeView3(),
       binding: HomeBinding(),
     ),
     GetPage(

@@ -12,7 +12,7 @@ class News extends StatelessWidget {
     final list = Get.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text("News"),
+        title: const Text("News"),
       ),
       body: Padding(
         padding: EdgeInsets.all(Constants.defaultPadding)

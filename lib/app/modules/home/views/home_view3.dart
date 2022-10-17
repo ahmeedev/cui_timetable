@@ -11,6 +11,8 @@ import 'widgets/home_drawer.dart';
 import 'widgets/home_widgets.dart';
 
 class HomeView3 extends GetView<HomeController> {
+  const HomeView3({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;

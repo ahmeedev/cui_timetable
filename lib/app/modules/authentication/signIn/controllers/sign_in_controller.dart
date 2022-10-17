@@ -240,6 +240,7 @@ class SignInController extends GetxController {
   }
 
   Future<UserCredential> signInWithGoogle() async {
+    signInProgress.value = true;
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -254,6 +255,22 @@ class SignInController extends GetxController {
     );
 
     // Once signed in, return the UserCredential
+
+    // print(credential);
+    signInProgress.value = false;
+    log('SignIn Successfully with email ${googleUser!.email}',
+        name: 'AuthController');
     return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  googleSignOut() async {
+    try {
+      await GoogleSignIn().disconnect();
+    } catch (e) {
+      GetXUtilities.snackbar(
+          title: 'Error!!',
+          message: "Sign out Unsuccessfully",
+          gradient: errorGradient);
+    }
   }
 }

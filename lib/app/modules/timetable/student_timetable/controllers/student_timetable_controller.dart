@@ -24,7 +24,7 @@ class StudentTimetableController extends GetxController {
   var friLectures = {};
   var lecturesCount = <String, String>{}.obs;
 
-  late final stream;
+  late final Stream stream;
   String lectureKey = "10000";
   var isLoading = true.obs;
 
@@ -78,7 +78,6 @@ class StudentTimetableController extends GetxController {
       default:
         mon.value = true;
         lectureKey = "10000";
-        print("Default case");
       // daywiseLectures.value = monLectures;
     }
   }

@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import '../controllers/settings_controller.dart';
 
 class SettingsView extends GetView<SettingsController> {
+  const SettingsView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,14 +140,15 @@ class SettingsView extends GetView<SettingsController> {
     );
   }
 
-  _buildSettingTile(
-      {required String label, required Rx<bool> value, required callback}) {
-    return Obx(() => Card(
-        margin: EdgeInsets.zero,
-        child: SwitchListTile(
-            activeColor: primaryColor,
-            title: Text(label),
-            value: value.value,
-            onChanged: callback)));
-  }
+  // _buildSettingTile(
+  //     {required String label, required Rx<bool> value, required callback}) {
+  //   return Obx(() => Card(
+  //       margin: EdgeInsets.zero,
+  //       child: SwitchListTile(
+  //           activeColor: primaryColor,
+  //           title: Text(label),
+  //           value: value.value,
+  //           onChanged: callback)));
+  // }
+
 }

@@ -1,5 +1,6 @@
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/authentication/controllers/authentication_controller.dart';
+import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -263,8 +264,13 @@ class SignInView extends GetView<SignInController> {
             ),
             OutlinedButton(
               onPressed: () async {
-                final result = await controller.signInWithGoogle();
-                print(result);
+                await controller.signInWithGoogle().then((value) =>
+                    Get.find<HomeController>().isUserSignIn.value = true);
+                Get.back();
+                GetXUtilities.snackbar(
+                    title: 'Sign in',
+                    message: 'Sign in successfully!',
+                    gradient: successGradient);
               },
               style: ButtonStyle(
                 // foregroundColor:

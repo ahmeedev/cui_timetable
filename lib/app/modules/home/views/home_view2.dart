@@ -1,10 +1,6 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 
-import '../../../data/database/timetable_db/timetable_database.dart';
 import '../../../routes/app_pages.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_constants.dart';
@@ -41,7 +37,7 @@ class HomeView2 extends GetView<HomeController> {
             actions: [
               Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding * 2),
-                child: TypeWriterText(),
+                child: const TypeWriterText(),
               )
             ],
             // shape: ContinuousRectangleBorder(
@@ -197,7 +193,7 @@ class HomeView2 extends GetView<HomeController> {
                 // mainAxisAlignment: ,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  HomeCarousel(),
+                  const HomeCarousel(),
                   const UpdateTile(),
                   Text(
                     'Events',

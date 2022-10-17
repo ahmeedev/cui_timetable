@@ -1,11 +1,9 @@
-import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../controllers/teacher_datesheet_controller.dart';
 import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_constants.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
+import '../../controllers/teacher_datesheet_controller.dart';
 
 class DayTile extends GetView<TeacherDatesheetController> {
   late final String day;

@@ -180,15 +180,13 @@ class StudentRemainderController extends GetxController {
         } else {
           currentTimeSlots = monToThursSlots;
         }
-        String localTimeZone =
-            await AwesomeNotifications().getLocalTimeZoneIdentifier();
 
         _parseTimeSlots(currentTimeSlots[element.slot - 1].toString())
             .then((value) {
           // log("Hour ${value['hours']}");
           // log("Minutes ${value['minutes']}");
           final String time;
-          final int hours;
+          // final int hours;
           final String minutes;
           if (value['minutes'] == 0) {
             minutes = "00";

@@ -11,10 +11,6 @@ class SettingsView2 extends GetView<SettingsController> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-    final textTheme = Theme.of(context).textTheme;
-
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,14 +122,15 @@ class SettingsView2 extends GetView<SettingsController> {
     );
   }
 
-  _buildSettingTile(
-      {required String label, required Rx<bool> value, required callback}) {
-    return Obx(() => Card(
-        margin: EdgeInsets.zero,
-        child: SwitchListTile(
-            activeColor: primaryColor,
-            title: Text(label),
-            value: value.value,
-            onChanged: callback)));
-  }
+  // _buildSettingTile(
+  //     {required String label, required Rx<bool> value, required callback}) {
+  //   return Obx(() => Card(
+  //       margin: EdgeInsets.zero,
+  //       child: SwitchListTile(
+  //           activeColor: primaryColor,
+  //           title: Text(label),
+  //           value: value.value,
+  //           onChanged: callback)));
+  // }
+
 }

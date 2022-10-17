@@ -33,7 +33,6 @@ class _StudentPortalState extends State<StudentPortal>
   final detailsMap = {"roll": '', "pass": ''};
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     init() async {
       box = await Hive.openBox(DBNames.portals);
@@ -60,22 +59,16 @@ class _StudentPortalState extends State<StudentPortal>
               JavascriptChannel(
                   name: 'rollNo',
                   onMessageReceived: (message) async {
-                    print("${message.message} roll#");
                     detailsMap["roll"] = message.message.toString().trim();
-                    print(detailsMap);
                   }),
               JavascriptChannel(
                   name: 'pass',
                   onMessageReceived: (message) async {
-                    print("${message.message} roll#");
-
                     detailsMap["pass"] = message.message.toString();
-                    print(detailsMap);
                   }),
               JavascriptChannel(
                   name: 'login',
                   onMessageReceived: (message) async {
-                    print("${message.message} login#");
                     await box.put(DBPortals.studentData, detailsMap);
                   }),
             },
@@ -92,7 +85,7 @@ class _StudentPortalState extends State<StudentPortal>
 
               final result = await box.get(DBPortals.studentData,
                   defaultValue: {"roll": '', "pass": ''});
-              print(result);
+
               _webViewController.evaluateJavascript(
                   """document.querySelector('#MaskedRegNo').value='${result['roll']}';
                   document.querySelector('#Password').value='${result['pass']}';""");
@@ -114,7 +107,7 @@ element3.addEventListener("click", () => {
 window.login.postMessage("store");
                 });
                 """,
-              ).then((value) => print(value + "hello"));
+              );
             },
           ),
           isLoading

@@ -14,7 +14,6 @@ class StudentUI extends GetView<RemainderStudentUIController> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: scaffoldColor,

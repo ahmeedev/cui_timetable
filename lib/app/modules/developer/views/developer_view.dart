@@ -13,7 +13,7 @@ class DeveloperView extends GetView<DeveloperController> {
         title: const Text('DeveloperView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'DeveloperView is working',
           style: TextStyle(fontSize: 20),

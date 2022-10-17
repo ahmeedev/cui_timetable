@@ -1,4 +1,5 @@
 import 'dart:developer' as devlog;
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -61,13 +62,17 @@ Future<void> _initialized() async {
   Get.put<HomeController>(
     HomeController(),
   );
+  Get.put<SyncController>(
+    SyncController(),
+  );
+
   Get.put<SettingsController>(
     SettingsController(),
   );
 
-  Get.put<SyncController>(
-    SyncController(),
-  );
+  // Get.put(
+  //   AuthenticationController(),
+  // );  //! check the auth status in the home, impact on performance.
 
   Get.lazyPut<NewsController>(
     () => NewsController(),
@@ -94,7 +99,7 @@ initializeLocalNotifications() {
       debug: true);
 
   AwesomeNotifications().createdStream.listen((event) {
-    print(event.toMap().toString());
+    log(event.toMap().toString());
   });
 }
 

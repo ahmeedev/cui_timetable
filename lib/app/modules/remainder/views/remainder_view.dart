@@ -25,7 +25,7 @@ class RemainderView extends GetView<RemainderController> {
             buildAppBar(context),
             SliverFillRemaining(
               child: TabBarView(
-                children: [StudentUI(), TeacherUI()],
+                children: const [StudentUI(), TeacherUI()],
               ),
             )
           ],

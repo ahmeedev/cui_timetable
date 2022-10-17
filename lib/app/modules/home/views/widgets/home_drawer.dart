@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:cui_timetable/app/data/database/database_constants.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +15,7 @@ import 'package:cui_timetable/app/theme/app_constants.dart';
 import '../../controllers/home_controller.dart';
 
 /// Header of the Drawer.
-class Header extends StatelessWidget {
+class Header extends GetView<HomeController> {
   const Header({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -77,26 +77,35 @@ class Header extends StatelessWidget {
                         border: Border.all(width: 3, color: Colors.white)),
                     child: Padding(
                         padding: EdgeInsets.all(Constants.defaultPadding / 3),
-                        child: Container(
-                          width: Constants.imageWidth + 20,
-                          height: Constants.imageHeight + 20,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage('assets/about_us/ahmad.jpg'),
-                              )),
-                        ))),
+                        child: Obx(() => Container(
+                              width: Constants.imageWidth + 20,
+                              height: Constants.imageHeight + 20,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: controller.isUserSignIn.value == false
+                                      ? DecorationImage(
+                                          image: AssetImage(
+                                              'assets/about_us/ahmad.jpg'))
+                                      : DecorationImage(
+                                          // image:AssetImage(''),
+                                          image: CachedNetworkImageProvider(
+                                            FirebaseAuth.instance.currentUser!
+                                                .photoURL!,
+                                          ),
+                                          fit: BoxFit.cover,
+                                        )),
+                            )))),
               ),
               kHeight,
               kHeight,
-              Text(
-                // "No details Available",
-                "Welcome, FA19-BSE-003",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
+              Obx(() => Text(
+                    // "No details Available",
+                    controller.isUserSignIn.value == true
+                        ? 'Welcome, ${FirebaseAuth.instance.currentUser!.displayName}'
+                        : "Welcome, FA19-BSE-003",
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  )),
             ],
           ),
         ),
@@ -187,11 +196,15 @@ class ButtonList extends GetView<HomeController> {
           //     title: 'Settings', onTap: () {
           //   Get.toNamed(Routes.SETTINGS);
           // }),
-          controller.authCache.get(DBAuthCache.isSignIn, defaultValue: false)
+          // controller.authCache.get(DBAuthCache.isSignIn, defaultValue: false)
+
+          Obx(() => controller.isUserSignIn.value == true
               ? buildButton(context,
                   icon: const AssetImage('assets/drawer/sign_out.png'),
-                  title: 'Sign out', onTap: () {
-                  controller.authCache.put(DBAuthCache.isSignIn, false);
+                  title: 'Sign out', onTap: () async {
+                  controller.isUserSignIn.value = false;
+                  // controller.authCache.put(DBAuthCache.isSignIn, false);
+                  await FirebaseAuth.instance.signOut();
                   Get.back();
                   GetXUtilities.snackbar(
                       title: 'Sign Out',
@@ -204,14 +217,7 @@ class ButtonList extends GetView<HomeController> {
                   title: 'Sign In', onTap: () {
                   //
                   Get.offAndToNamed(Routes.AUTHENTICATION);
-                }),
-
-          buildButton(context,
-              icon: const AssetImage('assets/drawer/sign_in.png'),
-              title: 'Sign In', onTap: () {
-            //
-            print(FirebaseAuth.instance.currentUser!.photoURL);
-          }),
+                })),
 
           // buildButton(context,
           //     icon: const AssetImage('assets/drawer/settings.png'),

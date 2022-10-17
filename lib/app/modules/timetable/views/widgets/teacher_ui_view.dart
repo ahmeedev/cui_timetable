@@ -230,7 +230,6 @@ class TeacherUIView extends GetView<TeacherUIController> {
     // cache the history
     final box2 = await Hive.openBox(DBNames.timetableCache);
     List list = box2.get(DBTimetableCache.teacherHistory, defaultValue: []);
-    print(list);
     if (list.length != 6) {
       Set result = list.toSet();
       result.add(value);
