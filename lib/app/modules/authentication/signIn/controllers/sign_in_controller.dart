@@ -22,11 +22,12 @@ class SignInController extends GetxController {
   var emailTextController = TextEditingController();
   var passTextController = TextEditingController();
 
-  var respectedEmailSuffixes = [
-    '@students.cuisahiwal.edu.pk',
-    '@cuisahiwal.edu.pk',
-    '@cuisahiwal.edu.pk'
-  ];
+  // var respectedEmailSuffixes = [
+  //   '@students.cuisahiwal.edu.pk',
+  //   '@cuisahiwal.edu.pk',
+  //   '@cuisahiwal.edu.pk'
+  // ];
+  var respectedEmailSuffixes = ['@gmail.com', '@gmail.com', '@gmail.com'];
 
   var isRemeberMe = false.obs;
   Box? box;
@@ -59,20 +60,22 @@ class SignInController extends GetxController {
           email: email, password: password);
 
       if (firebaseAuth.currentUser!.emailVerified) {
-        log("Email Verified");
+        // muct be verified before signin
+        log("Email Verified", name: 'Google SignIn');
         cachePass();
         box!.put(DBAuthCache.isSignIn, true);
         Get.back();
         Get.find<HomeController>().scaffoldKey.currentState!.openDrawer();
+        Get.find<HomeController>().isUserSignIn.value = true;
+
         GetXUtilities.snackbar(
             title: 'Sign In',
             message: 'Sign in successfully!',
             gradient: successGradient);
-        //login logic here
       } else {
         Get.find<AuthenticationController>()
             .infoMsg
-            .add('A verification email is sent. check your inbox');
+            .add('In order to proceed, Verify the email first.');
 
         GetXUtilities.snackbar(
             duration: 3,
@@ -197,8 +200,14 @@ class SignInController extends GetxController {
                           }
                           forgetPassProgress.value = true;
                           try {
+                            final email = forgetPassEmailController.text +
+                                respectedEmailSuffixes[
+                                    Get.find<AuthenticationController>()
+                                        .segmentedControlGroupValue
+                                        .value];
+                            log("Email: $email", name: 'Forget Password');
                             await firebaseAuth.sendPasswordResetEmail(
-                                email: forgetPassEmailController.text);
+                                email: email);
                             Get.back();
                             GetXUtilities.snackbar(
                                 duration: 3,

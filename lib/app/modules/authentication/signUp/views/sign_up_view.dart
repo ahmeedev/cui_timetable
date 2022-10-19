@@ -1,4 +1,6 @@
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +22,7 @@ class SignUpView extends GetView<SignUpController> {
           kHeight,
           kHeight,
           TextFormField(
+              controller: controller.emailController,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -35,14 +38,17 @@ class SignUpView extends GetView<SignUpController> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        ' @students.cuisahiwal.edu.pk ',
-                        style: theme.textTheme.labelMedium!.copyWith(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                      Obx(() => Text(
+                            controller.respectedEmailSuffixes[
+                                Get.find<AuthenticationController>()
+                                    .segmentedControlGroupValue
+                                    .value],
+                            style: theme.textTheme.labelMedium!.copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          )),
                     ],
                   ),
                 ),
@@ -65,7 +71,9 @@ class SignUpView extends GetView<SignUpController> {
               )),
           kHeight,
           kHeight,
-          TextFormField(
+          Obx(() => TextFormField(
+              controller: controller.passwordController,
+              obscureText: controller.isObscureText.value,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -98,10 +106,12 @@ class SignUpView extends GetView<SignUpController> {
                         BorderRadius.circular(Constants.defaultRadius),
                     borderSide:
                         const BorderSide(color: primaryColor, width: 2)),
-              )),
+              ))),
           kHeight,
           kHeight,
-          TextFormField(
+          Obx(() => TextFormField(
+              controller: controller.cPassController,
+              obscureText: controller.isObscureText.value,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -117,10 +127,22 @@ class SignUpView extends GetView<SignUpController> {
                   Icons.password,
                   color: primaryColor,
                 ),
-                suffixIcon: const Icon(
-                  // FontAwesomeIcons.eyeLowVision,
-                  FontAwesomeIcons.eye,
-                  color: primaryColor,
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    controller.isObscureText.value =
+                        !controller.isObscureText.value;
+                  },
+                  child: controller.isObscureText.value
+                      ? const Icon(
+                          // FontAwesomeIcons.eyeLowVision,
+                          FontAwesomeIcons.eye,
+                          color: primaryColor,
+                        )
+                      : const Icon(
+                          // FontAwesomeIcons.eyeLowVision,
+                          FontAwesomeIcons.eyeLowVision,
+                          color: primaryColor,
+                        ),
                 ),
 
                 // iconColor: Colors.grey,
@@ -135,23 +157,75 @@ class SignUpView extends GetView<SignUpController> {
                         BorderRadius.circular(Constants.defaultRadius),
                     borderSide:
                         const BorderSide(color: primaryColor, width: 2)),
+              ))),
+          kHeight,
+          kHeight,
+          Obx(() => AnimatedSwitcher(
+                layoutBuilder: (currentChild, previousChildren) =>
+                    currentChild!,
+                transitionBuilder: (child, animation) => ScaleTransition(
+                  scale: animation,
+                  child: child,
+                ),
+                duration: const Duration(milliseconds: 200),
+                child: controller.signUpProgress.value == false
+                    ? ClipRRect(
+                        key: const ValueKey(6),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(Constants.defaultRadius)),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Get.find<AuthenticationController>()
+                                  .infoMsg
+                                  .clear();
+
+                              final eText = controller.emailController.text;
+                              final pText = controller.passwordController.text;
+                              final cPText = controller.cPassController.text;
+                              if (eText.isEmpty) {
+                                GetXUtilities.snackbar(
+                                    title: 'Error!',
+                                    message: 'Email not be empty!',
+                                    gradient: errorGradient);
+                              } else if (pText.isEmpty) {
+                                GetXUtilities.snackbar(
+                                    title: 'Error!',
+                                    message: 'Password not be empty!',
+                                    gradient: errorGradient);
+                              } else if (cPText.isEmpty) {
+                                GetXUtilities.snackbar(
+                                    title: 'Error!',
+                                    message: 'Confirm the password!',
+                                    gradient: errorGradient);
+                              } else if (pText != cPText) {
+                                GetXUtilities.snackbar(
+                                    title: 'Error!',
+                                    message: 'Passwords not match',
+                                    gradient: errorGradient);
+                              } else {
+                                final email = eText +
+                                    controller.respectedEmailSuffixes[
+                                        Get.find<AuthenticationController>()
+                                            .segmentedControlGroupValue
+                                            .value];
+                                controller.signUpUser(
+                                    email: email, password: pText);
+                              }
+                            },
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.all(Constants.defaultPadding * 2),
+                              child: Text('Sign Up',
+                                  style:
+                                      Theme.of(context).textTheme.labelLarge),
+                            )),
+                      )
+                    : const SpinKitFadingCircle(
+                        key: ValueKey(5),
+                        size: 50,
+                        color: primaryColor,
+                      ),
               )),
-          kHeight,
-          kHeight,
-          ClipRRect(
-            borderRadius:
-                BorderRadius.all(Radius.circular(Constants.defaultRadius)),
-            child: ElevatedButton(
-                onPressed: () {
-                  controller.signUpUser(
-                      email: 'inahmee777@gmail.com', password: 'aspire');
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(Constants.defaultPadding * 2),
-                  child: Text('Sign Up',
-                      style: Theme.of(context).textTheme.labelLarge),
-                )),
-          ),
           kHeight,
           kHeight,
           kHeight,
@@ -166,75 +240,31 @@ class SignUpView extends GetView<SignUpController> {
           ),
           kHeight,
           kHeight,
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            OutlinedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                // foregroundColor:
-                //     MaterialStateProperty.all(Colors.blue),
-                side: MaterialStateProperty.all(const BorderSide(
-                    color: primaryColor, width: 2.0, style: BorderStyle.solid)),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(Constants.defaultRadius))),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(Constants.defaultPadding), // 16.0
-                child: Icon(
-                  Icons.facebook,
-                  color: Colors.blue,
-                  size: Constants.iconSize,
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                OutlinedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                    // foregroundColor:
+                    //     MaterialStateProperty.all(Colors.blue),
+                    side: MaterialStateProperty.all(const BorderSide(
+                        color: primaryColor,
+                        width: 2.0,
+                        style: BorderStyle.solid)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(Constants.defaultRadius))),
+                  ),
+                  child: Padding(
+                      padding: EdgeInsets.all(Constants.defaultPadding * 1.5),
+                      child: Image.asset(
+                        'assets/sign_in/google.png',
+                        width: Constants.iconSize,
+                      )),
                 ),
-              ),
-            ),
-            OutlinedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                // foregroundColor:
-                //     MaterialStateProperty.all(Colors.blue),
-                side: MaterialStateProperty.all(const BorderSide(
-                    color: primaryColor, width: 2.0, style: BorderStyle.solid)),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(Constants.defaultRadius))),
-              ),
-              // child: Padding(
-              //   padding: EdgeInsets.all(
-              //       Constants.defaultPadding), // 16.0
-              //   child: Icon(
-              //     FontAwesomeIcons.google,
-              //     color: Colors.red,
-              //     size: Constants.iconSize,
-              //   ),
-              // ),
-              child: Padding(
-                  padding: EdgeInsets.all(Constants.defaultPadding),
-                  child: Image.asset(
-                    'assets/sign_in/google.png',
-                    width: Constants.iconSize,
-                  )),
-            ),
-            OutlinedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                //   // foregroundColor:
-                //   //     MaterialStateProperty.all(Colors.blue),
-                side: MaterialStateProperty.all(const BorderSide(
-                    color: primaryColor, width: 2.0, style: BorderStyle.solid)),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(Constants.defaultRadius))),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(Constants.defaultPadding), // 16
-                child: Icon(
-                  FontAwesomeIcons.github,
-                  color: Colors.black,
-                  size: Constants.iconSize,
-                ),
-              ),
-            ),
-          ]),
+              ]),
           const Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

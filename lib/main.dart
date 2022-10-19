@@ -3,6 +3,13 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+
 import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 
@@ -17,12 +24,6 @@ import 'app/theme/app_constants.dart';
 import 'app/theme/light_theme.dart';
 import 'app/utilities/location/loc_utilities.dart';
 import 'firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(

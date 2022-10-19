@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/authentication/controllers/authentication_controller.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
@@ -190,25 +192,31 @@ class SignInView extends GetView<SignInController> {
                             Radius.circular(Constants.defaultRadius)),
                         child: ElevatedButton(
                             onPressed: () {
-                              // controller.addNewUser(
-                              //     email: "inahmee77@gmail.com", password: 'aspire');
                               Get.find<AuthenticationController>()
                                   .infoMsg
                                   .clear();
-                              if (controller.emailTextController.text.isEmpty) {
+                              final eText = controller.emailTextController.text;
+                              final pText = controller.passTextController.text;
+                              if (eText.isEmpty) {
                                 GetXUtilities.snackbar(
                                     title: "Error!",
                                     message: 'Invalid Email',
                                     gradient: errorGradient);
-                              } else if (controller
-                                  .passTextController.text.isEmpty) {
+                              } else if (pText.isEmpty) {
                                 GetXUtilities.snackbar(
                                     title: "Error!",
                                     message: 'Password is empty!',
                                     gradient: errorGradient);
                               } else {
+                                final email =
+                                    controller.emailTextController.text +
+                                        controller.respectedEmailSuffixes[
+                                            Get.find<AuthenticationController>()
+                                                .segmentedControlGroupValue
+                                                .value];
+                                log("email: $email");
                                 controller.signInUser(
-                                    email: controller.emailTextController.text,
+                                    email: email,
                                     password:
                                         controller.passTextController.text);
                               }
@@ -232,7 +240,7 @@ class SignInView extends GetView<SignInController> {
           kHeight,
           kHeight,
           Text(
-            "Or, SIGN IN WITH...",
+            "Or, SIGN IN with...",
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -241,83 +249,39 @@ class SignInView extends GetView<SignInController> {
           ),
           kHeight,
           kHeight,
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            OutlinedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                // foregroundColor:
-                //     MaterialStateProperty.all(Colors.blue),
-                side: MaterialStateProperty.all(const BorderSide(
-                    color: primaryColor, width: 2.0, style: BorderStyle.solid)),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(Constants.defaultRadius))),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(Constants.defaultPadding), // 16.0
-                child: Icon(
-                  Icons.facebook,
-                  color: Colors.blue,
-                  size: Constants.iconSize,
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                OutlinedButton(
+                  onPressed: () async {
+                    await controller.signInWithGoogle().then((value) =>
+                        Get.find<HomeController>().isUserSignIn.value = true);
+                    Get.back();
+                    GetXUtilities.snackbar(
+                        title: 'Sign in',
+                        message: 'Sign in successfully!',
+                        gradient: successGradient);
+                  },
+                  style: ButtonStyle(
+                    // foregroundColor:
+                    //     MaterialStateProperty.all(Colors.blue),
+                    side: MaterialStateProperty.all(const BorderSide(
+                        color: primaryColor,
+                        width: 2.0,
+                        style: BorderStyle.solid)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(Constants.defaultRadius))),
+                  ),
+                  child: Padding(
+                      padding: EdgeInsets.all(Constants.defaultPadding * 1.5),
+                      child: Image.asset(
+                        'assets/sign_in/google.png',
+                        width: Constants.iconSize,
+                      )),
                 ),
-              ),
-            ),
-            OutlinedButton(
-              onPressed: () async {
-                await controller.signInWithGoogle().then((value) =>
-                    Get.find<HomeController>().isUserSignIn.value = true);
-                Get.back();
-                GetXUtilities.snackbar(
-                    title: 'Sign in',
-                    message: 'Sign in successfully!',
-                    gradient: successGradient);
-              },
-              style: ButtonStyle(
-                // foregroundColor:
-                //     MaterialStateProperty.all(Colors.blue),
-                side: MaterialStateProperty.all(const BorderSide(
-                    color: primaryColor, width: 2.0, style: BorderStyle.solid)),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(Constants.defaultRadius))),
-              ),
-              // child: Padding(
-              //   padding: EdgeInsets.all(
-              //       Constants.defaultPadding), // 16.0
-              //   child: Icon(
-              //     FontAwesomeIcons.google,
-              //     color: Colors.red,
-              //     size: Constants.iconSize,
-              //   ),
-              // ),
-              child: Padding(
-                  padding: EdgeInsets.all(Constants.defaultPadding),
-                  child: Image.asset(
-                    'assets/sign_in/google.png',
-                    width: Constants.iconSize,
-                  )),
-            ),
-            OutlinedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                // foregroundColor:
-                //     MaterialStateProperty.all(Colors.blue),
-                side: MaterialStateProperty.all(const BorderSide(
-                    color: primaryColor, width: 2.0, style: BorderStyle.solid)),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(Constants.defaultRadius))),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(Constants.defaultPadding), // 16
-                child: Icon(
-                  FontAwesomeIcons.github,
-                  color: Colors.black,
-                  size: Constants.iconSize,
-                ),
-              ),
-            ),
-          ]),
+              ]),
           const Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

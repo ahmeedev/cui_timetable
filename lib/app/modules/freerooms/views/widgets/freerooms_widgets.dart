@@ -388,15 +388,22 @@ class RoomShowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.zero,
-      child: Card(
-        color: widgetColor,
-        elevation: Constants.defaultElevation,
-        shadowColor: shadowColor,
-        shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.all(Radius.circular(Constants.defaultRadius))),
-        child: Center(
+      child: GestureDetector(
+        onTap: () {
+          Get.defaultDialog(
+              title: 'Room',
+              middleText: room,
+              titleStyle: const TextStyle(color: Colors.black));
+        },
+        child: Card(
+          color: widgetColor,
+          elevation: Constants.defaultElevation,
+          shadowColor: shadowColor,
+          shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(Constants.defaultRadius))),
           child: FittedBox(
+            fit: BoxFit.scaleDown,
             child: Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
@@ -426,31 +433,38 @@ class LabShowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.zero,
-      child: Card(
-        color: widgetColor,
-        elevation: Constants.defaultElevation,
-        shadowColor: shadowColor,
-        shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.all(Radius.circular(Constants.defaultRadius))),
-        child: ListTile(
-            // contentPadding: EdgeInsets.zero,
-            minVerticalPadding: 0.0,
-            dense: true,
-            // visualDensity: VisualDensity(horizontal: 0, vertical: 0),
-            title: Align(
-              alignment: Alignment.centerLeft,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  lab.toString(),
-                  // textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+      child: GestureDetector(
+        onTap: () {
+          Get.defaultDialog(
+              title: 'Lab',
+              middleText: lab,
+              titleStyle: const TextStyle(color: Colors.black));
+        },
+        child: Card(
+          color: widgetColor,
+          elevation: Constants.defaultElevation,
+          shadowColor: shadowColor,
+          shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(Constants.defaultRadius))),
+          child: ListTile(
+              // contentPadding: EdgeInsets.zero,
+              minVerticalPadding: 0.0,
+              dense: true,
+              // visualDensity: VisualDensity(horizontal: 0, vertical: 0),
+              title: Align(
+                alignment: Alignment.centerLeft,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    lab.toString(),
+                    // textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: FontWeight.w900, color: Colors.black),
+                  ),
                 ),
-              ),
-            )),
+              )),
+        ),
       ),
     );
   }
