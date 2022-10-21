@@ -49,7 +49,11 @@ class StudentUIController extends GetxController {
       // fetching cached tokens
       overallTokens =
           await box2.get(DBTimetableData.overallTokens, defaultValue: []);
+
       yearTokens = await box2.get(DBTimetableData.yearTokens, defaultValue: []);
+      yearTokens = yearTokens
+          .where((element) => element.isNotEmpty)
+          .toList(); // refine the year tokens
       sectionTokens =
           await box2.get(DBTimetableData.sectionTokens, defaultValue: []);
       sectionVariantsTokens = await box2

@@ -16,6 +16,9 @@ class AuthenticationController extends GetxController {
   var styles = [].obs;
 
   var infoMsg = <String>[].obs;
+
+  var respectedEmailSuffixes = ['@gmail.com', '@gmail2.com', '@gmail1.com'];
+
   @override
   void onInit() {
     styles.add(selectedStyle);

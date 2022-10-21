@@ -14,11 +14,11 @@ class SignUpController extends GetxController {
   var firebaseAuth = FirebaseAuth.instance;
   var isObscureText = true.obs;
 
-  var respectedEmailSuffixes = [
-    '@gmail.com',
-    '@gmadasdfsadfil.com',
-    '@gmail.com'
-  ];
+  // var respectedEmailSuffixes = [
+  //   '@gmail.com',
+  //   '@gmadasdfsadfil.com',
+  //   '@gmail.com'
+  // ];
   final signUpProgress = false.obs;
   signUpUser({required String email, required String password}) async {
     signUpProgress.value = true;

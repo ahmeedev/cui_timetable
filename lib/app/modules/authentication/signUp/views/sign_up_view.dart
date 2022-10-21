@@ -39,7 +39,8 @@ class SignUpView extends GetView<SignUpController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Obx(() => Text(
-                            controller.respectedEmailSuffixes[
+                            Get.find<AuthenticationController>()
+                                    .respectedEmailSuffixes[
                                 Get.find<AuthenticationController>()
                                     .segmentedControlGroupValue
                                     .value],
@@ -204,7 +205,8 @@ class SignUpView extends GetView<SignUpController> {
                                     gradient: errorGradient);
                               } else {
                                 final email = eText +
-                                    controller.respectedEmailSuffixes[
+                                    Get.find<AuthenticationController>()
+                                            .respectedEmailSuffixes[
                                         Get.find<AuthenticationController>()
                                             .segmentedControlGroupValue
                                             .value];
@@ -230,42 +232,43 @@ class SignUpView extends GetView<SignUpController> {
           kHeight,
           kHeight,
           kHeight,
-          Text(
-            "Or, SIGN UP WITH...",
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .labelMedium!
-                .copyWith(color: Colors.black),
-          ),
-          kHeight,
-          kHeight,
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                OutlinedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    // foregroundColor:
-                    //     MaterialStateProperty.all(Colors.blue),
-                    side: MaterialStateProperty.all(const BorderSide(
-                        color: primaryColor,
-                        width: 2.0,
-                        style: BorderStyle.solid)),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(Constants.defaultRadius))),
-                  ),
-                  child: Padding(
-                      padding: EdgeInsets.all(Constants.defaultPadding * 1.5),
-                      child: Image.asset(
-                        'assets/sign_in/google.png',
-                        width: Constants.iconSize,
-                      )),
-                ),
-              ]),
+          // Text(
+          //   "Or, SIGN UP WITH...",
+          //   textAlign: TextAlign.center,
+          //   style: Theme.of(context)
+          //       .textTheme
+          //       .labelMedium!
+          //       .copyWith(color: Colors.black),
+          // ),
+          // kHeight,
+          // kHeight,
+          // Column(
+          //     crossAxisAlignment: CrossAxisAlignment.stretch,
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //     children: [
+          //       OutlinedButton(
+          //         onPressed: () {},
+          //         style: ButtonStyle(
+          //           // foregroundColor:
+          //           //     MaterialStateProperty.all(Colors.blue),
+          //           side: MaterialStateProperty.all(const BorderSide(
+          //               color: primaryColor,
+          //               width: 2.0,
+          //               style: BorderStyle.solid)),
+          //           shape: MaterialStateProperty.all(RoundedRectangleBorder(
+          //               borderRadius:
+          //                   BorderRadius.circular(Constants.defaultRadius))),
+          //         ),
+          //         child: Padding(
+          //             padding: EdgeInsets.all(Constants.defaultPadding * 1.5),
+          //             child: Image.asset(
+          //               'assets/sign_in/google.png',
+          //               width: Constants.iconSize,
+          //             )),
+          //       ),
+          //     ]),
           const Spacer(),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -16,6 +16,8 @@ import '../modules/datesheet/teacher_datesheet/views/teacher_datesheet_view.dart
 import '../modules/datesheet/views/datesheet_view.dart';
 import '../modules/developer/bindings/developer_binding.dart';
 import '../modules/developer/views/developer_view.dart';
+import '../modules/for_developer/bindings/for_developer_binding.dart';
+import '../modules/for_developer/views/for_developer_view.dart';
 import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -179,6 +181,11 @@ class AppPages {
           binding: SignUpBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.FOR_DEVELOPER,
+      page: () => const ForDeveloperView(),
+      binding: ForDeveloperBinding(),
     ),
   ];
 }

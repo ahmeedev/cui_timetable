@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -86,14 +87,20 @@ class Header extends GetView<HomeController> {
                                       ? DecorationImage(
                                           image: AssetImage(
                                               'assets/about_us/ahmad.jpg'))
-                                      : DecorationImage(
-                                          // image:AssetImage(''),
-                                          image: CachedNetworkImageProvider(
-                                            FirebaseAuth.instance.currentUser!
-                                                .photoURL!,
-                                          ),
-                                          fit: BoxFit.cover,
-                                        )),
+                                      : FirebaseAuth.instance.currentUser!
+                                                  .photoURL ==
+                                              null
+                                          ? DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/drawer/comsats.png'))
+                                          : DecorationImage(
+                                              // image:AssetImage(''),
+                                              image: CachedNetworkImageProvider(
+                                                FirebaseAuth.instance
+                                                    .currentUser!.photoURL!,
+                                              ),
+                                              fit: BoxFit.cover,
+                                            )),
                             )))),
               ),
               kHeight,
@@ -101,7 +108,11 @@ class Header extends GetView<HomeController> {
               Obx(() => Text(
                     // "No details Available",
                     controller.isUserSignIn.value == true
-                        ? 'Welcome, ${FirebaseAuth.instance.currentUser!.displayName}'
+                        ? 'Welcome,  ${FirebaseAuth.instance.currentUser!.email!.substring(
+                            0,
+                            FirebaseAuth.instance.currentUser!.email!
+                                .indexOf('@'),
+                          )}'
                         : "Welcome, FA19-BSE-003",
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold),
@@ -155,6 +166,7 @@ class Header extends GetView<HomeController> {
 /// Button List for Drawer.
 class ButtonList extends GetView<HomeController> {
   const ButtonList({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -222,13 +234,16 @@ class ButtonList extends GetView<HomeController> {
           // buildButton(context,
           //     icon: const AssetImage('assets/drawer/settings.png'),
           //     title: 'Settings', onTap: () {
-          //   Get.to(() => const Settings(), transition: Transition.cupertino);
+          //   final result = FirebaseAuth.instance.currentUser;
+          //   print(result);
           // }),
-          // buildButton(context,
-          //     icon: const AssetImage('assets/drawer/developer.png'),
-          //     title: 'For Developer', onTap: () {
-          //   Get.to(() => Developer());
-          // }),
+          kDebugMode == true
+              ? buildButton(context,
+                  icon: const AssetImage('assets/drawer/developer.png'),
+                  title: 'For Developer', onTap: () {
+                  Get.toNamed(Routes.FOR_DEVELOPER);
+                })
+              : SizedBox(),
           // buildButton(context,
           //     icon: const AssetImage('assets/drawer/firebase.png'),
           //     title: 'Firebase', onTap: () {

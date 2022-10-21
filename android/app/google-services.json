@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "663627456598-unlhff1sttjdo8tkmrc4hmngnj7ottsp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rise4solution.cui_timetable",
+            "certificate_hash": "b063793d2f608d218e5db4c8d4201018e9636aef"
+          }
+        },
+        {
           "client_id": "663627456598-urs4qlqmoe8co5rrmieccil5bar5huv7.apps.googleusercontent.com",
           "client_type": 3
         }

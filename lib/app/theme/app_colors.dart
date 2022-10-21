@@ -13,9 +13,9 @@ const shadowColor = Color(0Xffd4dfed);
 const statusBarColor = forGradient;
 
 // const scaffoldColor = Color(0xffD8E8FC);
-const widgetColor = Color(0xffe9eff6); //! okey
-// const widgetColor = onScaffoldColor;
-// const widgetColor = Color(0xffEBF4FF);
+// const widgetColor = Color(0xffe9eff6); //! okey
+// const widgetColor = Colors.white;
+const widgetColor = Color(0xffEBF4FF);
 const textFieldColor = Color(0xffbecfe4);
 const selectionColor = Color(0xff93afd2);
 const expandedColor = Color(0xff93afd2);

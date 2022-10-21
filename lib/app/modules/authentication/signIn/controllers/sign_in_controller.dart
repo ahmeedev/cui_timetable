@@ -27,7 +27,6 @@ class SignInController extends GetxController {
   //   '@cuisahiwal.edu.pk',
   //   '@cuisahiwal.edu.pk'
   // ];
-  var respectedEmailSuffixes = ['@gmail.com', '@gmail.com', '@gmail.com'];
 
   var isRemeberMe = false.obs;
   Box? box;
@@ -56,14 +55,22 @@ class SignInController extends GetxController {
   signInUser({required String email, required String password}) async {
     signInProgress.value = true;
     try {
+      log("SignIn in progress...", name: 'Google SignIn');
+
       await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
+
+      log("SignIn in completed...", name: 'Google SignIn');
 
       if (firebaseAuth.currentUser!.emailVerified) {
         // muct be verified before signin
         log("Email Verified", name: 'Google SignIn');
         cachePass();
         box!.put(DBAuthCache.isSignIn, true);
+        box!.put(
+            DBAuthCache.sectionName,
+            FirebaseAuth.instance.currentUser!.email!.substring(
+                0, FirebaseAuth.instance.currentUser!.email!.indexOf('@')));
         Get.back();
         Get.find<HomeController>().scaffoldKey.currentState!.openDrawer();
         Get.find<HomeController>().isUserSignIn.value = true;
@@ -149,7 +156,8 @@ class SignInController extends GetxController {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Obx(() => Text(
-                            respectedEmailSuffixes[
+                            Get.find<AuthenticationController>()
+                                    .respectedEmailSuffixes[
                                 Get.find<AuthenticationController>()
                                     .segmentedControlGroupValue
                                     .value],
@@ -201,7 +209,8 @@ class SignInController extends GetxController {
                           forgetPassProgress.value = true;
                           try {
                             final email = forgetPassEmailController.text +
-                                respectedEmailSuffixes[
+                                Get.find<AuthenticationController>()
+                                        .respectedEmailSuffixes[
                                     Get.find<AuthenticationController>()
                                         .segmentedControlGroupValue
                                         .value];

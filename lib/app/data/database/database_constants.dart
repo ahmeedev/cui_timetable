@@ -121,4 +121,6 @@ class DBAuthCache {
 
   static const signInEmail = 'signInEmail';
   static const signInPass = 'signInPass';
+
+  static const sectionName = 'sectionName';
 }

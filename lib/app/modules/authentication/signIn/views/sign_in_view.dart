@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/authentication/controllers/authentication_controller.dart';
-import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -45,7 +44,8 @@ class SignInView extends GetView<SignInController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Obx(() => Text(
-                            controller.respectedEmailSuffixes[
+                            Get.find<AuthenticationController>()
+                                    .respectedEmailSuffixes[
                                 Get.find<AuthenticationController>()
                                     .segmentedControlGroupValue
                                     .value],
@@ -210,7 +210,8 @@ class SignInView extends GetView<SignInController> {
                               } else {
                                 final email =
                                     controller.emailTextController.text +
-                                        controller.respectedEmailSuffixes[
+                                        Get.find<AuthenticationController>()
+                                                .respectedEmailSuffixes[
                                             Get.find<AuthenticationController>()
                                                 .segmentedControlGroupValue
                                                 .value];
@@ -239,49 +240,50 @@ class SignInView extends GetView<SignInController> {
           kHeight,
           kHeight,
           kHeight,
-          Text(
-            "Or, SIGN IN with...",
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .labelMedium!
-                .copyWith(color: Colors.black),
-          ),
-          kHeight,
-          kHeight,
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                OutlinedButton(
-                  onPressed: () async {
-                    await controller.signInWithGoogle().then((value) =>
-                        Get.find<HomeController>().isUserSignIn.value = true);
-                    Get.back();
-                    GetXUtilities.snackbar(
-                        title: 'Sign in',
-                        message: 'Sign in successfully!',
-                        gradient: successGradient);
-                  },
-                  style: ButtonStyle(
-                    // foregroundColor:
-                    //     MaterialStateProperty.all(Colors.blue),
-                    side: MaterialStateProperty.all(const BorderSide(
-                        color: primaryColor,
-                        width: 2.0,
-                        style: BorderStyle.solid)),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(Constants.defaultRadius))),
-                  ),
-                  child: Padding(
-                      padding: EdgeInsets.all(Constants.defaultPadding * 1.5),
-                      child: Image.asset(
-                        'assets/sign_in/google.png',
-                        width: Constants.iconSize,
-                      )),
-                ),
-              ]),
+          // Text(
+          //   "Or, SIGN IN with...",
+          //   textAlign: TextAlign.center,
+          //   style: Theme.of(context)
+          //       .textTheme
+          //       .labelMedium!
+          //       .copyWith(color: Colors.black),
+          // ),
+          // kHeight,
+          // kHeight,
+          // Column(
+          //     crossAxisAlignment: CrossAxisAlignment.stretch,
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //     children: [
+          //       OutlinedButton(
+          //         onPressed: () async {
+          //           await controller.signInWithGoogle().then((value) =>
+          //               Get.find<HomeController>().isUserSignIn.value = true);
+          //           Get.back();
+          //           GetXUtilities.snackbar(
+          //               title: 'Sign in',
+          //               message: 'Sign in successfully!',
+          //               gradient: successGradient);
+          //         },
+          //         style: ButtonStyle(
+          //           // foregroundColor:
+          //           //     MaterialStateProperty.all(Colors.blue),
+          //           side: MaterialStateProperty.all(const BorderSide(
+          //               color: primaryColor,
+          //               width: 2.0,
+          //               style: BorderStyle.solid)),
+          //           shape: MaterialStateProperty.all(RoundedRectangleBorder(
+          //               borderRadius:
+          //                   BorderRadius.circular(Constants.defaultRadius))),
+          //         ),
+          //         child: Padding(
+          //             padding: EdgeInsets.all(Constants.defaultPadding * 1.5),
+          //             child: Image.asset(
+          //               'assets/sign_in/google.png',
+          //               width: Constants.iconSize,
+          //             )),
+          //       ),
+          //     ]),
+
           const Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

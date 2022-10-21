@@ -47,7 +47,7 @@ class SyncController extends GetxController {
             // freeroomsSyncStatus.value = true;
           }
           // await _insertTime();
-          await _syncAllFiles();
+          await syncAllFiles();
         } else {
           // Execute when the user is new and already synchronized
           if (dialogPop) {
@@ -67,7 +67,7 @@ class SyncController extends GetxController {
     }
   }
 
-  Future<bool> _syncAllFiles() async {
+  Future<bool> syncAllFiles() async {
     await closeDatabases();
 
     final timeslots = TimeslotsDatabase();

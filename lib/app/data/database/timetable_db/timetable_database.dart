@@ -107,7 +107,7 @@ class TimetableDatabase {
 
     Hive.close();
     // final overallTokens = [];
-    final yearTokens = [];
+    final yearTokens = <String>[];
     final sectionTokens = [];
     final sectionVariantsTokens = [];
     final overall = [];
@@ -131,6 +131,14 @@ class TimetableDatabase {
     }
     yearTokens.sort();
     final box = await Hive.openBox(DBNames.timetableData);
+
+    // final purifyYearTokens = yearTokens
+    //     .where((element) =>
+    //         !element.contains(r'\s+') ||
+    //         element.isNotEmpty) // search the empty string.
+    //     .toSet()
+    //     .toList();
+
     await box.put(DBTimetableData.yearTokens, yearTokens.toSet().toList());
 
     await box.put(DBTimetableData.overallTokens, overall.toSet().toList());

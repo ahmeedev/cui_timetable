@@ -27,6 +27,7 @@ abstract class Routes {
   static const AUTHENTICATION = _Paths.AUTHENTICATION;
   static const SIGN_IN = _Paths.AUTHENTICATION + _Paths.SIGN_IN;
   static const SIGN_UP = _Paths.AUTHENTICATION + _Paths.SIGN_UP;
+  static const FOR_DEVELOPER = _Paths.FOR_DEVELOPER;
 }
 
 abstract class _Paths {
@@ -53,4 +54,5 @@ abstract class _Paths {
   static const AUTHENTICATION = '/authentication';
   static const SIGN_IN = '/sign-in';
   static const SIGN_UP = '/sign-up';
+  static const FOR_DEVELOPER = '/for-developer';
 }
