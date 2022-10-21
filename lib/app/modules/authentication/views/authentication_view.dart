@@ -141,12 +141,15 @@ class AuthenticationView extends GetView<AuthenticationController> {
                                       color: Colors.white,
                                       size: Constants.iconSize),
                                   kWidth,
-                                  Text(
-                                    controller
-                                        .infoMsg[controller.infoMsg.length - 1]
-                                        .toString(),
-                                    style: textTheme.labelMedium!
-                                        .copyWith(color: Colors.white),
+                                  FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      controller.infoMsg[
+                                              controller.infoMsg.length - 1]
+                                          .toString(),
+                                      style: textTheme.labelMedium!
+                                          .copyWith(color: Colors.white),
+                                    ),
                                   ),
                                 ],
                               )),

@@ -99,11 +99,6 @@ class AppPages {
           page: () => TeacherTimetableView(),
           binding: TeacherTimetableBinding(),
         ),
-        GetPage(
-          name: _Paths.COMPARISION,
-          page: () => ComparisonView(),
-          binding: ComparisionBinding(),
-        ),
       ],
     ),
     GetPage(
@@ -160,11 +155,6 @@ class AppPages {
       page: () => const DeveloperView(),
       binding: DeveloperBinding(),
     ),
-    // GetPage(
-    //   name: _Paths.SIGNIN,
-    //   page: () => const SigninView(),
-    //   binding: SigninBinding(),
-    // ),
     GetPage(
       name: _Paths.AUTHENTICATION,
       page: () => const AuthenticationView(),
@@ -187,5 +177,10 @@ class AppPages {
       page: () => const ForDeveloperView(),
       binding: ForDeveloperBinding(),
     ),
+    GetPage(
+        name: _Paths.COMPARISON,
+        page: () => ComparisonView(),
+        binding: ComparisionBinding(),
+        children: const []),
   ];
 }

@@ -15,7 +15,6 @@ abstract class Routes {
   static const SYNC = _Paths.SYNC;
   static const FREEROOMS = _Paths.FREEROOMS;
   static const PORTALS = _Paths.PORTALS;
-  static const COMPARISION = _Paths.TIMETABLE + _Paths.COMPARISION;
   static const DATESHEET = _Paths.DATESHEET;
   static const STUDENT_DATESHEET = _Paths.DATESHEET + _Paths.STUDENT_DATESHEET;
   static const TEACHER_DATESHEET = _Paths.DATESHEET + _Paths.TEACHER_DATESHEET;
@@ -23,11 +22,14 @@ abstract class Routes {
   static const SETTINGS = _Paths.SETTINGS;
   static const STUDENT_REMAINDER = _Paths.REMAINDER + _Paths.STUDENT_REMAINDER;
   static const DEVELOPER = _Paths.DEVELOPER;
-  // static const SIGNIN = _Paths.SIGNIN;
   static const AUTHENTICATION = _Paths.AUTHENTICATION;
   static const SIGN_IN = _Paths.AUTHENTICATION + _Paths.SIGN_IN;
   static const SIGN_UP = _Paths.AUTHENTICATION + _Paths.SIGN_UP;
   static const FOR_DEVELOPER = _Paths.FOR_DEVELOPER;
+
+  static const COMPARISON = _Paths.COMPARISON;
+  static const SECT_SECT = _Paths.COMPARISON + _Paths.SECT_SECT;
+  static const TEAC_SECT = _Paths.COMPARISON + _Paths.TEAC_SECT;
 }
 
 abstract class _Paths {
@@ -42,7 +44,6 @@ abstract class _Paths {
   static const SYNC = '/sync';
   static const FREEROOMS = '/freerooms';
   static const PORTALS = '/portals';
-  static const COMPARISION = '/comparision';
   static const DATESHEET = '/datesheet';
   static const STUDENT_DATESHEET = '/student-datesheet';
   static const TEACHER_DATESHEET = '/teacher-datesheet';
@@ -55,4 +56,8 @@ abstract class _Paths {
   static const SIGN_IN = '/sign-in';
   static const SIGN_UP = '/sign-up';
   static const FOR_DEVELOPER = '/for-developer';
+
+  static const COMPARISON = '/comparision';
+  static const SECT_SECT = '/sect-sect';
+  static const TEAC_SECT = '/teac-sect';
 }

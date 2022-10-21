@@ -408,7 +408,7 @@ class HomeViewWidget extends StatelessWidget {
             _buildTile(context,
                 title: "Comparision",
                 iconLocation: "assets/home/menu.png",
-                ontap: () => Get.toNamed(Routes.COMPARISION)),
+                ontap: () => Get.toNamed(Routes.COMPARISON)),
           ],
         ),
         SizedBox(height: Constants.defaultPadding),

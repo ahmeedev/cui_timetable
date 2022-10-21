@@ -37,14 +37,6 @@ class TimetableView extends GetView<TimetableController> {
     return SliverAppBar(
         title: const Text('Timetable'),
         centerTitle: true,
-        // actions: const [
-        //   Padding(
-        //     padding: EdgeInsets.only(right: Constants.defaultPadding),
-        //     child: Icon(
-        //       Icons.search,
-        //     ),
-        //   )
-        // ],
         bottom: TabBar(
           indicatorPadding: EdgeInsets.all(Constants.defaultPadding / 3),
           indicatorWeight: 4,
