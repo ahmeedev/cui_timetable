@@ -6,6 +6,7 @@ import '../../../theme/app_colors.dart';
 import '../../../theme/app_constants.dart';
 
 import '../controllers/comparison_controller.dart';
+import 'widgets/sect_sect_view.dart';
 import 'widgets/teac_sect_view.dart';
 
 class ComparisonView extends GetView<ComparisonController> {
@@ -30,7 +31,7 @@ class ComparisonView extends GetView<ComparisonController> {
                   // StudentUIView(),
                   // TeacherUIView(),
 
-                  Text("Student-Student"),
+                  SectSectView(),
                   TeacSectView(),
                 ],
               ),

@@ -25,9 +25,7 @@ class TeacSectView extends GetView<TeacSetViewController> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildTextField(context),
-              SizedBox(
-                height: Constants.defaultPadding,
-              ),
+              kHeight,
               _buildButton(context)
             ],
           ),
