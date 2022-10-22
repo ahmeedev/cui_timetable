@@ -7,6 +7,8 @@ import '../modules/authentication/signUp/bindings/sign_up_binding.dart';
 import '../modules/authentication/signUp/views/sign_up_view.dart';
 import '../modules/authentication/views/authentication_view.dart';
 import '../modules/comparison/bindings/comparision_binding.dart';
+import '../modules/comparison/sec_sec/bindings/sec_sec_binding.dart';
+import '../modules/comparison/sec_sec/views/sec_sec_view.dart';
 import '../modules/comparison/views/comparison_view.dart';
 import '../modules/datesheet/bindings/datesheet_binding.dart';
 import '../modules/datesheet/student_datesheet/bindings/student_datesheet_binding.dart';
@@ -181,6 +183,12 @@ class AppPages {
         name: _Paths.COMPARISON,
         page: () => ComparisonView(),
         binding: ComparisionBinding(),
-        children: const []),
+        children: [
+          GetPage(
+            name: _Paths.SEC_SEC,
+            page: () => const SecSecView(),
+            binding: SecSecBinding(),
+          ),
+        ]),
   ];
 }

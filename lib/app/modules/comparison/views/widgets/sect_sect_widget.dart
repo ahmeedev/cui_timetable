@@ -1,14 +1,16 @@
-import 'package:cui_timetable/app/modules/comparison/controllers/sect_sect_view_controller.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../routes/app_pages.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_constants.dart';
+import '../../../../widgets/get_widgets.dart';
+import '../../controllers/sect_sect_widget_controller.dart';
 
-class SectSectView extends GetView<SectSectViewController> {
-  const SectSectView({Key? key}) : super(key: key);
+class SectSectWidget extends GetView<SectSectWidgetController> {
+  const SectSectWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class SectSectView extends GetView<SectSectViewController> {
               height: Constants.defaultPadding,
             ),
             Text(
-              'Section1 Name',
+              'Section_1',
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -69,28 +71,21 @@ class SectSectView extends GetView<SectSectViewController> {
                           .contains(value.toLowerCase()))
                       .toList();
 
-                  if (value.isEmpty || value.isEmpty) {
-                    controller.listVisible.value = false;
+                  if (value.isEmpty) {
+                    controller.listVisible1.value = false;
                     controller.filteredList1.clear();
-                  } else if (controller.filteredList1.contains(value) &&
-                      controller.filteredList1.length == 1) {
-                    controller.listVisible.value = false;
+                  } else if (controller.filteredList1.contains(value)) {
+                    // *  && controller.filteredList1.length == 1
+                    controller.listVisible1.value = false;
                   } else {
-                    controller.listVisible.value = true;
+                    controller.listVisible1.value = true;
                   }
-
-                  // if (!controller.filteredList.contains(value)) {
-                  //   controller.respectiveSections.value = [' '];
-                  //   controller.dropBoxValue.value = ' ';
-                  // }
                 },
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                       onPressed: () {
                         controller.section1Controller.clear();
                         controller.filteredList1.value = [];
-                        // controller.respectiveSections.value = [' '];
-                        // controller.dropBoxValue.value = ' ';
                       },
                       icon: const Icon(Icons.cancel, color: primaryColor)),
                   fillColor: textFieldColor,
@@ -109,7 +104,7 @@ class SectSectView extends GetView<SectSectViewController> {
                   : ConstrainedBox(
                       constraints: BoxConstraints(
                         minWidth: double.infinity,
-                        maxHeight: controller.listVisible.value ? height : 0,
+                        maxHeight: controller.listVisible1.value ? height : 0,
                       ),
                       child: ListView.separated(
                         padding: EdgeInsets.zero,
@@ -121,6 +116,8 @@ class SectSectView extends GetView<SectSectViewController> {
                             onTap: () {
                               controller.section1Controller.text =
                                   controller.filteredList1[index].toString();
+
+                              controller.listVisible1.value = false;
                             },
                             dense: true,
                             contentPadding: EdgeInsets.zero,
@@ -145,8 +142,9 @@ class SectSectView extends GetView<SectSectViewController> {
                     )),
             ),
             kHeight,
+            kHeight,
             Text(
-              'Section2 Name',
+              'Section_2',
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -168,27 +166,20 @@ class SectSectView extends GetView<SectSectViewController> {
                       .toList();
 
                   if (value.isEmpty || value.isEmpty) {
-                    controller.listVisible.value = false;
+                    controller.listVisible2.value = false;
                     controller.filteredList2.clear();
-                  } else if (controller.filteredList2.contains(value) &&
-                      controller.filteredList2.length == 1) {
-                    controller.listVisible.value = false;
+                  } else if (controller.filteredList2.contains(value)) {
+                    // * && controller.filteredList2.length == 1
+                    controller.listVisible2.value = false;
                   } else {
-                    controller.listVisible.value = true;
+                    controller.listVisible2.value = true;
                   }
-
-                  // if (!controller.filteredList.contains(value)) {
-                  //   controller.respectiveSections.value = [' '];
-                  //   controller.dropBoxValue.value = ' ';
-                  // }
                 },
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                       onPressed: () {
                         controller.section2Controller.clear();
                         controller.filteredList2.value = [];
-                        // controller.respectiveSections.value = [' '];
-                        // controller.dropBoxValue.value = ' ';
                       },
                       icon: const Icon(Icons.cancel, color: primaryColor)),
                   fillColor: textFieldColor,
@@ -206,7 +197,7 @@ class SectSectView extends GetView<SectSectViewController> {
                   : ConstrainedBox(
                       constraints: BoxConstraints(
                         minWidth: double.infinity,
-                        maxHeight: controller.listVisible.value ? height : 0,
+                        maxHeight: controller.listVisible2.value ? height : 0,
                       ),
                       child: ListView.separated(
                         padding: EdgeInsets.zero,
@@ -218,6 +209,7 @@ class SectSectView extends GetView<SectSectViewController> {
                             onTap: () {
                               controller.section2Controller.text =
                                   controller.filteredList2[index].toString();
+                              controller.listVisible2.value = false;
                             },
                             dense: true,
                             contentPadding: EdgeInsets.zero,
@@ -258,27 +250,38 @@ class SectSectView extends GetView<SectSectViewController> {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              // final value = controller.textController.text.toString();
-              // if (controller.teachers.contains(value)) {
-              //   final box1 = await Hive.openBox(DBNames.info);
-              //   box1.put(DBInfo.searchComparisonTeacher, value);
-
-              //   Get.toNamed(Routes.COMPARISON, arguments: <String>[
-              //     controller.textController.text,
-              //     controller.dropBoxValue.value
-              //   ]);
-              // } else {
-              //   GetXUtilities.snackbar(
-              //       title: 'Not Found!!',
-              //       message: 'Enter Valid Teacher Name',
-              //       gradient: primaryGradient);
-              // }
+              final section1 = controller.section1Controller.text.toString();
+              final section2 = controller.section2Controller.text.toString();
+              if (section1.isEmpty) {
+                GetXUtilities.snackbar(
+                    title: 'Error!',
+                    message: 'Section 1 cannot be empty!',
+                    gradient: errorGradient);
+              } else if (section2.isEmpty) {
+                GetXUtilities.snackbar(
+                    title: 'Error!',
+                    message: 'Section 2 cannot be empty!',
+                    gradient: errorGradient);
+              } else if (!controller.sections.contains(section1)) {
+                GetXUtilities.snackbar(
+                    title: 'Error!',
+                    message: 'Section 1 is invalid!',
+                    gradient: errorGradient);
+              } else if (!controller.sections.contains(section2)) {
+                GetXUtilities.snackbar(
+                    title: 'Error!',
+                    message: 'Section 2 is invalid!',
+                    gradient: errorGradient);
+              } else {
+                Get.toNamed(Routes.SEC_SEC,
+                    arguments: {"section1": section1, "section2": section2});
+              }
             },
             child: Padding(
               padding: EdgeInsets.all(Constants.defaultPadding),
               child: Padding(
                 padding: EdgeInsets.all(Constants.defaultPadding),
-                child: Text('Find Now',
+                child: Text('Compare',
                     style: Theme.of(context).textTheme.labelLarge
                     // .copyWith(fontSize: 16),
                     ),

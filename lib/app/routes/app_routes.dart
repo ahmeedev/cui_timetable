@@ -28,8 +28,7 @@ abstract class Routes {
   static const FOR_DEVELOPER = _Paths.FOR_DEVELOPER;
 
   static const COMPARISON = _Paths.COMPARISON;
-  static const SECT_SECT = _Paths.COMPARISON + _Paths.SECT_SECT;
-  static const TEAC_SECT = _Paths.COMPARISON + _Paths.TEAC_SECT;
+  static const SEC_SEC = _Paths.COMPARISON + _Paths.SEC_SEC;
 }
 
 abstract class _Paths {
@@ -58,6 +57,5 @@ abstract class _Paths {
   static const FOR_DEVELOPER = '/for-developer';
 
   static const COMPARISON = '/comparision';
-  static const SECT_SECT = '/sect-sect';
-  static const TEAC_SECT = '/teac-sect';
+  static const SEC_SEC = '/sec-sec';
 }

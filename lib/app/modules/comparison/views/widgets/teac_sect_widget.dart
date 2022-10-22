@@ -9,10 +9,10 @@ import '../../../../routes/app_pages.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_constants.dart';
 import '../../../../widgets/get_widgets.dart';
-import '../../controllers/teac_sect_view_controller.dart';
+import '../../controllers/teac_sect_widget_controller.dart';
 
-class TeacSectView extends GetView<TeacSetViewController> {
-  const TeacSectView({Key? key}) : super(key: key);
+class TeacSectWidget extends GetView<TeacSetWidgetController> {
+  const TeacSectWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

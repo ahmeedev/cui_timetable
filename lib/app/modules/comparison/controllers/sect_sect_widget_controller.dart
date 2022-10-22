@@ -4,12 +4,13 @@ import 'package:hive/hive.dart';
 
 import '../../../data/database/database_constants.dart';
 
-class SectSectViewController extends GetxController {
+class SectSectWidgetController extends GetxController {
   final TextEditingController section1Controller = TextEditingController();
   final TextEditingController section2Controller = TextEditingController();
 
   late final List<String> sections;
-  var listVisible = true.obs;
+  var listVisible1 = true.obs;
+  var listVisible2 = true.obs;
   late final Box box;
   var filteredList1 = [].obs;
   var filteredList2 = [].obs;

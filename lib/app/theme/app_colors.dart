@@ -43,3 +43,21 @@ const swatch = MaterialColor(
     900: Color(0xff040910), //100%
   },
 );
+
+final colorList = [
+  Colors.purple,
+  Colors.amber,
+  Colors.red,
+  Colors.black,
+  Colors.orange,
+  Colors.purple,
+  Colors.amber,
+  Colors.red,
+  Colors.black,
+  Colors.orange,
+  Colors.purple,
+  Colors.amber,
+  Colors.red,
+  Colors.black,
+  Colors.orange,
+];

@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 
 import '../../../data/database/database_constants.dart';
 
-class TeacSetViewController extends GetxController {
+class TeacSetWidgetController extends GetxController {
   final TextEditingController textController = TextEditingController();
   var listVisible = true.obs;
   late final Box box;

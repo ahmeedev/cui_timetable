@@ -6,8 +6,8 @@ import '../../../theme/app_colors.dart';
 import '../../../theme/app_constants.dart';
 
 import '../controllers/comparison_controller.dart';
-import 'widgets/sect_sect_view.dart';
-import 'widgets/teac_sect_view.dart';
+import 'widgets/sect_sect_widget.dart';
+import 'widgets/teac_sect_widget.dart';
 
 class ComparisonView extends GetView<ComparisonController> {
   final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -31,8 +31,8 @@ class ComparisonView extends GetView<ComparisonController> {
                   // StudentUIView(),
                   // TeacherUIView(),
 
-                  SectSectView(),
-                  TeacSectView(),
+                  SectSectWidget(),
+                  TeacSectWidget(),
                 ],
               ),
             )
