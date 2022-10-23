@@ -163,7 +163,7 @@ class FreeroomsClassesExpensionTile extends StatelessWidget {
             BorderRadius.all(Radius.circular(Constants.defaultRadius)),
         child: ExpansionTile(
           collapsedBackgroundColor: widgetColor,
-          backgroundColor: textFieldColor,
+          backgroundColor: selectionColor,
           onExpansionChanged: (value) {},
           title: Text(
             'Classes',
@@ -220,7 +220,7 @@ class FreeroomsLabsExpensionTile extends StatelessWidget {
             BorderRadius.all(Radius.circular(Constants.defaultRadius)),
         child: ExpansionTile(
           collapsedBackgroundColor: widgetColor,
-          backgroundColor: textFieldColor,
+          backgroundColor: selectionColor,
           onExpansionChanged: (value) {},
           title: Text(
             'Labs',

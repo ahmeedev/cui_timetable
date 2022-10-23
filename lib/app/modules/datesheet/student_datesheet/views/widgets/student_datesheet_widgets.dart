@@ -156,7 +156,7 @@ class LectureDetailsTile extends StatelessWidget {
                   Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: textFieldColor,
+                        color: selectionColor,
                         borderRadius:
                             BorderRadius.circular(Constants.defaultRadius)),
                     child: Padding(
@@ -183,7 +183,7 @@ class LectureDetailsTile extends StatelessWidget {
                   Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: textFieldColor,
+                        color: selectionColor,
                         borderRadius:
                             BorderRadius.circular(Constants.defaultRadius)),
                     child: Padding(

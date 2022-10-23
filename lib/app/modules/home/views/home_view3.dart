@@ -91,51 +91,47 @@ class HomeView3 extends GetView<HomeController> {
                 )),
             SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
-              child: Banner(
-                message: "Beta",
-                location: BannerLocation.topEnd,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      // color: Colors.red,
-                      height: height * 0.32,
-                      child: Obx(
-                        () => controller.pageIndex.value == 0
-                            ? Container(
-                                color: Colors.red,
-                                width: 0,
-                              )
-                            : _buildParticles(width, height),
-                      ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    // color: Colors.red,
+                    height: height * 0.32,
+                    child: Obx(
+                      () => controller.pageIndex.value == 0
+                          ? Container(
+                              color: Colors.red,
+                              width: 0,
+                            )
+                          : _buildParticles(width, height),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(Constants.defaultPadding)
-                          .copyWith(bottom: 0),
-                      child: Container(
-                        width: width,
-                        height: height * 0.58 - (Constants.defaultPadding * 3),
-                        decoration: BoxDecoration(
-                          color: onScaffoldColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(Constants.defaultRadius),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 10,
-                              spreadRadius: 4,
-                            ),
-                          ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(Constants.defaultPadding)
+                        .copyWith(bottom: 0),
+                    child: Container(
+                      width: width,
+                      height: height * 0.58 - (Constants.defaultPadding * 3),
+                      decoration: BoxDecoration(
+                        color: onScaffoldColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(Constants.defaultRadius),
                         ),
-                        padding: EdgeInsets.all(Constants.defaultPadding),
-                        child: SingleChildScrollView(
-                            // physics: const BouncingScrollPhysics(),
-                            child: Obx(() => controller
-                                .pageWidget[controller.pageIndex.value])),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 10,
+                            spreadRadius: 4,
+                          ),
+                        ],
                       ),
+                      padding: EdgeInsets.all(Constants.defaultPadding),
+                      child: SingleChildScrollView(
+                          // physics: const BouncingScrollPhysics(),
+                          child: Obx(() => controller
+                              .pageWidget[controller.pageIndex.value])),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Container(

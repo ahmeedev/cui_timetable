@@ -9,6 +9,10 @@ import '../modules/authentication/views/authentication_view.dart';
 import '../modules/comparison/bindings/comparision_binding.dart';
 import '../modules/comparison/sec_sec/bindings/sec_sec_binding.dart';
 import '../modules/comparison/sec_sec/views/sec_sec_view.dart';
+import '../modules/comparison/teac_sect/bindings/teac_sect_binding.dart';
+import '../modules/comparison/teac_sect/views/teac_sect_view.dart';
+import '../modules/comparison/teac_teac/bindings/teac_teac_binding.dart';
+import '../modules/comparison/teac_teac/views/teac_teac_view.dart';
 import '../modules/comparison/views/comparison_view.dart';
 import '../modules/datesheet/bindings/datesheet_binding.dart';
 import '../modules/datesheet/student_datesheet/bindings/student_datesheet_binding.dart';
@@ -188,6 +192,16 @@ class AppPages {
             name: _Paths.SEC_SEC,
             page: () => const SecSecView(),
             binding: SecSecBinding(),
+          ),
+          GetPage(
+            name: _Paths.TEAC_SECT,
+            page: () => const TeacSectView(),
+            binding: TeacSectBinding(),
+          ),
+          GetPage(
+            name: _Paths.TEAC_TEAC,
+            page: () => const TeacTeacView(),
+            binding: TeacTeacBinding(),
           ),
         ]),
   ];

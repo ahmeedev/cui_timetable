@@ -86,7 +86,7 @@ class TeacherUI extends GetView<RemainderTeacherUIController> {
                         controller.filteredList.value = [];
                       },
                       icon: const Icon(Icons.cancel, color: primaryColor)),
-                  fillColor: textFieldColor,
+                  fillColor: selectionColor,
                   filled: true,
                   border: OutlineInputBorder(
                       borderRadius:

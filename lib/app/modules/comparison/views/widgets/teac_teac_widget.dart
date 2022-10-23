@@ -9,10 +9,10 @@ import '../../../../routes/app_pages.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_constants.dart';
 import '../../../../widgets/get_widgets.dart';
-import '../../controllers/sect_sect_widget_controller.dart';
+import '../../controllers/teac_teac_widget_controller.dart';
 
-class SectSectWidget extends GetView<SectSectWidgetController> {
-  const SectSectWidget({Key? key}) : super(key: key);
+class TeacTeacWidget extends GetView<TeacTeacWidgetController> {
+  const TeacTeacWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class SectSectWidget extends GetView<SectSectWidgetController> {
               height: Constants.defaultPadding,
             ),
             Text(
-              'Section_1',
+              'Teacher_1',
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -64,9 +64,9 @@ class SectSectWidget extends GetView<SectSectWidgetController> {
                     .textTheme
                     .titleMedium!
                     .copyWith(fontWeight: FontWeight.bold),
-                controller: controller.section1Controller,
+                controller: controller.teacher1Controller,
                 onChanged: (value) {
-                  controller.filteredList1.value = controller.sections
+                  controller.filteredList1.value = controller.teachers
                       .where((element) => element
                           .toString()
                           .toLowerCase()
@@ -86,7 +86,7 @@ class SectSectWidget extends GetView<SectSectWidgetController> {
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                       onPressed: () {
-                        controller.section1Controller.clear();
+                        controller.teacher1Controller.clear();
                         controller.filteredList1.value = [];
                       },
                       icon: const Icon(Icons.cancel, color: primaryColor)),
@@ -112,7 +112,7 @@ class SectSectWidget extends GetView<SectSectWidgetController> {
                         itemBuilder: (context, index) {
                           return ListTile(
                             onTap: () {
-                              controller.section1Controller.text =
+                              controller.teacher1Controller.text =
                                   controller.filteredList1[index].toString();
 
                               controller.listVisible1.value = false;
@@ -142,7 +142,7 @@ class SectSectWidget extends GetView<SectSectWidgetController> {
             kHeight,
             kHeight,
             Text(
-              'Section_2',
+              'Teacher_2',
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
@@ -154,9 +154,9 @@ class SectSectWidget extends GetView<SectSectWidgetController> {
                     .textTheme
                     .titleMedium!
                     .copyWith(fontWeight: FontWeight.bold),
-                controller: controller.section2Controller,
+                controller: controller.teacher2Controller,
                 onChanged: (value) {
-                  controller.filteredList2.value = controller.sections
+                  controller.filteredList2.value = controller.teachers
                       .where((element) => element
                           .toString()
                           .toLowerCase()
@@ -176,12 +176,21 @@ class SectSectWidget extends GetView<SectSectWidgetController> {
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
                       onPressed: () {
-                        controller.section2Controller.clear();
+                        controller.teacher2Controller.clear();
                         controller.filteredList2.value = [];
                       },
                       icon: const Icon(Icons.cancel, color: primaryColor)),
                   fillColor: selectionColor,
                   filled: true,
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.circular(Constants.defaultRadius),
+                      borderSide:
+                          const BorderSide(color: primaryColor, width: 2)),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius:
+                          BorderRadius.circular(Constants.defaultRadius),
+                      borderSide: const BorderSide(color: primaryColor)),
                 )),
             Padding(
               padding:
@@ -201,7 +210,7 @@ class SectSectWidget extends GetView<SectSectWidgetController> {
                         itemBuilder: (context, index) {
                           return ListTile(
                             onTap: () {
-                              controller.section2Controller.text =
+                              controller.teacher2Controller.text =
                                   controller.filteredList2[index].toString();
                               controller.listVisible2.value = false;
                             },
@@ -245,35 +254,35 @@ class SectSectWidget extends GetView<SectSectWidgetController> {
               borderRadius: BorderRadius.circular(10.0),
             )),
             onPressed: () async {
-              final section1 = controller.section1Controller.text.toString();
-              final section2 = controller.section2Controller.text.toString();
-              if (section1.isEmpty) {
+              final teacher1 = controller.teacher1Controller.text.toString();
+              final teacher2 = controller.teacher2Controller.text.toString();
+              if (teacher1.isEmpty) {
                 GetXUtilities.snackbar(
                     title: 'Error!',
-                    message: 'Section 1 cannot be empty!',
+                    message: 'Teacher 1 cannot be empty!',
                     gradient: errorGradient);
-              } else if (section2.isEmpty) {
+              } else if (teacher2.isEmpty) {
                 GetXUtilities.snackbar(
                     title: 'Error!',
-                    message: 'Section 2 cannot be empty!',
+                    message: 'Teacher 2 cannot be empty!',
                     gradient: errorGradient);
-              } else if (!controller.sections.contains(section1)) {
+              } else if (!controller.teachers.contains(teacher1)) {
                 GetXUtilities.snackbar(
                     title: 'Error!',
-                    message: 'Section 1 is invalid!',
+                    message: 'Teacher 1 is invalid!',
                     gradient: errorGradient);
-              } else if (!controller.sections.contains(section2)) {
+              } else if (!controller.teachers.contains(teacher2)) {
                 GetXUtilities.snackbar(
                     title: 'Error!',
-                    message: 'Section 2 is invalid!',
+                    message: 'Teacher 2 is invalid!',
                     gradient: errorGradient);
               } else {
                 final box = await Hive.openBox(DBNames.comparisonCache);
-                box.put(DBComparisonCache.section1, section1);
-                box.put(DBComparisonCache.section2, section2);
+                box.put(DBComparisonCache.teacher1, teacher1);
+                box.put(DBComparisonCache.teacher2, teacher2);
 
-                Get.toNamed(Routes.SEC_SEC,
-                    arguments: {"section1": section1, "section2": section2});
+                Get.toNamed(Routes.TEAC_TEAC,
+                    arguments: {"teacher1": teacher1, "teacher2": teacher2});
               }
             },
             child: Padding(

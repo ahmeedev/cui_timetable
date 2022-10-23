@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/modules/comparison/views/widgets/teac_teac_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ class ComparisonView extends GetView<ComparisonController> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: CustomScrollView(
@@ -32,6 +33,7 @@ class ComparisonView extends GetView<ComparisonController> {
                   // TeacherUIView(),
 
                   SectSectWidget(),
+                  TeacTeacWidget(),
                   TeacSectWidget(),
                 ],
               ),
@@ -56,6 +58,14 @@ class ComparisonView extends GetView<ComparisonController> {
               fit: BoxFit.scaleDown,
               child: Text(
                 'Section-Section',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            )),
+            Tab(
+                child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                'Teacher-Teacher',
                 style: Theme.of(context).textTheme.labelLarge,
               ),
             )),

@@ -22,6 +22,7 @@ class DBNames {
   static const timetableCache = "timetableCache";
   static const remainderCache = "remainderCache";
   static const authCache = 'authCache';
+  static const comparisonCache = 'comparisonCache';
 }
 
 class DBInfo {
@@ -32,7 +33,7 @@ class DBInfo {
   static const datesheetSections = 'datesheetSections';
   static const datesheetTeachers = 'datesheetTeachers';
 
-  static const searchComparisonTeacher = 'searchComparisonTeacher';
+  // static const searchComparisonTeacher = 'searchComparisonTeacher';
 
   static const datesheetSearchSection = 'datesheetSearchSection';
   static const datesheetSearchTeacher = 'datesheetSearchTeacher';
@@ -123,4 +124,14 @@ class DBAuthCache {
   static const signInPass = 'signInPass';
 
   static const sectionName = 'sectionName';
+}
+
+class DBComparisonCache {
+  static const section1 = 'section1';
+  static const section2 = 'section2';
+
+  static const searchTeacher = "searchTeacher";
+
+  static const teacher1 = 'teacher1';
+  static const teacher2 = 'teacher2';
 }

@@ -152,7 +152,7 @@ class StudentUIView extends GetView<StudentUIController> {
                             controller.filteredList.value = [];
                           },
                           icon: const Icon(Icons.cancel, color: primaryColor)),
-                      fillColor: textFieldColor,
+                      fillColor: selectionColor,
                       filled: true,
                       border: OutlineInputBorder(
                           borderRadius:
@@ -167,11 +167,11 @@ class StudentUIView extends GetView<StudentUIController> {
                               horizontal: Constants.defaultPadding,
                               vertical: Constants.defaultPadding / 2),
                           decoration: BoxDecoration(
-                              color: textFieldColor,
+                              color: selectionColor,
                               borderRadius: BorderRadius.circular(
                                   Constants.defaultRadius)),
                           child: DropdownButton<dynamic>(
-                            focusColor: textFieldColor,
+                            focusColor: selectionColor,
                             isExpanded: true,
                             borderRadius: BorderRadius.all(
                                 Radius.circular(Constants.defaultRadius)),
@@ -209,11 +209,11 @@ class StudentUIView extends GetView<StudentUIController> {
                               horizontal: Constants.defaultPadding,
                               vertical: Constants.defaultPadding / 2),
                           decoration: BoxDecoration(
-                              color: textFieldColor,
+                              color: selectionColor,
                               borderRadius: BorderRadius.circular(
                                   Constants.defaultRadius)),
                           child: DropdownButton<dynamic>(
-                            focusColor: textFieldColor,
+                            focusColor: selectionColor,
                             isExpanded: true,
                             borderRadius: BorderRadius.all(
                                 Radius.circular(Constants.defaultRadius)),
@@ -243,11 +243,11 @@ class StudentUIView extends GetView<StudentUIController> {
                               horizontal: Constants.defaultPadding,
                               vertical: Constants.defaultPadding / 2),
                           decoration: BoxDecoration(
-                              color: textFieldColor,
+                              color: selectionColor,
                               borderRadius: BorderRadius.circular(
                                   Constants.defaultRadius)),
                           child: DropdownButton<dynamic>(
-                            focusColor: textFieldColor,
+                            focusColor: selectionColor,
                             isExpanded: true,
                             borderRadius: BorderRadius.all(
                                 Radius.circular(Constants.defaultRadius)),

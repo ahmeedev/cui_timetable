@@ -1,21 +1,22 @@
-import 'package:cui_timetable/app/modules/comparison/sec_sec/views/widgets/sec_sec_view_widgets.dart';
-import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:cui_timetable/app/widgets/global_widgets.dart';
+import 'package:cui_timetable/app/modules/comparison/teac_sect/views/widgets/teac_sect_view_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import '../../../../theme/app_colors.dart';
-import '../controllers/sec_sec_controller.dart';
+import '../../../../theme/app_constants.dart';
+import '../../../../widgets/global_widgets.dart';
+import '../controllers/teac_sect_controller.dart';
 
-class SecSecView extends GetView<SecSecController> {
-  const SecSecView({Key? key}) : super(key: key);
+class TeacSectView extends GetView<TeacSectController> {
+  const TeacSectView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Free Lectures'),
+        title: const Text('MakeUp Lectures'),
         centerTitle: true,
       ),
       body: FutureBuilder<List>(
@@ -31,7 +32,7 @@ class SecSecView extends GetView<SecSecController> {
                     // scrollDirection: Axis.horizontal,
                     children: [
                       ...List.generate(5, (index) {
-                        return SecSecDayTile(
+                        return TeacSecDayTile(
                           day: controller.daysName[index],
                           // dayKey: controller.days[index],
                           state: controller.dayTileState[index],
@@ -57,7 +58,7 @@ class SecSecView extends GetView<SecSecController> {
                               child: Column(
                                 children: [
                                   Text(
-                                    "Availability of free lectures for",
+                                    "Availability slots for makeup classes",
                                     textAlign: TextAlign.center,
                                     style: theme.textTheme.titleLarge!.copyWith(
                                       color: Colors.black,
@@ -70,7 +71,7 @@ class SecSecView extends GetView<SecSecController> {
                                   FittedBox(
                                     fit: BoxFit.scaleDown,
                                     child: Text(
-                                      "[${controller.section1} / ${controller.section2} ]",
+                                      "[${controller.teacher} / ${controller.section} ]",
                                       textAlign: TextAlign.center,
                                       style:
                                           theme.textTheme.titleLarge!.copyWith(
@@ -95,7 +96,7 @@ class SecSecView extends GetView<SecSecController> {
                                 // itemExtent: 1.0,
 
                                 itemBuilder: (BuildContext context, int index) {
-                                  return SecSecLectureTile(index: index);
+                                  return TeacSecLectureTile(index: index);
                                 },
                               ),
                             ),

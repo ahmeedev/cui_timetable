@@ -153,7 +153,7 @@ class MyApp extends GetView<HomeController> {
       theme: theme,
       // darkTheme: ThemeData.dark(),
       defaultTransition: Transition.cupertino,
-      transitionDuration: const Duration(milliseconds: 300),
+      transitionDuration: const Duration(milliseconds: 200),
       title: 'CUI TIMETABLE',
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,

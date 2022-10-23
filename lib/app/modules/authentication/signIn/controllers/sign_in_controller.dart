@@ -147,7 +147,7 @@ class SignInController extends GetxController {
                   .titleMedium!
                   .copyWith(fontWeight: FontWeight.bold),
               decoration: InputDecoration(
-                // fillColor: textFieldColor,
+                // fillColor: selectionColor,
                 hintText: "Enter your email",
                 // suffixText: '@students.cuisahiwal.edu.pk',
                 suffixIcon: Padding(

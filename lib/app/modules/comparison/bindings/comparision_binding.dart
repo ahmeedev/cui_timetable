@@ -3,16 +3,21 @@ import 'package:get/get.dart';
 
 import '../controllers/comparison_controller.dart';
 import '../controllers/sect_sect_widget_controller.dart';
+import '../controllers/teac_teac_widget_controller.dart';
 
 class ComparisionBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ComparisonController>(
-      () => ComparisonController(),
+    Get.put<ComparisonController>(
+      ComparisonController(),
     );
 
     Get.lazyPut<SectSectWidgetController>(
       () => SectSectWidgetController(),
+    );
+
+    Get.lazyPut<TeacTeacWidgetController>(
+      () => TeacTeacWidgetController(),
     );
 
     Get.lazyPut<TeacSetWidgetController>(

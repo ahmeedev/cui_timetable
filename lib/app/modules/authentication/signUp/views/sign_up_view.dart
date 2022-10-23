@@ -30,7 +30,7 @@ class SignUpView extends GetView<SignUpController> {
               decoration: InputDecoration(
                 // isDense: true,
                 // suffixIconConstraints: BoxConstraints.tight(const Size(60, 3)),
-                // fillColor: textFieldColor,
+                // fillColor: selectionColor,
                 hintText: "Enter your email",
                 // suffixText: '@students.cuisahiwal.edu.pk',
                 suffixIcon: Padding(

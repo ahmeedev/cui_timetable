@@ -1,9 +1,10 @@
-import 'package:cui_timetable/app/modules/comparison/controllers/comparison_controller.dart';
 import 'package:get/get.dart';
 
-class SecSecController extends GetxController {
-  final section1 = Get.arguments["section1"];
-  final section2 = Get.arguments["section2"];
+import '../../controllers/comparison_controller.dart';
+
+class TeacTeacController extends GetxController {
+  final teacher1 = Get.arguments["teacher1"];
+  final teacher2 = Get.arguments["teacher2"];
 
   // final results = <String, List<int>>{};
   final daysName = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -24,34 +25,34 @@ class SecSecController extends GetxController {
   Future<List> calculate() async {
     // final box = await Hive.openBox(DBNames.timetableData);
     // final list = await box.get(DBTimetableData.studentsData);
-    final sec1Lectures = Get.find<ComparisonController>()
-        .studentTimetable[section1.toLowerCase()];
-    final sec2Lectures = Get.find<ComparisonController>()
-        .studentTimetable[section2.toLowerCase()];
+    final teac1Lectures = Get.find<ComparisonController>()
+        .teacherTimetable[teacher1.toLowerCase()];
+    final teac2Lectures = Get.find<ComparisonController>()
+        .teacherTimetable[teacher2.toLowerCase()];
 
     for (var element in days) {
       final dayWiseSec1 =
-          sec1Lectures.where((element2) => element2.day == element).toList();
+          teac1Lectures.where((element2) => element2.day == element).toList();
       final dayWiseSec2 =
-          sec2Lectures.where((element2) => element2.day == element).toList();
+          teac2Lectures.where((element2) => element2.day == element).toList();
 
-      final sec1Slots = [];
+      final teac1Slots = [];
       for (var element in dayWiseSec1) {
-        sec1Slots.add(element.slot);
+        teac1Slots.add(element.slot);
       }
-      final sec2Slots = [];
+      final teac2Slots = [];
       for (var element in dayWiseSec2) {
-        sec2Slots.add(element.slot);
+        teac2Slots.add(element.slot);
       }
-      sec1Slots.sort();
-      sec2Slots.sort();
+      teac1Slots.sort();
+      teac2Slots.sort();
 
-      // print(sec2Slots);
+      // print(teac2Slots);
 
       final common = <int>[];
       // check the common elements in five slots
       for (var i = 1; i <= 5; i++) {
-        if (!(sec1Slots.contains(i) || sec2Slots.contains(i))) {
+        if (!(teac1Slots.contains(i) || teac2Slots.contains(i))) {
           common.add(i);
         }
       }

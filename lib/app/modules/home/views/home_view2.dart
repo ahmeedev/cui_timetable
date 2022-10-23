@@ -19,7 +19,7 @@ class HomeView2 extends GetView<HomeController> {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       key: _key,
-      backgroundColor: textFieldColor,
+      backgroundColor: selectionColor,
       drawer: Drawer(
         width: width / 1.5,
         child: Container(

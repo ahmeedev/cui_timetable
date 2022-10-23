@@ -99,12 +99,8 @@ class TeacSectWidget extends GetView<TeacSetWidgetController> {
                         controller.dropBoxValue.value = ' ';
                       },
                       icon: const Icon(Icons.cancel, color: primaryColor)),
-                  fillColor: textFieldColor,
+                  fillColor: selectionColor,
                   filled: true,
-                  border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(Constants.defaultRadius),
-                      borderSide: const BorderSide(color: primaryColor)),
                 )),
             kHeight,
             Padding(
@@ -164,7 +160,7 @@ class TeacSectWidget extends GetView<TeacSetWidgetController> {
                 padding: EdgeInsets.fromLTRB(Constants.defaultPadding * 1.2, 0,
                     Constants.defaultPadding * 2, 0),
                 child: Obx(() => DropdownButton(
-                      focusColor: textFieldColor,
+                      focusColor: selectionColor,
                       isExpanded: true,
                       borderRadius: BorderRadius.all(
                           Radius.circular(Constants.defaultRadius)),
@@ -215,13 +211,13 @@ class TeacSectWidget extends GetView<TeacSetWidgetController> {
             onPressed: () async {
               final value = controller.textController.text.toString();
               if (controller.teachers.contains(value)) {
-                final box1 = await Hive.openBox(DBNames.info);
-                box1.put(DBInfo.searchComparisonTeacher, value);
+                final box1 = await Hive.openBox(DBNames.comparisonCache);
+                box1.put(DBComparisonCache.searchTeacher, value);
 
-                Get.toNamed(Routes.COMPARISON, arguments: <String>[
-                  controller.textController.text,
-                  controller.dropBoxValue.value
-                ]);
+                Get.toNamed(Routes.TEAC_SECT, arguments: {
+                  "teacher": controller.textController.text,
+                  "section": controller.dropBoxValue.value
+                });
               } else {
                 GetXUtilities.snackbar(
                     title: 'Not Found!!',

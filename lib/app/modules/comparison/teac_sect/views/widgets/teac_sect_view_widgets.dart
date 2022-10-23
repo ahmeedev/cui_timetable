@@ -1,4 +1,3 @@
-import 'package:cui_timetable/app/modules/comparison/sec_sec/controllers/sec_sec_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,15 +5,16 @@ import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_constants.dart';
 import '../../../../../widgets/global_widgets.dart';
 import '../../../controllers/comparison_controller.dart';
+import '../../controllers/teac_sect_controller.dart';
 
-class SecSecDayTile extends GetView<SecSecController> {
+class TeacSecDayTile extends GetView<TeacSectController> {
   final String day;
   // final String dayKey;
   final Rx<bool> state;
   final int index;
   // late final Function callback;
 
-  const SecSecDayTile({
+  const TeacSecDayTile({
     required this.day,
     // required this.dayKey,
     required this.state,
@@ -117,9 +117,9 @@ class SecSecDayTile extends GetView<SecSecController> {
   }
 }
 
-class SecSecLectureTile extends GetView<SecSecController> {
+class TeacSecLectureTile extends GetView<TeacSectController> {
   final int index;
-  const SecSecLectureTile({Key? key, required this.index}) : super(key: key);
+  const TeacSecLectureTile({Key? key, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -18,6 +18,12 @@ class SectSectWidgetController extends GetxController {
   @override
   Future<void> onInit() async {
     await fetchSections();
+
+    final box1 = await Hive.openBox(DBNames.comparisonCache);
+    section1Controller.text =
+        box1.get(DBComparisonCache.section1, defaultValue: "");
+    section2Controller.text =
+        box1.get(DBComparisonCache.section2, defaultValue: "");
     super.onInit();
   }
 

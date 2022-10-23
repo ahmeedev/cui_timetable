@@ -1,9 +1,10 @@
-import 'package:cui_timetable/app/modules/comparison/controllers/comparison_controller.dart';
 import 'package:get/get.dart';
 
-class SecSecController extends GetxController {
-  final section1 = Get.arguments["section1"];
-  final section2 = Get.arguments["section2"];
+import '../../controllers/comparison_controller.dart';
+
+class TeacSectController extends GetxController {
+  final teacher = Get.arguments["teacher"];
+  final section = Get.arguments["section"];
 
   // final results = <String, List<int>>{};
   final daysName = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -16,6 +17,7 @@ class SecSecController extends GetxController {
   Future<void> onInit() async {
     future = calculate();
     selectDateWiseTile();
+
     currentTimeSlots = Get.find<ComparisonController>().monToThursSlots;
     super.onInit();
   }
@@ -23,35 +25,38 @@ class SecSecController extends GetxController {
   final dayWiseFreeLectures = <List<int>>[].obs;
   Future<List> calculate() async {
     // final box = await Hive.openBox(DBNames.timetableData);
-    // final list = await box.get(DBTimetableData.studentsData);
-    final sec1Lectures = Get.find<ComparisonController>()
-        .studentTimetable[section1.toLowerCase()];
-    final sec2Lectures = Get.find<ComparisonController>()
-        .studentTimetable[section2.toLowerCase()];
+    // final secLectures =
+    //     await box.get(DBTimetableData.studentsData)[section.toLowerCase()];
+    // final teacLectures =
+    //     await box.get(DBTimetableData.teachersData)[teacher.toLowerCase()];
+    final secLectures = Get.find<ComparisonController>()
+        .studentTimetable[section.toLowerCase()];
+    final teacLectures = Get.find<ComparisonController>()
+        .teacherTimetable[teacher.toLowerCase()];
 
     for (var element in days) {
       final dayWiseSec1 =
-          sec1Lectures.where((element2) => element2.day == element).toList();
+          secLectures.where((element2) => element2.day == element).toList();
       final dayWiseSec2 =
-          sec2Lectures.where((element2) => element2.day == element).toList();
+          teacLectures.where((element2) => element2.day == element).toList();
 
-      final sec1Slots = [];
+      final secSlots = [];
       for (var element in dayWiseSec1) {
-        sec1Slots.add(element.slot);
+        secSlots.add(element.slot);
       }
-      final sec2Slots = [];
+      final teacSlots = [];
       for (var element in dayWiseSec2) {
-        sec2Slots.add(element.slot);
+        teacSlots.add(element.slot);
       }
-      sec1Slots.sort();
-      sec2Slots.sort();
+      secSlots.sort();
+      teacSlots.sort();
 
       // print(sec2Slots);
 
       final common = <int>[];
       // check the common elements in five slots
       for (var i = 1; i <= 5; i++) {
-        if (!(sec1Slots.contains(i) || sec2Slots.contains(i))) {
+        if (!(secSlots.contains(i) || teacSlots.contains(i))) {
           common.add(i);
         }
       }

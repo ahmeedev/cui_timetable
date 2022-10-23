@@ -34,6 +34,14 @@ ThemeData lightTheme({required isLarge}) {
         cursorColor: primaryColor,
         //thereby
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Constants.defaultRadius),
+            borderSide: const BorderSide(color: primaryColor, width: 2)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Constants.defaultRadius),
+            borderSide: const BorderSide(color: primaryColor)),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(backgroundColor: primaryColor)));
 }

@@ -97,7 +97,7 @@ class SettingsView2 extends GetView<SettingsController> {
       onTap: () => controller.setSearchBy(),
       child: Container(
           decoration: BoxDecoration(
-              color: obs == true ? primaryColor : textFieldColor,
+              color: obs == true ? primaryColor : selectionColor,
               borderRadius: last == true
                   ? BorderRadius.only(
                       topRight: Radius.circular(Constants.defaultRadius),

@@ -65,7 +65,7 @@ class SettingsView extends GetView<SettingsController> {
                             // kWidth,
                             // Container(
                             //     decoration: BoxDecoration(
-                            //         color: textFieldColor,
+                            //         color: selectionColor,
                             //         borderRadius: BorderRadius.only(
                             //           topRight:
                             //               Radius.circular(Constants.defaultRadius),
@@ -115,7 +115,7 @@ class SettingsView extends GetView<SettingsController> {
       onTap: () => controller.setSearchBy(),
       child: Container(
           decoration: BoxDecoration(
-              color: obs == true ? primaryColor : textFieldColor,
+              color: obs == true ? primaryColor : selectionColor,
               borderRadius: last == true
                   ? BorderRadius.only(
                       topRight: Radius.circular(Constants.defaultRadius),

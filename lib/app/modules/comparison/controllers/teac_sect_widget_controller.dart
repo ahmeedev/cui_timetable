@@ -22,9 +22,9 @@ class TeacSetWidgetController extends GetxController {
 
     var string = '';
 
-    final box2 = await Hive.openBox(DBNames.info);
+    final box2 = await Hive.openBox(DBNames.comparisonCache);
 
-    String value = box2.get(DBInfo.searchComparisonTeacher, defaultValue: "");
+    String value = box2.get(DBComparisonCache.searchTeacher, defaultValue: "");
     if (value.isNotEmpty) {
       string = value.toString();
       listTileTap(initialData: string);

@@ -100,7 +100,7 @@
 //                         controller.dropBoxValue.value = ' ';
 //                       },
 //                       icon: const Icon(Icons.cancel, color: primaryColor)),
-//                   fillColor: textFieldColor,
+//                   fillColor: selectionColor,
 //                   filled: true,
 //                   border: OutlineInputBorder(
 //                       borderRadius:
@@ -169,7 +169,7 @@
 //                 padding: EdgeInsets.fromLTRB(Constants.defaultPadding * 1.2, 0,
 //                     Constants.defaultPadding * 2, 0),
 //                 child: Obx(() => DropdownButton(
-//                       focusColor: textFieldColor,
+//                       focusColor: selectionColor,
 //                       isExpanded: true,
 //                       borderRadius: BorderRadius.all(
 //                           Radius.circular(Constants.defaultRadius)),
