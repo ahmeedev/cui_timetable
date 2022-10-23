@@ -46,6 +46,8 @@ import '../modules/timetable/student_timetable/views/student_timetable_view.dart
 import '../modules/timetable/teacher_timetable/bindings/teacher_timetable_binding.dart';
 import '../modules/timetable/teacher_timetable/views/teacher_timetable_view.dart';
 import '../modules/timetable/views/timetable_view.dart';
+import '../modules/transport/bindings/transport_binding.dart';
+import '../modules/transport/views/transport_view.dart';
 import '../modules/ui/about_us/about_us_view.dart';
 import '../modules/ui/director_vision/director_vision.dart';
 import '../modules/ui/news/news.dart';
@@ -204,5 +206,10 @@ class AppPages {
             binding: TeacTeacBinding(),
           ),
         ]),
+    GetPage(
+      name: _Paths.TRANSPORT,
+      page: () => TransportView(),
+      binding: TransportBinding(),
+    ),
   ];
 }
