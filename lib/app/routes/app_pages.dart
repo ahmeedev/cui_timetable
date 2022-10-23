@@ -6,6 +6,8 @@ import '../modules/authentication/signIn/views/sign_in_view.dart';
 import '../modules/authentication/signUp/bindings/sign_up_binding.dart';
 import '../modules/authentication/signUp/views/sign_up_view.dart';
 import '../modules/authentication/views/authentication_view.dart';
+import '../modules/booking/bindings/booking_binding.dart';
+import '../modules/booking/views/booking_view.dart';
 import '../modules/comparison/bindings/comparision_binding.dart';
 import '../modules/comparison/sec_sec/bindings/sec_sec_binding.dart';
 import '../modules/comparison/sec_sec/views/sec_sec_view.dart';
@@ -210,6 +212,11 @@ class AppPages {
       name: _Paths.TRANSPORT,
       page: () => TransportView(),
       binding: TransportBinding(),
+    ),
+    GetPage(
+      name: _Paths.BOOKING,
+      page: () => const BookingView(),
+      binding: BookingBinding(),
     ),
   ];
 }
