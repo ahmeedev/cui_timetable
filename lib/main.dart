@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -48,16 +49,23 @@ Future<void> _initialized() async {
   ]);
 
   await LocationUtilities.initialize();
+  // devlog.log("Hive Initialized...", name: 'HIVE');
+
   await initlializeHiveAdapters();
+  Hive.init(LocationUtilities.defaultpath);
+  devlog.log("Hive Initialized...", name: 'HIVE');
+
   await Firebase.initializeApp(
     name: 'cui-timetable',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await initializeLocalNotifications();
   devlog.log("Firebase Initialized...", name: 'FIREBASE');
 
-  Hive.init(LocationUtilities.defaultpath);
-  devlog.log("Hive Initialized...", name: 'HIVE');
+  await initializeLocalNotifications();
+  devlog.log("Local Notifications Initialized...", name: 'LOCAL');
+
+  await initializeFirebaseMsg();
+  devlog.log("Firebase Notifications Initialized...", name: 'FIREBASE');
 
   // Initialize important controllers //
   Get.put<HomeController>(
@@ -102,6 +110,36 @@ initializeLocalNotifications() {
   AwesomeNotifications().createdStream.listen((event) {
     log(event.toMap().toString());
   });
+}
+
+initializeFirebaseMsg() async {
+  final instance = FirebaseMessaging.instance;
+  final result = await instance.getInitialMessage();
+  print("Result of notifications: $result");
+
+  NotificationSettings settings = await instance.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print("User has authorized notifications");
+    final token = await instance.getToken();
+    print("Token: $token");
+
+    FirebaseMessaging.onMessage.listen((event) {
+      print("Message: $event");
+    });
+  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+    print("User has authorized notifications provisionally");
+  } else {
+    print("User has declined notifications");
+  }
 }
 
 /// Root Widget of the application.
