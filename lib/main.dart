@@ -112,11 +112,19 @@ initializeLocalNotifications() {
   });
 }
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
+}
+
 initializeFirebaseMsg() async {
   final instance = FirebaseMessaging.instance;
   final result = await instance.getInitialMessage();
   print("Result of notifications: $result");
-
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   NotificationSettings settings = await instance.requestPermission(
     alert: true,
     announcement: false,
@@ -132,8 +140,8 @@ initializeFirebaseMsg() async {
     final token = await instance.getToken();
     print("Token: $token");
 
-    FirebaseMessaging.onMessage.listen((event) {
-      print("Message: $event");
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      print("Message: ${event.notification!.body}");
     });
   } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
     print("User has authorized notifications provisionally");
