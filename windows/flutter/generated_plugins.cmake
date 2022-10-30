@@ -3,7 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  connectivity_plus_windows
+  awesome_notifications
+  connectivity_plus
   url_launcher_windows
 )
 

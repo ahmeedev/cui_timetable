@@ -5,8 +5,9 @@
 import FlutterMacOS
 import Foundation
 
+import awesome_notifications
 import cloud_firestore
-import connectivity_plus_macos
+import connectivity_plus
 import firebase_analytics
 import firebase_auth
 import firebase_core
@@ -21,6 +22,7 @@ import sqflite
 import url_launcher_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
+  AwesomeNotificationsPlugin.register(with: registry.registrar(forPlugin: "AwesomeNotificationsPlugin"))
   FLTFirebaseFirestorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseFirestorePlugin"))
   ConnectivityPlugin.register(with: registry.registrar(forPlugin: "ConnectivityPlugin"))
   FLTFirebaseAnalyticsPlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseAnalyticsPlugin"))

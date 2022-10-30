@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:developer' as devlog;
 import 'dart:developer';
 import 'dart:io';
@@ -99,35 +101,44 @@ initializeLocalNotifications() {
       null,
       [
         NotificationChannel(
-            channelKey: channelRemainderKey,
-            channelName: channelRemainder,
-            channelDescription: channelRemainderDescription,
-            defaultColor: primaryColor,
-            ledColor: Colors.red)
+          channelKey: channelRemainderKey,
+          channelName: channelRemainder,
+          channelDescription: channelRemainderDescription,
+          ledColor: primaryColor,
+        ),
+        NotificationChannel(
+          channelKey: channelUpdatesKey,
+          channelName: channelUpdates,
+          channelDescription: channelUpdatesDescription,
+          ledColor: primaryColor,
+        )
       ],
       debug: true);
 
-  AwesomeNotifications().createdStream.listen((event) {
-    log(event.toMap().toString());
-  });
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
-
-  print("Handling a background message: ${message.messageId}");
+  AwesomeNotifications().setListeners(
+    onActionReceivedMethod: (receivedAction) {
+      log("Action Received: $receivedAction");
+      return Future.value();
+    },
+    onNotificationCreatedMethod: (receivedNotification) {
+      log("Action Received: $receivedNotification");
+      return Future.value();
+    },
+  );
+  // AwesomeNotifications().createdStream.listen((event) {
+  //   log(event.toMap().toString());
+  // });
 }
 
 initializeFirebaseMsg() async {
   final instance = FirebaseMessaging.instance;
-  final result = await instance.getInitialMessage();
-  print("Result of notifications: $result");
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // final result = await instance.getInitialMessage();
+  // print("Result of notifications: $result");
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   NotificationSettings settings = await instance.requestPermission(
     alert: true,
-    announcement: false,
+    announcement: true,
     badge: true,
     carPlay: false,
     criticalAlert: false,
@@ -136,12 +147,21 @@ initializeFirebaseMsg() async {
   );
 
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    print("User has authorized notifications");
+    // print("User has authorized notifications");
     final token = await instance.getToken();
-    print("Token: $token");
+    log("Notification Token: $token");
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print("Message: ${event.notification!.body}");
+      // print("Message: ${event.notification!.body}");
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+        channelKey: channelUpdatesKey,
+        id: 1,
+        title: event.notification!.title,
+        body: event.notification!.body,
+        color: Colors.red,
+        bigPicture: event.notification!.android!.imageUrl,
+      ));
     });
   } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
     print("User has authorized notifications provisionally");
