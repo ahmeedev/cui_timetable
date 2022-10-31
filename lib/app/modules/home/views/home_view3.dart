@@ -71,7 +71,7 @@ class HomeView3 extends GetView<HomeController> {
                                             .textTheme
                                             .headlineMedium!
                                             .fontSize! -
-                                        4
+                                        8
                                     : Theme.of(context)
                                             .textTheme
                                             .headlineMedium!
@@ -124,7 +124,7 @@ class HomeView3 extends GetView<HomeController> {
                           ),
                         ],
                       ),
-                      padding: EdgeInsets.all(Constants.defaultPadding),
+                      // padding: EdgeInsets.all(Constants.defaultPadding),
                       child: SingleChildScrollView(
                           // physics: const BouncingScrollPhysics(),
                           child: Obx(() => controller
@@ -356,140 +356,119 @@ class HomeViewWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const UpdateTile(),
-        Text(
-          "Events",
-          style: textTheme.titleMedium!
-              .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
-        ),
-        SizedBox(height: Constants.defaultPadding),
+        kHeight,
+        _buildTag(context: context, text: 'Academic'),
+        kHeight,
+        kHeight,
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(width: Constants.defaultPadding),
-            _buildTile(context,
-                title: "Meetups", iconLocation: "assets/home/datesheet.png"),
-            SizedBox(width: Constants.defaultPadding),
-            _buildTile(context,
-                title: "Socities", iconLocation: "assets/home/room.png"),
-            _buildTile(context, blank: true),
-            _buildTile(context, blank: true),
-          ],
-        ),
-        SizedBox(height: Constants.defaultPadding),
-        SizedBox(height: Constants.defaultPadding),
-        Text(
-          "Academic",
-          style: textTheme.titleMedium!
-              .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
-        ),
-        SizedBox(height: Constants.defaultPadding),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(width: Constants.defaultPadding),
+            kWidth,
             _buildTile(context,
                 title: "Timetable",
                 ontap: () => Get.toNamed(Routes.TIMETABLE),
                 iconLocation: "assets/home/timetable.png"),
-            SizedBox(width: Constants.defaultPadding),
-            _buildTile(context,
-                title: "Datesheet",
-                ontap: () => Get.toNamed(Routes.DATESHEET),
-                iconLocation: "assets/home/datesheet.png"),
-            SizedBox(width: Constants.defaultPadding),
+            kWidth,
             _buildTile(context,
                 title: "Freerooms",
                 ontap: () => Get.toNamed(Routes.FREEROOMS),
                 iconLocation: "assets/home/room.png"),
-            SizedBox(width: Constants.defaultPadding),
+            kWidth,
+            _buildTile(context,
+                title: "Datesheet",
+                ontap: () => Get.toNamed(Routes.DATESHEET),
+                iconLocation: "assets/home/datesheet.png"),
+            kWidth,
             _buildTile(context,
                 title: "Comparision",
                 iconLocation: "assets/home/menu.png",
                 ontap: () => Get.toNamed(Routes.COMPARISON)),
+            kWidth,
           ],
         ),
-        SizedBox(height: Constants.defaultPadding),
+        kHeight,
         Row(
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(width: Constants.defaultPadding),
+            kWidth,
             _buildTile(context,
                 title: "Booking",
                 ontap: () => Get.toNamed(Routes.BOOKING),
                 iconLocation: "assets/home/booking.png"),
-            SizedBox(width: Constants.defaultPadding),
+            kWidth,
             _buildTile(context,
                 title: "Transport",
                 ontap: () => Get.toNamed(Routes.TRANSPORT),
                 iconLocation: "assets/home/transport.png"),
-            SizedBox(width: Constants.defaultPadding),
-            _buildTile(context, blank: true),
-            SizedBox(width: Constants.defaultPadding),
-            _buildTile(context, blank: true),
+            kWidth,
+            _buildTile(context,
+                title: "Meetups", iconLocation: "assets/home/datesheet.png"),
+            kWidth,
+            _buildTile(context,
+                title: "Socities", iconLocation: "assets/home/room.png"),
+            kWidth,
           ],
         ),
-        SizedBox(height: Constants.defaultPadding),
-        SizedBox(height: Constants.defaultPadding),
-        Text(
-          "General",
-          style: textTheme.titleMedium!
-              .copyWith(color: Colors.black, fontWeight: FontWeight.w900),
-        ),
-        SizedBox(height: Constants.defaultPadding),
+        kHeight,
+        kHeight,
+        kHeight,
+        _buildTag(context: context, text: 'Miscellaneous'),
+        kHeight,
+        kHeight,
         Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(width: Constants.defaultPadding),
+            kWidth,
             _buildTile(context,
                 title: "Feedback",
                 // ontap: () => Get.toNamed(Routes.TIMETABLE),
                 iconLocation: "assets/home/feedback.png"),
-            SizedBox(width: Constants.defaultPadding),
+            kWidth,
             _buildTile(context,
                 title: "About Us",
                 ontap: () => Get.toNamed(Routes.ABOUT_US),
                 iconLocation: "assets/home/about_us.png"),
-            SizedBox(width: Constants.defaultPadding),
+            kWidth,
             _buildTile(context,
                 title: "Donation",
                 // ontap: () => Get.toNamed(Routes.FREEROOMS),
                 iconLocation: "assets/home/donation.png"),
-            SizedBox(width: Constants.defaultPadding),
+            kWidth,
             _buildTile(
               context,
               title: "Developers",
               iconLocation: "assets/home/developer.png",
               ontap: () => Get.toNamed(Routes.DEVELOPER),
             ),
+            kWidth,
           ],
         ),
-        // SizedBox(height: Constants.defaultPadding + 5),
-
-        // Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   children: [
-        //     SizedBox(width: Constants.defaultPadding),
-        //     _buildTile(context,
-        //         title: "Feedback",
-        //         // ontap: () => Get.toNamed(Routes.TIMETABLE),
-        //         iconLocation: "assets/home/timetable.png"),
-        //     SizedBox(width: Constants.defaultPadding),
-        //     _buildTile(context,
-        //         title: "About Us",
-        //         // ontap: () => Get.toNamed(Routes.DATESHEET),
-        //         iconLocation: "assets/home/datesheet.png"),
-        //     SizedBox(width: Constants.defaultPadding),
-        //     _buildTile(context,
-        //         title: "Donation",
-        //         // ontap: () => Get.toNamed(Routes.FREEROOMS),
-        //         iconLocation: "assets/home/room.png"),
-        //     SizedBox(width: Constants.defaultPadding),
-        //     _buildTile(context,
-        //         title: "Contribute", iconLocation: "assets/home/menu.png"),
-        //   ],
-        // ),
       ],
     );
   }
+}
+
+_buildTag({required context, required text}) {
+  final theme = Theme.of(context);
+
+  return Card(
+      color: primaryColor.withOpacity(0.8),
+      elevation: 20,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(Constants.defaultRadius / 2),
+              bottomRight: Radius.circular(Constants.defaultRadius / 2))),
+      margin: EdgeInsets.zero,
+      child: Text(
+        text,
+        style: theme.textTheme.titleSmall!
+            .copyWith(color: Colors.white, fontWeight: FontWeight.w900),
+      ).paddingAll(Constants.defaultPadding)
+      // .paddingSymmetric(horizontal: Constants.defaultPadding),
+      );
+  // .paddingSymmetric(horizontal: Constants.defaultPadding);
 }
 
 _buildTile(context,

@@ -29,13 +29,8 @@ class SettingsView2 extends GetView<SettingsController> {
           //     callback: controller.setDarkMode),
           // kHeight,
           // kHeight,
-          Text(
-            "General",
-            style: Theme.of(context)
-                .textTheme
-                .labelLarge!
-                .copyWith(color: Colors.black),
-          ),
+          kHeight,
+          _buildTag(context: context, text: 'General'),
           kHeight,
           Card(
             margin: EdgeInsets.zero,
@@ -48,15 +43,39 @@ class SettingsView2 extends GetView<SettingsController> {
                           context: context,
                           title: '   List   ',
                           obs: controller.searchBy["list"],
+                          onTap: controller.setSearchBy,
                         ),
                         buildButtonList(
+                            onTap: controller.setSearchBy,
                             context: context,
                             title: 'Section',
                             obs: controller.searchBy["section"],
                             last: true),
                       ],
                     ))),
-          ),
+          ).paddingSymmetric(horizontal: Constants.defaultPadding),
+          kHeight,
+          Card(
+            margin: EdgeInsets.zero,
+            child: ListTile(
+                title: Obx(() => Row(
+                      children: [
+                        const Text("Cloud Notifications"),
+                        const Spacer(),
+                        buildButtonList(
+                            context: context,
+                            title: '   Off   ',
+                            obs: controller.cloudNotiStateFalse,
+                            onTap: controller.resetCloudNotiState),
+                        buildButtonList(
+                            context: context,
+                            title: '   On   ',
+                            obs: controller.cloudNotiStateTrue,
+                            onTap: controller.resetCloudNotiState,
+                            last: true),
+                      ],
+                    ))),
+          ).paddingSymmetric(horizontal: Constants.defaultPadding),
 
           // kHeight,
           // _buildSettingTile(
@@ -70,13 +89,7 @@ class SettingsView2 extends GetView<SettingsController> {
           //     callback: controller.setLatestNews),
           kHeight,
           kHeight,
-          Text(
-            "Miscellaneous",
-            style: Theme.of(context)
-                .textTheme
-                .labelLarge!
-                .copyWith(color: Colors.black),
-          ),
+          _buildTag(context: context, text: "Miscellaneous"),
           kHeight,
           Card(
             child: ListTile(
@@ -87,14 +100,40 @@ class SettingsView2 extends GetView<SettingsController> {
                   },
                   child: const Text("Clear")),
             ),
-          )
+          ).paddingSymmetric(horizontal: Constants.defaultPadding)
         ]);
   }
 
-  InkWell buildButtonList(
-      {required context, required String title, required obs, last = false}) {
+  _buildTag({required context, required text}) {
+    final theme = Theme.of(context);
+
+    return Card(
+        color: primaryColor.withOpacity(0.8),
+        elevation: 20,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(Constants.defaultRadius / 2),
+                bottomRight: Radius.circular(Constants.defaultRadius / 2))),
+        margin: EdgeInsets.zero,
+        child: Text(
+          text,
+          style: theme.textTheme.titleSmall!
+              .copyWith(color: Colors.white, fontWeight: FontWeight.w900),
+        ).paddingAll(Constants.defaultPadding)
+        // .paddingSymmetric(horizontal: Constants.defaultPadding),
+        );
+    // .paddingSymmetric(horizontal: Constants.defaultPadding);
+  }
+
+  InkWell buildButtonList({
+    required context,
+    required String title,
+    required obs,
+    required onTap,
+    last = false,
+  }) {
     return InkWell(
-      onTap: () => controller.setSearchBy(),
+      onTap: () => onTap(),
       child: Container(
           decoration: BoxDecoration(
               color: obs == true ? primaryColor : selectionColor,
@@ -121,16 +160,4 @@ class SettingsView2 extends GetView<SettingsController> {
           )),
     );
   }
-
-  // _buildSettingTile(
-  //     {required String label, required Rx<bool> value, required callback}) {
-  //   return Obx(() => Card(
-  //       margin: EdgeInsets.zero,
-  //       child: SwitchListTile(
-  //           activeColor: primaryColor,
-  //           title: Text(label),
-  //           value: value.value,
-  //           onChanged: callback)));
-  // }
-
 }

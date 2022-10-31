@@ -17,6 +17,7 @@ dependencies:
   csv: ^5.0.1
   cupertino_icons: ^1.0.2
   dart_date: ^1.1.1
+  # device_info_plus: ^8.0.0
   device_preview: ^1.1.0
   firebase_analytics: ^10.0.3
   firebase_auth: ^4.1.0
@@ -47,6 +48,7 @@ dependencies:
   logger: ^1.1.0
   particles_flutter: ^0.1.4
   path_provider: ^2.0.9
+  platform_device_id: ^1.0.1
   rive: ^0.9.1
   sqflite: ^2.0.2+1
   url_launcher: ^6.0.20

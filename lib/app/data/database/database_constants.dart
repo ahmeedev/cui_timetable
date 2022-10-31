@@ -88,6 +88,7 @@ class DBHistory {
 
 class DBSettings {
   static const searchBy = 'searchBy';
+  static const cloudNoti = 'cloudNoti';
 
   static const darkMode = 'darkMode';
 

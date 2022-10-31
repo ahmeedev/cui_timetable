@@ -64,7 +64,7 @@ class NewsView extends GetView<NewsController> {
               .copyWith(fontWeight: FontWeight.w900, color: Colors.black),
         );
       },
-    );
+    ).paddingAll(Constants.defaultPadding);
   }
 
   Card buildNews(context,

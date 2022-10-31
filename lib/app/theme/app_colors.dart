@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 const primaryColor = Color(0xFF265FA4);
 const secondaryColor = Color(0xFF482369);
+const secondaryForGradient = Color.fromARGB(255, 60, 30, 87);
 const forGradient = Color(0XFF1b4373);
 // const scaffoldColor = Color(0xffd4dfed);
 const scaffoldColor = onScaffoldColor;
@@ -25,6 +26,7 @@ const successColor2 = Color(0xff02734a);
 const errorColor1 = Color(0xffB00020);
 
 const primaryGradient = [primaryColor, forGradient];
+const secondaryGradient = [secondaryColor, secondaryForGradient];
 const successGradient = [successColor, successColor2];
 const errorGradient = [Color(0xff800000), Color(0xff990000)];
 

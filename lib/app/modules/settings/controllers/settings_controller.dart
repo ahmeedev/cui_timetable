@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
+import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/light_theme.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -17,6 +19,9 @@ class SettingsController extends GetxController {
   final carousel = true.obs;
   final latestNews = true.obs;
 
+  final cloudNotiStateTrue = true.obs;
+  final cloudNotiStateFalse = false.obs;
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -29,6 +34,17 @@ class SettingsController extends GetxController {
     searchBy.value = Map<String, bool>.from(await box.get(DBSettings.searchBy,
         // ignore: invalid_use_of_protected_member
         defaultValue: searchBy.value));
+
+    // setting cloud messaging state
+    cloudNotiStateTrue.value =
+        box.get(DBSettings.cloudNoti, defaultValue: true);
+    if (cloudNotiStateTrue.value) {
+      FirebaseMessaging.instance.subscribeToTopic(notificationsForAll);
+    } else {
+      FirebaseMessaging.instance.unsubscribeFromTopic(notificationsForAll);
+    }
+    cloudNotiStateFalse.value = !cloudNotiStateTrue.value;
+
     darkMode.value = box.get(DBSettings.darkMode, defaultValue: false);
 
     carousel.value = box.get(DBSettings.carousel, defaultValue: true);
@@ -42,6 +58,19 @@ class SettingsController extends GetxController {
     await box.put(DBSettings.searchBy, searchBy);
 
     // print(box.get(DBSettings.searchBy));
+  }
+
+  resetCloudNotiState() async {
+    cloudNotiStateTrue.value = !cloudNotiStateTrue.value;
+    cloudNotiStateFalse.value = !cloudNotiStateFalse.value;
+
+    if (cloudNotiStateTrue.value) {
+      FirebaseMessaging.instance.subscribeToTopic(notificationsForAll);
+      await box.put(DBSettings.cloudNoti, true);
+    } else {
+      FirebaseMessaging.instance.unsubscribeFromTopic(notificationsForAll);
+      await box.put(DBSettings.cloudNoti, false);
+    }
   }
 
   void setDarkMode(value) {

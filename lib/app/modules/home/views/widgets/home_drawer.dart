@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -237,13 +236,12 @@ class ButtonList extends GetView<HomeController> {
           //   final result = FirebaseAuth.instance.currentUser;
           //   print(result);
           // }),
-          kDebugMode == true
-              ? buildButton(context,
-                  icon: const AssetImage('assets/drawer/developer.png'),
-                  title: 'For Developer', onTap: () {
-                  Get.toNamed(Routes.FOR_DEVELOPER);
-                })
-              : SizedBox(),
+
+          buildButton(context,
+              icon: const AssetImage('assets/drawer/developer.png'),
+              title: 'For Developer', onTap: () {
+            Get.toNamed(Routes.FOR_DEVELOPER);
+          }),
           // buildButton(context,
           //     icon: const AssetImage('assets/drawer/firebase.png'),
           //     title: 'Firebase', onTap: () {
