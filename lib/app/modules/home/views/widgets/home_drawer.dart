@@ -168,6 +168,7 @@ class ButtonList extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Expanded(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -184,11 +185,33 @@ class ButtonList extends GetView<HomeController> {
           //     title: 'About Us', onTap: () {
           //   Get.toNamed(Routes.ABOUT_US);
           // }),
-          buildButton(context,
-              icon: const AssetImage('assets/drawer/remainder.png'),
-              title: 'Remainder', onTap: () {
-            Get.toNamed(Routes.REMAINDER);
-          }),
+          Stack(
+            children: [
+              buildButton(context,
+                  icon: const AssetImage('assets/drawer/remainder.png'),
+                  title: 'Remainder', onTap: () {
+                Get.toNamed(Routes.REMAINDER);
+              }),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  // width: 30,
+                  decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(Constants.defaultRadius),
+                          bottomRight:
+                              Radius.circular(Constants.defaultRadius))),
+                  // height: 30,
+                  child: Text(
+                    "Beta",
+                    style: theme.textTheme.labelMedium!.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.w900),
+                  ).paddingAll(Constants.defaultPadding * 0.8),
+                ).paddingOnly(right: 4),
+              ),
+            ],
+          ),
           // buildButton(context,
           //     icon: const AssetImage('assets/drawer/bookings.png'),
           //     title: 'Bookings',

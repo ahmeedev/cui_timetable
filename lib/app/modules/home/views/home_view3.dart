@@ -355,8 +355,8 @@ class HomeViewWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const UpdateTile(),
         kHeight,
+        const UpdateTile(),
         _buildTag(context: context, text: 'Academic'),
         kHeight,
         kHeight,
