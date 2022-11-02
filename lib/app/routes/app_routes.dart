@@ -33,6 +33,9 @@ abstract class Routes {
   static const TEAC_TEAC = _Paths.COMPARISON + _Paths.TEAC_TEAC;
   static const TRANSPORT = _Paths.TRANSPORT;
   static const BOOKING = _Paths.BOOKING;
+  static const BOOKING_DETAILS = _Paths.BOOKING + _Paths.BOOKING_DETAILS;
+  static const BOOKING_INFO = _Paths.BOOKING + _Paths.BOOKING_INFO;
+  static const BOOKING_ROOM = _Paths.BOOKING + _Paths.BOOKING_ROOM;
 }
 
 abstract class _Paths {
@@ -66,4 +69,7 @@ abstract class _Paths {
   static const TEAC_TEAC = '/teac-teac';
   static const TRANSPORT = '/transport';
   static const BOOKING = '/booking';
+  static const BOOKING_DETAILS = '/booking-details';
+  static const BOOKING_INFO = '/booking-info';
+  static const BOOKING_ROOM = '/booking-room';
 }

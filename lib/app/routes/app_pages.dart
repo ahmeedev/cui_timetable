@@ -7,6 +7,12 @@ import '../modules/authentication/signUp/bindings/sign_up_binding.dart';
 import '../modules/authentication/signUp/views/sign_up_view.dart';
 import '../modules/authentication/views/authentication_view.dart';
 import '../modules/booking/bindings/booking_binding.dart';
+import '../modules/booking/bookingDetails/bindings/booking_details_binding.dart';
+import '../modules/booking/bookingDetails/views/booking_details_view.dart';
+import '../modules/booking/bookingInfo/bindings/booking_info_binding.dart';
+import '../modules/booking/bookingInfo/views/booking_info_view.dart';
+import '../modules/booking/bookingRoom/bindings/booking_room_binding.dart';
+import '../modules/booking/bookingRoom/views/booking_room_view.dart';
 import '../modules/booking/views/booking_view.dart';
 import '../modules/comparison/bindings/comparision_binding.dart';
 import '../modules/comparison/sec_sec/bindings/sec_sec_binding.dart';
@@ -210,13 +216,30 @@ class AppPages {
         ]),
     GetPage(
       name: _Paths.TRANSPORT,
-      page: () => TransportView(),
+      page: () => const TransportView(),
       binding: TransportBinding(),
     ),
     GetPage(
       name: _Paths.BOOKING,
       page: () => const BookingView(),
       binding: BookingBinding(),
+      children: [
+        GetPage(
+          name: _Paths.BOOKING_DETAILS,
+          page: () => const BookingDetailsView(),
+          binding: BookingDetailsBinding(),
+        ),
+        GetPage(
+          name: _Paths.BOOKING_INFO,
+          page: () => const BookingInfoView(),
+          binding: BookingInfoBinding(),
+        ),
+        GetPage(
+          name: _Paths.BOOKING_ROOM,
+          page: () => const BookingRoomView(),
+          binding: BookingRoomBinding(),
+        ),
+      ],
     ),
   ];
 }

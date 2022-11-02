@@ -23,6 +23,7 @@ class DBNames {
   static const remainderCache = "remainderCache";
   static const authCache = 'authCache';
   static const comparisonCache = 'comparisonCache';
+  static const bookingCache = 'bookingCache';
 }
 
 class DBInfo {
@@ -135,4 +136,8 @@ class DBComparisonCache {
 
   static const teacher1 = 'teacher1';
   static const teacher2 = 'teacher2';
+}
+
+class DBBookingCache {
+  static const searchTeacher = "searchTeacher";
 }
