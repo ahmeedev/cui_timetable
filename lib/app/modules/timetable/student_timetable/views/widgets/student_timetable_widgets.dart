@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_soul/flutter_soul.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -212,7 +213,7 @@ class LectureDetailsTile extends StatelessWidget {
                       ),
                       const VerticalDivider(
                         color: primaryColor,
-                        thickness: 2.0,
+                        thickness: 3.0,
                         // indent: 4,
                       ),
                       Expanded(
@@ -248,9 +249,7 @@ class LectureDetailsTile extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 8,
-                              ),
+                           kHeight,
                               Row(
                                 children: [
                                   const ImageIcon(

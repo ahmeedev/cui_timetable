@@ -276,6 +276,11 @@ class TeacTeacWidget extends GetView<TeacTeacWidgetController> {
                     title: 'Error!',
                     message: 'Teacher 2 is invalid!',
                     gradient: errorGradient);
+              }else if (teacher1==teacher2) {
+                GetXUtilities.snackbar(
+                    title: 'Error!',
+                    message: 'Both teachers must be different',
+                    gradient: errorGradient);
               } else {
                 final box = await Hive.openBox(DBNames.comparisonCache);
                 box.put(DBComparisonCache.teacher1, teacher1);

@@ -42,7 +42,6 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-//hi thi sis bilal
 Future<void> _initialized() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

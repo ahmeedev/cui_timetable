@@ -132,14 +132,13 @@ class BookingInfoLectureTile extends GetView<BookingInfoController> {
 
     final slotNo = controller
         .dayWiseFreeLectures[controller.currentActiveIndex.value][index];
-    return SizedBox(
-      // color: widgetColor,
-      height: Get.height * 0.16,
-      // width: Get.width - 32,
-      child: Card(
+    return Card(
+      child: IntrinsicHeight(
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Column(
+
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -162,8 +161,10 @@ class BookingInfoLectureTile extends GetView<BookingInfoController> {
             Container(
               color: selectionColor,
               width: 4,
-              height: double.infinity,
+              // height: 4,
+              // height: double.infinity,
             ).paddingSymmetric(vertical: Constants.defaultPadding / 2),
+
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -58,15 +58,17 @@ class Header extends GetView<HomeController> {
           forGradient,
         ],
       )),
-      height:
-          MediaQuery.of(context).size.height * 0.25 + Constants.defaultPadding,
+      height: MediaQuery.of(context).size.height<600?MediaQuery.of(context).size.height * 0.30 + Constants.defaultPadding:
+        MediaQuery.of(context).size.height * 0.25 + Constants.defaultPadding,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
         child: SafeArea(
           child: Column(
+
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               Padding(
                 padding: EdgeInsets.only(
                   top: Constants.defaultPadding,

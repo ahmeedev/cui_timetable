@@ -1,7 +1,9 @@
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:particles_flutter/particles_flutter.dart';
@@ -393,10 +395,26 @@ class HomeViewWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             kWidth,
-            _buildTile(context,
-                title: "Booking",
-                ontap: () => Get.toNamed(Routes.BOOKING),
-                iconLocation: "assets/home/booking.png"),
+            _buildTile(context, title: "Booking", ontap: () {
+              String? email = FirebaseAuth.instance.currentUser?.email;
+
+              // if (email!.endsWith("@cuisahiwal.edu.pk")) {
+              if (email == null) {
+                GetXUtilities.snackbar(
+                    title: "Error!",
+                    message: "Sign in as a Teacher",
+                    gradient: errorGradient);
+              } else {
+                if (email!.endsWith("@gmail.com")) {
+                  Get.toNamed(Routes.BOOKING);
+                } else {
+                  GetXUtilities.snackbar(
+                      title: "Error!",
+                      message: "Sign in as a Teacher",
+                      gradient: errorGradient);
+                }
+              }
+            }, iconLocation: "assets/home/booking.png"),
             kWidth,
             _buildTile(context,
                 title: "Transport",

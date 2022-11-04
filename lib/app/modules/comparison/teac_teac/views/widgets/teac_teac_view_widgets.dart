@@ -124,23 +124,26 @@ class TeacTeacLectureTile extends GetView<TeacTeacController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return SizedBox(
-      // color: widgetColor,
-      height: Get.height * 0.16,
-      // width: Get.width - 32,
-      child: Card(
+    return Card(
+      child: IntrinsicHeight(
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              "Free Slot",
-              style: theme.textTheme.titleMedium!
-                  .copyWith(color: successColor, fontWeight: FontWeight.w900),
-            ).paddingSymmetric(horizontal: Constants.defaultPadding),
-            Container(
-              color: selectionColor,
-              width: 4,
-              height: double.infinity,
-            ).paddingSymmetric(vertical: Constants.defaultPadding / 2),
+            Center(
+              child: Text(
+                "Free Slot",
+                style: theme.textTheme.titleMedium!
+                    .copyWith(color: successColor, fontWeight: FontWeight.w900),
+              ).paddingSymmetric(horizontal: Constants.defaultPadding),
+            ),
+            const VerticalDivider(
+              color: primaryColor,
+              thickness: 3,
+              indent: 5,
+              endIndent: 5,
+              width: 0,
+            ),
+
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

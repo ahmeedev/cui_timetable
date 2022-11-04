@@ -267,7 +267,14 @@ class SectSectWidget extends GetView<SectSectWidgetController> {
                     title: 'Error!',
                     message: 'Section 2 is invalid!',
                     gradient: errorGradient);
-              } else {
+              } else if (section1==section2) {
+                GetXUtilities.snackbar(
+                    title: 'Error!',
+                    message: 'Both sections must be different',
+                    gradient: errorGradient);
+              }
+
+              else {
                 final box = await Hive.openBox(DBNames.comparisonCache);
                 box.put(DBComparisonCache.section1, section1);
                 box.put(DBComparisonCache.section2, section2);

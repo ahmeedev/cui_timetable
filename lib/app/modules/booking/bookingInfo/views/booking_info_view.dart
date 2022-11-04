@@ -22,7 +22,7 @@ class BookingInfoView extends GetView<BookingInfoController> {
       body: FutureBuilder<List>(
         future: controller.future,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
             return Column(
               children: [
                 SizedBox(

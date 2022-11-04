@@ -8,6 +8,7 @@ import 'widgets/booking_details_widgets.dart';
 
 class BookingDetailsView extends GetView<BookingDetailsController> {
   const BookingDetailsView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -32,10 +33,13 @@ class BookingDetailsView extends GetView<BookingDetailsController> {
                 },
                 onStepContinue: () {
                   if (controller.currentStep.value == 2) {
-                    Get.back();
-                  }
-                  if (controller.currentStep.value < 2) {
+                    // Get.back();
+                  } else if (controller.currentStep.value < 2) {
                     controller.currentStep.value++;
+                    controller.book(
+                        section: controller.bookingFor,
+                        time: controller.bookingSlot,
+                        room: "C1");
                   }
                 },
                 onStepCancel: () {

@@ -50,20 +50,23 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
         ),
         Card(
           child: ListTile(
-            title: Row(
-              children: [
-                Text("Booking slot:  ", style: headingStyle),
-                Text(
-                  "${controller.bookingSlot.toString()}  -  ",
-                  style: theme.textTheme.titleMedium!.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.w900),
-                ),
-                Text(
-                  "[${Get.find<BookingInfoController>().currentTimeSlots[controller.bookingSlot - 1]}]",
-                  style: theme.textTheme.titleMedium!.copyWith(
-                      color: successColor, fontWeight: FontWeight.w900),
-                ),
-              ],
+            title: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                children: [
+                  Text("Booking slot:  ", style: headingStyle),
+                  Text(
+                    "${controller.bookingSlot.toString()}  -  ",
+                    style: theme.textTheme.titleMedium!.copyWith(
+                        color: Colors.black, fontWeight: FontWeight.w900),
+                  ),
+                  Text(
+                    "[${Get.find<BookingInfoController>().currentTimeSlots[controller.bookingSlot - 1]}]",
+                    style: theme.textTheme.titleMedium!.copyWith(
+                        color: successColor, fontWeight: FontWeight.w900),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -81,16 +84,17 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
                 //   ),
                 // ),
                 // const Spacer(),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(Routes.BOOKING_ROOM);
-                  },
-                  child: Text(
-                    "Select",
-                    style: theme.textTheme.titleMedium!.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.w900),
-                  ),
-                ),
+                Text("C1"),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Get.toNamed(Routes.BOOKING_ROOM);
+                //   },
+                //   child: Text(
+                //     "Select",
+                //     style: theme.textTheme.titleMedium!.copyWith(
+                //         color: Colors.white, fontWeight: FontWeight.w900),
+                //   ),
+                // ),
               ],
             ),
           ),
