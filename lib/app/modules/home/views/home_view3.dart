@@ -405,7 +405,7 @@ class HomeViewWidget extends StatelessWidget {
                     message: "Sign in as a Teacher",
                     gradient: errorGradient);
               } else {
-                if (email!.endsWith("@gmail.com")) {
+                if (email.endsWith("@gmail.com")) {
                   Get.toNamed(Routes.BOOKING);
                 } else {
                   GetXUtilities.snackbar(

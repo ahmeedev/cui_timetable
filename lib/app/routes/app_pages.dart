@@ -56,9 +56,9 @@ import '../modules/timetable/teacher_timetable/views/teacher_timetable_view.dart
 import '../modules/timetable/views/timetable_view.dart';
 import '../modules/transport/bindings/transport_binding.dart';
 import '../modules/transport/views/transport_view.dart';
-import '../modules/ui/about_us/about_us_view.dart';
-import '../modules/ui/director_vision/director_vision.dart';
-import '../modules/ui/news/news.dart';
+import '../modules/pages/about_us/about_us_view.dart';
+import '../modules/pages/director_vision/director_vision.dart';
+import '../modules/pages/news/news.dart';
 
 // import '../modules/signin/bindings/signin_binding.dart';
 // import '../modules/signin/views/signin_view.dart';
