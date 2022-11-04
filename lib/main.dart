@@ -217,6 +217,8 @@ class MyApp extends GetView<HomeController> {
 
   getMaterialApp({required theme, required context}) {
     return GetMaterialApp(
+      //checkbanneroff
+      debugShowCheckedModeBanner: false,
       theme: theme,
       // darkTheme: ThemeData.dark(),
       defaultTransition: Transition.cupertino,
