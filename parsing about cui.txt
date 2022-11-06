@@ -1,0 +1,34 @@
+import re
+from bs4 import BeautifulSoup
+from urllib.request import Request, urlopen
+
+pattern = re.compile("( {2,})")
+
+
+def purify(msg):
+    string = msg
+    output = re.sub(pattern, '', string)
+    return output
+
+
+print("Scraping start")
+req = Request(
+    url='https://sahiwal.comsats.edu.pk/Introduction.aspx',
+    headers={'User-Agent': 'Mozilla/5.0'}
+)
+html = urlopen(req).read().decode('utf-8')
+
+# url = "http://www.wallpaperflare.com/"
+# url = "http://olympus.realpython.org/profiles/dionysus"
+# page = urlopen(url)
+# html = page.read().decode("utf-8")
+soup = BeautifulSoup(html, "html.parser")
+
+images = soup.find_all('p')
+del images[0]
+for im in images:
+    result = purify(im.text.strip())
+    print(result)
+    print('\n')
+
+print("==== End of parsing ====")
