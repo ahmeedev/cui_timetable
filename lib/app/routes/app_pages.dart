@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/announcement/bindings/announcement_binding.dart';
+import '../modules/announcement/views/announcement_view.dart';
 import '../modules/authentication/bindings/authentication_binding.dart';
 import '../modules/authentication/signIn/bindings/sign_in_binding.dart';
 import '../modules/authentication/signIn/views/sign_in_view.dart';
@@ -38,6 +40,9 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view3.dart';
 import '../modules/news/bindings/news_binding.dart';
 import '../modules/news/views/news_view.dart';
+import '../modules/pages/about_us/about_us_view.dart';
+import '../modules/pages/director_vision/director_vision.dart';
+import '../modules/pages/news/news.dart';
 import '../modules/portals/bindings/portals_binding.dart';
 import '../modules/portals/views/portals_view.dart';
 import '../modules/remainder/bindings/remainder_binding.dart';
@@ -56,9 +61,6 @@ import '../modules/timetable/teacher_timetable/views/teacher_timetable_view.dart
 import '../modules/timetable/views/timetable_view.dart';
 import '../modules/transport/bindings/transport_binding.dart';
 import '../modules/transport/views/transport_view.dart';
-import '../modules/pages/about_us/about_us_view.dart';
-import '../modules/pages/director_vision/director_vision.dart';
-import '../modules/pages/news/news.dart';
 
 // import '../modules/signin/bindings/signin_binding.dart';
 // import '../modules/signin/views/signin_view.dart';
@@ -240,6 +242,11 @@ class AppPages {
           binding: BookingRoomBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.ANNOUNCEMENT,
+      page: () => const AnnouncementView(),
+      binding: AnnouncementBinding(),
     ),
   ];
 }

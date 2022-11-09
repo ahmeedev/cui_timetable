@@ -21,12 +21,12 @@ class BookingLog extends GetView<BookingLogController> {
           if (snapshot.hasData) {
             final data = snapshot.data!.data()!;
             final keys = data.keys.toList();
-            print(keys);
-            // keys.sort(
-            //   (a, b) => a.compareTo(b),
-            // );
-            // print(keys);
-            print(data[keys[0]]);
+
+            keys.sort((a, b) {
+              //sorting in ascending order
+              return DateTime.parse(b).compareTo(DateTime.parse(a));
+            });
+
             return ListView.builder(
                 padding: EdgeInsets.zero,
                 itemCount: data.length,

@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:get/get.dart';
 
+import '../../../utilities/notifications/cloud_notifications.dart';
 import '../controllers/for_developer_controller.dart';
 
 class ForDeveloperView extends GetView<ForDeveloperController> {
@@ -41,8 +42,10 @@ class ForDeveloperView extends GetView<ForDeveloperController> {
                               .paddingAll(16),
                           ElevatedButton(
                                   onPressed: () async {
-                                    final result =
-                                        await controller.sendNotification();
+                                    final result = await sendNotification(
+                                        title: "Asalam o alaikum",
+                                        description:
+                                            'This is a cloud tesing notification');
                                     GetXUtilities.snackbar(
                                         duration: 3,
                                         title: 'Cloud Notification',
@@ -53,44 +56,36 @@ class ForDeveloperView extends GetView<ForDeveloperController> {
                                   child: const Text("Send Notification")
                                       .paddingAll(16))
                               .paddingAll(16),
-
-
                           ElevatedButton(
                                   onPressed: () async {
-
-                                    final uid=FirebaseAuth.instance.currentUser!.uid;
-                                    log(uid.toString(),name: 'UID',
-
+                                    final uid =
+                                        FirebaseAuth.instance.currentUser!.uid;
+                                    log(
+                                      uid.toString(),
+                                      name: 'UID',
                                     );
                                   },
-                                  child: const Text("Testing")
-                                      .paddingAll(16))
+                                  child: const Text("Testing").paddingAll(16))
                               .paddingAll(16),
-
-
-
-
                         ],
                       ),
                     ),
                   ],
                 ).paddingAll(16);
               }
-
-            } else if(snapshot.hasError){
+            } else if (snapshot.hasError) {
               return Center(
                   child: Text(
-                    "You must be signIn as a developer.",
-                    textAlign: TextAlign.center,
-                    style:
+                "You must be signIn as a developer.",
+                textAlign: TextAlign.center,
+                style:
                     theme.textTheme.titleMedium!.copyWith(color: Colors.black),
-                  ));
+              ));
             }
 
             return const SpinKitFadingCube(
               color: primaryColor,
               size: 30,
-
             );
             // return const Center(child: CircularProgressIndicator());
           }),

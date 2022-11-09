@@ -14,11 +14,8 @@ class BookingInfoController extends GetxController {
   var monToThursSlots = <String>[];
   var friSlots = <String>[];
 
-  late Future<List> future;
-
   @override
   Future<void> onInit() async {
-    future = calculate();
     final boxx = await Hive.openBox(DBNames.timeSlots);
     monToThursSlots = await boxx.get(DBTimeSlots.monToThur);
     friSlots = await boxx.get(DBTimeSlots.fri);

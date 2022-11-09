@@ -8,8 +8,20 @@ import '../../../../widgets/global_widgets.dart';
 import '../controllers/booking_info_controller.dart';
 import 'widgets/booking_info_view_widgets.dart';
 
-class BookingInfoView extends GetView<BookingInfoController> {
+class BookingInfoView extends StatefulWidget {
   const BookingInfoView({Key? key}) : super(key: key);
+
+  @override
+  State<BookingInfoView> createState() => _BookingInfoViewState();
+}
+
+class _BookingInfoViewState extends State<BookingInfoView> {
+  late final future;
+  @override
+  void initState() {
+    future = Get.find<BookingInfoController>().calculate();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +32,7 @@ class BookingInfoView extends GetView<BookingInfoController> {
         centerTitle: true,
       ),
       body: FutureBuilder<List>(
-        future: controller.future,
+        future: future,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return Column(
@@ -33,9 +45,11 @@ class BookingInfoView extends GetView<BookingInfoController> {
                     children: [
                       ...List.generate(5, (index) {
                         return BookingInfoDayTile(
-                          day: controller.daysName[index],
+                          day:
+                              Get.find<BookingInfoController>().daysName[index],
                           // dayKey: controller.days[index],
-                          state: controller.dayTileState[index],
+                          state: Get.find<BookingInfoController>()
+                              .dayTileState[index],
                           index: index,
                           // callback: controller.allFalse,
                           // obs: controller.giveValue(index),
@@ -45,9 +59,10 @@ class BookingInfoView extends GetView<BookingInfoController> {
                   ),
                 ),
                 Expanded(
-                  child: Obx(() => controller
-                          .dayWiseFreeLectures[
-                              controller.currentActiveIndex.value]
+                  child: Obx(() => Get.find<BookingInfoController>()
+                          .dayWiseFreeLectures[Get.find<BookingInfoController>()
+                              .currentActiveIndex
+                              .value]
                           .isNotEmpty
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -71,7 +86,7 @@ class BookingInfoView extends GetView<BookingInfoController> {
                                   FittedBox(
                                     fit: BoxFit.scaleDown,
                                     child: Text(
-                                      "[${controller.teacher} / ${controller.section} ]",
+                                      "[${Get.find<BookingInfoController>().teacher} / ${Get.find<BookingInfoController>().section} ]",
                                       textAlign: TextAlign.center,
                                       style:
                                           theme.textTheme.titleLarge!.copyWith(
@@ -89,9 +104,11 @@ class BookingInfoView extends GetView<BookingInfoController> {
                             Expanded(
                               child: ListView.builder(
                                 physics: const BouncingScrollPhysics(),
-                                itemCount: controller
+                                itemCount: Get.find<BookingInfoController>()
                                     .dayWiseFreeLectures[
-                                        controller.currentActiveIndex.value]
+                                        Get.find<BookingInfoController>()
+                                            .currentActiveIndex
+                                            .value]
                                     .length,
                                 // itemExtent: 1.0,
 

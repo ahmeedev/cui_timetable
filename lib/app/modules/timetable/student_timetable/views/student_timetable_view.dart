@@ -103,25 +103,7 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                                           String time =
                                               _fetchNewTime(index: index);
                                           return LectureDetailsTile(
-                                              lab: true,
-                                              subject: controller
-                                                  .daywiseLectures["lectures"]
-                                                      [index]
-                                                  .subject,
-                                              teacher: controller
-                                                  .daywiseLectures["lectures"]
-                                                      [index]
-                                                  .teacher,
-                                              room: controller
-                                                  .daywiseLectures["lectures"]
-                                                      [index]
-                                                  .room,
-                                              time: time);
-                                        } else {
-                                          return const SizedBox();
-                                        }
-                                      } else {
-                                        return LectureDetailsTile(
+                                            lab: true,
                                             subject: controller
                                                 .daywiseLectures["lectures"]
                                                     [index]
@@ -134,13 +116,41 @@ class StudentTimetableView extends GetView<StudentTimetableController> {
                                                 .daywiseLectures["lectures"]
                                                     [index]
                                                 .room,
-                                            time: controller
-                                                .currentTimeSlots[controller
-                                                        .daywiseLectures[
-                                                            "lectures"][index]
-                                                        .slot -
-                                                    1]
-                                                .toString());
+                                            time: time,
+                                            slot: controller
+                                                .daywiseLectures["lectures"]
+                                                    [index]
+                                                .slot,
+                                          );
+                                        } else {
+                                          return const SizedBox();
+                                        }
+                                      } else {
+                                        return LectureDetailsTile(
+                                          subject: controller
+                                              .daywiseLectures["lectures"]
+                                                  [index]
+                                              .subject,
+                                          teacher: controller
+                                              .daywiseLectures["lectures"]
+                                                  [index]
+                                              .teacher,
+                                          room: controller
+                                              .daywiseLectures["lectures"]
+                                                  [index]
+                                              .room,
+                                          time: controller.currentTimeSlots[
+                                                  controller
+                                                          .daywiseLectures[
+                                                              "lectures"][index]
+                                                          .slot -
+                                                      1]
+                                              .toString(),
+                                          slot: controller
+                                              .daywiseLectures["lectures"]
+                                                  [index]
+                                              .slot,
+                                        );
                                       }
                                     },
                                   ),

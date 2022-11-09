@@ -138,7 +138,6 @@ class BookingInfoLectureTile extends GetView<BookingInfoController> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Column(
-
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -152,7 +151,7 @@ class BookingInfoLectureTile extends GetView<BookingInfoController> {
                       color: successColor, fontWeight: FontWeight.w900),
                 ).paddingSymmetric(horizontal: Constants.defaultPadding),
                 Text(
-                  time[0],
+                  time[1],
                   style: theme.textTheme.titleMedium!.copyWith(
                       color: successColor, fontWeight: FontWeight.w900),
                 ).paddingSymmetric(horizontal: Constants.defaultPadding),
@@ -164,7 +163,6 @@ class BookingInfoLectureTile extends GetView<BookingInfoController> {
               // height: 4,
               // height: double.infinity,
             ).paddingSymmetric(vertical: Constants.defaultPadding / 2),
-
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

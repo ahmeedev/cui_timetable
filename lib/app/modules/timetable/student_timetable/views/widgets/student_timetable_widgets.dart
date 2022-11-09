@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/constants/rooms_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_soul/flutter_soul.dart';
 
@@ -144,6 +145,7 @@ class LectureDetailsTile extends StatelessWidget {
   final String teacher;
   final String room;
   final dynamic time;
+  final int slot;
   final bool lab;
 
   const LectureDetailsTile(
@@ -152,6 +154,7 @@ class LectureDetailsTile extends StatelessWidget {
       required this.teacher,
       required this.room,
       required this.time,
+      required this.slot,
       this.lab = false})
       : super(key: key);
 
@@ -249,7 +252,7 @@ class LectureDetailsTile extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                           kHeight,
+                              kHeight,
                               Row(
                                 children: [
                                   const ImageIcon(
@@ -285,6 +288,32 @@ class LectureDetailsTile extends StatelessWidget {
                                             .copyWith(
                                                 fontWeight: FontWeight.bold)),
                                   ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  const ImageIcon(
+                                    AssetImage('assets/timetable/location.png'),
+                                    color: primaryColor,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  roomsLocation[room.trim()] != null
+                                      ? Text(roomsLocation[room.trim()],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold))
+                                      : Text("NO LOCATION FOUND",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.bold)),
                                 ],
                               ),
                             ],
@@ -329,7 +358,42 @@ class LectureDetailsTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
+          Padding(
+            padding: EdgeInsets.all(Constants.defaultPadding / 2),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(Constants.defaultRadius),
+                    topLeft: Radius.circular(Constants.defaultRadius / 2),
+                  )),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: Constants.defaultPadding,
+                  vertical: Constants.defaultPadding / 2,
+                ),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: lab == true
+                      ? Text(
+                          "$slot,${slot + 1}  Slot",
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Colors.white,
+                                  ),
+                        )
+                      : Text(
+                          "$slot Slot",
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Colors.white,
+                                  ),
+                        ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -159,7 +159,8 @@ initializeFirebaseMsg() async {
         id: 1,
         title: event.notification!.title,
         body: event.notification!.body,
-        color: Colors.red,
+        color: primaryColor,
+        notificationLayout: NotificationLayout.BigText,
         bigPicture: event.notification!.android!.imageUrl,
       ));
     });

@@ -84,7 +84,7 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
                 //   ),
                 // ),
                 // const Spacer(),
-                Text("C1"),
+                const Text("C1"),
                 // ElevatedButton(
                 //   onPressed: () {
                 //     Get.toNamed(Routes.BOOKING_ROOM);
@@ -128,24 +128,35 @@ class BookingFinalizeStepperWidget extends GetView<BookingDetailsController> {
         ),
       ),
       Card(
-        child: ListTile(
-          leading: FittedBox(
-              fit: BoxFit.scaleDown,
-              // child: SpinKitFadingCube(
-              //   color: primaryColor,
-              //   size: Constants.iconSize,
-              // ),
-              child: Icon(
-                Icons.check_circle,
-                color: successColor,
-                size: Constants.iconSize,
-              )),
-          title: Text(
-            "Notifying Admin",
-            style: theme.textTheme.titleMedium!
-                .copyWith(color: successColor, fontWeight: FontWeight.w900),
-          ),
-        ),
+        child: Obx(() => ListTile(
+              leading: controller.notificationSent.value
+                  ? FittedBox(
+                      fit: BoxFit.scaleDown,
+                      // child: SpinKitFadingCube(
+                      //   color: primaryColor,
+                      //   size: Constants.iconSize,
+                      // ),
+                      child: Icon(
+                        Icons.check_circle,
+                        color: successColor,
+                        size: Constants.iconSize,
+                      ))
+                  : FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: SpinKitFadingCube(
+                        color: primaryColor,
+                        size: Constants.iconSize,
+                      ),
+                    ),
+              title: Text(
+                "Notifying Admin",
+                style: theme.textTheme.titleMedium!.copyWith(
+                    color: controller.notificationSent.value
+                        ? successColor
+                        : primaryColor,
+                    fontWeight: FontWeight.w900),
+              ),
+            )),
       ),
     ]);
   }

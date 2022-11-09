@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -58,17 +59,17 @@ class Header extends GetView<HomeController> {
           forGradient,
         ],
       )),
-      height: MediaQuery.of(context).size.height<600?MediaQuery.of(context).size.height * 0.30 + Constants.defaultPadding:
-        MediaQuery.of(context).size.height * 0.25 + Constants.defaultPadding,
+      height: MediaQuery.of(context).size.height < 600
+          ? MediaQuery.of(context).size.height * 0.30 + Constants.defaultPadding
+          : MediaQuery.of(context).size.height * 0.25 +
+              Constants.defaultPadding,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
         child: SafeArea(
           child: Column(
-
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Padding(
                 padding: EdgeInsets.only(
                   top: Constants.defaultPadding,
@@ -87,7 +88,7 @@ class Header extends GetView<HomeController> {
                                   image: controller.isUserSignIn.value == false
                                       ? DecorationImage(
                                           image: AssetImage(
-                                              'assets/about_us/ahmad.jpg'))
+                                              'assets/drawer/comsats.png'))
                                       : FirebaseAuth.instance.currentUser!
                                                   .photoURL ==
                                               null
@@ -114,7 +115,7 @@ class Header extends GetView<HomeController> {
                             FirebaseAuth.instance.currentUser!.email!
                                 .indexOf('@'),
                           )}'
-                        : "Welcome, FA19-BSE-003",
+                        : "Welcome, to CUI Sahiwal",
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   )),
@@ -177,6 +178,11 @@ class ButtonList extends GetView<HomeController> {
         physics: BouncingScrollPhysics(),
         shrinkWrap: true,
         children: [
+          if (kDebugMode)
+            buildButton(context,
+                icon: const AssetImage('assets/drawer/vision.png'),
+                title: 'Testing',
+                onTap: () {}),
           buildButton(context,
               icon: const AssetImage('assets/drawer/vision.png'),
               title: 'Director Vision', onTap: () {
@@ -187,6 +193,11 @@ class ButtonList extends GetView<HomeController> {
           //     title: 'About Us', onTap: () {
           //   Get.toNamed(Routes.ABOUT_US);
           // }),
+          buildButton(context,
+              icon: const AssetImage('assets/home/announc.png'),
+              title: 'Announcement', onTap: () {
+            Get.toNamed(Routes.ANNOUNCEMENT);
+          }),
           Stack(
             children: [
               buildButton(context,
@@ -218,6 +229,7 @@ class ButtonList extends GetView<HomeController> {
           //     icon: const AssetImage('assets/drawer/bookings.png'),
           //     title: 'Bookings',
           //     onTap: () {}),
+
           buildButton(context,
               icon: const AssetImage('assets/drawer/sync.png'),
               title: 'Synchronized', onTap: () {

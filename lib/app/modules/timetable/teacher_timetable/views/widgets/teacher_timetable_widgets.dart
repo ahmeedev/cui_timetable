@@ -231,7 +231,7 @@ class LectureDetailsTile extends StatelessWidget {
                                                 2)),
                               ),
                             ),
-                          kHeight,
+                            kHeight,
                             Row(
                               children: [
                                 const ImageIcon(
@@ -278,39 +278,39 @@ class LectureDetailsTile extends StatelessWidget {
               ),
             ),
           ),
-          // lab == false
-          //     ? const SizedBox()
-          //     : Positioned(
-          //         // top: 4,
-          //         right: 4,
-          //         bottom: 3,
-          //
-          //         child: Container(
-          //           decoration: BoxDecoration(
-          //               color: primaryColor,
-          //               borderRadius: BorderRadius.only(
-          //                 topLeft: Radius.circular(Constants.defaultRadius),
-          //                 bottomRight: Radius.circular(Constants.defaultRadius),
-          //               )),
-          //           height: Constants.defaultPadding * 4,
-          //           // width: context.width * 0.4,
-          //           // height: context.height,
-          //           child: RotatedBox(
-          //             quarterTurns: 3,
-          //             child: Padding(
-          //               padding: EdgeInsets.all(Constants.defaultPadding / 2),
-          //               child: FittedBox(
-          //                 fit: BoxFit.scaleDown,
-          //                 child: Text('Lab',
-          //                     style: Theme.of(context)
-          //                         .textTheme
-          //                         .titleSmall!
-          //                         .copyWith(color: Colors.white)),
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //       )
+          room.toLowerCase().contains("lab")
+              ? Positioned(
+                  // top: 4,
+                  right: 4,
+                  bottom: 3,
+
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(Constants.defaultRadius),
+                          bottomRight: Radius.circular(Constants.defaultRadius),
+                        )),
+                    height: Constants.defaultPadding * 4,
+                    // width: context.width * 0.4,
+                    // height: context.height,
+                    child: RotatedBox(
+                      quarterTurns: 3,
+                      child: Padding(
+                        padding: EdgeInsets.all(Constants.defaultPadding / 2),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text('Lab',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(color: Colors.white)),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox()
         ],
       ),
     );

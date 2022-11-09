@@ -36,10 +36,12 @@ class BookingDetailsView extends GetView<BookingDetailsController> {
                     // Get.back();
                   } else if (controller.currentStep.value < 2) {
                     controller.currentStep.value++;
-                    controller.book(
-                        section: controller.bookingFor,
-                        time: controller.bookingSlot,
-                        room: "C1");
+                    if (controller.currentStep.value == 1) {
+                      controller.book(
+                          section: controller.bookingFor,
+                          time: controller.bookingSlot,
+                          room: "C1");
+                    }
                   }
                 },
                 onStepCancel: () {
