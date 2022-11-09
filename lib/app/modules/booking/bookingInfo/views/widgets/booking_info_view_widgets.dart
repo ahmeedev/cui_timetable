@@ -187,6 +187,7 @@ class BookingInfoLectureTile extends GetView<BookingInfoController> {
                       Get.toNamed(Routes.BOOKING_DETAILS, arguments: {
                         "bookingBy": controller.teacher,
                         "bookingFor": controller.section,
+                        "bookingDay": controller.currentActiveIndex.value + 1,
                         "bookingSlot": slotNo,
                       });
                     },

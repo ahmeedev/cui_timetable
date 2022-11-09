@@ -8,7 +8,16 @@ import 'package:get/get.dart';
 class BookingDetailsController extends GetxController {
   final bookingBy = Get.arguments['bookingBy'];
   final bookingFor = Get.arguments['bookingFor'];
+  final bookingDay = Get.arguments['bookingDay'];
   final bookingSlot = Get.arguments['bookingSlot'];
+
+  final timeMap = {
+    "1": "Monday",
+    "2": "Tuesday",
+    "3": "Wednesday",
+    "4": "Thursday",
+    "5": "Friday",
+  };
 
   final currentStep = 0.obs;
   final notificationSent = false.obs;

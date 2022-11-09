@@ -326,9 +326,8 @@ class LectureDetailsTile extends StatelessWidget {
               ),
             ),
           ),
-          lab == false
-              ? const SizedBox()
-              : Positioned(
+          room.toLowerCase().contains("lab")
+              ? Positioned(
                   // top: 4,
                   right: 4,
                   bottom: 3,
@@ -358,7 +357,8 @@ class LectureDetailsTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                )
+              : const SizedBox(),
           Padding(
             padding: EdgeInsets.all(Constants.defaultPadding / 2),
             child: Container(

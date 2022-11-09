@@ -3,6 +3,7 @@ import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_constants.dart';
@@ -50,6 +51,35 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
         ),
         Card(
           child: ListTile(
+            title: Row(
+              children: [
+                Text("Booking Day:  ", style: headingStyle),
+                Text(
+                  controller.timeMap[controller.bookingDay.toString()]
+                      .toString(),
+                  style: theme.textTheme.titleMedium!.copyWith(
+                      color: Colors.black, fontWeight: FontWeight.w900),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Card(
+          child: ListTile(
+            title: Row(
+              children: [
+                Text("Booking Date:  ", style: headingStyle),
+                Text(
+                  DateFormat.yMMMMd('en_US').format(DateTime.now()).toString(),
+                  style: theme.textTheme.titleMedium!.copyWith(
+                      color: Colors.black, fontWeight: FontWeight.w900),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Card(
+          child: ListTile(
             title: FittedBox(
               fit: BoxFit.scaleDown,
               child: Row(
@@ -76,25 +106,25 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
               children: [
                 Text("Booking Room:  ", style: headingStyle),
                 // FittedBox(
-                //   fit: BoxFit.scaleDown,
-                //   child: Text(
-                //     "No room selected",
-                //     style: theme.textTheme.titleMedium!.copyWith(
-                //         color: errorColor1, fontWeight: FontWeight.w900),
-                //   ),
+                //     fit: BoxFit.scaleDown,
+                //     child: Text(
+                //       "No room selected",
+                //       style: theme.textTheme.titleMedium!.copyWith(
+                //           color: errorColor1, fontWeight: FontWeight.w900),
+                //     )),
                 // ),
-                // const Spacer(),
-                const Text("C1"),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     Get.toNamed(Routes.BOOKING_ROOM);
-                //   },
-                //   child: Text(
-                //     "Select",
-                //     style: theme.textTheme.titleMedium!.copyWith(
-                //         color: Colors.white, fontWeight: FontWeight.w900),
-                //   ),
-                // ),
+                const Spacer(),
+                // const Text("C1"),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.BOOKING_ROOM);
+                  },
+                  child: Text(
+                    "Select",
+                    style: theme.textTheme.titleMedium!.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.w900),
+                  ),
+                ),
               ],
             ),
           ),

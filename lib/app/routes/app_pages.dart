@@ -38,6 +38,8 @@ import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view3.dart';
+import '../modules/location/bindings/location_binding.dart';
+import '../modules/location/views/location_view.dart';
 import '../modules/news/bindings/news_binding.dart';
 import '../modules/news/views/news_view.dart';
 import '../modules/pages/about_us/about_us_view.dart';
@@ -247,6 +249,11 @@ class AppPages {
       name: _Paths.ANNOUNCEMENT,
       page: () => const AnnouncementView(),
       binding: AnnouncementBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOCATION,
+      page: () => const LocationView(),
+      binding: LocationBinding(),
     ),
   ];
 }
