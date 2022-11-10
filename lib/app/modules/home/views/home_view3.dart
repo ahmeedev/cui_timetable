@@ -451,7 +451,7 @@ class HomeViewWidget extends StatelessWidget {
             kWidth,
             _buildTile(context,
                 title: "Feedback",
-                // ontap: () => Get.toNamed(Routes.TIMETABLE),
+                ontap: () => Get.toNamed(Routes.REPORTS),
                 iconLocation: "assets/home/feedback.png"),
             kWidth,
             _buildTile(

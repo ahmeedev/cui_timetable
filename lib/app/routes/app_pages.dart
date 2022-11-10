@@ -51,6 +51,8 @@ import '../modules/remainder/bindings/remainder_binding.dart';
 import '../modules/remainder/student_remainder/bindings/student_remainder_binding.dart';
 import '../modules/remainder/student_remainder/views/student_remainder_view.dart';
 import '../modules/remainder/views/remainder_view.dart';
+import '../modules/reports/bindings/reports_binding.dart';
+import '../modules/reports/views/reports_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view2.dart';
 import '../modules/sync/bindings/sync_binding.dart';
@@ -254,6 +256,11 @@ class AppPages {
       name: _Paths.LOCATION,
       page: () => const LocationView(),
       binding: LocationBinding(),
+    ),
+    GetPage(
+      name: _Paths.REPORTS,
+      page: () => const ReportsView(),
+      binding: ReportsBinding(),
     ),
   ];
 }
