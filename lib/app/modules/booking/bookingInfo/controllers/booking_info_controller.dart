@@ -16,17 +16,16 @@ class BookingInfoController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    final boxx = await Hive.openBox(DBNames.timeSlots);
-    monToThursSlots = await boxx.get(DBTimeSlots.monToThur);
-    friSlots = await boxx.get(DBTimeSlots.fri);
-
-    currentTimeSlots = monToThursSlots;
-
     super.onInit();
   }
 
   final dayWiseFreeLectures = <List<int>>[].obs;
   Future<List> calculate() async {
+    final boxx = await Hive.openBox(DBNames.timeSlots);
+    monToThursSlots = await boxx.get(DBTimeSlots.monToThur);
+    friSlots = await boxx.get(DBTimeSlots.fri);
+    currentTimeSlots = monToThursSlots;
+
     final box = await Hive.openBox(DBNames.timetableData);
     final secLectures =
         await box.get(DBTimetableData.studentsData)[section.toLowerCase()];

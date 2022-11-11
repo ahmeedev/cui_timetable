@@ -52,6 +52,7 @@ dependencies:
   platform_device_id: ^1.0.1
   rive: ^0.9.1
   sqflite: ^2.0.2+1
+  syncfusion_flutter_datepicker: ^20.3.56
   url_launcher: ^6.0.20
   webview_flutter: ^3.0.4
 

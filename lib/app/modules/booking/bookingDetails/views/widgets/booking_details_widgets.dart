@@ -66,22 +66,8 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
         ),
         Card(
           child: ListTile(
-            title: Row(
-              children: [
-                Text("Booking Date:  ", style: headingStyle),
-                Text(
-                  DateFormat.yMMMMd('en_US').format(DateTime.now()).toString(),
-                  style: theme.textTheme.titleMedium!.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.w900),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Card(
-          child: ListTile(
             title: FittedBox(
-              fit: BoxFit.scaleDown,
+              fit: BoxFit.fill,
               child: Row(
                 children: [
                   Text("Booking slot:  ", style: headingStyle),
@@ -97,6 +83,48 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
                   ),
                 ],
               ),
+            ),
+          ),
+        ),
+        Card(
+          child: ListTile(
+            title: Row(
+              children: [
+                Text("Booking Date:  ", style: headingStyle),
+                // Text(
+                //   DateFormat.yMMMMd('en_US').format(DateTime.now()).toString(),
+                //   style: theme.textTheme.titleMedium!.copyWith(
+                //       color: Colors.black, fontWeight: FontWeight.w900),
+                // ),
+                const Spacer(),
+                ElevatedButton(
+                    onPressed: () async {
+                      var startDate =
+                          DateTime.now().add(const Duration(days: 1));
+                      for (var i = 0; i < 2; i++) {
+                        if (startDate.weekday == 6 || startDate.weekday == 7) {
+                          startDate = startDate.add(const Duration(days: 1));
+                        }
+                      }
+
+                      var endDate = startDate.add(const Duration(days: 6));
+
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: startDate, //get today's date
+                        firstDate: startDate,
+                        lastDate: endDate,
+                        selectableDayPredicate: (day) =>
+                            day.weekday == 6 || day.weekday == 7 ? false : true,
+                      );
+                      if (pickedDate != null) {
+                        String formattedDate = DateFormat('yyyy-MM-dd').format(
+                            pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                        print(formattedDate);
+                      }
+                    },
+                    child: const Text("Select"))
+              ],
             ),
           ),
         ),
