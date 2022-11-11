@@ -451,7 +451,26 @@ class HomeViewWidget extends StatelessWidget {
             kWidth,
             _buildTile(context,
                 title: "Feedback",
-                ontap: () => Get.toNamed(Routes.REPORTS),
+                ontap: () {
+              String? email = FirebaseAuth.instance.currentUser?.email;
+
+              // if (email!.endsWith("@cuisahiwal.edu.pk")) {
+              if (email == null) {
+                GetXUtilities.snackbar(
+                    title: "Error!",
+                    message: "You must be signed in to report an issue",
+                    gradient: errorGradient);
+              } else {
+                if (email.endsWith("@gmail.com")) {
+                  Get.toNamed(Routes.REPORTS);
+                } else {
+                  GetXUtilities.snackbar(
+                      title: "Error!",
+                      message: "You must be signed in to report an issue",
+                      gradient: errorGradient);
+                }
+              }
+            },
                 iconLocation: "assets/home/feedback.png"),
             kWidth,
             _buildTile(

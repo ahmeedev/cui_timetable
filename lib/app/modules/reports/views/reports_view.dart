@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,9 @@ class ReportsView extends GetView<ReportsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: onScaffoldColor,
+      // backgroundColor: onScaffoldColor,
       appBar: AppBar(
-        title: const Text('New Report/Feedback'),
+        title: const Text('Report/Feedback'),
         centerTitle: true,
         backgroundColor: primaryColor,
       ),
@@ -23,9 +24,11 @@ class ReportsView extends GetView<ReportsController> {
                 style: TextStyle(fontSize: 20),
               ),
             )
-          : Container(),
+          : Column(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed(Routes.NEW_REPORT);
+        },
         child: const Icon(Icons.add),
       ),
     );

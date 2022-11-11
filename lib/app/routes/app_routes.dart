@@ -39,6 +39,7 @@ abstract class Routes {
   static const ANNOUNCEMENT = _Paths.ANNOUNCEMENT;
   static const LOCATION = _Paths.LOCATION;
   static const REPORTS = _Paths.REPORTS;
+  static const NEW_REPORT = _Paths.REPORTS + _Paths.NEW_REPORT;
 }
 
 abstract class _Paths {
@@ -78,4 +79,5 @@ abstract class _Paths {
   static const ANNOUNCEMENT = '/announcement';
   static const LOCATION = '/location';
   static const REPORTS = '/reports';
+  static const NEW_REPORT = '/new-report';
 }
