@@ -3,7 +3,6 @@ import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../../theme/app_colors.dart';
 import '../../../../../theme/app_constants.dart';
@@ -49,21 +48,21 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
             ),
           ),
         ),
-        Card(
-          child: ListTile(
-            title: Row(
-              children: [
-                Text("Booking Day:  ", style: headingStyle),
-                Text(
-                  controller.timeMap[controller.bookingDay.toString()]
-                      .toString(),
-                  style: theme.textTheme.titleMedium!.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.w900),
-                ),
-              ],
-            ),
-          ),
-        ),
+        // Card(
+        //   child: ListTile(
+        //     title: Row(
+        //       children: [
+        //         Text("Booking Day:  ", style: headingStyle),
+        //         Text(
+        //           controller.timeMap[controller.bookingDay.toString()]
+        //               .toString(),
+        //           style: theme.textTheme.titleMedium!.copyWith(
+        //               color: Colors.black, fontWeight: FontWeight.w900),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         Card(
           child: ListTile(
             title: FittedBox(
@@ -96,65 +95,58 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
                 //   style: theme.textTheme.titleMedium!.copyWith(
                 //       color: Colors.black, fontWeight: FontWeight.w900),
                 // ),
-                const Spacer(),
-                ElevatedButton(
-                    onPressed: () async {
-                      var startDate =
-                          DateTime.now().add(const Duration(days: 1));
-                      for (var i = 0; i < 2; i++) {
-                        if (startDate.weekday == 6 || startDate.weekday == 7) {
-                          startDate = startDate.add(const Duration(days: 1));
-                        }
-                      }
-
-                      var endDate = startDate.add(const Duration(days: 6));
-
-                      DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: startDate, //get today's date
-                        firstDate: startDate,
-                        lastDate: endDate,
-                        selectableDayPredicate: (day) =>
-                            day.weekday == 6 || day.weekday == 7 ? false : true,
-                      );
-                      if (pickedDate != null) {
-                        String formattedDate = DateFormat('yyyy-MM-dd').format(
-                            pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                        print(formattedDate);
-                      }
-                    },
-                    child: const Text("Select"))
+                FutureBuilder<String>(
+                  future: controller.bookingDateFuture,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    return Text('${snapshot.data}',
+                        style: theme.textTheme.titleMedium!.copyWith(
+                            color: Colors.black, fontWeight: FontWeight.w900));
+                  },
+                ),
               ],
             ),
           ),
         ),
         Card(
           child: ListTile(
-            title: Row(
-              children: [
-                Text("Booking Room:  ", style: headingStyle),
-                // FittedBox(
-                //     fit: BoxFit.scaleDown,
-                //     child: Text(
-                //       "No room selected",
-                //       style: theme.textTheme.titleMedium!.copyWith(
-                //           color: errorColor1, fontWeight: FontWeight.w900),
-                //     )),
-                // ),
-                const Spacer(),
-                // const Text("C1"),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(Routes.BOOKING_ROOM);
-                  },
-                  child: Text(
-                    "Select",
-                    style: theme.textTheme.titleMedium!.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.w900),
-                  ),
-                ),
-              ],
-            ),
+            title: Obx(() => Row(
+                  children: [
+                    Text("Booking Room:  ", style: headingStyle),
+                    Text(controller.bookingRoom.value,
+                        style: theme.textTheme.titleMedium!.copyWith(
+                            color: Colors.black, fontWeight: FontWeight.w900)),
+                    Expanded(
+                      child: controller.bookingRoom.value.isEmpty
+                          ? Row(
+                              children: [
+                                const Spacer(),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Get.toNamed(Routes.BOOKING_ROOM);
+                                    },
+                                    child: Text(
+                                      "Select",
+                                      style: theme.textTheme.titleMedium!
+                                          .copyWith(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w900),
+                                    )),
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                const Spacer(),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Get.toNamed(Routes.BOOKING_ROOM);
+                                  },
+                                  child: const Icon(Icons.change_circle),
+                                ),
+                              ],
+                            ),
+                    ),
+                  ],
+                )),
           ),
         ),
       ],

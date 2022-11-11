@@ -111,7 +111,7 @@ initializeLocalNotifications() {
           channelName: channelUpdates,
           channelDescription: channelUpdatesDescription,
           ledColor: primaryColor,
-        )
+        ),
       ],
       debug: true);
 

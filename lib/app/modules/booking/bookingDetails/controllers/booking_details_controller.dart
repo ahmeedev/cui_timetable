@@ -4,12 +4,15 @@ import 'package:cui_timetable/app/utilities/notifications/cloud_notifications.da
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class BookingDetailsController extends GetxController {
   final bookingBy = Get.arguments['bookingBy'];
   final bookingFor = Get.arguments['bookingFor'];
   final bookingDay = Get.arguments['bookingDay'];
   final bookingSlot = Get.arguments['bookingSlot'];
+  var bookingRoom = ""
+      .obs; //* Came from the freerooms module, on the onTap of the freeroom card.
 
   final timeMap = {
     "1": "Monday",
@@ -21,6 +24,30 @@ class BookingDetailsController extends GetxController {
 
   final currentStep = 0.obs;
   final notificationSent = false.obs;
+
+  late final bookingDate;
+
+  late final Future<String> bookingDateFuture;
+  @override
+  void onInit() {
+    bookingDateFuture = calculateDate();
+    super.onInit();
+  }
+
+  Future<String> calculateDate() {
+    // print(bookingDay);
+    var startDate = DateTime.now();
+    if (startDate.weekday == bookingDay) {
+      startDate = startDate.add(const Duration(days: 1));
+    }
+    final nextDate = startDate.add(Duration(
+      days: (bookingDay - startDate.weekday) % DateTime.daysPerWeek,
+    ));
+    bookingDate = nextDate;
+    final result = DateFormat.MMMMEEEEd().format(nextDate).toString();
+
+    return Future.value(result);
+  }
 
   book(
       {required String section,

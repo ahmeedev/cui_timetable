@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'package:cui_timetable/app/modules/booking/bookingDetails/controllers/booking_details_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -295,12 +296,16 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
   final department;
   final int totalClasses;
   final List availableClasses;
-  const FreeroomsDepartmentWiseExpensionTile(
-      {Key? key,
-      required this.department,
-      required this.totalClasses,
-      required this.availableClasses})
-      : super(key: key);
+  final bool initialExpanded;
+  final bool isBookingCard;
+  const FreeroomsDepartmentWiseExpensionTile({
+    Key? key,
+    required this.department,
+    required this.totalClasses,
+    required this.availableClasses,
+    this.initialExpanded = false,
+    this.isBookingCard = false,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -317,6 +322,7 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
           child: ExpansionTile(
             collapsedBackgroundColor: widgetColor,
             backgroundColor: expandedColor,
+            initiallyExpanded: initialExpanded,
             onExpansionChanged: (value) {},
             title: Text(
               '$department Dept.',
@@ -365,6 +371,7 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
                               availableClasses.length,
                               (index) => RoomShowCard(
                                     room: availableClasses[index].toString(),
+                                    isBookingCard: isBookingCard,
                                   ))
                         ],
                       ),
@@ -379,9 +386,12 @@ class FreeroomsDepartmentWiseExpensionTile extends StatelessWidget {
 
 class RoomShowCard extends StatelessWidget {
   final String room;
-  const RoomShowCard({
+  var isSelected = false.obs;
+  final isBookingCard;
+  RoomShowCard({
     Key? key,
     required this.room,
+    required this.isBookingCard,
   }) : super(key: key);
 
   @override
@@ -390,33 +400,50 @@ class RoomShowCard extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: GestureDetector(
         onTap: () {
-          Get.defaultDialog(
-              title: 'Room',
-              middleText: room,
-              titleStyle: const TextStyle(color: Colors.black));
+          isSelected.value = true;
+          if (!isBookingCard) {
+            Get.defaultDialog(
+                title: 'Room',
+                middleText: room,
+                titleStyle: const TextStyle(color: Colors.black));
+          } else {
+            Get.defaultDialog(
+                onWillPop: () => Future.value(false),
+                title: 'Room',
+                middleText: room,
+                confirmTextColor: Colors.white,
+                onConfirm: () {
+                  Get.find<BookingDetailsController>().bookingRoom.value = room;
+                  Get.close(2);
+                },
+                onCancel: () {
+                  isSelected.value = false;
+                },
+                titleStyle: const TextStyle(color: Colors.black));
+          }
         },
-        child: Card(
-          color: widgetColor,
-          elevation: Constants.defaultElevation,
-          shadowColor: shadowColor,
-          shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.all(Radius.circular(Constants.defaultRadius))),
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
-              child: Text(
-                room.toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(fontWeight: FontWeight.w900),
+        child: Obx(() => Card(
+              color: isSelected.value ? successColor : widgetColor,
+              elevation: Constants.defaultElevation,
+              shadowColor: shadowColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(Constants.defaultRadius))),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Constants.defaultPadding),
+                  child: Text(
+                    room.toString(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .copyWith(fontWeight: FontWeight.w900),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
+            )),
       ),
     );
   }

@@ -1,3 +1,6 @@
+import 'package:cui_timetable/app/modules/booking/bookingDetails/controllers/booking_details_controller.dart';
+import 'package:cui_timetable/app/modules/booking/bookingRoom/views/widgets/booking_rooms_classes.dart';
+import 'package:cui_timetable/app/modules/freerooms/controllers/freerooms_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -33,10 +36,14 @@ class BookingRoomView extends GetView<BookingRoomController> {
                 )),
               ]),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            Icon(Icons.home),
-            Icon(Icons.sync),
+            BookingFreerooms(
+                classes: Get.find<FreeroomsController>()
+                    .freerooms[
+                        Get.find<BookingDetailsController>().bookingSlot - 1]
+                    .classes),
+            const Icon(Icons.sync),
           ],
         ),
       ),
