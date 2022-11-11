@@ -1,5 +1,5 @@
 import 'package:cui_timetable/app/modules/booking/bookingDetails/controllers/booking_details_controller.dart';
-import 'package:cui_timetable/app/modules/booking/bookingRoom/views/widgets/booking_rooms_classes.dart';
+import 'package:cui_timetable/app/modules/booking/bookingRoom/views/widgets/booking_rooms_widgets.dart';
 import 'package:cui_timetable/app/modules/freerooms/controllers/freerooms_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +43,12 @@ class BookingRoomView extends GetView<BookingRoomController> {
                     .freerooms[
                         Get.find<BookingDetailsController>().bookingSlot - 1]
                     .classes),
-            const Icon(Icons.sync),
+            BookingFreeLabs(
+              labs: Get.find<FreeroomsController>()
+                  .freerooms[
+                      Get.find<BookingDetailsController>().bookingSlot - 1]
+                  .labs,
+            ),
           ],
         ),
       ),

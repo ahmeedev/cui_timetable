@@ -204,6 +204,7 @@ class FreeroomsClassesExpensionTile extends StatelessWidget {
 class FreeroomsLabsExpensionTile extends StatelessWidget {
   final totalLabs;
   final List labs;
+
   const FreeroomsLabsExpensionTile(
       {Key? key, required this.totalLabs, required this.labs})
       : super(key: key);
@@ -422,28 +423,28 @@ class RoomShowCard extends StatelessWidget {
                 titleStyle: const TextStyle(color: Colors.black));
           }
         },
-        child: Obx(() => Card(
-              color: isSelected.value ? successColor : widgetColor,
-              elevation: Constants.defaultElevation,
-              shadowColor: shadowColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(Constants.defaultRadius))),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: Constants.defaultPadding),
-                  child: Text(
-                    room.toString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(fontWeight: FontWeight.w900),
-                  ),
-                ),
+        child: Card(
+          color: widgetColor,
+          elevation: Constants.defaultElevation,
+          shadowColor: shadowColor,
+          shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(Constants.defaultRadius))),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
+              child: Text(
+                room.toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(fontWeight: FontWeight.w900),
               ),
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -451,9 +452,12 @@ class RoomShowCard extends StatelessWidget {
 
 class LabShowCard extends StatelessWidget {
   final String lab;
-  const LabShowCard({
+  var isSelected = false.obs;
+  final isBookingCard;
+  LabShowCard({
     Key? key,
     required this.lab,
+    this.isBookingCard = false,
   }) : super(key: key);
 
   @override
@@ -462,10 +466,26 @@ class LabShowCard extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: GestureDetector(
         onTap: () {
-          Get.defaultDialog(
-              title: 'Lab',
-              middleText: lab,
-              titleStyle: const TextStyle(color: Colors.black));
+          if (isBookingCard) {
+            Get.defaultDialog(
+                title: 'Lab',
+                middleText: lab,
+                titleStyle: const TextStyle(color: Colors.black));
+          } else {
+            Get.defaultDialog(
+                onWillPop: () => Future.value(false),
+                title: 'Lab',
+                middleText: lab,
+                confirmTextColor: Colors.white,
+                onConfirm: () {
+                  Get.find<BookingDetailsController>().bookingRoom.value = lab;
+                  Get.close(2);
+                },
+                onCancel: () {
+                  isSelected.value = false;
+                },
+                titleStyle: const TextStyle(color: Colors.black));
+          }
         },
         child: Card(
           color: widgetColor,

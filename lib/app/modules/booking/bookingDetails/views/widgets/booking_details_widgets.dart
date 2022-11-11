@@ -109,44 +109,23 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
         ),
         Card(
           child: ListTile(
-            title: Obx(() => Row(
-                  children: [
-                    Text("Booking Room:  ", style: headingStyle),
-                    Text(controller.bookingRoom.value,
+            // contentPadding: EdgeInsets.zero,
+            horizontalTitleGap: 0.5,
+            leading: Text("Booking Room:  ", style: headingStyle),
+            title: Obx(() => Text(controller.bookingRoom.value,
+                style: theme.textTheme.titleMedium!.copyWith(
+                    color: Colors.black, fontWeight: FontWeight.w900))),
+            trailing: ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(Routes.BOOKING_ROOM);
+                },
+                child: controller.bookingRoom.value.isEmpty
+                    ? Text(
+                        "Select",
                         style: theme.textTheme.titleMedium!.copyWith(
-                            color: Colors.black, fontWeight: FontWeight.w900)),
-                    Expanded(
-                      child: controller.bookingRoom.value.isEmpty
-                          ? Row(
-                              children: [
-                                const Spacer(),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      Get.toNamed(Routes.BOOKING_ROOM);
-                                    },
-                                    child: Text(
-                                      "Select",
-                                      style: theme.textTheme.titleMedium!
-                                          .copyWith(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w900),
-                                    )),
-                              ],
-                            )
-                          : Row(
-                              children: [
-                                const Spacer(),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Get.toNamed(Routes.BOOKING_ROOM);
-                                  },
-                                  child: const Icon(Icons.change_circle),
-                                ),
-                              ],
-                            ),
-                    ),
-                  ],
-                )),
+                            color: Colors.white, fontWeight: FontWeight.w900),
+                      )
+                    : const Icon(Icons.change_circle)),
           ),
         ),
       ],

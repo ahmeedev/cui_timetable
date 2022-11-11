@@ -28,6 +28,7 @@ class BookingLog extends GetView<BookingLogController> {
             });
 
             return ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
                 itemCount: data.length,
                 itemBuilder: (BuildContext context, int index) {

@@ -26,3 +26,25 @@ class BookingFreerooms extends StatelessWidget {
     );
   }
 }
+
+class BookingFreeLabs extends StatelessWidget {
+  final List labs;
+
+  const BookingFreeLabs({Key? key, required this.labs}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(Constants.defaultPadding),
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: labs.length,
+        itemBuilder: (context, index) {
+          return LabShowCard(
+            lab: labs[index].toString(),
+          );
+        },
+      ),
+    );
+  }
+}
