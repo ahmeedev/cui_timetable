@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:get/get.dart';
 
@@ -144,7 +145,12 @@ class _BookingInfoViewState extends State<BookingInfoView> {
             );
             // return Text(snapshot.data["10000"].toString());
           }
-          return const CircularProgressIndicator();
+          return const Center(
+            child: SpinKitFadingCube(
+              color: primaryColor,
+              size: 30,
+            ),
+          );
         },
       ),
     );
