@@ -5,9 +5,12 @@ import '../../../../freerooms/models/freerooms_model.dart';
 import '../../../../freerooms/views/widgets/freerooms_widgets.dart';
 
 class BookingFreerooms extends StatelessWidget {
-  BookingFreerooms({Key? key, required this.classes}) : super(key: key);
+  final List<String> bookedRooms;
   final List<String> dept = ['A', 'B', 'C', 'W'];
   final List<FreeroomsSubClass> classes;
+
+  BookingFreerooms({Key? key, required this.classes, required this.bookedRooms})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +24,7 @@ class BookingFreerooms extends StatelessWidget {
           availableClasses: classes[index].classes,
           initialExpanded: index == 0 ? true : false,
           isBookingCard: true,
+          bookedRooms: bookedRooms,
         );
       },
     );
@@ -29,8 +33,10 @@ class BookingFreerooms extends StatelessWidget {
 
 class BookingFreeLabs extends StatelessWidget {
   final List labs;
-
-  const BookingFreeLabs({Key? key, required this.labs}) : super(key: key);
+  final List<String> bookedLabs;
+  const BookingFreeLabs(
+      {Key? key, required this.labs, required this.bookedLabs})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,6 +48,7 @@ class BookingFreeLabs extends StatelessWidget {
         itemBuilder: (context, index) {
           return LabShowCard(
             lab: labs[index].toString(),
+            bookedLabs: bookedLabs,
           );
         },
       ),

@@ -28,12 +28,12 @@ class BookingDetailsView extends GetView<BookingDetailsController> {
             child: Stepper(
                 physics: const BouncingScrollPhysics(),
                 currentStep: controller.currentStep.value,
-                onStepTapped: (index) {
-                  controller.currentStep.value = index;
-                },
+                // onStepTapped: (index) {
+                //   controller.currentStep.value = index;
+                // },
                 onStepContinue: () {
                   if (controller.currentStep.value == 2) {
-                    // Get.back();
+                    Get.back();
                   } else if (controller.currentStep.value < 2) {
                     controller.currentStep.value++;
                     if (controller.currentStep.value == 1) {

@@ -2,6 +2,7 @@ import 'package:cui_timetable/app/modules/booking/bookingDetails/controllers/boo
 import 'package:cui_timetable/app/modules/booking/bookingRoom/views/widgets/booking_rooms_widgets.dart';
 import 'package:cui_timetable/app/modules/freerooms/controllers/freerooms_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:get/get.dart';
 
@@ -36,21 +37,40 @@ class BookingRoomView extends GetView<BookingRoomController> {
                 )),
               ]),
         ),
-        body: TabBarView(
-          children: [
-            BookingFreerooms(
-                classes: Get.find<FreeroomsController>()
-                    .freerooms[
-                        Get.find<BookingDetailsController>().bookingSlot - 1]
-                    .classes),
-            BookingFreeLabs(
-              labs: Get.find<FreeroomsController>()
-                  .freerooms[
-                      Get.find<BookingDetailsController>().bookingSlot - 1]
-                  .labs,
-            ),
-          ],
-        ),
+        body: FutureBuilder<List<String>>(
+            future: controller.roomsFuture,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                // log("Snapshot data: ${snapshot.data}");
+                return TabBarView(children: [
+                  BookingFreerooms(
+                    classes: Get.find<FreeroomsController>()
+                        .freerooms[
+                            Get.find<BookingDetailsController>().bookingSlot -
+                                1]
+                        .classes,
+                    bookedRooms: snapshot.data!,
+                  ),
+                  BookingFreeLabs(
+                    labs: Get.find<FreeroomsController>()
+                        .freerooms[
+                            Get.find<BookingDetailsController>().bookingSlot -
+                                1]
+                        .labs,
+                    bookedLabs: snapshot.data!,
+                  ),
+                ]);
+              }
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text("Error: ${snapshot.error}"),
+                );
+              }
+              return const SpinKitFadingCube(
+                color: primaryColor,
+                size: 30.0,
+              );
+            }),
       ),
     );
   }

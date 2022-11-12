@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cui_timetable/app/constants/firebase_constants.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/utilities/notifications/cloud_notifications.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../../../../utilities/notifications/cloud_notifications.dart';
 
 class BookingDetailsController extends GetxController {
   final bookingBy = Get.arguments['bookingBy'];
@@ -13,6 +17,7 @@ class BookingDetailsController extends GetxController {
   final bookingSlot = Get.arguments['bookingSlot'];
   var bookingRoom = ""
       .obs; //* Came from the freerooms module, on the onTap of the freeroom card.
+  late final bookingDate;
 
   final timeMap = {
     "1": "Monday",
@@ -23,9 +28,9 @@ class BookingDetailsController extends GetxController {
   };
 
   final currentStep = 0.obs;
+  final isRoomAvailable = true.obs;
   final notificationSent = false.obs;
-
-  late final bookingDate;
+  final isBookingSuccessful = true.obs;
 
   late final Future<String> bookingDateFuture;
   @override
@@ -54,26 +59,72 @@ class BookingDetailsController extends GetxController {
       required int time,
       required String room}) async {
     FirebaseFirestore db = FirebaseFirestore.instance;
-    await db
-        .collection("booking")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set({
-      "${DateTime.now()}": {
-        "section": section,
-        "time": time,
-        "room": room,
-        "status": false,
-      }
-    }, SetOptions(merge: true)).onError((error, stackTrace) =>
+
+    //? Check the freerooms here.
+    final docRef = db.collection(bookingCollection).doc(bookedRooms);
+    final response = await docRef.get();
+    final date = DateFormat.yMd()
+        .format(Get.find<BookingDetailsController>().bookingDate)
+        .replaceAll("/", "-");
+    final tag = "$date-${Get.find<BookingDetailsController>().bookingSlot}";
+
+    List<String> result = List<String>.from(response.data()![tag] ?? []);
+    if (!result.contains(bookingRoom.value)) {
+      db.runTransaction((transaction) async {
+        final now = DateTime.now();
+        final uid = FirebaseAuth.instance.currentUser!.uid;
+        await db.collection(bookingCollection).doc(uid).set({
+          "$now": {
+            "section": section,
+            "time": time,
+            "room": room,
+            "status": false,
+          }
+        }, SetOptions(merge: true)).onError((error, stackTrace) =>
             GetXUtilities.snackbar(
                 title: "Error!",
                 message: error.toString(),
                 gradient: errorGradient));
 
-    await sendNotification(
-      title: 'Room Booked',
-      description:
-          "Booked for $bookingFor by $bookingFor at slot $bookingSlot in room C1 is done.",
-    ).then((value) => notificationSent.value = true);
+        await db.collection(bookingCollection).doc(bookedRooms).update({
+          tag: FieldValue.arrayUnion([bookingRoom.value.toString()]),
+        });
+
+        final bookingLog =
+            "Booking with $bookingFor in room ${bookingRoom.value} at slot $bookingSlot on $date";
+
+        await db.collection(bookingCollection).doc(bookingsLog).set({
+          uid: {
+            "$now": bookingLog,
+          }
+        }, SetOptions(merge: true)).onError((error, stackTrace) =>
+            GetXUtilities.snackbar(
+                title: "Error!",
+                message: error.toString(),
+                gradient: errorGradient));
+      }).then(
+        (value) => log("DocumentSnapshot successfully updated!"),
+        onError: (e) => log(
+          "Error updating document $e",
+        ),
+      );
+    } else {
+      isRoomAvailable.value = false;
+      notificationSent.value = false;
+      isBookingSuccessful.value = false;
+      GetXUtilities.snackbar(
+          duration: 3,
+          title: "Error!",
+          message: "Room is already booked, make another selection",
+          gradient: errorGradient);
+    }
+
+    if (isBookingSuccessful.value) {
+      await sendNotification(
+        title: 'Room Booked!',
+        description:
+            "$bookingBy make booking for $bookingFor at room ${bookingRoom.value} for ${DateFormat.yMMMMd().format(bookingDate)} in slot $bookingSlot.",
+      ).then((value) => notificationSent.value = true);
+    }
   }
 }

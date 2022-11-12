@@ -141,48 +141,64 @@ class BookingFinalizeStepperWidget extends GetView<BookingDetailsController> {
     final theme = Theme.of(context);
     return Column(children: [
       Card(
-        child: ListTile(
+          child: Obx(
+        () => ListTile(
           leading: FittedBox(
             fit: BoxFit.scaleDown,
-            child: SpinKitFadingCube(
-              color: primaryColor,
-              size: Constants.iconSize,
-            ),
+            child: controller.isRoomAvailable.value
+                ? Icon(
+                    Icons.check_circle,
+                    color: successColor,
+                    size: Constants.iconSize,
+                  )
+                : controller.isBookingSuccessful.value
+                    ? SpinKitFadingCube(
+                        color: primaryColor,
+                        size: Constants.iconSize,
+                      )
+                    : Icon(
+                        Icons.cancel,
+                        color: errorColor1,
+                        size: Constants.iconSize,
+                      ),
           ),
           title: Text(
-            "Checking Room Availability and reserving for you...",
-            style: theme.textTheme.titleMedium!
-                .copyWith(color: successColor, fontWeight: FontWeight.w900),
+            "Ensuring the room availability and reserving...",
+            style: theme.textTheme.titleMedium!.copyWith(
+                color: controller.isRoomAvailable.value
+                    ? successColor
+                    : errorColor1,
+                fontWeight: FontWeight.w900),
           ),
         ),
-      ),
+      )),
       Card(
         child: Obx(() => ListTile(
               leading: controller.notificationSent.value
-                  ? FittedBox(
-                      fit: BoxFit.scaleDown,
-                      // child: SpinKitFadingCube(
-                      //   color: primaryColor,
-                      //   size: Constants.iconSize,
-                      // ),
-                      child: Icon(
-                        Icons.check_circle,
-                        color: successColor,
-                        size: Constants.iconSize,
-                      ))
-                  : FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: SpinKitFadingCube(
-                        color: primaryColor,
-                        size: Constants.iconSize,
-                      ),
-                    ),
+                  ? Icon(
+                      Icons.check_circle,
+                      color: successColor,
+                      size: Constants.iconSize,
+                    )
+                  : controller.isBookingSuccessful.value
+                      ? FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: SpinKitFadingCube(
+                            color: primaryColor,
+                            size: Constants.iconSize,
+                          ),
+                        )
+                      : Icon(
+                          Icons.cancel,
+                          color: errorColor1,
+                          size: Constants.iconSize,
+                        ),
               title: Text(
-                "Notifying Admin",
+                "Notifying Admin...",
                 style: theme.textTheme.titleMedium!.copyWith(
-                    color: controller.notificationSent.value
+                    color: controller.isBookingSuccessful.value
                         ? successColor
-                        : primaryColor,
+                        : errorColor1,
                     fontWeight: FontWeight.w900),
               ),
             )),
@@ -191,33 +207,38 @@ class BookingFinalizeStepperWidget extends GetView<BookingDetailsController> {
   }
 }
 
-class BookingStatusStepperWidget extends StatelessWidget {
+class BookingStatusStepperWidget extends GetView<BookingDetailsController> {
   const BookingStatusStepperWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Column(children: [
-      Card(
-        child: ListTile(
-          leading: FittedBox(
-              fit: BoxFit.scaleDown,
-              // child: SpinKitFadingCube(
-              //   color: primaryColor,
-              //   size: Constants.iconSize,
-              // ),
-              child: Icon(
-                Icons.check_circle,
-                color: successColor,
-                size: Constants.iconSize,
-              )),
-          title: Text(
-            "Your request has been sent to admin and accepted!",
-            style: theme.textTheme.titleMedium!
-                .copyWith(color: successColor, fontWeight: FontWeight.w900),
-          ),
-        ),
-      )
+      Obx(() => Card(
+            child: ListTile(
+              leading: controller.isBookingSuccessful.value
+                  ? Icon(
+                      Icons.check_circle,
+                      color: successColor,
+                      size: Constants.iconSize,
+                    )
+                  : Icon(
+                      Icons.cancel,
+                      color: errorColor1,
+                      size: Constants.iconSize,
+                    ),
+              title: Text(
+                controller.isBookingSuccessful.value
+                    ? "Your booking has been done. Make sure your presence in the lecture.!"
+                    : "Your booking has been failed. Please try again later.",
+                style: theme.textTheme.titleMedium!.copyWith(
+                    color: controller.isBookingSuccessful.value
+                        ? successColor
+                        : errorColor1,
+                    fontWeight: FontWeight.w900),
+              ),
+            ),
+          ))
     ]);
   }
 }
