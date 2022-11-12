@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/modules/reports/views/reported_view.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,9 @@ import 'package:get/get.dart';
 import '../controllers/reports_controller.dart';
 
 class ReportsView extends GetView<ReportsController> {
-  const ReportsView({Key? key}) : super(key: key);
+ const ReportsView({Key? key}) : super(key: key);
+ 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +27,7 @@ class ReportsView extends GetView<ReportsController> {
                 style: TextStyle(fontSize: 20),
               ),
             )
-          : Column(),
+          :const ReportedView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.toNamed(Routes.NEW_REPORT);
