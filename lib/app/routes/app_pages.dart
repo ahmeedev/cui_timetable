@@ -52,6 +52,8 @@ import '../modules/remainder/student_remainder/bindings/student_remainder_bindin
 import '../modules/remainder/student_remainder/views/student_remainder_view.dart';
 import '../modules/remainder/views/remainder_view.dart';
 import '../modules/reports/bindings/reports_binding.dart';
+import '../modules/reports/newReport/bindings/new_report_binding.dart';
+import '../modules/reports/newReport/views/new_report_view.dart';
 import '../modules/reports/views/reports_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view2.dart';
@@ -259,8 +261,15 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.REPORTS,
-      page: () => const ReportsView(),
+      page: () => ReportsView(),
       binding: ReportsBinding(),
+      children: [
+        GetPage(
+          name: _Paths.NEW_REPORT,
+          page: () => const NewReportView(),
+          binding: NewReportBinding(),
+        ),
+      ],
     ),
   ];
 }
