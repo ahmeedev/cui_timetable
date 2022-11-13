@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/modules/booking/controllers/booking_log_controller.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_constants.dart';
 
@@ -19,7 +21,7 @@ class BookingLog extends GetView<BookingLogController> {
         builder: (BuildContext context,
             AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.hasData) {
-            final data = snapshot.data!.data()!;
+            final data = snapshot.data!.data() ?? {};
             final keys = data.keys.toList();
 
             keys.sort((a, b) {
@@ -27,6 +29,15 @@ class BookingLog extends GetView<BookingLogController> {
               return DateTime.parse(b).compareTo(DateTime.parse(a));
             });
 
+            if (data.isEmpty) {
+              return Center(
+                child: Text(
+                  'No booking Logs found',
+                  style:
+                      theme.textTheme.labelLarge!.copyWith(color: Colors.black),
+                ),
+              );
+            }
             return ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
@@ -36,36 +47,41 @@ class BookingLog extends GetView<BookingLogController> {
                   String msg = "";
                   if (status) {
                     msg =
-                        "Booking with ${data[keys[index]]["section"]} in room ${data[keys[index]]["room"]} at slot ${data[keys[index]]["slot"]} has been Accepted.";
+                        "Booking for ${data[keys[index]]["section"]} in room ${data[keys[index]]["room"]} has been done.";
                   } else {
                     msg =
-                        "Booking with ${data[keys[index]]["section"]} in room ${data[keys[index]]["room"]} at slot ${data[keys[index]]["slot"]} has been Rejected.";
+                        "Booking for ${data[keys[index]]["section"]} in room ${data[keys[index]]["room"]} has been rejected.";
                   }
                   return Card(
                     child: ListTile(
-                      leading: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          // child: SpinKitFadingCube(
-                          //   color: primaryColor,
-                          //   size: Constants.iconSize,
-                          // ),
-                          child: status
-                              ? Icon(
-                                  Icons.check_circle,
-                                  color: successColor,
-                                  size: Constants.iconSize,
-                                )
-                              : Icon(
-                                  Icons.cancel_rounded,
-                                  color: errorColor1,
-                                  size: Constants.iconSize,
-                                )),
                       title: Text(
                         msg,
                         style: theme.textTheme.titleMedium!.copyWith(
                             color: status ? successColor : errorColor1,
                             fontWeight: FontWeight.w900),
-                      ),
+                      ).paddingOnly(bottom: Constants.defaultPadding),
+                      // minVerticalPadding: Constants.defaultPadding,
+                      contentPadding: EdgeInsets.all(Constants.defaultPadding),
+                      subtitle: Row(children: [
+                        ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: errorColor1),
+                            child: const Text("Cancel booking")),
+                        kWidth,
+                        ElevatedButton(
+                            onPressed: () {
+                              Get.toNamed(Routes.BOOKING_DETAILS_VIEW,
+                                  arguments: {
+                                    "timestamp": keys[index],
+                                    "section": data[keys[index]]["section"],
+                                    "room": data[keys[index]]["room"],
+                                    "slot": data[keys[index]]["slot"],
+                                  });
+                            },
+                            child: const Text("View Details")),
+                        // kWidth,
+                      ]),
                     ),
                   );
                 });

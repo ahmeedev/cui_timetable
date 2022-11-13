@@ -1,4 +1,5 @@
 import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -38,15 +39,25 @@ class BookingDetailsView extends GetView<BookingDetailsController> {
                     controller.currentStep.value++;
                     if (controller.currentStep.value == 1) {
                       controller.book(
-                          section: controller.bookingFor,
-                          time: controller.bookingSlot,
-                          room: "C1");
+                        section: controller.bookingFor,
+                        slot: controller.bookingSlot,
+                        room: controller.bookingRoom.value,
+                      );
                     }
                   }
                 },
                 onStepCancel: () {
                   if (controller.currentStep.value > 0) {
-                    controller.currentStep.value--;
+                    if (!controller.isBookingSuccessful.value) {
+                      controller.currentStep.value--;
+                    } else {
+                      GetXUtilities.snackbar(
+                          duration: 3,
+                          title: 'Room Booked!',
+                          message:
+                              'Room is already booked, to unbook go to BOOKING LOG',
+                          gradient: primaryGradient);
+                    }
                   }
                 },
                 steps: [

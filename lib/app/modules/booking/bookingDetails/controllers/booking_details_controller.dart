@@ -56,7 +56,7 @@ class BookingDetailsController extends GetxController {
 
   book(
       {required String section,
-      required int time,
+      required int slot,
       required String room}) async {
     FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -68,27 +68,34 @@ class BookingDetailsController extends GetxController {
         .replaceAll("/", "-");
     final tag = "$date-${Get.find<BookingDetailsController>().bookingSlot}";
 
-    List<String> result = List<String>.from(response.data()![tag] ?? []);
+    List<String> result;
+    if (response.data() == null) {
+      result = [];
+    } else {
+      result = List<String>.from(response.data()![tag] ?? []);
+    }
     if (!result.contains(bookingRoom.value)) {
       db.runTransaction((transaction) async {
         final now = DateTime.now();
         final uid = FirebaseAuth.instance.currentUser!.uid;
+
+        await db.collection(bookingCollection).doc(bookedRooms).update({
+          tag: FieldValue.arrayUnion([bookingRoom.value.toString()]),
+        });
+
         await db.collection(bookingCollection).doc(uid).set({
           "$now": {
             "section": section,
-            "time": time,
+            "slot": slot,
             "room": room,
-            "status": false,
+            "date": date,
+            "status": true,
           }
         }, SetOptions(merge: true)).onError((error, stackTrace) =>
             GetXUtilities.snackbar(
                 title: "Error!",
                 message: error.toString(),
                 gradient: errorGradient));
-
-        await db.collection(bookingCollection).doc(bookedRooms).update({
-          tag: FieldValue.arrayUnion([bookingRoom.value.toString()]),
-        });
 
         final bookingLog =
             "Booking with $bookingFor in room ${bookingRoom.value} at slot $bookingSlot on $date";

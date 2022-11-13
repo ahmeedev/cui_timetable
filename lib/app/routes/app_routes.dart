@@ -40,6 +40,9 @@ abstract class Routes {
   static const LOCATION = _Paths.LOCATION;
   static const REPORTS = _Paths.REPORTS;
   static const NEW_REPORT = _Paths.REPORTS + _Paths.NEW_REPORT;
+  static const BOOKING_DETAILS_VIEW =
+      _Paths.BOOKING + _Paths.BOOKING_DETAILS_VIEW;
+  static const CANCEL_BOOKING = _Paths.BOOKING + _Paths.CANCEL_BOOKING;
 }
 
 abstract class _Paths {
@@ -80,4 +83,6 @@ abstract class _Paths {
   static const LOCATION = '/location';
   static const REPORTS = '/reports';
   static const NEW_REPORT = '/new-report';
+  static const BOOKING_DETAILS_VIEW = '/booking-details-view';
+  static const CANCEL_BOOKING = '/cancel-booking';
 }

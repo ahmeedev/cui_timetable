@@ -11,10 +11,14 @@ import '../modules/authentication/views/authentication_view.dart';
 import '../modules/booking/bindings/booking_binding.dart';
 import '../modules/booking/bookingDetails/bindings/booking_details_binding.dart';
 import '../modules/booking/bookingDetails/views/booking_details_view.dart';
+import '../modules/booking/bookingDetailsView/bindings/booking_details_view_binding.dart';
+import '../modules/booking/bookingDetailsView/views/booking_details_view_view.dart';
 import '../modules/booking/bookingInfo/bindings/booking_info_binding.dart';
 import '../modules/booking/bookingInfo/views/booking_info_view.dart';
 import '../modules/booking/bookingRoom/bindings/booking_room_binding.dart';
 import '../modules/booking/bookingRoom/views/booking_room_view.dart';
+import '../modules/booking/cancelBooking/bindings/cancel_booking_binding.dart';
+import '../modules/booking/cancelBooking/views/cancel_booking_view.dart';
 import '../modules/booking/views/booking_view.dart';
 import '../modules/comparison/bindings/comparision_binding.dart';
 import '../modules/comparison/sec_sec/bindings/sec_sec_binding.dart';
@@ -246,6 +250,16 @@ class AppPages {
           name: _Paths.BOOKING_ROOM,
           page: () => const BookingRoomView(),
           binding: BookingRoomBinding(),
+        ),
+        GetPage(
+          name: _Paths.BOOKING_DETAILS_VIEW,
+          page: () => const BookingDetailsViewView(),
+          binding: BookingDetailsViewBinding(),
+        ),
+        GetPage(
+          name: _Paths.CANCEL_BOOKING,
+          page: () => const CancelBookingView(),
+          binding: CancelBookingBinding(),
         ),
       ],
     ),

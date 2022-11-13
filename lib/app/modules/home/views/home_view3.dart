@@ -403,7 +403,7 @@ class HomeViewWidget extends StatelessWidget {
                 GetXUtilities.snackbar(
                     title: "Error!",
                     message: "Sign in as a Teacher",
-                    gradient: errorGradient);
+                    gradient: primaryGradient);
               } else {
                 if (email.endsWith("@gmail.com")) {
                   Get.toNamed(Routes.BOOKING);
@@ -411,7 +411,7 @@ class HomeViewWidget extends StatelessWidget {
                   GetXUtilities.snackbar(
                       title: "Error!",
                       message: "Sign in as a Teacher",
-                      gradient: errorGradient);
+                      gradient: primaryGradient);
                 }
               }
             }, iconLocation: "assets/home/booking.png"),
@@ -449,9 +449,7 @@ class HomeViewWidget extends StatelessWidget {
                 ontap: () => Get.toNamed(Routes.ABOUT_US),
                 iconLocation: "assets/home/about_us.png"),
             kWidth,
-            _buildTile(context,
-                title: "Feedback",
-                ontap: () {
+            _buildTile(context, title: "Feedback", ontap: () {
               String? email = FirebaseAuth.instance.currentUser?.email;
 
               // if (email!.endsWith("@cuisahiwal.edu.pk")) {
@@ -459,7 +457,7 @@ class HomeViewWidget extends StatelessWidget {
                 GetXUtilities.snackbar(
                     title: "Error!",
                     message: "You must be signed in to report an issue",
-                    gradient: errorGradient);
+                    gradient: primaryGradient);
               } else {
                 if (email.endsWith("@gmail.com")) {
                   Get.toNamed(Routes.REPORTS);
@@ -467,11 +465,10 @@ class HomeViewWidget extends StatelessWidget {
                   GetXUtilities.snackbar(
                       title: "Error!",
                       message: "You must be signed in to report an issue",
-                      gradient: errorGradient);
+                      gradient: primaryGradient);
                 }
               }
-            },
-                iconLocation: "assets/home/feedback.png"),
+            }, iconLocation: "assets/home/feedback.png"),
             kWidth,
             _buildTile(
               context,

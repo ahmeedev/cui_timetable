@@ -18,7 +18,7 @@ class BookingRoomController extends GetxController {
     FirebaseFirestore db = FirebaseFirestore.instance;
     final docRef = db.collection(bookingCollection).doc(bookedRooms);
     final response = await docRef.get();
-    final data = Map<String, dynamic>.from(response.data()!);
+    final data = Map<String, dynamic>.from(response.data() ?? {});
     final date = DateFormat.yMd()
         .format(Get.find<BookingDetailsController>().bookingDate)
         .replaceAll("/", "-");
