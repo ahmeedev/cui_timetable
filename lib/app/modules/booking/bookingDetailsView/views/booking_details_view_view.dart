@@ -43,7 +43,8 @@ class BookingDetailsViewView extends GetView<BookingDetailsViewController> {
                           fit: BoxFit.scaleDown,
                           child: Row(
                             children: [
-                              Text("Booking Timestamp:  ", style: headingStyle),
+                              Text("Initiate Timestamp:  ",
+                                  style: headingStyle),
                               Text(
                                 DateFormat.yMMMMEEEEd().add_jm().format(
                                     DateTime.parse(controller.timestamp)),
@@ -111,9 +112,11 @@ class BookingDetailsViewView extends GetView<BookingDetailsViewController> {
                   ],
                 ).paddingAll(Constants.defaultPadding);
               }
-              return const SpinKitFadingCube(
-                color: primaryColor,
-                size: 30.0,
+              return const Center(
+                child: SpinKitFadingCube(
+                  color: primaryColor,
+                  size: 30.0,
+                ),
               );
             }));
   }

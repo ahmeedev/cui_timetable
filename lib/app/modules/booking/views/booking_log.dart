@@ -64,7 +64,15 @@ class BookingLog extends GetView<BookingLogController> {
                       contentPadding: EdgeInsets.all(Constants.defaultPadding),
                       subtitle: Row(children: [
                         ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.toNamed(Routes.CANCEL_BOOKING, arguments: {
+                                "timestamp": keys[index],
+                                "section": data[keys[index]]["section"],
+                                "room": data[keys[index]]["room"],
+                                "slot": data[keys[index]]["slot"],
+                                "date": data[keys[index]]["date"],
+                              });
+                            },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: errorColor1),
                             child: const Text("Cancel booking")),
