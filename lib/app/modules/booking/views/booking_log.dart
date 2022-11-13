@@ -52,6 +52,9 @@ class BookingLog extends GetView<BookingLogController> {
                     msg =
                         "Booking for ${data[keys[index]]["section"]} in room ${data[keys[index]]["room"]} has been rejected.";
                   }
+                  //! if date is elapsed the check the status, if status pass then it means that the booking is cancelled, if not then it means that the
+                  //! booking time is elapsed, and if the date is not elapsed then check that the status is true, if true show the elevated buttons otherwise,
+                  //! it means, that the booking was cancelled before the date has elapsed.
                   return Card(
                     child: ListTile(
                       title: Text(
@@ -59,37 +62,95 @@ class BookingLog extends GetView<BookingLogController> {
                         style: theme.textTheme.titleMedium!.copyWith(
                             color: status ? successColor : errorColor1,
                             fontWeight: FontWeight.w900),
-                      ).paddingOnly(bottom: Constants.defaultPadding),
+                      )
+                          .paddingAll(Constants.defaultPadding)
+                          .paddingOnly(bottom: Constants.defaultPadding / 2),
                       // minVerticalPadding: Constants.defaultPadding,
-                      contentPadding: EdgeInsets.all(Constants.defaultPadding),
-                      subtitle: Row(children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Get.toNamed(Routes.CANCEL_BOOKING, arguments: {
-                                "timestamp": keys[index],
-                                "section": data[keys[index]]["section"],
-                                "room": data[keys[index]]["room"],
-                                "slot": data[keys[index]]["slot"],
-                                "date": data[keys[index]]["date"],
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: errorColor1),
-                            child: const Text("Cancel booking")),
-                        kWidth,
-                        ElevatedButton(
-                            onPressed: () {
-                              Get.toNamed(Routes.BOOKING_DETAILS_VIEW,
-                                  arguments: {
-                                    "timestamp": keys[index],
-                                    "section": data[keys[index]]["section"],
-                                    "room": data[keys[index]]["room"],
-                                    "slot": data[keys[index]]["slot"],
-                                  });
-                            },
-                            child: const Text("View Details")),
-                        // kWidth,
-                      ]),
+                      // contentPadding:
+                      //     EdgeInsets.all(Constants.defaultPadding),
+                      contentPadding: EdgeInsets.zero,
+                      minVerticalPadding: 0,
+                      subtitle: DateTime.parse(data[keys[index]]["date"])
+                              .isBefore(DateTime.now())
+                          ? status == false
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                      color: errorColor1,
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(
+                                              Constants.defaultRadius / 2),
+                                          bottomRight: Radius.circular(
+                                              Constants.defaultRadius / 2))),
+                                  child: Text(
+                                    "Booking Cancelled",
+                                    style: theme.textTheme.titleSmall!.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900),
+                                  ).paddingAll(Constants.defaultPadding),
+                                )
+                              : Container(
+                                  decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(
+                                              Constants.defaultRadius / 2),
+                                          bottomRight: Radius.circular(
+                                              Constants.defaultRadius / 2))),
+                                  child: Text(
+                                    "Booking has been Expired!",
+                                    style: theme.textTheme.titleSmall!.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900),
+                                  ).paddingAll(Constants.defaultPadding),
+                                )
+                          : status
+                              ? Row(children: [
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Get.toNamed(Routes.CANCEL_BOOKING,
+                                            arguments: {
+                                              "timestamp": keys[index],
+                                              "section": data[keys[index]]
+                                                  ["section"],
+                                              "room": data[keys[index]]["room"],
+                                              "slot": data[keys[index]]["slot"],
+                                              "date": data[keys[index]]["date"],
+                                            });
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: errorColor1),
+                                      child: const Text("Cancel booking")),
+                                  kWidth,
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Get.toNamed(Routes.BOOKING_DETAILS_VIEW,
+                                            arguments: {
+                                              "timestamp": keys[index],
+                                              "section": data[keys[index]]
+                                                  ["section"],
+                                              "room": data[keys[index]]["room"],
+                                              "slot": data[keys[index]]["slot"],
+                                            });
+                                      },
+                                      child: const Text("View Details")),
+                                  // kWidth,
+                                ]).paddingSymmetric(
+                                  horizontal: Constants.defaultPadding)
+                              : Container(
+                                  decoration: BoxDecoration(
+                                      color: errorColor1,
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(
+                                              Constants.defaultRadius / 2),
+                                          bottomRight: Radius.circular(
+                                              Constants.defaultRadius / 2))),
+                                  child: Text(
+                                    "Booking Cancelled",
+                                    style: theme.textTheme.titleSmall!.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900),
+                                  ).paddingAll(Constants.defaultPadding),
+                                ),
                     ),
                   );
                 });

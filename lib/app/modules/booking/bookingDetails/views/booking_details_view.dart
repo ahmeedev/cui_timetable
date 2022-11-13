@@ -55,7 +55,7 @@ class BookingDetailsView extends GetView<BookingDetailsController> {
                           duration: 3,
                           title: 'Room Booked!',
                           message:
-                              'Room is already booked, to unbook go to BOOKING LOG',
+                              'Booking in progress, to unbook go to BOOKING LOG',
                           gradient: primaryGradient);
                     }
                   }

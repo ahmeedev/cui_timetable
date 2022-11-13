@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 import '../../../../theme/app_colors.dart';
+import '../../../../widgets/get_widgets.dart';
 import '../controllers/cancel_booking_controller.dart';
 import 'widgets/cancel_booking_widgets.dart';
 
@@ -59,18 +60,14 @@ class CancelBookingView extends GetView<CancelBookingController> {
                           }
                         },
                         onStepCancel: () {
-                          // if (controller.currentStep.value > 0) {
-                          //   if (!controller.isBookingSuccessful.value) {
-                          //     controller.currentStep.value--;
-                          //   } else {
-                          //     GetXUtilities.snackbar(
-                          //         duration: 3,
-                          //         title: 'Room Booked!',
-                          //         message:
-                          //             'Room is already booked, to unbook go to BOOKING LOG',
-                          //         gradient: primaryGradient);
-                          //   }
-                          // }
+                          if (controller.currentStep.value > 0) {
+                            GetXUtilities.snackbar(
+                                duration: 3,
+                                title: 'Booking Cancelled!',
+                                message:
+                                    'Booking has been cancelled, make another booking',
+                                gradient: primaryGradient);
+                          }
                         },
                         steps: [
                           Step(
@@ -81,9 +78,7 @@ class CancelBookingView extends GetView<CancelBookingController> {
                           Step(
                               isActive: controller.currentStep.value >= 1,
                               title: const Text("Finalize Booking"),
-                              content: const Card(
-                                child: Text("CHild 2"),
-                              )),
+                              content: const CancelBookingFinalizeWidget()),
                         ]),
                   ));
             }

@@ -194,7 +194,7 @@ class BookingFinalizeStepperWidget extends GetView<BookingDetailsController> {
                           size: Constants.iconSize,
                         ),
               title: Text(
-                "Notifying Admin...",
+                "Notifying Management...",
                 style: theme.textTheme.titleMedium!.copyWith(
                     color: controller.isBookingSuccessful.value
                         ? successColor

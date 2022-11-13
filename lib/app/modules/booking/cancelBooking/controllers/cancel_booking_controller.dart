@@ -15,6 +15,8 @@ class CancelBookingController extends GetxController {
   var monToThursSlots = <String>[];
   var friSlots = <String>[];
 
+  final isBookingCancel = false.obs;
+
   late final Future<void> future;
   @override
   void onInit() {

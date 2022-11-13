@@ -88,7 +88,7 @@ class BookingDetailsController extends GetxController {
             "section": section,
             "slot": slot,
             "room": room,
-            "date": date,
+            "date": bookingDate.toString(),
             "status": true,
           }
         }, SetOptions(merge: true)).onError((error, stackTrace) =>
@@ -111,9 +111,7 @@ class BookingDetailsController extends GetxController {
                 gradient: errorGradient));
       }).then(
         (value) => log("DocumentSnapshot successfully updated!"),
-        onError: (e) => log(
-          "Error updating document $e",
-        ),
+        onError: (e) => log("Error updating document $e", name: 'ERROR'),
       );
     } else {
       isRoomAvailable.value = false;
