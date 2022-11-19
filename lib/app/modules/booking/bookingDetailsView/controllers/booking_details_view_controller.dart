@@ -8,6 +8,7 @@ class BookingDetailsViewController extends GetxController {
   final section = Get.arguments['section'];
   final room = Get.arguments['room'];
   final slot = Get.arguments['slot'];
+  final date = Get.arguments['date'];
   var currentTimeSlots = [];
   var monToThursSlots = <String>[];
   var friSlots = <String>[];

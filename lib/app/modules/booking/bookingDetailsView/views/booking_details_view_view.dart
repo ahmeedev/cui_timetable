@@ -83,6 +83,22 @@ class BookingDetailsViewView extends GetView<BookingDetailsViewController> {
                       child: ListTile(
                         title: Row(
                           children: [
+                            Text("Booking Date:        ", style: headingStyle),
+                            Text(
+                              DateFormat.yMMMMEEEEd()
+                                  .format(DateTime.parse(controller.date)),
+                              style: theme.textTheme.titleMedium!.copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w900),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Card(
+                      child: ListTile(
+                        title: Row(
+                          children: [
                             Text("Booking Room:      ", style: headingStyle),
                             Text(
                               "${controller.room}",

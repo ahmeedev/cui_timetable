@@ -130,6 +130,7 @@ class BookingLog extends GetView<BookingLogController> {
                                                   ["section"],
                                               "room": data[keys[index]]["room"],
                                               "slot": data[keys[index]]["slot"],
+                                              "date": data[keys[index]]["date"],
                                             });
                                       },
                                       child: const Text("View Details")),
