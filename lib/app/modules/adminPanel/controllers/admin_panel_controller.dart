@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-class AnnouncementController extends GetxController {
-  //TODO: Implement AnnouncementController
+class AdminPanelController extends GetxController {
+  //TODO: Implement AdminPanelController
 
   final count = 0.obs;
   @override

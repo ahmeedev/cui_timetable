@@ -178,11 +178,6 @@ class ButtonList extends GetView<HomeController> {
         physics: BouncingScrollPhysics(),
         shrinkWrap: true,
         children: [
-          if (kDebugMode)
-            buildButton(context,
-                icon: const AssetImage('assets/drawer/vision.png'),
-                title: 'Testing',
-                onTap: () {}),
           buildButton(context,
               icon: const AssetImage('assets/drawer/vision.png'),
               title: 'Director Vision', onTap: () {
@@ -193,11 +188,33 @@ class ButtonList extends GetView<HomeController> {
           //     title: 'About Us', onTap: () {
           //   Get.toNamed(Routes.ABOUT_US);
           // }),
+
+          // buildButton(context,
+          //     icon: const AssetImage('assets/drawer/bookings.png'),
+          //     title: 'Bookings',
+          //     onTap: () {}),
+
           buildButton(context,
-              icon: const AssetImage('assets/home/announc.png'),
-              title: 'Announcement', onTap: () {
-            Get.toNamed(Routes.ANNOUNCEMENT);
+              icon: const AssetImage('assets/drawer/developer.png'),
+              title: 'Admin Panel',
+              onTap: () => Get.toNamed(Routes.ADMIN_PANEL)),
+          buildButton(context,
+              icon: const AssetImage('assets/drawer/sync.png'),
+              title: 'Synchronize', onTap: () {
+            Get.toNamed(Routes.SYNC);
           }),
+
+          // buildButton(context,
+          //     icon: const AssetImage('assets/drawer/feedback.png'),
+          //     title: 'Feedback / Report an Issue',
+          //     onTap: () {}),
+          // buildButton(context,
+          //     icon: const AssetImage('assets/drawer/settings.png'),
+          //     title: 'Settings', onTap: () {
+          //   Get.toNamed(Routes.SETTINGS);
+          // }),
+          // controller.authCache.get(DBAuthCache.isSignIn, defaultValue: false)
+
           Stack(
             children: [
               buildButton(context,
@@ -225,26 +242,6 @@ class ButtonList extends GetView<HomeController> {
               ),
             ],
           ),
-          // buildButton(context,
-          //     icon: const AssetImage('assets/drawer/bookings.png'),
-          //     title: 'Bookings',
-          //     onTap: () {}),
-
-          buildButton(context,
-              icon: const AssetImage('assets/drawer/sync.png'),
-              title: 'Synchronized', onTap: () {
-            Get.toNamed(Routes.SYNC);
-          }),
-          // buildButton(context,
-          //     icon: const AssetImage('assets/drawer/feedback.png'),
-          //     title: 'Feedback / Report an Issue',
-          //     onTap: () {}),
-          // buildButton(context,
-          //     icon: const AssetImage('assets/drawer/settings.png'),
-          //     title: 'Settings', onTap: () {
-          //   Get.toNamed(Routes.SETTINGS);
-          // }),
-          // controller.authCache.get(DBAuthCache.isSignIn, defaultValue: false)
 
           Obx(() => controller.isUserSignIn.value == true
               ? buildButton(context,
@@ -274,16 +271,17 @@ class ButtonList extends GetView<HomeController> {
           //   print(result);
           // }),
 
-          buildButton(context,
-              icon: const AssetImage('assets/drawer/developer.png'),
-              title: 'For Developer', onTap: () {
-            Get.toNamed(Routes.FOR_DEVELOPER);
-          }),
           // buildButton(context,
           //     icon: const AssetImage('assets/drawer/firebase.png'),
           //     title: 'Firebase', onTap: () {
           //   Get.to(FirebaseUI());
           // }),
+
+          if (kDebugMode)
+            buildButton(context,
+                icon: const AssetImage('assets/drawer/vision.png'),
+                title: 'Testing',
+                onTap: () {}),
         ],
       ),
     );

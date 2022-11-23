@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../modules/announcement/bindings/announcement_binding.dart';
-import '../modules/announcement/views/announcement_view.dart';
+import '../modules/adminPanel/bindings/admin_panel_binding.dart';
+import '../modules/adminPanel/views/admin_panel_view.dart';
 import '../modules/authentication/bindings/authentication_binding.dart';
 import '../modules/authentication/signIn/bindings/sign_in_binding.dart';
 import '../modules/authentication/signIn/views/sign_in_view.dart';
@@ -36,8 +36,6 @@ import '../modules/datesheet/teacher_datesheet/views/teacher_datesheet_view.dart
 import '../modules/datesheet/views/datesheet_view.dart';
 import '../modules/developer/bindings/developer_binding.dart';
 import '../modules/developer/views/developer_view.dart';
-import '../modules/for_developer/bindings/for_developer_binding.dart';
-import '../modules/for_developer/views/for_developer_view.dart';
 import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -61,6 +59,8 @@ import '../modules/reports/newReport/views/new_report_view.dart';
 import '../modules/reports/views/reports_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view2.dart';
+import '../modules/socities/bindings/socities_binding.dart';
+import '../modules/socities/views/socities_view.dart';
 import '../modules/sync/bindings/sync_binding.dart';
 import '../modules/sync/views/sync_view.dart';
 import '../modules/timetable/bindings/timetable_binding.dart';
@@ -201,11 +201,6 @@ class AppPages {
       ],
     ),
     GetPage(
-      name: _Paths.FOR_DEVELOPER,
-      page: () => const ForDeveloperView(),
-      binding: ForDeveloperBinding(),
-    ),
-    GetPage(
         name: _Paths.COMPARISON,
         page: () => ComparisonView(),
         binding: ComparisionBinding(),
@@ -264,18 +259,13 @@ class AppPages {
       ],
     ),
     GetPage(
-      name: _Paths.ANNOUNCEMENT,
-      page: () => const AnnouncementView(),
-      binding: AnnouncementBinding(),
-    ),
-    GetPage(
       name: _Paths.LOCATION,
       page: () => const LocationView(),
       binding: LocationBinding(),
     ),
     GetPage(
       name: _Paths.REPORTS,
-      page: () => ReportsView(),
+      page: () => const ReportsView(),
       binding: ReportsBinding(),
       children: [
         GetPage(
@@ -284,6 +274,16 @@ class AppPages {
           binding: NewReportBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.ADMIN_PANEL,
+      page: () => const AdminPanelView(),
+      binding: AdminPanelBinding(),
+    ),
+    GetPage(
+      name: _Paths.SOCITIES,
+      page: () => const SocitiesView(),
+      binding: SocitiesBinding(),
     ),
   ];
 }

@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/announcement_controller.dart';
+import '../controllers/socities_controller.dart';
 
-class AnnouncementView extends GetView<AnnouncementController> {
-  const AnnouncementView({Key? key}) : super(key: key);
+class SocitiesView extends GetView<SocitiesController> {
+  const SocitiesView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AnnouncementView'),
+        title: const Text('SocitiesView'),
         centerTitle: true,
       ),
       body: Center(
         child: Text(
-          'AnnouncementView is working',
+          'SocitiesView is working',
           style: TextStyle(fontSize: 20),
         ),
       ),

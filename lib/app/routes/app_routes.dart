@@ -25,7 +25,6 @@ abstract class Routes {
   static const AUTHENTICATION = _Paths.AUTHENTICATION;
   static const SIGN_IN = _Paths.AUTHENTICATION + _Paths.SIGN_IN;
   static const SIGN_UP = _Paths.AUTHENTICATION + _Paths.SIGN_UP;
-  static const FOR_DEVELOPER = _Paths.FOR_DEVELOPER;
 
   static const COMPARISON = _Paths.COMPARISON;
   static const SEC_SEC = _Paths.COMPARISON + _Paths.SEC_SEC;
@@ -36,13 +35,14 @@ abstract class Routes {
   static const BOOKING_DETAILS = _Paths.BOOKING + _Paths.BOOKING_DETAILS;
   static const BOOKING_INFO = _Paths.BOOKING + _Paths.BOOKING_INFO;
   static const BOOKING_ROOM = _Paths.BOOKING + _Paths.BOOKING_ROOM;
-  static const ANNOUNCEMENT = _Paths.ANNOUNCEMENT;
   static const LOCATION = _Paths.LOCATION;
   static const REPORTS = _Paths.REPORTS;
   static const NEW_REPORT = _Paths.REPORTS + _Paths.NEW_REPORT;
   static const BOOKING_DETAILS_VIEW =
       _Paths.BOOKING + _Paths.BOOKING_DETAILS_VIEW;
   static const CANCEL_BOOKING = _Paths.BOOKING + _Paths.CANCEL_BOOKING;
+  static const ADMIN_PANEL = _Paths.ADMIN_PANEL;
+  static const SOCITIES = _Paths.SOCITIES;
 }
 
 abstract class _Paths {
@@ -85,4 +85,6 @@ abstract class _Paths {
   static const NEW_REPORT = '/new-report';
   static const BOOKING_DETAILS_VIEW = '/booking-details-view';
   static const CANCEL_BOOKING = '/cancel-booking';
+  static const ADMIN_PANEL = '/admin-panel';
+  static const SOCITIES = '/socities';
 }
