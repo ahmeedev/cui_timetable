@@ -104,7 +104,7 @@ class HomeView3 extends GetView<HomeController> {
                               color: Colors.red,
                               width: 0,
                             )
-                          : _buildParticles(width, height),
+                          : buildParticles(width, height * 0.4),
                     ),
                   ),
                   Padding(
@@ -314,35 +314,35 @@ class HomeView3 extends GetView<HomeController> {
         // .paddingAll(Constants.defaultPadding)
         );
   }
+}
 
-  CircularParticle _buildParticles(double width, double height) {
-    return CircularParticle(
-      key: UniqueKey(),
-      awayRadius: 80,
-      numberOfParticles: 10,
-      speedOfParticles: 1,
-      width: width,
-      height: height * 0.4,
-      onTapAnimation: true,
-      particleColor: Colors.white.withAlpha(150),
-      awayAnimationDuration: const Duration(milliseconds: 500),
-      maxParticleSize: 5,
-      isRandSize: true,
-      isRandomColor: true,
-      randColorList: const [
-        Colors.purple,
-        Colors.amber,
-        Colors.red,
-        // Colors.black,
-        Colors.orange,
-      ],
-      awayAnimationCurve: Curves.easeInOutBack,
-      enableHover: true,
-      hoverColor: Colors.white,
-      hoverRadius: 90,
-      connectDots: false, //not recommended
-    );
-  }
+CircularParticle buildParticles(double width, double height) {
+  return CircularParticle(
+    key: UniqueKey(),
+    awayRadius: 80,
+    numberOfParticles: 10,
+    speedOfParticles: 1,
+    width: width,
+    height: height,
+    onTapAnimation: true,
+    particleColor: Colors.white.withAlpha(150),
+    awayAnimationDuration: const Duration(milliseconds: 500),
+    maxParticleSize: 5,
+    isRandSize: true,
+    isRandomColor: true,
+    randColorList: const [
+      Colors.purple,
+      Colors.amber,
+      Colors.red,
+      // Colors.black,
+      Colors.orange,
+    ],
+    awayAnimationCurve: Curves.easeInOutBack,
+    enableHover: true,
+    hoverColor: Colors.white,
+    hoverRadius: 90,
+    connectDots: false, //not recommended
+  );
 }
 
 class HomeViewWidget extends StatelessWidget {

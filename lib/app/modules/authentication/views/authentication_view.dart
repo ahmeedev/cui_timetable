@@ -91,8 +91,8 @@ class AuthenticationView extends GetView<AuthenticationController> {
                       },
                       child: Padding(
                         padding: EdgeInsets.all(Constants.defaultPadding),
-                        child: Icon(Icons.arrow_back,
-                            color: Colors.white, size: Constants.iconSize + 10),
+                        child: Icon(Icons.arrow_back_rounded,
+                            color: Colors.white, size: Constants.iconSize + 5),
                       ),
                     ),
                     const Spacer(),
