@@ -36,8 +36,7 @@ import '../modules/datesheet/student_datesheet/views/student_datesheet_view.dart
 import '../modules/datesheet/teacher_datesheet/bindings/teacher_datesheet_binding.dart';
 import '../modules/datesheet/teacher_datesheet/views/teacher_datesheet_view.dart';
 import '../modules/datesheet/views/datesheet_view.dart';
-import '../modules/developer/bindings/developer_binding.dart';
-import '../modules/developer/views/developer_view.dart';
+
 import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -179,11 +178,6 @@ class AppPages {
       name: _Paths.SETTINGS,
       page: () => const SettingsView2(),
       binding: SettingsBinding(),
-    ),
-    GetPage(
-      name: _Paths.DEVELOPER,
-      page: () => const DeveloperView(),
-      binding: DeveloperBinding(),
     ),
     GetPage(
       name: _Paths.AUTHENTICATION,

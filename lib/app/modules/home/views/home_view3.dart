@@ -474,9 +474,9 @@ class HomeViewWidget extends StatelessWidget {
             kWidth,
             _buildTile(
               context,
-              title: "Developers",
+              title: "Contribution",
               iconLocation: "assets/home/developer.png",
-              ontap: () => Get.toNamed(Routes.DEVELOPER),
+              // ontap: () => Get.toNamed(Routes.DEVELOPER),
             ),
             kWidth,
           ],
