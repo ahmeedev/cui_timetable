@@ -4,7 +4,7 @@ import 'dart:developer' as devlog;
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:awesome_notifications/awesome_notifications.dart';
+// import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 
 import 'app/data/models/timetable/student_timetable/student_timetable.dart';
@@ -96,35 +95,35 @@ initlializeHiveAdapters() {
 }
 
 initializeLocalNotifications() {
-  AwesomeNotifications().initialize(
-      // 'resource://drawable/res_app_icon',
-      null,
-      [
-        NotificationChannel(
-          channelKey: channelRemainderKey,
-          channelName: channelRemainder,
-          channelDescription: channelRemainderDescription,
-          ledColor: primaryColor,
-        ),
-        NotificationChannel(
-          channelKey: channelUpdatesKey,
-          channelName: channelUpdates,
-          channelDescription: channelUpdatesDescription,
-          ledColor: primaryColor,
-        ),
-      ],
-      debug: true);
+  // AwesomeNotifications().initialize(
+  //     // 'resource://drawable/res_app_icon',
+  //     null,
+  //     [
+  //       NotificationChannel(
+  //         channelKey: channelRemainderKey,
+  //         channelName: channelRemainder,
+  //         channelDescription: channelRemainderDescription,
+  //         ledColor: primaryColor,
+  //       ),
+  //       NotificationChannel(
+  //         channelKey: channelUpdatesKey,
+  //         channelName: channelUpdates,
+  //         channelDescription: channelUpdatesDescription,
+  //         ledColor: primaryColor,
+  //       ),
+  //     ],
+  //     debug: true);
 
-  AwesomeNotifications().setListeners(
-    onActionReceivedMethod: (receivedAction) {
-      log("Action Received: $receivedAction");
-      return Future.value();
-    },
-    onNotificationCreatedMethod: (receivedNotification) {
-      log("Action Received: $receivedNotification");
-      return Future.value();
-    },
-  );
+  // AwesomeNotifications().setListeners(
+  //   onActionReceivedMethod: (receivedAction) {
+  //     log("Action Received: $receivedAction");
+  //     return Future.value();
+  //   },
+  //   onNotificationCreatedMethod: (receivedNotification) {
+  //     log("Action Received: $receivedNotification");
+  //     return Future.value();
+  //   },
+  // );
   // AwesomeNotifications().createdStream.listen((event) {
   //   log(event.toMap().toString());
   // });
@@ -153,16 +152,16 @@ initializeFirebaseMsg() async {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       // print("Message: ${event.notification!.body}");
-      AwesomeNotifications().createNotification(
-          content: NotificationContent(
-        channelKey: channelUpdatesKey,
-        id: 1,
-        title: event.notification!.title,
-        body: event.notification!.body,
-        color: primaryColor,
-        notificationLayout: NotificationLayout.BigText,
-        bigPicture: event.notification!.android!.imageUrl,
-      ));
+      // AwesomeNotifications().createNotification(
+      //     content: NotificationContent(
+      //   channelKey: channelUpdatesKey,
+      //   id: 1,
+      //   title: event.notification!.title,
+      //   body: event.notification!.body,
+      //   color: primaryColor,
+      //   notificationLayout: NotificationLayout.BigText,
+      //   bigPicture: event.notification!.android!.imageUrl,
+      // ));
     });
   } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
     print("User has authorized notifications provisionally");

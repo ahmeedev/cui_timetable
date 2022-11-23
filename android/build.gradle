@@ -6,9 +6,10 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.1'
+        classpath 'com.android.tools.build:gradle:7.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.10'
+        // classpath "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.14'
     }
 }
 
@@ -17,11 +18,18 @@ allprojects {
         google()
         mavenCentral()
     }
+    // mavenCentral {
+    //        content {
+    //             excludeGroupByRegex "com\\.google\\.android\\.gms"
+    //        }
+    //     }
 }
 
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
     project.evaluationDependsOn(':app')
 }
 

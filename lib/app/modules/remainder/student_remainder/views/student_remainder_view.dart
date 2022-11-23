@@ -1,5 +1,4 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:cui_timetable/app/constants/notification_constants.dart';
+// import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cui_timetable/app/modules/remainder/student_remainder/views/widgets/student_remainder_widgets.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
@@ -25,14 +24,14 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
             IconButton(
                 onPressed: () async {
                   // await AwesomeNotifications().cancelAllSchedules();
-                  AwesomeNotifications().createNotification(
-                      content: NotificationContent(
-                    channelKey: channelRemainderKey,
-                    id: channelRemainderId,
-                    title: 'Testing Notification',
-                    body: "This is the body of the testing notification",
-                    color: Colors.red,
-                  ));
+                  // AwesomeNotifications().createNotification(
+                  //     content: NotificationContent(
+                  //   channelKey: channelRemainderKey,
+                  //   id: channelRemainderId,
+                  //   title: 'Testing Notification',
+                  //   body: "This is the body of the testing notification",
+                  //   color: Colors.red,
+                  // ));
                 },
                 icon: const Text("Click me"))
           ],
@@ -76,7 +75,7 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
                                   child: ElevatedButton(
                                       onPressed: () {
                                         // log("${controller.sectionDetails.toList()}");
-                                        controller.revokeAll();
+                                        // controller.revokeAll();
                                       },
                                       // style: ElevatedButton.styleFrom(
                                       //     primary: errorColor1),

@@ -104,9 +104,9 @@ class LectureDetailsTile extends GetView<StudentRemainderController> {
                                     absorbing: controller.absorbing.value,
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        controller.setRemainder(
-                                            subject: subject,
-                                            index: counter - 1);
+                                        // controller.setRemainder(
+                                        //     subject: subject,
+                                        //     index: counter - 1);
                                         // controller.setRemainder(subject: subject);
                                       },
                                       child: Row(
@@ -137,9 +137,9 @@ class LectureDetailsTile extends GetView<StudentRemainderController> {
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor: errorColor1),
                                       onPressed: () {
-                                        controller.revokeRemainder(
-                                            subject: subject,
-                                            index: counter - 1);
+                                        // controller.revokeRemainder(
+                                        //     subject: subject,
+                                        //     index: counter - 1);
                                       },
                                       child: Row(
                                         mainAxisAlignment:
