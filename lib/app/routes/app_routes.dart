@@ -43,6 +43,7 @@ abstract class Routes {
   static const CANCEL_BOOKING = _Paths.BOOKING + _Paths.CANCEL_BOOKING;
   static const ADMIN_PANEL = _Paths.ADMIN_PANEL;
   static const SOCITIES = _Paths.SOCITIES;
+  static const ANNOUNCEMENT = _Paths.ADMIN_PANEL + _Paths.ANNOUNCEMENT;
 }
 
 abstract class _Paths {
@@ -68,7 +69,6 @@ abstract class _Paths {
   static const AUTHENTICATION = '/authentication';
   static const SIGN_IN = '/sign-in';
   static const SIGN_UP = '/sign-up';
-  static const FOR_DEVELOPER = '/for-developer';
 
   static const COMPARISON = '/comparision';
   static const SEC_SEC = '/sec-sec';
@@ -79,7 +79,6 @@ abstract class _Paths {
   static const BOOKING_DETAILS = '/booking-details';
   static const BOOKING_INFO = '/booking-info';
   static const BOOKING_ROOM = '/booking-room';
-  static const ANNOUNCEMENT = '/announcement';
   static const LOCATION = '/location';
   static const REPORTS = '/reports';
   static const NEW_REPORT = '/new-report';
@@ -87,4 +86,5 @@ abstract class _Paths {
   static const CANCEL_BOOKING = '/cancel-booking';
   static const ADMIN_PANEL = '/admin-panel';
   static const SOCITIES = '/socities';
+  static const ANNOUNCEMENT = '/announcement';
 }

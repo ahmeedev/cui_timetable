@@ -402,7 +402,7 @@ class HomeViewWidget extends StatelessWidget {
               if (email == null) {
                 GetXUtilities.snackbar(
                     title: "Error!",
-                    message: "Sign in as a Teacher",
+                    message: "You must be sign in as a teacher",
                     gradient: primaryGradient);
               } else {
                 if (email.endsWith("@gmail.com")) {

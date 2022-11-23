@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/adminPanel/announcement/bindings/announcement_binding.dart';
+import '../modules/adminPanel/announcement/views/announcement_view.dart';
 import '../modules/adminPanel/bindings/admin_panel_binding.dart';
 import '../modules/adminPanel/views/admin_panel_view.dart';
 import '../modules/authentication/bindings/authentication_binding.dart';
@@ -279,6 +281,13 @@ class AppPages {
       name: _Paths.ADMIN_PANEL,
       page: () => const AdminPanelView(),
       binding: AdminPanelBinding(),
+      children: [
+        GetPage(
+          name: _Paths.ANNOUNCEMENT,
+          page: () => const AnnouncementView(),
+          binding: AnnouncementBinding(),
+        ),
+      ],
     ),
     GetPage(
       name: _Paths.SOCITIES,
