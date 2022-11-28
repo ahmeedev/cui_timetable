@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'dart:io';
 
 // import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'package:cui_timetable/app/theme/app_colors.dart';
 
 import 'app/data/models/timetable/student_timetable/student_timetable.dart';
 import 'app/data/models/timetable/teacher_timetable/teacher_timetable.dart';
+import 'app/data/services/local_notifications.dart';
 import 'app/modules/home/controllers/home_controller.dart';
 import 'app/modules/news/controllers/news_controller.dart';
 import 'app/modules/settings/controllers/settings_controller.dart';
@@ -62,7 +64,8 @@ Future<void> _initialized() async {
   );
   devlog.log("Firebase Initialized...", name: 'FIREBASE');
 
-  await initializeLocalNotifications();
+  LocalNotifications.initialize();
+
   devlog.log("Local Notifications Initialized...", name: 'LOCAL');
 
   await initializeFirebaseMsg();
@@ -94,41 +97,6 @@ initlializeHiveAdapters() {
   Hive.registerAdapter(TeacherTimetableAdapter());
 }
 
-initializeLocalNotifications() {
-  // AwesomeNotifications().initialize(
-  //     // 'resource://drawable/res_app_icon',
-  //     null,
-  //     [
-  //       NotificationChannel(
-  //         channelKey: channelRemainderKey,
-  //         channelName: channelRemainder,
-  //         channelDescription: channelRemainderDescription,
-  //         ledColor: primaryColor,
-  //       ),
-  //       NotificationChannel(
-  //         channelKey: channelUpdatesKey,
-  //         channelName: channelUpdates,
-  //         channelDescription: channelUpdatesDescription,
-  //         ledColor: primaryColor,
-  //       ),
-  //     ],
-  //     debug: true);
-
-  // AwesomeNotifications().setListeners(
-  //   onActionReceivedMethod: (receivedAction) {
-  //     log("Action Received: $receivedAction");
-  //     return Future.value();
-  //   },
-  //   onNotificationCreatedMethod: (receivedNotification) {
-  //     log("Action Received: $receivedNotification");
-  //     return Future.value();
-  //   },
-  // );
-  // AwesomeNotifications().createdStream.listen((event) {
-  //   log(event.toMap().toString());
-  // });
-}
-
 initializeFirebaseMsg() async {
   final instance = FirebaseMessaging.instance;
   // final result = await instance.getInitialMessage();
@@ -151,17 +119,12 @@ initializeFirebaseMsg() async {
     log("Notification Token: $token");
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      // print("Message: ${event.notification!.body}");
-      // AwesomeNotifications().createNotification(
-      //     content: NotificationContent(
-      //   channelKey: channelUpdatesKey,
-      //   id: 1,
-      //   title: event.notification!.title,
-      //   body: event.notification!.body,
-      //   color: primaryColor,
-      //   notificationLayout: NotificationLayout.BigText,
-      //   bigPicture: event.notification!.android!.imageUrl,
-      // ));
+      LocalNotifications.showBigTextNotification(
+        channelID: channelUpdatesID,
+        channelName: channelUpdates,
+        title: event.notification!.title!,
+        body: event.notification!.body!,
+      );
     });
   } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
     print("User has authorized notifications provisionally");

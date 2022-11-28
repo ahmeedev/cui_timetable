@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +14,7 @@ import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 
+import '../../../../data/services/local_notifications.dart';
 import '../../controllers/home_controller.dart';
 
 /// Header of the Drawer.
@@ -280,8 +282,15 @@ class ButtonList extends GetView<HomeController> {
           if (kDebugMode)
             buildButton(context,
                 icon: const AssetImage('assets/drawer/vision.png'),
-                title: 'Testing',
-                onTap: () {}),
+                title: 'Testing', onTap: () {
+              LocalNotifications.showBigTextNotification(
+                channelID: channelRemainderId,
+                channelName: channelRemainder,
+                title: 'This is a big title',
+                body:
+                    "This is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThidyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThidyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a body",
+              );
+            }),
         ],
       ),
     );
