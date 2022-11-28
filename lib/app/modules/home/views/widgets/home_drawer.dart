@@ -195,11 +195,11 @@ class ButtonList extends GetView<HomeController> {
           //     icon: const AssetImage('assets/drawer/bookings.png'),
           //     title: 'Bookings',
           //     onTap: () {}),
-
-          buildButton(context,
-              icon: const AssetImage('assets/drawer/developer.png'),
-              title: 'Admin Panel',
-              onTap: () => Get.toNamed(Routes.ADMIN_PANEL)),
+          if (FirebaseAuth.instance.currentUser?.email == "inahmee77@gmail.com")
+            buildButton(context,
+                icon: const AssetImage('assets/drawer/developer.png'),
+                title: 'Admin Panel',
+                onTap: () => Get.toNamed(Routes.ADMIN_PANEL)),
           buildButton(context,
               icon: const AssetImage('assets/drawer/sync.png'),
               title: 'Synchronize', onTap: () {
@@ -217,33 +217,33 @@ class ButtonList extends GetView<HomeController> {
           // }),
           // controller.authCache.get(DBAuthCache.isSignIn, defaultValue: false)
 
-          Stack(
-            children: [
-              buildButton(context,
-                  icon: const AssetImage('assets/drawer/remainder.png'),
-                  title: 'Remainder', onTap: () {
-                Get.toNamed(Routes.REMAINDER);
-              }),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  // width: 30,
-                  decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(Constants.defaultRadius),
-                          bottomRight:
-                              Radius.circular(Constants.defaultRadius))),
-                  // height: 30,
-                  child: Text(
-                    "Beta",
-                    style: theme.textTheme.labelMedium!.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.w900),
-                  ).paddingAll(Constants.defaultPadding * 0.8),
-                ).paddingOnly(right: 4),
-              ),
-            ],
-          ),
+          // Stack(
+          //   children: [
+          //     buildButton(context,
+          //         icon: const AssetImage('assets/drawer/remainder.png'),
+          //         title: 'Remainder', onTap: () {
+          //       Get.toNamed(Routes.REMAINDER);
+          //     }),
+          //     Align(
+          //       alignment: Alignment.topRight,
+          //       child: Container(
+          //         // width: 30,
+          //         decoration: BoxDecoration(
+          //             color: primaryColor,
+          //             borderRadius: BorderRadius.only(
+          //                 bottomLeft: Radius.circular(Constants.defaultRadius),
+          //                 bottomRight:
+          //                     Radius.circular(Constants.defaultRadius))),
+          //         // height: 30,
+          //         child: Text(
+          //           "Beta",
+          //           style: theme.textTheme.labelMedium!.copyWith(
+          //               color: Colors.white, fontWeight: FontWeight.w900),
+          //         ).paddingAll(Constants.defaultPadding * 0.8),
+          //       ).paddingOnly(right: 4),
+          //     ),
+          //   ],
+          // ),
 
           Obx(() => controller.isUserSignIn.value == true
               ? buildButton(context,
