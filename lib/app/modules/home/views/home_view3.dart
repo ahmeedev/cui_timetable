@@ -405,12 +405,13 @@ class HomeViewWidget extends StatelessWidget {
                     message: "You must be sign in as a teacher",
                     gradient: primaryGradient);
               } else {
-                if (email.endsWith("@gmail.com")) {
+                // if (email.endsWith("@gmail.com")) {
+                if (email == "inahmee77@gmail.com") {
                   Get.toNamed(Routes.BOOKING);
                 } else {
                   GetXUtilities.snackbar(
                       title: "Error!",
-                      message: "Sign in as a Teacher",
+                      message: "You must be sign in as a teacher",
                       gradient: primaryGradient);
                 }
               }

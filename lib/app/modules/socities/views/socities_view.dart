@@ -1,11 +1,11 @@
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_constants.dart';
-import '../../home/views/home_view3.dart';
 import '../controllers/socities_controller.dart';
 
 class SocitiesView extends GetView<SocitiesController> {
@@ -18,111 +18,59 @@ class SocitiesView extends GetView<SocitiesController> {
 
     return Scaffold(
         backgroundColor: const Color(0xffB7CAE1),
-        body: Stack(
-          // fit: StackFit.expand,
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  end: Alignment.bottomRight,
-                  colors: [
-                    // secondaryColor,
-                    primaryColor,
-                    forGradient,
-                  ],
-                ),
-              ),
-              height: height * 0.21,
-              alignment: Alignment.center,
-              child: Text(
-                "Socities",
-                style: textTheme.titleLarge!.copyWith(
-                    fontSize: textTheme.titleLarge!.fontSize! + 6,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  // color: Colors.yellow,
-                  height: height * 0.16,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(Constants.defaultRadius * 4),
-                        topRight: Radius.circular(Constants.defaultRadius * 4)),
-                    color: widgetColor,
-                  ),
-                  height: height * 0.84,
-                  width: width,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: Constants.defaultPadding),
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            kHeight,
-                            kHeight,
-                            _buildTag(context: context, text: 'CS Dept.'),
-                            kHeight,
-                            kHeight,
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  buildSocietyCard(context,
-                                      name: "Computer Science"),
-                                  buildSocietyCard(context,
-                                      name: "Computer Science"),
-                                ]),
-                            kHeight,
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  buildSocietyCard(context,
-                                      name: "Computer Science"),
-                                  buildSocietyCard(context,
-                                      name: "Computer Science"),
-                                ]),
-                            kHeight,
-                            kHeight,
-                            _buildTag(context: context, text: 'BBA Dept.'),
-                            kHeight,
-                            kHeight,
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  buildSocietyCard(context,
-                                      name: "Computer Science"),
-                                  buildSocietyCard(context,
-                                      name: "Computer Science"),
-                                ]),
-                          ]),
+        appBar: AppBar(title: const Text("Socities")),
+        body: Padding(
+          padding: EdgeInsets.all(Constants.defaultPadding),
+          child: Obx(() => Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: CupertinoSegmentedControl<int>(
+                      padding: EdgeInsets.zero,
+                      selectedColor: primaryColor,
+                      borderColor: primaryColor,
+                      unselectedColor: widgetColor,
+                      children: {
+                        0: const Text('All')
+                            .paddingAll(Constants.defaultPadding),
+                        1: const Text('CS Dept.').paddingSymmetric(
+                            horizontal: Constants.defaultPadding * 2),
+                        2: const Text('MS Dept.').paddingSymmetric(
+                            horizontal: Constants.defaultPadding * 2),
+                        3: const Text('MS Dept.').paddingSymmetric(
+                            horizontal: Constants.defaultPadding * 2),
+                        4: const Text('MS Dept.').paddingSymmetric(
+                            horizontal: Constants.defaultPadding * 2),
+                        5: const Text('MS Dept.').paddingSymmetric(
+                            horizontal: Constants.defaultPadding * 2),
+                      },
+                      onValueChanged: (int val) {
+                        controller.segmentedControlValue.value = val;
+                      },
+                      groupValue: controller.segmentedControlValue.value,
                     ),
                   ),
-                ),
-              ],
-            ),
-            buildParticles(width, height * 0.15),
-            SafeArea(
-              child: InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(Constants.defaultPadding),
-                  child: Icon(Icons.arrow_back_rounded,
-                      color: Colors.white, size: Constants.iconSize + 5),
-                ),
-              ),
-            ),
-          ],
+                  kHeight,
+                  kHeight,
+                  Expanded(
+                      child: GridView.count(
+                          physics: const BouncingScrollPhysics(),
+                          crossAxisCount: 2,
+                          crossAxisSpacing: Constants.defaultPadding,
+                          mainAxisSpacing: 0,
+                          children: [
+                        buildSocietyCard(context, name: "CS Society"),
+                        buildSocietyCard(context, name: "Literacy Society"),
+                        buildSocietyCard(context, name: "Literacy Society"),
+                        buildSocietyCard(context, name: "Literacy Society"),
+                        buildSocietyCard(context, name: "Literacy Society"),
+                        buildSocietyCard(context, name: "Literacy Society"),
+                        buildSocietyCard(context, name: "Literacy Society"),
+                        buildSocietyCard(context, name: "Literacy Society"),
+                      ]))
+                ],
+              )),
         ));
   }
 
@@ -156,7 +104,7 @@ class SocitiesView extends GetView<SocitiesController> {
                       color: Colors.white, fontWeight: FontWeight.w900),
                 ).paddingAll(Constants.defaultPadding)),
             Image.network(
-              'https://scontent.flhe28-1.fna.fbcdn.net/v/t39.30808-6/310661575_110379318512956_136870021229319444_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeFooroeYd0uTVENcOoIB7O9SMh-jz3PNolIyH6PPc82iWf-phJwL3VZOJpxnDX-CsdpVbIlgEhoNfZQC7kPUqmi&_nc_ohc=zlJZNQZlkhYAX8hh5gL&tn=qBHsSZIFz85ua4G-&_nc_ht=scontent.flhe28-1.fna&oh=00_AfA8xHecqzXJhvuVYZ4zV0HlOSYk_wUn4Z0AZ--O_H4loQ&oe=6382152B',
+              "https://images.unsplash.com/photo-1664725080246-9d5368a0a86b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
               // fit: BoxFit.fill,
             )
           ]),
