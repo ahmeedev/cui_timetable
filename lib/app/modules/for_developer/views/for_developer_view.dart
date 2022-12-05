@@ -26,7 +26,7 @@ class ForDeveloperView extends GetView<ForDeveloperController> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               // if (snapshot.data == "49082b2b795ad0e7") {
-              if (snapshot.data == "W1oNbPGPgrNyfQ1n5ZW5QUsRtpb2") {
+              if (snapshot.data == "W1oNbPGPgrNyfQ1n5ZW5QUsRtpb2" || snapshot.data=="oLhfW6KlCpPnj9svftMyHcneHJx2") {
                 return ListView(
                   children: [
                     Card(

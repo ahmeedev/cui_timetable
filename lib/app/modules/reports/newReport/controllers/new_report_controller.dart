@@ -20,7 +20,9 @@ class NewReportController extends GetxController {
         .set({
           "${DateTime.now()}": {
             "userTitle": titleControler.text,
-            "userMSg": descripControler.text,
+            "userMsg": descripControler.text,
+            "adminMSg": "",
+            "adminTime": "",
           },
         }, SetOptions(merge: true))
         .onError((error, stackTrace) => GetXUtilities.snackbar(

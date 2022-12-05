@@ -44,7 +44,7 @@ class NewReportView extends GetView<NewReportController> {
                 borderRadius: BorderRadius.circular(10.0),
               )),
               onPressed: () {
-                if (controller.titleControler.text.isEmpty) {
+                if (controller.titleControler.text.isEmpty || controller.titleControler.text.length>20) {
                   GetXUtilities.snackbar(
                       title: "Title can't be empty ",
                       message: 'Please enter a valid title',
