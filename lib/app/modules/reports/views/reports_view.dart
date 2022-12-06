@@ -20,14 +20,7 @@ class ReportsView extends GetView<ReportsController> {
         centerTitle: true,
         backgroundColor: primaryColor,
       ),
-      body: controller.isReports == false
-          ? const Center(
-              child: Text(
-                'No Reports/Feedbacks available',
-                style: TextStyle(fontSize: 20),
-              ),
-            )
-          :const ReportedView(),
+      body: const ReportedView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.toNamed(Routes.NEW_REPORT);

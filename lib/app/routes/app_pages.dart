@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/adminPanel/adminFeedback/bindings/admin_feedback_binding.dart';
+import '../modules/adminPanel/adminFeedback/views/admin_feedback_view.dart';
 import '../modules/adminPanel/announcement/bindings/announcement_binding.dart';
 import '../modules/adminPanel/announcement/views/announcement_view.dart';
 import '../modules/adminPanel/bindings/admin_panel_binding.dart';
@@ -36,7 +38,6 @@ import '../modules/datesheet/student_datesheet/views/student_datesheet_view.dart
 import '../modules/datesheet/teacher_datesheet/bindings/teacher_datesheet_binding.dart';
 import '../modules/datesheet/teacher_datesheet/views/teacher_datesheet_view.dart';
 import '../modules/datesheet/views/datesheet_view.dart';
-
 import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -280,6 +281,11 @@ class AppPages {
           name: _Paths.ANNOUNCEMENT,
           page: () => const AnnouncementView(),
           binding: AnnouncementBinding(),
+        ),
+        GetPage(
+          name: _Paths.ADMIN_FEEDBACK,
+          page: () => const AdminFeedbackView(),
+          binding: AdminFeedbackBinding(),
         ),
       ],
     ),

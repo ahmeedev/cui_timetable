@@ -195,7 +195,7 @@ class ButtonList extends GetView<HomeController> {
           //     icon: const AssetImage('assets/drawer/bookings.png'),
           //     title: 'Bookings',
           //     onTap: () {}),
-          if (FirebaseAuth.instance.currentUser?.email == "inahmee77@gmail.com")
+          if (FirebaseAuth.instance.currentUser?.email == "inahmee77@gmail.com" || FirebaseAuth.instance.currentUser?.email == "mnawazshah49@gmail.com" )
             buildButton(context,
                 icon: const AssetImage('assets/drawer/developer.png'),
                 title: 'Admin Panel',
