@@ -204,14 +204,7 @@ class HomeView3 extends GetView<HomeController> {
           SizedBox(
             // color: Colors.red,
             height: height * 0.32,
-            child: Obx(
-              () => controller.pageIndex.value == 0
-                  ? Container(
-                      color: Colors.red,
-                      width: 0,
-                    )
-                  : buildParticles(width, height * 0.4),
-            ),
+            child: buildParticles(width, height * 0.4),
           ),
           Padding(
             padding:
