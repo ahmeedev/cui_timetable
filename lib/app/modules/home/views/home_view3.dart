@@ -41,14 +41,10 @@ class HomeView3 extends GetView<HomeController> {
         body: Stack(
           clipBehavior: Clip.none,
           children: [
-            Obx(() => AnimatedContainer(
-                  duration: const Duration(seconds: 1),
-                  curve: Curves.easeInOut,
-                  alignment: controller.pageIndex.value == 0
-                      ? const Alignment(-1, -0.7)
-                      : Alignment.center,
+            Obx(() => Container(
                   width: width,
                   height: height * 0.4,
+                  alignment: Alignment.center,
                   decoration: const BoxDecoration(
                       // color: primaryColor,
                       gradient: LinearGradient(colors: primaryGradient)),
@@ -56,134 +52,17 @@ class HomeView3 extends GetView<HomeController> {
                     padding: EdgeInsets.symmetric(
                         vertical: Constants.defaultPadding,
                         horizontal: Constants.defaultPadding * 2),
-                    child: SafeArea(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          kHeight,
-                          kHeight,
-                          Text(
-                            controller.pageLabels[controller.pageIndex.value],
+                    child:
+                        Text(controller.pageLabels[controller.pageIndex.value],
                             style: textTheme.titleLarge!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: controller.pageIndex.value == 0
-                                    ? Theme.of(context)
-                                            .textTheme
-                                            .headlineMedium!
-                                            .fontSize! -
-                                        8
-                                    : Theme.of(context)
-                                            .textTheme
-                                            .headlineMedium!
-                                            .fontSize! +
-                                        4.0),
-                          ),
-                          // Container(
-                          //   width: double.infinity,
-                          //   height: 150,
-                          //   color: Colors.green,
-                          // )
-                          kHeight,
-                        ],
-                      ),
-                    ),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: textTheme.displayMedium!.fontSize! - 12,
+                            )),
                   ),
                 )),
-            SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              child: Column(
-                children: [
-                  SizedBox(
-                    // color: Colors.red,
-                    height: height * 0.32,
-                    child: Obx(
-                      () => controller.pageIndex.value == 0
-                          ? Container(
-                              color: Colors.red,
-                              width: 0,
-                            )
-                          : buildParticles(width, height * 0.4),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(Constants.defaultPadding)
-                        .copyWith(bottom: 0),
-                    child: Container(
-                      width: width,
-                      height: height * 0.58 - (Constants.defaultPadding * 3),
-                      decoration: BoxDecoration(
-                        color: onScaffoldColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(Constants.defaultRadius),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 10,
-                            spreadRadius: 4,
-                          ),
-                        ],
-                      ),
-                      // padding: EdgeInsets.all(Constants.defaultPadding),
-                      child: SingleChildScrollView(
-                          // physics: const BouncingScrollPhysics(),
-                          child: Obx(() => controller
-                              .pageWidget[controller.pageIndex.value])),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              padding:
-                  EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
-              width: width,
-              height: height * 0.32,
-              child: Obx(() => controller.pageIndex.value == 0
-                  ? const HomeCarousel()
-                  : const SizedBox()),
-            ),
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.all(Constants.defaultPadding),
-                child: Row(
-                  children: [
-                    InkWell(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        //  hoverColor: Colors.tra
-
-                        onTap: () {
-                          controller.scaffoldKey.currentState!.openDrawer();
-                        },
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              // color: selectionColor,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(Constants.defaultRadius),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(Constants.defaultPadding),
-                              child: ImageIcon(
-                                const AssetImage('assets/drawer/menu2.png'),
-                                color: Colors.white,
-                                size: Constants.iconSize - 4,
-                              ),
-                            ),
-                          ),
-                        )),
-                    const Spacer(),
-                    const TypeWriterText()
-                  ],
-                ),
-              ),
-            ),
+            _buildMainPlaceholder(context),
+            _bulidTopDrawerRow(),
           ],
         ),
         bottomNavigationBar: Padding(
@@ -313,6 +192,97 @@ class HomeView3 extends GetView<HomeController> {
         // .roundAll(Constants.defaultRadius * 2)
         // .paddingAll(Constants.defaultPadding)
         );
+  }
+
+  SingleChildScrollView _buildMainPlaceholder(context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      child: Column(
+        children: [
+          SizedBox(
+            // color: Colors.red,
+            height: height * 0.32,
+            child: Obx(
+              () => controller.pageIndex.value == 0
+                  ? Container(
+                      color: Colors.red,
+                      width: 0,
+                    )
+                  : buildParticles(width, height * 0.4),
+            ),
+          ),
+          Padding(
+            padding:
+                EdgeInsets.all(Constants.defaultPadding).copyWith(bottom: 0),
+            child: Container(
+              width: width,
+              height: height * 0.58 - (Constants.defaultPadding * 3),
+              decoration: BoxDecoration(
+                color: onScaffoldColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(Constants.defaultRadius),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    spreadRadius: 4,
+                  ),
+                ],
+              ),
+              // padding: EdgeInsets.all(Constants.defaultPadding),
+              child: SingleChildScrollView(
+                  // physics: const BouncingScrollPhysics(),
+                  child: Obx(
+                      () => controller.pageWidget[controller.pageIndex.value])),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  SafeArea _bulidTopDrawerRow() {
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.all(Constants.defaultPadding),
+        child: Row(
+          children: [
+            InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                //  hoverColor: Colors.tra
+
+                onTap: () {
+                  controller.scaffoldKey.currentState!.openDrawer();
+                },
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      // color: selectionColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(Constants.defaultRadius),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(Constants.defaultPadding),
+                      child: ImageIcon(
+                        const AssetImage('assets/drawer/menu2.png'),
+                        color: Colors.white,
+                        size: Constants.iconSize - 4,
+                      ),
+                    ),
+                  ),
+                )),
+            const Spacer(),
+            const TypeWriterText()
+          ],
+        ),
+      ),
+    );
   }
 }
 

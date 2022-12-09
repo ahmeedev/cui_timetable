@@ -51,6 +51,10 @@ final roomsLocation = <String, dynamic>{
   "C2.3": "C Dept. 2nd Floor",
   "C2.4": "C Dept. 2nd Floor",
   "C2.5": "C Dept. 2nd Floor",
+  // C Dept Labs.
+  "C LAB1": "C Dept. 1st Floor",
+  "C LAB2": "C Dept. 2nd Floor",
+  "C LAB5": "C Dept. 2nd Floor",
 
   // W Dept.
 

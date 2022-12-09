@@ -1,4 +1,4 @@
-import 'package:cui_timetable/app/constants/rooms_location.dart';
+import 'package:cui_timetable/app/data/database/rooms_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_soul/flutter_soul.dart';
 
