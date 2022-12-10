@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/modules/location/views/widgets/location_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -20,87 +21,29 @@ class LocationView extends GetView<LocationController> {
           IconButton(
             onPressed: () {
               // Get.toNamed('/settings');
+              showSearch(
+                  context: context,
+                  // delegate to customize the search bar
+
+                  delegate: CustomSearchDelegate());
             },
             icon: const Icon(Icons.search_rounded),
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: roomsLocation.length,
-        itemBuilder: (BuildContext context, int index) {
-          final textTheme = Theme.of(context).textTheme;
-          final cardHeight = Get.height * 0.12;
-          return Container(
-            height: cardHeight,
-            child: Card(
-              child: ListTile(
-                title: Row(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          roomsLocation[controller.roomsKeys[index]][0],
-                          style: textTheme.titleLarge!.copyWith(
-                            fontWeight: FontWeight.w900,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          "Dept",
-                          style: textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                    kWidth,
-                    Container(
-                      width: 3,
-                      height: cardHeight,
-                      color: primaryColor,
-                    ),
-                    kWidth,
-                    kWidth,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "Room:       ",
-                              style: textTheme.titleMedium!.copyWith(
-                                fontWeight: FontWeight.w900,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text("  ${controller.roomsKeys[index]}"),
-                          ],
-                        ),
-                        kHeight,
-                        Row(
-                          children: [
-                            Text(
-                              "Location: ",
-                              style: textTheme.titleMedium!.copyWith(
-                                fontWeight: FontWeight.w900,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                                " ${roomsLocation[controller.roomsKeys[index]]}"),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ).paddingAll(Constants.defaultPadding),
-              ),
-            ),
-          );
-        },
+      body: Container(
+        padding: EdgeInsets.all(Constants.defaultPadding / 2),
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemCount: roomsLocation.length,
+          itemBuilder: (BuildContext context, int index) {
+            return LocationDetailsTile(
+              room: controller.roomsKeys[index],
+              location: roomsLocation[controller.roomsKeys[index]],
+              dept: roomsLocation[controller.roomsKeys[index]][0],
+            );
+          },
+        ),
       ),
     );
   }
