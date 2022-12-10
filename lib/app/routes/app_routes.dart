@@ -45,6 +45,7 @@ abstract class Routes {
   static const SOCITIES = _Paths.SOCITIES;
   static const ANNOUNCEMENT = _Paths.ADMIN_PANEL + _Paths.ANNOUNCEMENT;
   static const ADMIN_FEEDBACK = _Paths.ADMIN_PANEL + _Paths.ADMIN_FEEDBACK;
+  static const CONTRIBUTIONS = _Paths.CONTRIBUTIONS;
 }
 
 abstract class _Paths {
@@ -89,4 +90,5 @@ abstract class _Paths {
   static const SOCITIES = '/socities';
   static const ANNOUNCEMENT = '/announcement';
   static const ADMIN_FEEDBACK = '/admin-feedback';
+  static const CONTRIBUTIONS = '/contributions';
 }

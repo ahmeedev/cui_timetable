@@ -440,7 +440,7 @@ class HomeViewWidget extends StatelessWidget {
               context,
               title: "Contribution",
               iconLocation: "assets/home/developer.png",
-              // ontap: () => Get.toNamed(Routes.DEVELOPER),
+              ontap: () => Get.toNamed(Routes.CONTRIBUTIONS),
             ),
             kWidth,
           ],

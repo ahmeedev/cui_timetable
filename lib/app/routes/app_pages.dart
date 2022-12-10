@@ -32,6 +32,8 @@ import '../modules/comparison/teac_sect/views/teac_sect_view.dart';
 import '../modules/comparison/teac_teac/bindings/teac_teac_binding.dart';
 import '../modules/comparison/teac_teac/views/teac_teac_view.dart';
 import '../modules/comparison/views/comparison_view.dart';
+import '../modules/contributions/bindings/contributions_binding.dart';
+import '../modules/contributions/views/contributions_view.dart';
 import '../modules/datesheet/bindings/datesheet_binding.dart';
 import '../modules/datesheet/student_datesheet/bindings/student_datesheet_binding.dart';
 import '../modules/datesheet/student_datesheet/views/student_datesheet_view.dart';
@@ -293,6 +295,11 @@ class AppPages {
       name: _Paths.SOCITIES,
       page: () => const SocitiesView(),
       binding: SocitiesBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONTRIBUTIONS,
+      page: () => const ContributionsView(),
+      binding: ContributionsBinding(),
     ),
   ];
 }
