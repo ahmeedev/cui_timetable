@@ -1,12 +1,11 @@
 import 'package:cui_timetable/app/modules/booking/controllers/booking_controller.dart';
-import 'package:cui_timetable/app/modules/booking/views/make_booking.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_constants.dart';
-import 'booking_log.dart';
+import 'widgets/booking_widgets.dart';
 
 class BookingView extends GetView<BookingController> {
   const BookingView({Key? key}) : super(key: key);
@@ -28,7 +27,8 @@ class BookingView extends GetView<BookingController> {
                   // TeacherUIView(),
 
                   BookingWidget(),
-                  BookingLog(),
+
+                  BookingLog()
                 ],
               ),
             )

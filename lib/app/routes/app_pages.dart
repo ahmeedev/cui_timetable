@@ -5,6 +5,8 @@ import '../modules/adminPanel/adminFeedback/views/admin_feedback_view.dart';
 import '../modules/adminPanel/announcement/bindings/announcement_binding.dart';
 import '../modules/adminPanel/announcement/views/announcement_view.dart';
 import '../modules/adminPanel/bindings/admin_panel_binding.dart';
+import '../modules/adminPanel/bookingRequest/bindings/booking_request_binding.dart';
+import '../modules/adminPanel/bookingRequest/views/booking_request_view.dart';
 import '../modules/adminPanel/views/admin_panel_view.dart';
 import '../modules/authentication/bindings/authentication_binding.dart';
 import '../modules/authentication/signIn/bindings/sign_in_binding.dart';
@@ -13,6 +15,8 @@ import '../modules/authentication/signUp/bindings/sign_up_binding.dart';
 import '../modules/authentication/signUp/views/sign_up_view.dart';
 import '../modules/authentication/views/authentication_view.dart';
 import '../modules/booking/bindings/booking_binding.dart';
+import '../modules/booking/bookingApproval/bindings/booking_approval_binding.dart';
+import '../modules/booking/bookingApproval/views/booking_approval_view.dart';
 import '../modules/booking/bookingDetails/bindings/booking_details_binding.dart';
 import '../modules/booking/bookingDetails/views/booking_details_view.dart';
 import '../modules/booking/bookingDetailsView/bindings/booking_details_view_binding.dart';
@@ -255,6 +259,11 @@ class AppPages {
           page: () => const CancelBookingView(),
           binding: CancelBookingBinding(),
         ),
+        GetPage(
+          name: _Paths.BOOKING_APPROVAL,
+          page: () => const BookingApprovalView(),
+          binding: BookingApprovalBinding(),
+        ),
       ],
     ),
     GetPage(
@@ -288,6 +297,11 @@ class AppPages {
           name: _Paths.ADMIN_FEEDBACK,
           page: () => const AdminFeedbackView(),
           binding: AdminFeedbackBinding(),
+        ),
+        GetPage(
+          name: _Paths.BOOKING_REQUEST,
+          page: () => const BookingRequestView(),
+          binding: BookingRequestBinding(),
         ),
       ],
     ),

@@ -96,18 +96,15 @@ class AdminPanelView extends GetView<AdminPanelController> {
                     ontap: () => Get.toNamed(Routes.ANNOUNCEMENT),
                   ),
                   kWidth,
-                  _buildTile(
-                    context,
-                    title: "Feedback",
-                    iconLocation: "assets/home/feedback.png",
-                    ontap: ()=> Get.toNamed(Routes.ADMIN_FEEDBACK)
-                    
-                  ),
+                  _buildTile(context,
+                      title: "Feedback",
+                      iconLocation: "assets/home/feedback.png",
+                      ontap: () => Get.toNamed(Routes.ADMIN_FEEDBACK)),
                   kWidth,
-                  _buildTile(
-                    context,
-                    blank: true,
-                  ),
+                  _buildTile(context,
+                      title: "Requests",
+                      iconLocation: "assets/home/feedback.png",
+                      ontap: () => Get.toNamed(Routes.BOOKING_REQUEST)),
                   kWidth,
                   _buildTile(
                     context,

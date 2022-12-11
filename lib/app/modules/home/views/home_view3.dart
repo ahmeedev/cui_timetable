@@ -370,7 +370,8 @@ class HomeViewWidget extends StatelessWidget {
               } else {
                 // if (email.endsWith("@gmail.com")) {
                 if (email == "inahmee77@gmail.com") {
-                  Get.toNamed(Routes.BOOKING);
+                  // Get.toNamed(Routes.BOOKING);
+                  Get.toNamed(Routes.BOOKING_APPROVAL);
                 } else {
                   GetXUtilities.snackbar(
                       title: "Error!",
