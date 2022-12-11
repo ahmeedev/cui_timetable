@@ -70,6 +70,7 @@ class SignUpView extends GetView<SignUpController> {
                     borderSide:
                         const BorderSide(color: primaryColor, width: 2)),
               )),
+
           kHeight,
           kHeight,
           Obx(() => TextFormField(
@@ -108,6 +109,7 @@ class SignUpView extends GetView<SignUpController> {
                     borderSide:
                         const BorderSide(color: primaryColor, width: 2)),
               ))),
+
           kHeight,
           kHeight,
           Obx(() => TextFormField(
@@ -180,7 +182,8 @@ class SignUpView extends GetView<SignUpController> {
                                   .infoMsg
                                   .clear();
 
-                              final eText = controller.emailController.text;
+                              final eText =
+                                  controller.emailController.text.trim();
                               final pText = controller.passwordController.text;
                               final cPText = controller.cPassController.text;
                               if (eText.isEmpty) {

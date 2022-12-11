@@ -104,9 +104,6 @@ class AuthenticationView extends GetView<AuthenticationController> {
                         groupValue: controller.segmentedControlGroupValue.value,
                         children: controller.myTabs!,
                         onValueChanged: (i) {
-                          // setState(() {
-                          //   segmentedControlGroupValue = i;
-                          // });
                           controller.segmentedControlGroupValue.value =
                               int.parse(i.toString());
 
