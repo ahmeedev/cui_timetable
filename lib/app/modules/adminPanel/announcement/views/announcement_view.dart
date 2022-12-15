@@ -20,6 +20,7 @@ class AnnouncementView extends GetView<AnnouncementController> {
         child: ElevatedButton(
           onPressed: () async {
             final result = await sendNotification(
+                topic: 'all',
                 title: "Asalam o alaikum",
                 description: 'This is a cloud tesing notification');
             GetXUtilities.snackbar(

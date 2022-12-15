@@ -16,7 +16,15 @@ class AdminPanelView extends GetView<AdminPanelController> {
 
     return Scaffold(
       backgroundColor: selectionColor,
-      appBar: AppBar(title: const Text("Admin Panel")),
+      appBar: AppBar(
+        title: const Text("Admin Panel"),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications),
+          )
+        ],
+      ),
       body: Padding(
         padding: EdgeInsets.all(Constants.defaultPadding * 2),
         child: Card(

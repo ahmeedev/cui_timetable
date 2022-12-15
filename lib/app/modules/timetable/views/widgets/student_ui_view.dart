@@ -135,7 +135,7 @@ class StudentUIView extends GetView<StudentUIController> {
                               .contains(value.toLowerCase()))
                           .toList();
 
-                      if (value.isEmpty || value.isEmpty) {
+                      if (value.isEmpty) {
                         controller.listVisible.value = false;
                         controller.filteredList.clear();
                       } else if (controller.filteredList.contains(value) &&

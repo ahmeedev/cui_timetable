@@ -210,7 +210,7 @@ class SignInView extends GetView<SignInController> {
                                     gradient: errorGradient);
                               } else {
                                 final email =
-                                    controller.emailTextController.text +
+                                    controller.emailTextController.text.trim() +
                                         Get.find<AuthenticationController>()
                                                 .respectedEmailSuffixes[
                                             Get.find<AuthenticationController>()

@@ -9,47 +9,44 @@ import 'package:hive/hive.dart';
 import '../../../../data/database/database_constants.dart';
 
 class BookingApprovalController extends GetxController {
+  final isPostApproval = Get.arguments['isPostApproval'];
+  final name = Get.arguments['name'];
+  var isPosted = false.obs;
   var teachers = [];
   final TextEditingController textController = TextEditingController();
   var filteredList = [].obs;
   var listVisible = true.obs;
-  var dialogHistoryList = [].obs;
 
   @override
   Future<void> onInit() async {
     await fetchTeachers();
-    var string = '';
-
-    // final box = await Hive.openBox(DBNames.info);
-    // try {
-    //   String value = box.get(DBTimetableCache.teacherName, defaultValue: '');
-    //   if (value.isNotEmpty) {
-    //     string = value.toString();
-    //   }
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // }
-
-    textController.text = string;
-
+    isPosted.value = isPostApproval;
+    textController.text = name;
     super.onInit();
   }
 
   postApproval({required String name}) async {
-    final db = FirebaseFirestore.instance;
-    await db
-        .collection('approvals')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set({
-      'name': name,
-      "email": FirebaseAuth.instance.currentUser!.email,
-      'approved': false,
-    });
-
-    GetXUtilities.snackbar(
-        title: "Sent",
-        message: "Your approval is sent to the admin",
-        gradient: successGradient);
+    if (teachers.contains(textController.text)) {
+      final db = FirebaseFirestore.instance;
+      await db
+          .collection('approvals')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({
+        'name': textController.text.toString(),
+        "email": FirebaseAuth.instance.currentUser!.email,
+        'approved': false,
+      });
+      isPosted.value = true;
+      GetXUtilities.snackbar(
+          title: "Queued!",
+          message: "Your approval is queued successfully.",
+          gradient: successGradient);
+    } else {
+      GetXUtilities.snackbar(
+          title: "Error!",
+          message: "Select your name from the list.",
+          gradient: errorGradient);
+    }
   }
 
   Future<void> fetchTeachers() async {

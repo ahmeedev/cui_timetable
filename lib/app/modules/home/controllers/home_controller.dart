@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/modules/home/views/home_view3.dart';
 import 'package:cui_timetable/app/modules/news/views/news_view.dart';
 import 'package:cui_timetable/app/modules/settings/views/settings_view2.dart';
@@ -15,6 +16,8 @@ import 'package:http/http.dart' as http;
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/sync/controllers/sync_controller.dart';
 import 'package:cui_timetable/app/utilities/location/loc_utilities.dart';
+
+import '../../../routes/app_pages.dart';
 
 class HomeController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -97,6 +100,32 @@ class HomeController extends GetxController {
     isHome.value = false;
     isSetting.value = false;
     isNews.value = false;
+  }
+
+  // for booking route
+  Future<void> approveAndGoToBooking() async {
+    final arguments = <String, dynamic>{};
+    final db = FirebaseFirestore.instance;
+    final doc = await db
+        .collection('approvals')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    final result = doc.data() ?? <String, dynamic>{};
+
+    if (result.isEmpty) {
+      arguments['isPostApproval'] = false;
+      arguments['name'] = "";
+    } else {
+      arguments['isPostApproval'] = true;
+      arguments['name'] = result['name'];
+    }
+
+    final isApproved = result['approved'] ?? false;
+    if (isApproved) {
+      Get.toNamed(Routes.BOOKING, arguments: arguments);
+    } else {
+      Get.toNamed(Routes.BOOKING_APPROVAL, arguments: arguments);
+    }
   }
 }
 

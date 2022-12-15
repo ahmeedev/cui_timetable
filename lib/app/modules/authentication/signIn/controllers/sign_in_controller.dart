@@ -7,12 +7,14 @@ import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 
+import '../../../../data/database/notification_topics.dart';
 import '../../../../theme/app_constants.dart';
 
 class SignInController extends GetxController {
@@ -71,6 +73,10 @@ class SignInController extends GetxController {
             DBAuthCache.sectionName,
             FirebaseAuth.instance.currentUser!.email!.substring(
                 0, FirebaseAuth.instance.currentUser!.email!.indexOf('@')));
+
+        //* register channels for notifications
+        subscribeToRespectiveChannels();
+
         Get.back();
         Get.find<HomeController>().scaffoldKey.currentState!.openDrawer();
         Get.find<HomeController>().isUserSignIn.value = true;
@@ -255,6 +261,20 @@ class SignInController extends GetxController {
                             vertical: Constants.defaultPadding * 1.5)),
               ))
         ]));
+  }
+
+  subscribeToRespectiveChannels() {
+    if (Get.find<AuthenticationController>().segmentedControlGroupValue.value ==
+        0) {
+      log("Subscribing to students");
+    } else if (Get.find<AuthenticationController>()
+            .segmentedControlGroupValue
+            .value ==
+        2) {
+      FirebaseMessaging.instance.subscribeToTopic(adminTopic);
+      log("Subscribing to admin");
+    }
+    // Get.find<AuthenticationController>().subscribeToChannel('students');
   }
 
   Future<UserCredential> signInWithGoogle() async {

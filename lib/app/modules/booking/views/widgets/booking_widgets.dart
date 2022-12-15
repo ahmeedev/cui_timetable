@@ -192,7 +192,7 @@ class BookingWidget extends GetView<BookingController> {
             children: [
               _buildTextField(context),
               kHeight,
-              _buildButton(context)
+              _buildButton(context),
             ],
           ),
         ));
@@ -232,7 +232,15 @@ class BookingWidget extends GetView<BookingController> {
                     .textTheme
                     .titleMedium!
                     .copyWith(fontWeight: FontWeight.bold),
+                // enabled: false,
                 controller: controller.textController,
+                readOnly: true,
+                onTap: () {
+                  GetXUtilities.snackbar(
+                      title: 'Info',
+                      message: "Name can't be changed!",
+                      gradient: primaryGradient);
+                },
                 onChanged: (value) {
                   controller.filteredList.value = controller.teachers
                       .where((element) => element

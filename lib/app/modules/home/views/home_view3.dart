@@ -371,7 +371,7 @@ class HomeViewWidget extends StatelessWidget {
                 // if (email.endsWith("@gmail.com")) {
                 if (email == "inahmee77@gmail.com") {
                   // Get.toNamed(Routes.BOOKING);
-                  Get.toNamed(Routes.BOOKING_APPROVAL);
+                  Get.find<HomeController>().approveAndGoToBooking();
                 } else {
                   GetXUtilities.snackbar(
                       title: "Error!",

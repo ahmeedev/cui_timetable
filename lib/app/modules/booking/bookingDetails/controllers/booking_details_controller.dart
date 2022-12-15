@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../data/database/notification_topics.dart';
 import '../../../../utilities/notifications/cloud_notifications.dart';
 
 class BookingDetailsController extends GetxController {
@@ -126,6 +127,7 @@ class BookingDetailsController extends GetxController {
 
     if (isBookingSuccessful.value) {
       await sendNotification(
+        topic: adminTopic,
         title: 'Room Booked!',
         description:
             "$bookingBy make booking for $bookingFor at room ${bookingRoom.value} for ${DateFormat.yMMMMd().format(bookingDate)} in slot $bookingSlot.",

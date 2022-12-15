@@ -17,7 +17,7 @@ class AuthenticationController extends GetxController {
 
   var infoMsg = <String>[].obs;
 
-  var respectedEmailSuffixes = ['@gmail.com', '@gmail.com'];
+  var respectedEmailSuffixes = ['@gmail.com', '@gmail.com', '@gmail.com'];
 
   @override
   void onInit() {
@@ -27,6 +27,7 @@ class AuthenticationController extends GetxController {
     myTabs = <int, Widget>{
       0: Obx(() => Text("Students", style: styles[0])),
       1: Obx(() => Text("Faculty", style: styles[1])),
+      2: Obx(() => Text("Admin", style: styles[2])),
     };
 
     super.onInit();

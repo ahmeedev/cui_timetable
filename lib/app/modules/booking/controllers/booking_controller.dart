@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import '../../../data/database/database_constants.dart';
 
 class BookingController extends GetxController {
+  final name = Get.arguments['name'];
   final TextEditingController textController = TextEditingController();
   var listVisible = true.obs;
   late final Box box;
@@ -20,17 +21,10 @@ class BookingController extends GetxController {
     await fetchTeachers();
     box = await Hive.openBox(DBNames.timetableData);
 
-    var string = '';
+    // default behaviour from the firebase data.
+    listTileTap(initialData: name);
+    textController.text = name;
 
-    final box2 = await Hive.openBox(DBNames.bookingCache);
-
-    String value = box2.get(DBBookingCache.searchTeacher, defaultValue: "");
-    if (value.isNotEmpty) {
-      string = value.toString();
-      listTileTap(initialData: string);
-    }
-
-    textController.text = string;
     super.onInit();
   }
 
