@@ -195,7 +195,8 @@ class SignInView extends GetView<SignInController> {
                               Get.find<AuthenticationController>()
                                   .infoMsg
                                   .clear();
-                              final eText = controller.emailTextController.text;
+                              final eText =
+                                  controller.emailTextController.text.trim();
                               final pText = controller.passTextController.text;
                               if (eText.isEmpty) {
                                 GetXUtilities.snackbar(

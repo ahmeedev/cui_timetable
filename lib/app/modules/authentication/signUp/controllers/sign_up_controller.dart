@@ -26,6 +26,7 @@ class SignUpController extends GetxController {
       await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       await firebaseAuth.currentUser!.sendEmailVerification();
+
       Get.find<AuthenticationController>().isSignIn.value = true;
       Get.find<AuthenticationController>()
           .infoMsg
