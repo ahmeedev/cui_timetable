@@ -3,6 +3,7 @@ import 'package:cui_timetable/app/modules/reports/controllers/reports_controller
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:get/get.dart';
@@ -34,17 +35,49 @@ class ReportedView extends GetView<ReportsController> {
                       style: TextStyle(fontSize: 20),
                     ),
                   )
-                : Padding(
-                  padding: EdgeInsets.all(Constants.defaultPadding),
-                  child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: data.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
+                : createCards(data, keys);
+          } else {
+            return const Center(
+              child: Text(
+                'No Reports/Feedbacks available',
+                style: TextStyle(fontSize: 20),
+              ),
+            );
+          }
+
+          return const Center(
+              child: SpinKitCircle(
+            color: primaryColor,
+          ));
+        });
+  }
+
+  Padding createCards(Map<String, dynamic> data, List<String> keys) {
+    return Padding(
+                padding: EdgeInsets.all(Constants.defaultPadding),
+                child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: data.length,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Slidable(
+                         key: const ValueKey(0),
+                          startActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  borderRadius: BorderRadius.all(Radius.circular(Constants.defaultRadius)),
+                                  onPressed: controller.deleteReport(),
+                                  backgroundColor: const Color(0xFFFE4A49),
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                ),
+                              ]),
+                        child: Card(
                           elevation: Constants.defaultElevation,
                           child: Padding(
-                            padding: EdgeInsets.all(Constants.defaultPadding),
+                            padding: EdgeInsets.all(Constants.defaultPadding*2),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -65,8 +98,8 @@ class ReportedView extends GetView<ReportsController> {
                                       // keys[index].toString(),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .titleMedium!
-                                          .copyWith(fontWeight: FontWeight.w600),
+                                          .labelLarge!
+                                          .copyWith(fontWeight: FontWeight.w400,color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -84,22 +117,9 @@ class ReportedView extends GetView<ReportsController> {
                               ],
                             ),
                           ),
-                        );
-                      }),
-                );
-          } else {
-            return const Center(
-              child: Text(
-                'No Reports/Feedbacks available',
-                style: TextStyle(fontSize: 20),
-              ),
-            );
-          }
-
-          return const Center(
-              child: SpinKitCircle(
-            color: primaryColor,
-          ));
-        });
+                        ),
+                      );
+                    }),
+              );
   }
 }
