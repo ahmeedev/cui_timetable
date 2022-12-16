@@ -1,40 +1,62 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../../../../theme/app_colors.dart';
-import '../../../../utilities/notifications/cloud_notifications.dart';
-import '../../../../widgets/get_widgets.dart';
+import '../../../../theme/app_constants.dart';
 import '../controllers/announcement_controller.dart';
+import 'widgets/announcement_widgets.dart';
 
 class AnnouncementView extends GetView<AnnouncementController> {
   const AnnouncementView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('AnnouncementView'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            final result = await sendCloudNotification(
-                topic: 'all',
-                title: "Asalam o alaikum",
-                description: 'This is a cloud tesing notification');
-            GetXUtilities.snackbar(
-                duration: 3,
-                title: 'Cloud Notification',
-                message: result.body.toString(),
-                gradient: successGradient);
-          },
-          child: const Text(
-            'Test Notification',
-            style: TextStyle(fontSize: 20),
-          ),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: CustomScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          slivers: [
+            buildAppBar(context),
+            const SliverFillRemaining(
+              child: TabBarView(
+                children: [
+                  StudentAnnouncement(),
+                  TeacherAnnouncement(),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
+  }
+
+  SliverAppBar buildAppBar(context) {
+    return SliverAppBar(
+        title: const Text('Announcement'),
+        centerTitle: true,
+        bottom: TabBar(
+          indicatorPadding: EdgeInsets.all(Constants.defaultPadding / 3),
+          indicatorWeight: 4,
+          indicatorColor: shadowColor,
+          tabs: [
+            Tab(
+                child: Text(
+              'Student',
+              style: Theme.of(context).textTheme.labelLarge,
+            )),
+            Tab(
+                child: Text(
+              'Teacher',
+              style: Theme.of(context).textTheme.labelLarge,
+            )),
+            // Tab(
+            //     child: Text(
+            //   'Compare',
+            //   style: Theme.of(context).textTheme.labelLarge,
+            // )),
+          ],
+        ));
   }
 }
