@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'dart:developer' as devlog;
-import 'dart:developer';
 import 'dart:io';
 
 // import 'package:awesome_notifications/awesome_notifications.dart';
@@ -115,10 +114,11 @@ initializeFirebaseMsg() async {
 
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
     // print("User has authorized notifications");
-    final token = await instance.getToken();
-    log("Notification Token: $token");
+    // final token = await instance.getToken();
+    // log("Notification Token: $token");
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      // log(event.data.toString(), name: "Cloud Message Payload");
       LocalNotifications.showBigTextNotification(
         channelID: channelUpdatesID,
         channelName: channelUpdates,

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/modules/adminPanel/bookingRequest/models/booking_request_model.dart';
+import 'package:cui_timetable/app/utilities/notifications/cloud_notifications.dart';
 import 'package:get/get.dart';
 
 class BookingRequestController extends GetxController {
@@ -39,6 +40,12 @@ class BookingRequestController extends GetxController {
     await db.collection('approvals').doc(id).update({
       'approved': true,
     });
+    sendCloudNotification(
+        topic: id, //? send to the respected teacher.
+        title: "Booking Approved!",
+        description:
+            "Your booking request has been approved. You are now elibile to book a room.");
+
     // refresh requestes.
     getApprovalRequestes();
   }
@@ -48,6 +55,12 @@ class BookingRequestController extends GetxController {
     await db.collection('approvals').doc(id).update({
       'approved': false,
     });
+    sendCloudNotification(
+        topic: id, //? send to the respected teacher.
+        title: "Booking Revoked!",
+        description:
+            "Your booking request has been declined. Make sure you select the correct name.");
+
     // refresh requestes.
     getApprovalRequestes();
   }

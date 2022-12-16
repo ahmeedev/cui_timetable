@@ -126,7 +126,7 @@ class BookingDetailsController extends GetxController {
     }
 
     if (isBookingSuccessful.value) {
-      await sendNotification(
+      await sendCloudNotification(
         topic: adminTopic,
         title: 'Room Booked!',
         description:

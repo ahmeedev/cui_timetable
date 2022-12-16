@@ -1,11 +1,12 @@
-import 'package:cui_timetable/app/data/database/notification_topics.dart';
-import 'package:cui_timetable/app/utilities/notifications/cloud_notifications.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../data/database/notification_topics.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_constants.dart';
+import '../../../../utilities/notifications/cloud_notifications.dart';
 import '../../../../widgets/global_widgets.dart';
 import '../controllers/booking_approval_controller.dart';
 
@@ -198,10 +199,15 @@ class BookingApprovalView extends GetView<BookingApprovalController> {
                                   )),
                       ElevatedButton(
                           onPressed: () async {
-                            await sendNotification(
-                                topic: adminTopic,
-                                title: "Request",
-                                description: "A new request has been made");
+                            sendCloudNotification(
+                              topic:
+                                  adminTopic, //? send the notification to the admin for the approval.
+                              title: "Request Remainder!",
+                              description:
+                                  "${FirebaseAuth.instance.currentUser!.email} remainds you to check their queued booking request.",
+
+                              toAdmin: true,
+                            );
                           },
                           child: const Text("Notify again"))
                     ],

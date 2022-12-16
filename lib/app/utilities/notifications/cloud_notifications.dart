@@ -1,12 +1,15 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
-Future<Response> sendNotification(
-    {required String topic,
-    required String title,
-    required String description}) async {
+Future<Response> sendCloudNotification({
+  required String topic,
+  required String title,
+  required String description,
+  bool toAdmin = false,
+}) async {
   final result = await http.post(
     Uri.parse('https://fcm.googleapis.com/fcm/send'),
     headers: <String, String>{
@@ -22,5 +25,16 @@ Future<Response> sendNotification(
       }
     }),
   );
+
+  // store in admin db
+  if (toAdmin) {
+    final db = FirebaseFirestore.instance;
+    await db.collection('admin').doc("notifications").set({
+      DateTime.now().toString(): {
+        'title': title,
+        'description': description,
+      },
+    }, SetOptions(merge: true));
+  }
   return Future.value(result);
 }

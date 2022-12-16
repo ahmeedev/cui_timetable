@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/data/database/database_constants.dart';
 import 'package:cui_timetable/app/modules/authentication/controllers/authentication_controller.dart';
 import 'package:cui_timetable/app/modules/home/controllers/home_controller.dart';
@@ -80,7 +81,8 @@ class SignInController extends GetxController {
         Get.back();
         Get.find<HomeController>().scaffoldKey.currentState!.openDrawer();
         Get.find<HomeController>().isUserSignIn.value = true;
-
+        log("User sign in with Token ${FirebaseAuth.instance.currentUser!.uid}",
+            name: 'SignIn');
         GetXUtilities.snackbar(
             title: 'Sign In',
             message: 'Sign in successfully!',
@@ -263,16 +265,32 @@ class SignInController extends GetxController {
         ]));
   }
 
-  subscribeToRespectiveChannels() {
+  subscribeToRespectiveChannels() async {
+    //? subscribe everyone to their uid tokens, for the purpose of notifying them indiviually.
+    FirebaseMessaging.instance
+        .subscribeToTopic(FirebaseAuth.instance.currentUser!.uid);
+
     if (Get.find<AuthenticationController>().segmentedControlGroupValue.value ==
         0) {
-      log("Subscribing to students");
+      // * storing details for the device.
+      await FirebaseFirestore.instance
+          .collection('info')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({"tag": "student"});
+    } else if (Get.find<AuthenticationController>()
+            .segmentedControlGroupValue
+            .value ==
+        1) {
+      await FirebaseFirestore.instance
+          .collection('info')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({"tag": "teacher"});
     } else if (Get.find<AuthenticationController>()
             .segmentedControlGroupValue
             .value ==
         2) {
       FirebaseMessaging.instance.subscribeToTopic(adminTopic);
-      log("Subscribing to admin");
+      log("Subscribing to admin topic", name: "Cloud Messaging");
     }
     // Get.find<AuthenticationController>().subscribeToChannel('students');
   }

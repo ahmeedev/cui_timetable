@@ -19,7 +19,7 @@ class AnnouncementView extends GetView<AnnouncementController> {
       body: Center(
         child: ElevatedButton(
           onPressed: () async {
-            final result = await sendNotification(
+            final result = await sendCloudNotification(
                 topic: 'all',
                 title: "Asalam o alaikum",
                 description: 'This is a cloud tesing notification');
