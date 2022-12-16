@@ -132,24 +132,26 @@ class AuthenticationView extends GetView<AuthenticationController> {
                       children: [
                         Obx(() => controller.infoMsg.isEmpty
                             ? const SizedBox()
-                            : Row(
-                                // key: ValueKey(controller.infoMsg.length),
-                                children: [
-                                  Icon(Icons.info_outline_rounded,
-                                      color: Colors.white,
-                                      size: Constants.iconSize),
-                                  kWidth,
-                                  FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(
+                            : FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Row(
+                                  // alignment: WrapAlignment.center,
+                                  // key: ValueKey(controller.infoMsg.length),
+                                  children: [
+                                    Icon(Icons.info_outline_rounded,
+                                        color: Colors.white,
+                                        size: Constants.iconSize),
+                                    kWidth,
+                                    Text(
                                       controller.infoMsg[
                                               controller.infoMsg.length - 1]
                                           .toString(),
                                       style: textTheme.labelMedium!
                                           .copyWith(color: Colors.white),
+                                      textAlign: TextAlign.center,
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               )),
                       ],
                     ),

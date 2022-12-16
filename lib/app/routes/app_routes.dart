@@ -48,6 +48,8 @@ abstract class Routes {
   static const CONTRIBUTIONS = _Paths.CONTRIBUTIONS;
   static const BOOKING_APPROVAL = _Paths.BOOKING + _Paths.BOOKING_APPROVAL;
   static const BOOKING_REQUEST = _Paths.ADMIN_PANEL + _Paths.BOOKING_REQUEST;
+  static const ADMIN_NOTIFICATIONS =
+      _Paths.ADMIN_PANEL + _Paths.ADMIN_NOTIFICATIONS;
 }
 
 abstract class _Paths {
@@ -95,4 +97,5 @@ abstract class _Paths {
   static const CONTRIBUTIONS = '/contributions';
   static const BOOKING_APPROVAL = '/booking-approval';
   static const BOOKING_REQUEST = '/booking-request';
+  static const ADMIN_NOTIFICATIONS = '/admin-notifications';
 }

@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/adminPanel/adminFeedback/bindings/admin_feedback_binding.dart';
 import '../modules/adminPanel/adminFeedback/views/admin_feedback_view.dart';
+import '../modules/adminPanel/adminNotifications/bindings/admin_notifications_binding.dart';
+import '../modules/adminPanel/adminNotifications/views/admin_notifications_view.dart';
 import '../modules/adminPanel/announcement/bindings/announcement_binding.dart';
 import '../modules/adminPanel/announcement/views/announcement_view.dart';
 import '../modules/adminPanel/bindings/admin_panel_binding.dart';
@@ -302,6 +304,11 @@ class AppPages {
           name: _Paths.BOOKING_REQUEST,
           page: () => const BookingRequestView(),
           binding: BookingRequestBinding(),
+        ),
+        GetPage(
+          name: _Paths.ADMIN_NOTIFICATIONS,
+          page: () => const AdminNotificationsView(),
+          binding: AdminNotificationsBinding(),
         ),
       ],
     ),

@@ -277,6 +277,8 @@ class SignInController extends GetxController {
           .collection('info')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .set({"tag": "student"});
+      FirebaseMessaging.instance.subscribeToTopic(studentTopic);
+      log("Subscribing to Student topic", name: "Cloud Messaging");
     } else if (Get.find<AuthenticationController>()
             .segmentedControlGroupValue
             .value ==
@@ -285,6 +287,8 @@ class SignInController extends GetxController {
           .collection('info')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .set({"tag": "teacher"});
+      FirebaseMessaging.instance.subscribeToTopic(teacherTopic);
+      log("Subscribing to Teacher topic", name: "Cloud Messaging");
     } else if (Get.find<AuthenticationController>()
             .segmentedControlGroupValue
             .value ==

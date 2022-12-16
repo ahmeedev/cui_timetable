@@ -9,14 +9,16 @@ class AboutUsTile extends StatelessWidget {
   final String subName;
   final String position;
   final String description;
-  const AboutUsTile(
-      {Key? key,
-      required this.pic,
-      required this.name,
-      this.subName = '',
-      required this.position,
-      required this.description})
-      : super(key: key);
+  final bool isProminent;
+  const AboutUsTile({
+    Key? key,
+    required this.pic,
+    required this.name,
+    this.subName = '',
+    required this.position,
+    required this.description,
+    this.isProminent = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +116,7 @@ class AboutUsTile extends StatelessWidget {
                             Radius.circular(Constants.defaultRadius * 2),
                         bottomRight:
                             Radius.circular(Constants.defaultRadius * 2)),
-                    color: primaryColor,
+                    color: isProminent ? successColor2 : primaryColor,
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(

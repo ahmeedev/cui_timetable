@@ -28,13 +28,19 @@ Future<Response> sendCloudNotification({
 
   // store in admin db
   if (toAdmin) {
-    final db = FirebaseFirestore.instance;
-    await db.collection('admin').doc("notifications").set({
-      DateTime.now().toString(): {
-        'title': title,
-        'description': description,
-      },
-    }, SetOptions(merge: true));
+    await storeNotifiationInAdminDB(title: title, description: description);
   }
   return Future.value(result);
+}
+
+storeNotifiationInAdminDB(
+    {required String title, required String description}) async {
+  final db = FirebaseFirestore.instance;
+  await db.collection('admin').doc("notifications").set({
+    DateTime.now().toString(): {
+      'title': title,
+      'description': description,
+      // 'isRead': false,
+    },
+  }, SetOptions(merge: true));
 }

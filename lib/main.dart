@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:developer' as devlog;
+import 'dart:developer';
 import 'dart:io';
 
 // import 'package:awesome_notifications/awesome_notifications.dart';
@@ -26,6 +27,7 @@ import 'app/routes/app_pages.dart';
 import 'app/theme/app_constants.dart';
 import 'app/theme/light_theme.dart';
 import 'app/utilities/location/loc_utilities.dart';
+import 'app/utilities/notifications/cloud_notifications.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -117,8 +119,11 @@ initializeFirebaseMsg() async {
     // final token = await instance.getToken();
     // log("Notification Token: $token");
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      // log(event.data.toString(), name: "Cloud Message Payload");
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
+      log(event.data.toString(), name: "Cloud Message Payload");
+      await storeNotifiationInAdminDB(
+          title: event.notification!.title!,
+          description: event.notification!.body!);
       LocalNotifications.showBigTextNotification(
         channelID: channelUpdatesID,
         channelName: channelUpdates,

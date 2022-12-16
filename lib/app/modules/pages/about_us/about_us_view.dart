@@ -35,6 +35,7 @@ class AboutUsView extends StatelessWidget {
               subName: '',
               position: 'C.E.O',
               description: 'CUI Computer Science Student',
+              isProminent: true,
             ),
             // AboutUsTile(
             //   pic: 'ramay.JPG',
@@ -58,6 +59,14 @@ class AboutUsView extends StatelessWidget {
               position: 'Junior Developer',
               description: 'CUI Computer Science Student',
             ),
+            AboutUsTile(
+              pic: 'suban.png',
+              name: 'CS',
+              subName: 'Muhammad Soban',
+              position: 'Beta Tester',
+              description: 'CUI Computer Science Student',
+            ),
+
             AboutUsTile(
               pic: 'awais.jpg',
               name: 'CS',

@@ -365,18 +365,20 @@ class HomeViewWidget extends StatelessWidget {
               if (email == null) {
                 GetXUtilities.snackbar(
                     title: "Error!",
-                    message: "You must be sign in as a teacher",
-                    gradient: primaryGradient);
+                    message:
+                        "You must be sign in as a teacher to start booking",
+                    gradient: errorGradient);
               } else {
                 // if (email.endsWith("@gmail.com")) {
-                if (email == "inahmee77@gmail.com") {
+                if (email.endsWith("@gmail.com")) {
                   // Get.toNamed(Routes.BOOKING);
                   Get.find<HomeController>().approveAndGoToBooking();
                 } else {
                   GetXUtilities.snackbar(
                       title: "Error!",
-                      message: "You must be sign in as a teacher",
-                      gradient: primaryGradient);
+                      message:
+                          "You must be sign in as a teacher to start booking",
+                      gradient: errorGradient);
                 }
               }
             }, iconLocation: "assets/home/booking.png"),

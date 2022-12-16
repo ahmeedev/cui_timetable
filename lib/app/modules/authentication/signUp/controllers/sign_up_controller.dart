@@ -30,7 +30,7 @@ class SignUpController extends GetxController {
       Get.find<AuthenticationController>().isSignIn.value = true;
       Get.find<AuthenticationController>()
           .infoMsg
-          .add('A verification email is sent at $email, Check your inbox');
+          .add("Check your inbox or spam folder for verification link.");
 
       GetXUtilities.snackbar(
           title: "Sign Up",

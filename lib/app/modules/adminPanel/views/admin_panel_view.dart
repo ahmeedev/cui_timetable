@@ -20,7 +20,9 @@ class AdminPanelView extends GetView<AdminPanelController> {
         title: const Text("Admin Panel"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(Routes.ADMIN_NOTIFICATIONS);
+            },
             icon: const Icon(Icons.notifications),
           )
         ],
