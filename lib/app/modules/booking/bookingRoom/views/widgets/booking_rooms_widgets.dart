@@ -49,6 +49,7 @@ class BookingFreeLabs extends StatelessWidget {
           return LabShowCard(
             lab: labs[index].toString(),
             bookedLabs: bookedLabs,
+            isBookingCard: true,
           );
         },
       ),

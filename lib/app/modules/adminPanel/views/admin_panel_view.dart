@@ -44,6 +44,10 @@ class AdminPanelView extends GetView<AdminPanelController> {
                 children: [
                   kWidth,
                   _buildTile(context,
+                      title: "Timeslots",
+                      iconLocation: "assets/home/timetable.png"),
+                  kWidth,
+                  _buildTile(context,
                       title: "Timetable",
                       iconLocation: "assets/home/timetable.png"),
                   kWidth,
@@ -53,11 +57,6 @@ class AdminPanelView extends GetView<AdminPanelController> {
                   _buildTile(context,
                       title: "Datesheet",
                       iconLocation: "assets/home/datesheet.png"),
-                  kWidth,
-                  _buildTile(
-                    context,
-                    blank: true,
-                  ),
                   kWidth,
                 ],
               ),

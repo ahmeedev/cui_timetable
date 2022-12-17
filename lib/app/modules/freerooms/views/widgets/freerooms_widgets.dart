@@ -272,8 +272,10 @@ class FreeroomsLabsExpensionTile extends StatelessWidget {
                       itemCount: labs.length,
                       itemBuilder: (context, index) {
                         return LabShowCard(
-                            lab: labs[index].toString(),
-                            bookedLabs: bookedLabs);
+                          lab: labs[index].toString(),
+                          bookedLabs: bookedLabs,
+                          isBookingCard: false,
+                        );
                       },
                     ),
               // : GridView.count(
@@ -509,7 +511,7 @@ class LabShowCard extends StatelessWidget {
   LabShowCard({
     Key? key,
     required this.lab,
-    this.isBookingCard = false,
+    required this.isBookingCard,
     this.bookedLabs = const [],
   }) : super(key: key);
 
@@ -519,7 +521,7 @@ class LabShowCard extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: GestureDetector(
         onTap: () {
-          if (isBookingCard) {
+          if (!isBookingCard) {
             Get.defaultDialog(
                 title: 'Lab',
                 middleText: lab,

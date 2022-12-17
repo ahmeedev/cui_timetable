@@ -269,6 +269,7 @@ class SignInController extends GetxController {
     //? subscribe everyone to their uid tokens, for the purpose of notifying them indiviually.
     FirebaseMessaging.instance
         .subscribeToTopic(FirebaseAuth.instance.currentUser!.uid);
+    FirebaseMessaging.instance.subscribeToTopic(everyoneTopic);
 
     if (Get.find<AuthenticationController>().segmentedControlGroupValue.value ==
         0) {
