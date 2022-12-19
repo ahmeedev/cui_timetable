@@ -52,9 +52,7 @@ class BookingRequestController extends GetxController {
 
   revokeBooking({required String id}) async {
     final db = FirebaseFirestore.instance;
-    await db.collection('approvals').doc(id).update({
-      'approved': false,
-    });
+    await db.collection('approvals').doc(id).delete();
     sendCloudNotification(
         topic: id, //? send to the respected teacher.
         title: "Booking Revoked!",

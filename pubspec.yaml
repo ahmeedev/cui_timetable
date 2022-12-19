@@ -74,11 +74,14 @@ flutter_native_splash:
   fullscreen: true
 
 flutter_icons:
-  android: false
+  android: "launcher_icon"
   ios: true
-  image_path: assets/icon.png
-  # adaptive_icon_background: '#93afd2'
-  # adaptive_icon_foreground: 'assets/icon_foreground.png'
+  remove_alpha_ios: true
+  image_path: "assets/icon.png"
+  # image_path_android: "assets/icon.png"
+  min_sdk_android: 21
+  # adaptive_icon_background: "#265FA4"
+  # adaptive_icon_foreground: "assets/icon_foreground.png"
 
 flutter:
   uses-material-design: true

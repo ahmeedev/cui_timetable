@@ -197,19 +197,22 @@ class BookingApprovalView extends GetView<BookingApprovalController> {
                               Theme.of(context).textTheme.labelLarge!.copyWith(
                                     color: Colors.black,
                                   )),
-                      ElevatedButton(
-                          onPressed: () async {
-                            sendCloudNotification(
-                              topic:
-                                  adminTopic, //? send the notification to the admin for the approval.
-                              title: "Request Remainder!",
-                              description:
-                                  "${FirebaseAuth.instance.currentUser!.email} remainds you to check their queued booking request.",
+                      kWidth,
+                      Expanded(
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              sendCloudNotification(
+                                topic:
+                                    adminTopic, //? send the notification to the admin for the approval.
+                                title: "Request Remainder!",
+                                description:
+                                    "${FirebaseAuth.instance.currentUser!.email} remainds you to check their queued booking request.",
 
-                              toAdmin: true,
-                            );
-                          },
-                          child: const Text("Notify again"))
+                                toAdmin: true,
+                              );
+                            },
+                            child: const Text("Notify again")),
+                      )
                     ],
                   )
                 : const SizedBox())

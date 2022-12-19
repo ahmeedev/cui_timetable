@@ -52,20 +52,25 @@ class BookingRequestView extends GetView<BookingRequestController> {
                                     padding: EdgeInsets.only(
                                         top: Constants.defaultPadding / 2),
                                     child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "Email:     ",
-                                              style: theme
-                                                  .textTheme.titleMedium!
-                                                  .copyWith(
-                                                color: Colors.black,
+                                        FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Email:     ",
+                                                style: theme
+                                                    .textTheme.titleMedium!
+                                                    .copyWith(
+                                                  color: Colors.black,
+                                                ),
                                               ),
-                                            ),
-                                            Text(controller
-                                                .requestes[index].email),
-                                          ],
+                                              Text(controller
+                                                  .requestes[index].email),
+                                            ],
+                                          ),
                                         ),
                                         kHeight,
                                         Row(
@@ -78,13 +83,17 @@ class BookingRequestView extends GetView<BookingRequestController> {
                                                 color: Colors.black,
                                               ),
                                             ),
-                                            Text(
-                                              controller.requestes[index].name,
-                                              style: theme
-                                                  .textTheme.titleMedium!
-                                                  .copyWith(
-                                                color: successColor,
-                                                fontWeight: FontWeight.w900,
+                                            FittedBox(
+                                              fit: BoxFit.scaleDown,
+                                              child: Text(
+                                                controller
+                                                    .requestes[index].name,
+                                                style: theme
+                                                    .textTheme.titleMedium!
+                                                    .copyWith(
+                                                  color: successColor,
+                                                  fontWeight: FontWeight.w900,
+                                                ),
                                               ),
                                             ),
                                           ],
