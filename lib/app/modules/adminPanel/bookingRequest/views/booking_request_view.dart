@@ -54,10 +54,14 @@ class BookingRequestView extends GetView<BookingRequestController> {
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         FittedBox(
                                           fit: BoxFit.scaleDown,
                                           child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               Text(
                                                 "Email:     ",
@@ -113,6 +117,9 @@ class BookingRequestView extends GetView<BookingRequestController> {
                                                   id: controller
                                                       .requestes[index].id);
                                             },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: errorColor1,
+                                            ),
                                             child: const Text("Revoke")),
                                         kWidth,
                                         ElevatedButton(

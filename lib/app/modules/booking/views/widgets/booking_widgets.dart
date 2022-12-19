@@ -264,15 +264,7 @@ class BookingWidget extends GetView<BookingController> {
                     controller.dropBoxValue.value = ' ';
                   }
                 },
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        controller.textController.clear();
-                        controller.filteredList.value = [];
-                        controller.respectiveSections.value = [' '];
-                        controller.dropBoxValue.value = ' ';
-                      },
-                      icon: const Icon(Icons.cancel, color: primaryColor)),
+                decoration: const InputDecoration(
                   fillColor: selectionColor,
                   filled: true,
                 )),
