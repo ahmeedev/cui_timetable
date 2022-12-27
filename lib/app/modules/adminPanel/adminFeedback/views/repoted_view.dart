@@ -12,55 +12,48 @@ import 'package:intl/intl.dart';
 
 import '../../../../theme/app_colors.dart';
 
-class AdminRepotedView extends GetView<AdminFeedbackController> {
-  const AdminRepotedView({Key? key}) : super(key: key);
+class AdminReportedView extends GetView<AdminFeedbackController> {
+  const AdminReportedView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-      future: controller.getReports(),
+    return StreamBuilder<QuerySnapshot>(
+      stream: controller.getReports(),
       builder: (context, snapshot) {
-        
         if (snapshot.hasData) {
-          
-
+          if (snapshot.data == null) {
+            return const Center(
+              child: Text(
+                'No Reports/Feedbacks available',
+                style: TextStyle(fontSize: 20),
+              ),
+            );
+          }
           final reportCollection = snapshot.data!;
           final reportCollectionKey = [];
-          final results =<String,dynamic> {};
+          final results = <String, dynamic>{};
           final keys = [];
           for (var element in reportCollection.docs) {
             reportCollectionKey.add(element.id);
 
             final map = element.data() as Map<String, dynamic>;
             map.forEach((key, value) {
-              results[key]=value;
+              results[key] = value;
             });
-// keys.add(map.keys);
-           for (var key in map.keys) {
-            keys.add(key);
-           }
-
+            for (var key in map.keys) {
+              keys.add(key);
+            }
           }
           log(reportCollectionKey.toString());
           log(results.length.toString());
 
-          return createCards(results: results,keys: keys);
-        } else {
-          return const Center(
-            child: Text(
-              'No Reports/Feedbacks available',
-              style: TextStyle(fontSize: 20),
-            ),
-          );
+          return createCards(results: results, keys: keys);
         }
 
-        if (snapshot.hasError) {}
-
         return const Center(
-            child: SpinKitCircle(
+            child: SpinKitFadingCube(
+              size: 30,
           color: primaryColor,
         ));
-      
-      
       },
     );
   }
@@ -69,63 +62,63 @@ class AdminRepotedView extends GetView<AdminFeedbackController> {
     return Padding(
       padding: EdgeInsets.all(Constants.defaultPadding),
       child: ListView.builder(
-        itemCount: results.length,
-        itemBuilder: (BuildContext context, int index) {
-        return Slidable(
-          key: const ValueKey(0),
-          startActionPane: const ActionPane(motion: ScrollMotion(), children: [
-            SlidableAction(
-              onPressed: null,
-              backgroundColor: Color(0xFFFE4A49),
-              foregroundColor: Colors.white,
-              icon: Icons.delete,
-              label: 'Delete',
-            ),
-          ]),
-          child: Card(
-            elevation: Constants.defaultElevation,
-            child: Padding(
-              padding: EdgeInsets.all(Constants.defaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          itemCount: results.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Slidable(
+              key: const ValueKey(0),
+              startActionPane:
+                  const ActionPane(motion: ScrollMotion(), children: [
+                SlidableAction(
+                  onPressed: null,
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  icon: Icons.replay,
+                  label: 'Reply',
+                ),
+              ]),
+              child: Card(
+                elevation: Constants.defaultElevation,
+                child: Padding(
+                  padding: EdgeInsets.all(Constants.defaultPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        results[keys[index]]["userTitle"].toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(fontWeight: FontWeight.w900),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            results[keys[index]]["userTitle"].toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(fontWeight: FontWeight.w900),
+                          ),
+                          Text(
+                            DateFormat("yyyy-MM-dd")
+                                .format(DateTime.parse(keys[index].toString())),
+                            // keys[index].toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(fontWeight: FontWeight.w600),
+                          ),
+                        ],
                       ),
-                      Text(
-                        DateFormat("yyyy-MM-dd").format(
-                            DateTime.parse(results[keys[index]].toString())),
-                        // keys[index].toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(
-                                fontWeight: FontWeight.w600),
+                      SizedBox(
+                        height: Constants.defaultPadding,
+                      ),
+                      Wrap(
+                        children: [
+                          Text(results[keys[index]]["userMsg"].toString(),
+                              style: Theme.of(context).textTheme.bodyLarge),
+                        ],
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: Constants.defaultPadding,
-                  ),
-                  Wrap(
-                    children: [
-                      Text(results[keys[index]]["userMsg"].toString(),
-                          style: Theme.of(context).textTheme.bodyLarge),
-                    ],
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-        );
-      }),
+            );
+          }),
     );
   }
 }

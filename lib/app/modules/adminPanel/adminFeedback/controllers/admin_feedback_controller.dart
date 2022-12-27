@@ -12,7 +12,7 @@ class AdminFeedbackController extends GetxController {
 
  getReports()  {
     FirebaseFirestore db = FirebaseFirestore.instance;
-    final docRef = db.collection("report").get();
+    final docRef = db.collection("report").snapshots();
     return docRef;
   }
 

@@ -18,7 +18,7 @@ class AdminFeedbackView extends GetView<AdminFeedbackController> {
         ),
         body: Stack(
           children: [
-            // const AdminRepotedView(),
+            const AdminReportedView(),
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
