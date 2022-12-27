@@ -19,6 +19,7 @@ class AdminRepotedView extends GetView<AdminFeedbackController> {
     return FutureBuilder<QuerySnapshot>(
       future: controller.getReports(),
       builder: (context, snapshot) {
+        
         if (snapshot.hasData) {
           
 
@@ -26,7 +27,7 @@ class AdminRepotedView extends GetView<AdminFeedbackController> {
           final reportCollectionKey = [];
           final results =<String,dynamic> {};
           final keys = [];
-          reportCollection.docs.forEach((element) {
+          for (var element in reportCollection.docs) {
             reportCollectionKey.add(element.id);
 
             final map = element.data() as Map<String, dynamic>;
@@ -38,7 +39,7 @@ class AdminRepotedView extends GetView<AdminFeedbackController> {
             keys.add(key);
            }
 
-          });
+          }
           log(reportCollectionKey.toString());
           log(results.length.toString());
 
@@ -58,6 +59,8 @@ class AdminRepotedView extends GetView<AdminFeedbackController> {
             child: SpinKitCircle(
           color: primaryColor,
         ));
+      
+      
       },
     );
   }

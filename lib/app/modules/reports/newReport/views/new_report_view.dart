@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
-import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -55,7 +53,8 @@ class NewReportView extends GetView<NewReportController> {
                       message: 'Please fill the description field ',
                       gradient: errorGradient);
                 } else {
-                  controller.uploadData(controller.titleControler.text,controller.descripControler.text,DateTime.now());
+                  controller.uploadData(controller.titleControler.text,
+                      controller.descripControler.text, DateTime.now());
                 }
                 // controller.titleControler.text.isEmpty ||
                 //         controller.descripControler.text.isEmpty
@@ -110,6 +109,11 @@ class NewReportView extends GetView<NewReportController> {
             ),
             TextFormField(
               controller: controller.titleControler,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Title can't be empty";
+                }
+              },
               decoration: const InputDecoration(hintText: 'Enter title here'),
             ),
             SizedBox(
@@ -131,6 +135,8 @@ class NewReportView extends GetView<NewReportController> {
             ),
             TextFormField(
               controller: controller.descripControler,
+              maxLength: 80,
+              maxLines: 7,
               decoration:
                   const InputDecoration(hintText: 'Enter Description here'),
             ),
