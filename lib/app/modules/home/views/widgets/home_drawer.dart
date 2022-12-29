@@ -61,10 +61,10 @@ class Header extends GetView<HomeController> {
           forGradient,
         ],
       )),
-      height: MediaQuery.of(context).size.height < 600
-          ? MediaQuery.of(context).size.height * 0.30 + Constants.defaultPadding
-          : MediaQuery.of(context).size.height * 0.25 +
-              Constants.defaultPadding,
+      height: 
+           MediaQuery.of(context).size.height * 0.28 + Constants.defaultPadding,
+
+              
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
@@ -72,55 +72,54 @@ class Header extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  top: Constants.defaultPadding,
-                ),
-                child: Container(
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(width: 3, color: Colors.white)),
-                    child: Padding(
-                        padding: EdgeInsets.all(Constants.defaultPadding / 3),
-                        child: Obx(() => Container(
-                              width: Constants.imageWidth + 20,
-                              height: Constants.imageHeight + 20,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: controller.isUserSignIn.value == false
-                                      ? DecorationImage(
-                                          image: AssetImage(
-                                              'assets/drawer/comsats.png'))
-                                      : FirebaseAuth.instance.currentUser!
-                                                  .photoURL ==
-                                              null
-                                          ? DecorationImage(
-                                              image: AssetImage(
-                                                  'assets/drawer/comsats.png'))
-                                          : DecorationImage(
-                                              // image:AssetImage(''),
-                                              image: CachedNetworkImageProvider(
-                                                FirebaseAuth.instance
-                                                    .currentUser!.photoURL!,
-                                              ),
-                                              fit: BoxFit.cover,
-                                            )),
-                            )))),
-              ),
-              kHeight,
-              kHeight,
-              Obx(() => Text(
-                    // "No details Available",
-                    controller.isUserSignIn.value == true
-                        ? 'Welcome,  ${FirebaseAuth.instance.currentUser!.email!.substring(
-                            0,
-                            FirebaseAuth.instance.currentUser!.email!
-                                .indexOf('@'),
-                          )}'
-                        : "Welcome, to CUI Sahiwal",
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  )),
+              Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(width: 3, color: Colors.white)),
+                  child: Padding(
+                      padding: EdgeInsets.all(Constants.defaultPadding / 3).copyWith(
+                        bottom: 0,
+                      ),
+                      child: Obx(() => Container(
+                            width: Constants.imageWidth + 20,
+                            height: Constants.imageHeight + 20,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: controller.isUserSignIn.value == false
+                                    ? DecorationImage(
+                                        image: AssetImage(
+                                            'assets/drawer/comsats.png'))
+                                    : FirebaseAuth.instance.currentUser!
+                                                .photoURL ==
+                                            null
+                                        ? DecorationImage(
+                                            image: AssetImage(
+                                                'assets/drawer/comsats.png'))
+                                        : DecorationImage(
+                                            // image:AssetImage(''),
+                                            image: CachedNetworkImageProvider(
+                                              FirebaseAuth.instance
+                                                  .currentUser!.photoURL!,
+                                            ),
+                                            fit: BoxFit.cover,
+                                          )),
+                          )))),
+              SizedBox(height: Get.height*0.02,),
+              Obx(() => Padding(
+                padding:  EdgeInsets.only(top: 4),
+                child: Text(
+                      // "No details Available",
+                      controller.isUserSignIn.value == true
+                          ? 'Welcome,  ${FirebaseAuth.instance.currentUser!.email!.substring(
+                              0,
+                              FirebaseAuth.instance.currentUser!.email!
+                                  .indexOf('@'),
+                            )}'
+                          : "Welcome, to CUI Sahiwal",
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+              )),
             ],
           ),
         ),

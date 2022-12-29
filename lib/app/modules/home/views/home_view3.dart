@@ -363,6 +363,7 @@ class HomeViewWidget extends StatelessWidget {
 
               // if (email!.endsWith("@cuisahiwal.edu.pk")) {
               if (email == null) {
+                print('hello');
                 GetXUtilities.snackbar(
                     title: "Error!",
                     message:
@@ -374,6 +375,7 @@ class HomeViewWidget extends StatelessWidget {
                   // Get.toNamed(Routes.BOOKING);
                   Get.find<HomeController>().approveAndGoToBooking();
                 } else {
+                  
                   GetXUtilities.snackbar(
                       title: "Error!",
                       message:
