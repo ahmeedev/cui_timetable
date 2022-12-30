@@ -1,5 +1,6 @@
 import 'package:cui_timetable/app/modules/booking/bookingDetails/controllers/booking_details_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
+import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -87,26 +88,54 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
         ),
         Card(
           child: ListTile(
-            title: Row(
-              children: [
-                Text("Booking Date:  ", style: headingStyle),
-                // Text(
-                //   DateFormat.yMMMMd('en_US').format(DateTime.now()).toString(),
-                //   style: theme.textTheme.titleMedium!.copyWith(
-                //       color: Colors.black, fontWeight: FontWeight.w900),
-                // ),
-                FutureBuilder<String>(
-                  future: controller.bookingDateFuture,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    return Text('${snapshot.data}',
-                        style: theme.textTheme.titleMedium!.copyWith(
-                            color: Colors.black, fontWeight: FontWeight.w900));
-                  },
-                ),
-              ],
+            // contentPadding: EdgeInsets.zero,
+            horizontalTitleGap: 0.5,
+            // style: ListTileStyle.list,
+
+            leading: Text(
+              "Booking Date:  ",
+              style: headingStyle,
+              // textAlign: TextAlign.center,
             ),
+            title: Obx(() => Text(controller.bookingDatePlaceholder.value,
+                style: theme.textTheme.titleMedium!.copyWith(
+                    color: Colors.black, fontWeight: FontWeight.w900))),
+            trailing: ElevatedButton(
+                onPressed: () {
+                  // Get.toNamed(Routes.BOOKING_ROOM);
+                  controller.selectDate(context);
+                },
+                child: controller.bookingRoom.value.isEmpty
+                    ? Text(
+                        "Select",
+                        style: theme.textTheme.titleMedium!.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.w900),
+                      )
+                    : const Icon(Icons.change_circle)),
           ),
         ),
+        // Card(
+        //   child: ListTile(
+        //     title: Row(
+        //       children: [
+        //         Text("Booking Date:  ", style: headingStyle),
+        //         // Text(
+        //         //   DateFormat.yMMMMd('en_US').format(DateTime.now()).toString(),
+        //         //   style: theme.textTheme.titleMedium!.copyWith(
+        //         //       color: Colors.black, fontWeight: FontWeight.w900),
+        //         // ),
+        //         // FutureBuilder<String>(
+        //         //   future: controller.bookingDateFuture,
+        //         //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+        //         //     return Text('${snapshot.data}',
+        //         //         style: theme.textTheme.titleMedium!.copyWith(
+        //         //             color: Colors.black, fontWeight: FontWeight.w900));
+        //         //   },
+        //         // ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         Card(
           child: ListTile(
             // contentPadding: EdgeInsets.zero,
@@ -117,7 +146,14 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
                     color: Colors.black, fontWeight: FontWeight.w900))),
             trailing: ElevatedButton(
                 onPressed: () {
-                  Get.toNamed(Routes.BOOKING_ROOM);
+                  if (controller.bookingDatePlaceholder.value.isEmpty) {
+                    GetXUtilities.snackbar(
+                        title: "Error!",
+                        message: "Select the date first",
+                        gradient: errorGradient);
+                  } else {
+                    Get.toNamed(Routes.BOOKING_ROOM);
+                  }
                 },
                 child: controller.bookingRoom.value.isEmpty
                     ? Text(

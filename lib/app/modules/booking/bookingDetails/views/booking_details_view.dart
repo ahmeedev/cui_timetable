@@ -33,11 +33,14 @@ class BookingDetailsView extends GetView<BookingDetailsController> {
                 //   controller.currentStep.value = index;
                 // },
                 onStepContinue: () {
-                  if (controller.currentStep.value == 2) {
-                    Get.back();
-                  } else if (controller.currentStep.value < 2) {
-                    controller.currentStep.value++;
-                    if (controller.currentStep.value == 1) {
+                  if (controller.currentStep.value == 0) {
+                    if (controller.bookingDatePlaceholder.value.isEmpty ||
+                        controller.bookingRoom.value.isEmpty) {
+                      GetXUtilities.snackbar(
+                          title: "Error!",
+                          message: 'Fill the details first',
+                          gradient: errorGradient);
+                    } else {
                       controller.book(
                         section: controller.bookingFor,
                         slot: controller.bookingSlot,
@@ -47,31 +50,22 @@ class BookingDetailsView extends GetView<BookingDetailsController> {
                   }
                 },
                 onStepCancel: () {
-                  if (controller.currentStep.value > 0) {
-                    if (!controller.isBookingSuccessful.value) {
-                      controller.currentStep.value--;
-                    } else {
-                      GetXUtilities.snackbar(
-                          duration: 3,
-                          title: 'Room Booked!',
-                          message:
-                              'Booking in progress, to unbook go to BOOKING LOG',
-                          gradient: primaryGradient);
-                    }
+                  if (controller.currentStep.value == 0) {
+                    Get.back();
                   }
                 },
                 steps: [
                   Step(
-                    isActive: controller.currentStep.value >= 0,
+                    isActive: controller.currentStep.value == 0,
                     title: const Text("Booking Details"),
                     content: const BookingDetailsStepperWidget(),
                   ),
                   Step(
-                      isActive: controller.currentStep.value >= 1,
+                      isActive: controller.currentStep.value == 1,
                       title: const Text("Finalize Booking"),
                       content: const BookingFinalizeStepperWidget()),
                   Step(
-                      isActive: controller.currentStep.value >= 2,
+                      isActive: controller.currentStep.value == 2,
                       title: const Text("Status"),
                       content: const BookingStatusStepperWidget()),
                 ]),

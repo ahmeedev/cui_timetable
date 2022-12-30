@@ -6,6 +6,7 @@ import 'dart:io';
 
 // import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cui_timetable/app/constants/notification_constants.dart';
+import 'package:cui_timetable/app/data/database/notification_topics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:logger/logger.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'app/data/models/timetable/student_timetable/student_timetable.dart';
 import 'app/data/models/timetable/teacher_timetable/teacher_timetable.dart';
@@ -30,6 +33,30 @@ import 'app/utilities/location/loc_utilities.dart';
 import 'app/utilities/notifications/cloud_notifications.dart';
 import 'firebase_options.dart';
 
+@pragma(
+    'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    print(
+        "Native called background task: $task"); //simpleTask will be emitted here.
+    if (inputData != null && inputData.containsKey('action')) {
+      // initializeFirebaseMsg();
+      WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+      await Firebase.initializeApp(
+        name: 'cui-timetable',
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      sendCloudNotification(
+          topic: studentTopic,
+          title: 'Workmanager',
+          description: "This is a test notification from workmanager");
+    }
+    return Future.value(true);
+  });
+}
+
+Logger logger = Logger();
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     // systemNavigationBarColor: Color(0xFF000000),
@@ -40,7 +67,18 @@ Future<void> main() async {
     // statusBarBrightness: Brightness.light,
   ));
   await _initialized();
-
+  Workmanager().initialize(
+      callbackDispatcher, // The top level function, aka callbackDispatcher
+      isInDebugMode:
+          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+      );
+  Workmanager().registerOneOffTask("task-identifier", "simpleTask");
+  Workmanager().registerPeriodicTask(
+      "periodic-task-identifier", "simplePeriodicTask",
+      // When no frequency is provided the default 15 minutes is set.
+      // Minimum frequency is 15 min. Android will automatically change your frequency to 15 min if you have configured a lower frequency.
+      frequency: const Duration(seconds: 10000),
+      inputData: {"action": "testing"});
   runApp(const MyApp());
 }
 

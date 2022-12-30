@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/constants/firebase_constants.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:cui_timetable/app/utilities/time/cloud_time.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -18,7 +20,6 @@ class BookingDetailsController extends GetxController {
   final bookingSlot = Get.arguments['bookingSlot'];
   var bookingRoom = ""
       .obs; //* Came from the freerooms module, on the onTap of the freeroom card.
-  late final bookingDate;
 
   final timeMap = {
     "1": "Monday",
@@ -34,25 +35,26 @@ class BookingDetailsController extends GetxController {
   final isBookingSuccessful = true.obs;
 
   late final Future<String> bookingDateFuture;
-  @override
-  void onInit() {
-    bookingDateFuture = calculateDate();
-    super.onInit();
-  }
 
-  Future<String> calculateDate() {
-    // print(bookingDay);
-    var startDate = DateTime.now();
-    if (startDate.weekday == bookingDay) {
-      startDate = startDate.add(const Duration(days: 1));
-    }
-    final nextDate = startDate.add(Duration(
-      days: (bookingDay - startDate.weekday) % DateTime.daysPerWeek,
-    ));
-    bookingDate = nextDate;
-    final result = DateFormat.MMMMEEEEd().format(nextDate).toString();
+  var bookingDate;
+  var bookingDatePlaceholder = ''.obs;
+  selectDate(BuildContext context) async {
+    await currentTime().then((todayDate) async {
+      // var selectedDate = DateTime.now();
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: todayDate,
+        firstDate: todayDate,
+        lastDate: todayDate.add(const Duration(days: 14)),
+      );
+      if (picked != null && picked != todayDate) {
+        // selectedDate = picked;
 
-    return Future.value(result);
+        bookingDate = picked;
+        bookingDatePlaceholder.value =
+            DateFormat.MMMMEEEEd().format(picked).toString();
+      }
+    });
   }
 
   book(

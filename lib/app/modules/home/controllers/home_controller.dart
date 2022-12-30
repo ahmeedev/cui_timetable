@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/modules/home/views/home_view3.dart';
 import 'package:cui_timetable/app/modules/news/views/news_view.dart';
 import 'package:cui_timetable/app/modules/settings/views/settings_view2.dart';
+import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
@@ -106,6 +107,13 @@ class HomeController extends GetxController {
   Future<void> approveAndGoToBooking() async {
     final arguments = <String, dynamic>{};
     final db = FirebaseFirestore.instance;
+
+    Get.defaultDialog(
+        title: 'Checking Status',
+        titlePadding: EdgeInsets.all(Constants.defaultPadding),
+        titleStyle: const TextStyle(color: Colors.black, fontSize: 20),
+        content: const Text("Please Wait..."));
+
     final doc = await db
         .collection('approvals')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -122,8 +130,10 @@ class HomeController extends GetxController {
 
     final isApproved = result['approved'] ?? false;
     if (isApproved) {
+      Get.back();
       Get.toNamed(Routes.BOOKING, arguments: arguments);
     } else {
+      Get.back();
       Get.toNamed(Routes.BOOKING_APPROVAL, arguments: arguments);
     }
   }
