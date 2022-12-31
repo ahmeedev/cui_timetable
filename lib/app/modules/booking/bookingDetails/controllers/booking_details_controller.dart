@@ -3,10 +3,8 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/constants/firebase_constants.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
-import 'package:cui_timetable/app/utilities/time/cloud_time.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -30,57 +28,30 @@ class BookingDetailsController extends GetxController {
     "5": "Friday",
   };
 
-  var normalStyle = const TextStyle(
-      color: Colors.black, fontSize: 14, fontWeight: FontWeight.w900);
-  var selectedStyle = const TextStyle(
-      color: Colors.white, fontSize: 14, fontWeight: FontWeight.w900);
-  var segmentedControlGroupValue = 0.obs;
-  Map<int, Widget>? myTabs;
-  var styles = [].obs;
-
   final currentStep = 0.obs;
   final isRoomAvailable = true.obs;
   final notificationSent = false.obs;
   final isBookingSuccessful = true.obs;
 
-  late final Future<DateTime> bookingDateFuture;
-  @override
-  Future<void> onInit() async {
-    styles.add(selectedStyle);
-    styles.add(normalStyle);
-    styles.add(normalStyle);
-    myTabs = <int, Widget>{
-      0: Obx(() => Text("This", style: styles[0])),
-      1: Obx(() => Text("Next", style: styles[1])),
-    };
+  var bookingDatePlaceholder = ''.obs;
+  // var selectedDate;
+  // selectDate(BuildContext context) async {
+  //   await currentTime().then((todayDate) async {
+  //     final DateTime? picked = await showDatePicker(
+  //       context: context,
+  //       initialDate: todayDate,
+  //       firstDate: todayDate,
+  //       lastDate: todayDate.add(const Duration(days: 14)),
+  //     );
+  //     if (picked != null && picked != todayDate) {
+  //       selectedDate = picked;
 
-    bookingDateFuture = currentTime();
-    bookingDate = await bookingDateFuture;
-    if (bookingDate.weekday == bookingDay) {
-      segmentedControlGroupValue.value = 1;
-    }
-    super.onInit();
-  }
-
-  // var bookingDatePlaceholder = ''.obs;
-  selectDate(BuildContext context) async {
-    await currentTime().then((todayDate) async {
-      // var selectedDate = DateTime.now();
-      final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: todayDate,
-        firstDate: todayDate,
-        lastDate: todayDate.add(const Duration(days: 14)),
-      );
-      if (picked != null && picked != todayDate) {
-        // selectedDate = picked;
-
-        // bookingDate = picked;
-        // bookingDatePlaceholder.value =
-        //     DateFormat.MMMMEEEEd().format(picked).toString();
-      }
-    });
-  }
+  //       bookingDate = picked;
+  //       bookingDatePlaceholder.value =
+  //           DateFormat.MMMMEEEEd().format(picked).toString();
+  //     }
+  //   });
+  // }
 
   book(
       {required String section,

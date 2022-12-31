@@ -19,6 +19,8 @@ import '../modules/authentication/views/authentication_view.dart';
 import '../modules/booking/bindings/booking_binding.dart';
 import '../modules/booking/bookingApproval/bindings/booking_approval_binding.dart';
 import '../modules/booking/bookingApproval/views/booking_approval_view.dart';
+import '../modules/booking/bookingDate/bindings/booking_date_binding.dart';
+import '../modules/booking/bookingDate/views/booking_date_view.dart';
 import '../modules/booking/bookingDetails/bindings/booking_details_binding.dart';
 import '../modules/booking/bookingDetails/views/booking_details_view.dart';
 import '../modules/booking/bookingDetailsView/bindings/booking_details_view_binding.dart';
@@ -265,6 +267,11 @@ class AppPages {
           name: _Paths.BOOKING_APPROVAL,
           page: () => const BookingApprovalView(),
           binding: BookingApprovalBinding(),
+        ),
+        GetPage(
+          name: _Paths.BOOKING_DATE,
+          page: () => const BookingDateView(),
+          binding: BookingDateBinding(),
         ),
       ],
     ),

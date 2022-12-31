@@ -50,6 +50,7 @@ abstract class Routes {
   static const BOOKING_REQUEST = _Paths.ADMIN_PANEL + _Paths.BOOKING_REQUEST;
   static const ADMIN_NOTIFICATIONS =
       _Paths.ADMIN_PANEL + _Paths.ADMIN_NOTIFICATIONS;
+  static const BOOKING_DATE = _Paths.BOOKING + _Paths.BOOKING_DATE;
 }
 
 abstract class _Paths {
@@ -98,4 +99,5 @@ abstract class _Paths {
   static const BOOKING_APPROVAL = '/booking-approval';
   static const BOOKING_REQUEST = '/booking-request';
   static const ADMIN_NOTIFICATIONS = '/admin-notifications';
+  static const BOOKING_DATE = '/booking-date';
 }
