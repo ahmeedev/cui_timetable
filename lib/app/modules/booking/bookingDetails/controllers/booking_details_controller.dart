@@ -20,7 +20,8 @@ class BookingDetailsController extends GetxController {
   final bookingSlot = Get.arguments['bookingSlot'];
   var bookingRoom = ""
       .obs; //* Came from the freerooms module, on the onTap of the freeroom card.
-
+  // late final Future<DateTime> bookingDate;
+  var bookingDate;
   final timeMap = {
     "1": "Monday",
     "2": "Tuesday",
@@ -29,15 +30,39 @@ class BookingDetailsController extends GetxController {
     "5": "Friday",
   };
 
+  var normalStyle = const TextStyle(
+      color: Colors.black, fontSize: 14, fontWeight: FontWeight.w900);
+  var selectedStyle = const TextStyle(
+      color: Colors.white, fontSize: 14, fontWeight: FontWeight.w900);
+  var segmentedControlGroupValue = 0.obs;
+  Map<int, Widget>? myTabs;
+  var styles = [].obs;
+
   final currentStep = 0.obs;
   final isRoomAvailable = true.obs;
   final notificationSent = false.obs;
   final isBookingSuccessful = true.obs;
 
-  late final Future<String> bookingDateFuture;
+  late final Future<DateTime> bookingDateFuture;
+  @override
+  Future<void> onInit() async {
+    styles.add(selectedStyle);
+    styles.add(normalStyle);
+    styles.add(normalStyle);
+    myTabs = <int, Widget>{
+      0: Obx(() => Text("This", style: styles[0])),
+      1: Obx(() => Text("Next", style: styles[1])),
+    };
 
-  var bookingDate;
-  var bookingDatePlaceholder = ''.obs;
+    bookingDateFuture = currentTime();
+    bookingDate = await bookingDateFuture;
+    if (bookingDate.weekday == bookingDay) {
+      segmentedControlGroupValue.value = 1;
+    }
+    super.onInit();
+  }
+
+  // var bookingDatePlaceholder = ''.obs;
   selectDate(BuildContext context) async {
     await currentTime().then((todayDate) async {
       // var selectedDate = DateTime.now();
@@ -50,9 +75,9 @@ class BookingDetailsController extends GetxController {
       if (picked != null && picked != todayDate) {
         // selectedDate = picked;
 
-        bookingDate = picked;
-        bookingDatePlaceholder.value =
-            DateFormat.MMMMEEEEd().format(picked).toString();
+        // bookingDate = picked;
+        // bookingDatePlaceholder.value =
+        //     DateFormat.MMMMEEEEd().format(picked).toString();
       }
     });
   }
@@ -66,9 +91,7 @@ class BookingDetailsController extends GetxController {
     //? Check the freerooms here.
     final docRef = db.collection(bookingCollection).doc(bookedRooms);
     final response = await docRef.get();
-    final date = DateFormat.yMd()
-        .format(Get.find<BookingDetailsController>().bookingDate)
-        .replaceAll("/", "-");
+    final date = DateFormat.yMd().format(bookingDate).replaceAll("/", "-");
     final tag = "$date-${Get.find<BookingDetailsController>().bookingSlot}";
 
     List<String> result;

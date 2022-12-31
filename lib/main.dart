@@ -37,21 +37,16 @@ import 'firebase_options.dart';
     'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
-    print(
-        "Native called background task: $task"); //simpleTask will be emitted here.
-    if (inputData != null && inputData.containsKey('action')) {
-      // initializeFirebaseMsg();
-      WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    // await Firebase.initializeApp(
+    //   name: 'cui-timetable',
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    // );
+    sendCloudNotification(
+        topic: studentTopic,
+        title: 'Workmanager',
+        description: "This is a test notification from workmanager");
 
-      await Firebase.initializeApp(
-        name: 'cui-timetable',
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-      sendCloudNotification(
-          topic: studentTopic,
-          title: 'Workmanager',
-          description: "This is a test notification from workmanager");
-    }
     return Future.value(true);
   });
 }
@@ -67,18 +62,19 @@ Future<void> main() async {
     // statusBarBrightness: Brightness.light,
   ));
   await _initialized();
-  Workmanager().initialize(
-      callbackDispatcher, // The top level function, aka callbackDispatcher
-      isInDebugMode:
-          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
-      );
-  Workmanager().registerOneOffTask("task-identifier", "simpleTask");
-  Workmanager().registerPeriodicTask(
-      "periodic-task-identifier", "simplePeriodicTask",
-      // When no frequency is provided the default 15 minutes is set.
-      // Minimum frequency is 15 min. Android will automatically change your frequency to 15 min if you have configured a lower frequency.
-      frequency: const Duration(seconds: 10000),
-      inputData: {"action": "testing"});
+  // Workmanager().initialize(
+  //     callbackDispatcher, // The top level function, aka callbackDispatcher
+  //     isInDebugMode:
+  //         true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+  //     );
+  // Workmanager().cancelAll();
+  // Workmanager().registerOneOffTask("task-identifier", "simpleTask");
+  // Workmanager().registerPeriodicTask(
+  //     "periodic-task-identifier", "simplePeriodicTask",
+  //     // When no frequency is provided the default 15 minutes is set.
+  //     // Minimum frequency is 15 min. Android will automatically change your frequency to 15 min if you have configured a lower frequency.
+  //     frequency: const Duration(minutes: 15),
+  //     inputData: {"action": "testing"});
   runApp(const MyApp());
 }
 

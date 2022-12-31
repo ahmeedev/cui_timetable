@@ -1,7 +1,8 @@
 import 'package:cui_timetable/app/modules/booking/bookingDetails/controllers/booking_details_controller.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_soul/flutter_soul.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
@@ -93,25 +94,83 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
             // style: ListTileStyle.list,
 
             leading: Text(
-              "Booking Date:  ",
+              "Booking Week:  ",
               style: headingStyle,
               // textAlign: TextAlign.center,
             ),
-            title: Obx(() => Text(controller.bookingDatePlaceholder.value,
-                style: theme.textTheme.titleMedium!.copyWith(
-                    color: Colors.black, fontWeight: FontWeight.w900))),
-            trailing: ElevatedButton(
-                onPressed: () {
-                  // Get.toNamed(Routes.BOOKING_ROOM);
-                  controller.selectDate(context);
-                },
-                child: controller.bookingRoom.value.isEmpty
-                    ? Text(
-                        "Select",
-                        style: theme.textTheme.titleMedium!.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.w900),
-                      )
-                    : const Icon(Icons.change_circle)),
+            title: FutureBuilder<DateTime>(
+                future: controller.bookingDateFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerRight,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Obx(() => CupertinoSlidingSegmentedControl(
+                                children: controller.myTabs!,
+                                onValueChanged: (i) {
+                                  if (snapshot.data!.weekday !=
+                                      controller.bookingDay) {
+                                    controller.segmentedControlGroupValue
+                                        .value = int.parse(i.toString());
+
+                                    for (var i = 0;
+                                        i < controller.styles.length;
+                                        i++) {
+                                      controller.styles[i] =
+                                          controller.normalStyle;
+                                    }
+                                    controller.styles[controller
+                                        .segmentedControlGroupValue
+                                        .value] = controller.selectedStyle;
+                                  }
+                                },
+                                groupValue:
+                                    controller.segmentedControlGroupValue.value,
+                                padding: EdgeInsets.all(
+                                    Constants.defaultPadding / 2),
+                                backgroundColor: selectionColor,
+                                thumbColor: primaryColor,
+                              ))
+                        ],
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return const Text(
+                      "Retry in few seconds",
+                      style: TextStyle(
+                          color: errorColor1, fontWeight: FontWeight.w900),
+                    );
+                  }
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: const [
+                      SpinKitFadingCube(
+                        color: primaryColor,
+                        size: 20,
+                      ),
+                      kWidth,
+                    ],
+                  );
+                }),
+            // title: Obx(() => Text(controller.bookingDatePlaceholder.value,
+            //     style: theme.textTheme.titleMedium!.copyWith(
+            //         color: Colors.black, fontWeight: FontWeight.w900))),
+            // trailing: ElevatedButton(
+            //     onPressed: () {
+            //       // Get.toNamed(Routes.BOOKING_ROOM);
+            //       controller.selectDate(context);
+            //     },
+            //     child: controller.bookingRoom.value.isEmpty
+            //         ? Text(
+            //             "Select",
+            //             style: theme.textTheme.titleMedium!.copyWith(
+            //                 color: Colors.white, fontWeight: FontWeight.w900),
+            //           )
+            //         : const Icon(Icons.change_circle)),
           ),
         ),
         // Card(
@@ -146,14 +205,7 @@ class BookingDetailsStepperWidget extends GetView<BookingDetailsController> {
                     color: Colors.black, fontWeight: FontWeight.w900))),
             trailing: ElevatedButton(
                 onPressed: () {
-                  if (controller.bookingDatePlaceholder.value.isEmpty) {
-                    GetXUtilities.snackbar(
-                        title: "Error!",
-                        message: "Select the date first",
-                        gradient: errorGradient);
-                  } else {
-                    Get.toNamed(Routes.BOOKING_ROOM);
-                  }
+                  Get.toNamed(Routes.BOOKING_ROOM);
                 },
                 child: controller.bookingRoom.value.isEmpty
                     ? Text(

@@ -34,11 +34,10 @@ class BookingDetailsView extends GetView<BookingDetailsController> {
                 // },
                 onStepContinue: () {
                   if (controller.currentStep.value == 0) {
-                    if (controller.bookingDatePlaceholder.value.isEmpty ||
-                        controller.bookingRoom.value.isEmpty) {
+                    if (controller.bookingRoom.value.isEmpty) {
                       GetXUtilities.snackbar(
                           title: "Error!",
-                          message: 'Fill the details first',
+                          message: 'Select all the fields to continue',
                           gradient: errorGradient);
                     } else {
                       controller.book(
