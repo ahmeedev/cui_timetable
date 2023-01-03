@@ -19,10 +19,10 @@ dependencies:
   dio: ^4.0.6
   firebase_analytics: ^10.0.7
   firebase_auth: ^4.2.0
-  firebase_core: ^2.4.0
+  firebase_core: ^2.4.1
   firebase_messaging: ^14.1.4
-  firebase_remote_config: ^3.0.7
-  firebase_storage: ^11.0.7
+  firebase_remote_config: ^3.0.9
+  firebase_storage: ^11.0.10
   flutter:
     sdk: flutter
   flutter_local_notifications: ^12.0.4
@@ -45,7 +45,8 @@ dependencies:
   jiffy: ^5.0.0
   logger: ^1.1.0
   particles_flutter: ^0.1.4
-  path_provider: ^2.0.9
+  path_provider: ^2.0.11
+  permission_handler: ^10.2.0
   rive: ^0.9.1
   sqflite: ^2.0.2+1
   syncfusion_flutter_datepicker: ^20.4.41

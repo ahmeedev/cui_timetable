@@ -68,7 +68,7 @@ Future<void> downloadFile(
             name: fileName.toUpperCase());
         break;
       case TaskState.error:
-        devlog.log("File Downloading Cancelled...",
+        devlog.log("File Downloading errored...",
             name: fileName.toUpperCase());
         break;
     }

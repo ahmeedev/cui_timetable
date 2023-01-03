@@ -1,16 +1,20 @@
 import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
+import 'package:cui_timetable/main.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class LocalNotifications {
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   static Future initialize() async {
+    final DarwinInitializationSettings initializationSettingsDarwin =
+    DarwinInitializationSettings(
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     var androidInitialize =
         const AndroidInitializationSettings('mipmap/ic_launcher');
     // var iOSInitialize = IOSInitializationSettings();
     var initializationsSettings =
-        InitializationSettings(android: androidInitialize);
+        InitializationSettings(android: androidInitialize, iOS: initializationSettingsDarwin);
     await flutterLocalNotificationsPlugin.initialize(initializationsSettings);
   }
 
@@ -41,4 +45,13 @@ class LocalNotifications {
     await flutterLocalNotificationsPlugin.show(
         notificationID, title, body, not);
   }
+
+
+
+}
+
+  void onDidReceiveLocalNotification(
+    int? id, String? title, String? body, String? payload) async {
+  // display a dialog with the notification details, tap ok to go to another page
+ logger.d('notifications received');
 }

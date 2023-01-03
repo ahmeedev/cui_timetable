@@ -33,6 +33,7 @@ import 'app/utilities/location/loc_utilities.dart';
 import 'app/utilities/notifications/cloud_notifications.dart';
 import 'firebase_options.dart';
 
+
 @pragma(
     'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
 void callbackDispatcher() {
@@ -75,6 +76,10 @@ Future<void> main() async {
   //     // Minimum frequency is 15 min. Android will automatically change your frequency to 15 min if you have configured a lower frequency.
   //     frequency: const Duration(minutes: 15),
   //     inputData: {"action": "testing"});
+//   var status = await Permission.camera.status;
+// if (status.isDenied) {
+//   // We didn't ask for permission yet or the permission has been denied before but not permanently.
+// }
   runApp(const MyApp());
 }
 
