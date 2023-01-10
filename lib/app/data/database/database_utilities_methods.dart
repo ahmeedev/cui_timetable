@@ -20,12 +20,15 @@ Future<void> downloadFile(
     required callback,
     csv = true,
     lastEntity = false}) async {
-  final storageRef = FirebaseStorage.instance.ref();
-  final islandRef = storageRef.child(fileName);
+  // final storageRef = FirebaseStorage.instance.ref();
+final storageRef =
+    FirebaseStorage.instance.refFromURL("gs://cui-timetable.appspot.com/$fileName");
+
+  // final islandRef = storageRef.child(fileName);
   final filePath = "${LocationUtilities.defaultpath}/$fileName";
   final file = File(filePath);
 
-  final downloadTask = islandRef.writeToFile(file);
+  final downloadTask = storageRef.writeToFile(file);
   downloadTask.snapshotEvents.listen((taskSnapshot) async {
     switch (taskSnapshot.state) {
       case TaskState.running:
