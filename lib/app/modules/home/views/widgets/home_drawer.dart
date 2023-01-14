@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +16,10 @@ import 'package:get/get.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../../data/services/local_notifications.dart';
+import '../../../../utilities/location/loc_utilities.dart';
 import '../../controllers/home_controller.dart';
 
 /// Header of the Drawer.
@@ -61,10 +66,11 @@ class Header extends GetView<HomeController> {
           forGradient,
         ],
       )),
-      height: 
-           MediaQuery.of(context).size.height * 0.28 + Constants.defaultPadding,
-
-              
+      height:  MediaQuery.of(context).size.height * 0.28 + Constants.defaultPadding,
+      // height: MediaQuery.of(context).size.height < 600
+      //     ? MediaQuery.of(context).size.height * 0.30 + Constants.defaultPadding
+      //     : MediaQuery.of(context).size.height * 0.25 +
+      //         Constants.defaultPadding,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: Constants.defaultPadding),
@@ -77,9 +83,7 @@ class Header extends GetView<HomeController> {
                       shape: BoxShape.circle,
                       border: Border.all(width: 3, color: Colors.white)),
                   child: Padding(
-                      padding: EdgeInsets.all(Constants.defaultPadding / 3).copyWith(
-                        bottom: 0,
-                      ),
+                      padding: EdgeInsets.all(Constants.defaultPadding / 3),
                       child: Obx(() => Container(
                             width: Constants.imageWidth + 20,
                             height: Constants.imageHeight + 20,
@@ -104,22 +108,20 @@ class Header extends GetView<HomeController> {
                                             fit: BoxFit.cover,
                                           )),
                           )))),
-              SizedBox(height: Get.height*0.02,),
-              Obx(() => Padding(
-                padding:  EdgeInsets.only(top: 4),
-                child: Text(
-                      // "No details Available",
-                      controller.isUserSignIn.value == true
-                          ? 'Welcome,  ${FirebaseAuth.instance.currentUser!.email!.substring(
-                              0,
-                              FirebaseAuth.instance.currentUser!.email!
-                                  .indexOf('@'),
-                            )}'
-                          : "Welcome, to CUI Sahiwal",
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-              )),
+              kHeight,
+              kHeight,
+              Obx(() => Text(
+                    // "No details Available",
+                    controller.isUserSignIn.value == true
+                        ? 'Welcome,  ${FirebaseAuth.instance.currentUser!.email!.substring(
+                            0,
+                            FirebaseAuth.instance.currentUser!.email!
+                                .indexOf('@'),
+                          )}'
+                        : "Welcome, to CUI Sahiwal",
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  )),
             ],
           ),
         ),
@@ -281,14 +283,24 @@ class ButtonList extends GetView<HomeController> {
           if (kDebugMode)
             buildButton(context,
                 icon: const AssetImage('assets/drawer/vision.png'),
-                title: 'Testing', onTap: () {
-              LocalNotifications.showBigTextNotification(
-                channelID: channelRemainderId,
-                channelName: channelRemainder,
-                title: 'This is a big title',
-                body:
-                    "This is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThidyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThidyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a body",
-              );
+                title: 'Testing', onTap: () async {
+
+// final storageRef = FirebaseStorage.instance.ref();
+
+
+final storageRef =
+    FirebaseStorage.instance.refFromURL("gs://cui-timetable.appspot.com/timetable.json");
+
+
+
+
+              // LocalNotifications.showBigTextNotification(
+              //   channelID: channelRemainderId,
+              //   channelName: channelRemainder,
+              //   title: 'This is a big title',
+              //   body:
+              //       "This is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThidyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThidyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a body",
+              // );
             }),
         ],
       ),

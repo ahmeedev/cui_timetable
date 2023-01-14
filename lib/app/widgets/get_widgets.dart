@@ -21,7 +21,7 @@ class GetXUtilities {
       duration = 2}) {
     Get.closeAllSnackbars();
 
-    if (Platform.isAndroid) {
+   
       Get.showSnackbar(GetSnackBar(
         // backgroundColor: primaryColor,
         // padding: EdgeInsets.all(Constants.defaultPadding),
@@ -42,21 +42,23 @@ class GetXUtilities {
         snackStyle: SnackStyle.GROUNDED,
         // backgroundColor: primaryColor,
       ));
-    } else if (Platform.isIOS) {
-      Get.snackbar(
-        "Default SnackBar",
-        "This is the Getx default SnackBar",
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(milliseconds: duration),
-        titleText: Text(title,
-            style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-                fontWeight: FontWeight.bold)),
-        messageText: Text(message,
-            style: const TextStyle(fontSize: 12, color: Colors.black)),
-      );
-    }
+    
+    
+    // else if (Platform.isIOS) {
+    //   Get.snackbar(
+    //     "Default SnackBar",
+    //     "This is the Getx default SnackBar",
+    //     snackPosition: SnackPosition.BOTTOM,
+    //     duration: Duration(milliseconds: duration),
+    //     titleText: Text(title,
+    //         style: const TextStyle(
+    //             fontSize: 16,
+    //             color: Colors.black,
+    //             fontWeight: FontWeight.bold)),
+    //     messageText: Text(message,
+    //         style: const TextStyle(fontSize: 12, color: Colors.black)),
+    //   );
+    // }
   }
 
   //! Use Context for the automation of theme.

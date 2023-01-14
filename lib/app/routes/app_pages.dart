@@ -1,3 +1,4 @@
+import 'package:cui_timetable/app/modules/home/views/home_view2.dart';
 import 'package:get/get.dart';
 
 import '../modules/adminPanel/adminFeedback/bindings/admin_feedback_binding.dart';
@@ -51,6 +52,7 @@ import '../modules/datesheet/views/datesheet_view.dart';
 import '../modules/freerooms/bindings/freerooms_binding.dart';
 import '../modules/freerooms/views/freerooms_view.dart';
 import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
 import '../modules/home/views/home_view3.dart';
 import '../modules/location/bindings/location_binding.dart';
 import '../modules/location/views/location_view.dart';
@@ -102,7 +104,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => const HomeView3(),
+      page: () =>  HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
