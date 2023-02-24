@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>663627456598-ed6tiqk5sn2v9ohraei9dp8iiq18eovk.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.663627456598-ed6tiqk5sn2v9ohraei9dp8iiq18eovk</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>663627456598-unlhff1sttjdo8tkmrc4hmngnj7ottsp.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBrHwBUbYTga1qC5MbeT9W5GDuHRF5jpbA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>663627456598</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.rise4solution.cuiTimetable</string>
+	<key>PROJECT_ID</key>
+	<string>cui-timetable</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cui-timetable.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:663627456598:ios:70b30863ae7f8111ea9bf7</string>
+	<key>DATABASE_URL</key>
+	<string>https://cui-timetable-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
