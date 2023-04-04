@@ -14,7 +14,7 @@ import firebase_messaging
 import firebase_remote_config
 import firebase_storage
 import flutter_local_notifications
-import path_provider_macos
+import path_provider_foundation
 import sqflite
 import url_launcher_macos
 

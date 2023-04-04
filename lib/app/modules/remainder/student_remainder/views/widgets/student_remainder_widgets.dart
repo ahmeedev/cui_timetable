@@ -127,8 +127,7 @@ class LectureDetailsTile extends GetView<StudentRemainderController> {
                                             color: widgetColor,
                                           )
                                         ],
-                                      ).paddingVertical(
-                                          Constants.defaultPadding),
+                                      ).paddingSymmetric(vertical: Constants.defaultPadding),
                                     ),
                                   ))
                               : Obx(() => AbsorbPointer(
@@ -159,8 +158,7 @@ class LectureDetailsTile extends GetView<StudentRemainderController> {
                                             color: widgetColor,
                                           )
                                         ],
-                                      ).paddingVertical(
-                                          Constants.defaultPadding),
+                                      ).paddingSymmetric(vertical: Constants.defaultPadding)
                                     ),
                                   ))
                         ],

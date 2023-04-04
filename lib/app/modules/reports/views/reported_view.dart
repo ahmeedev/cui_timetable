@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/modules/reports/controllers/reports_controller.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -62,8 +63,10 @@ class ReportedView extends GetView<ReportsController> {
                     itemBuilder: (BuildContext context, int index) {
                       return Slidable(
                          key: const ValueKey(0),
+                         groupTag: "feedbacks",
+                        //  closeOnScroll: true,
                           startActionPane: ActionPane(
-                              motion: const ScrollMotion(),
+                              motion: const BehindMotion(),
                               children: [
                                 SlidableAction(
                                   borderRadius: BorderRadius.all(Radius.circular(Constants.defaultRadius)),
@@ -72,6 +75,8 @@ class ReportedView extends GetView<ReportsController> {
                                   foregroundColor: Colors.white,
                                   icon: Icons.delete,
                                   label: 'Delete',
+                                  autoClose: true,
+                                  // padding: EdgeInsets.symmetric(vertical: Constants.defaultPadding * 2),
                                 ),
                               ]),
                         child: Card(

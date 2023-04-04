@@ -36,6 +36,10 @@ class AdminReportedView extends GetView<AdminFeedbackController> {
             reportCollectionKey.add(element.id);
 
             final map = element.data() as Map<String, dynamic>;
+            keys.sort((a, b) {
+              //sorting in ascending order
+              return DateTime.parse(b).compareTo(DateTime.parse(a));
+            });
             map.forEach((key, value) {
               results[key] = value;
             });
@@ -51,7 +55,7 @@ class AdminReportedView extends GetView<AdminFeedbackController> {
 
         return const Center(
             child: SpinKitFadingCube(
-              size: 30,
+          size: 30,
           color: primaryColor,
         ));
       },
@@ -65,21 +69,22 @@ class AdminReportedView extends GetView<AdminFeedbackController> {
           itemCount: results.length,
           itemBuilder: (BuildContext context, int index) {
             return Slidable(
+              groupTag: "feedbacks",
               key: const ValueKey(0),
               startActionPane:
-                  const ActionPane(motion: ScrollMotion(), children: [
+                  ActionPane(motion: const ScrollMotion(), children: [
                 SlidableAction(
-                  onPressed: null,
+                  onPressed: controller.sendResponse(),
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
-                  icon: Icons.replay,
+                  icon: Icons.reply,
                   label: 'Reply',
                 ),
               ]),
               child: Card(
                 elevation: Constants.defaultElevation,
                 child: Padding(
-                  padding: EdgeInsets.all(Constants.defaultPadding),
+                  padding: EdgeInsets.all(Constants.defaultPadding*2),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
