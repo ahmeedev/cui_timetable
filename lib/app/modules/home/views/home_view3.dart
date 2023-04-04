@@ -385,16 +385,29 @@ class HomeViewWidget extends StatelessWidget {
             kWidth,
             _buildTile(context,
                 title: "Socities",
-                iconLocation: "assets/home/room.png",
-                ontap: () => Get.toNamed(Routes.SOCITIES)),
+                upComing: true,
+                iconLocation: "assets/home/room.png", ontap: () {
+              GetXUtilities.snackbar(
+                  title: "In Development!",
+                  message: "This Module is Under Development",
+                  gradient: primaryGradient);
+            }),
+            kWidth,
+            _buildTile(context, title: "Transport", ontap: () {
+              GetXUtilities.snackbar(
+                  title: "In Development!",
+                  message: "This Module is Under Development",
+                  gradient: primaryGradient);
+            }, iconLocation: "assets/home/transport.png"),
             kWidth,
             _buildTile(context,
-                title: "Transport",
-                ontap: () => Get.toNamed(Routes.TRANSPORT),
-                iconLocation: "assets/home/transport.png"),
-            kWidth,
-            _buildTile(context,
-                title: "Meetups", iconLocation: "assets/home/datesheet.png"),
+                title: "Meetups",
+                iconLocation: "assets/home/datesheet.png", ontap: () {
+              GetXUtilities.snackbar(
+                  title: "In Development!",
+                  message: "This Module is Under Development",
+                  gradient: primaryGradient);
+            }),
             kWidth,
           ],
         ),
@@ -426,7 +439,7 @@ class HomeViewWidget extends StatelessWidget {
                 GetXUtilities.snackbar(
                     title: "Error!",
                     message: "You must be signed in to report an issue",
-                    gradient: primaryGradient);
+                    gradient: errorGradient);
               } else {
                 if (email.endsWith("@gmail.com")) {
                   Get.toNamed(Routes.REPORTS);
@@ -475,93 +488,114 @@ _buildTag({required context, required text}) {
 }
 
 _buildTile(context,
-    {String title = "", String iconLocation = "", ontap, blank = false}) {
+    {String title = "",
+    String iconLocation = "",
+    ontap,
+    blank = false,
+    bool upComing = false}) {
   final textTheme = Theme.of(context).textTheme;
   return Flexible(
     child: FractionallySizedBox(
       widthFactor: 0.9,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Stack(
         children: [
-          IntrinsicWidth(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(Constants.defaultRadius),
-                    topRight: Radius.circular(Constants.defaultRadius)),
-                gradient: LinearGradient(
-                  end: Alignment.bottomRight,
-                  colors: blank == true
-                      ? [
-                          Colors.transparent,
-                          Colors.transparent,
-                        ]
-                      : [
-                          // secondaryColor,
-                          primaryColor,
-                          forGradient,
-                        ],
-                ),
-              ),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Constants.defaultPadding - 2,
-                    vertical: Constants.defaultPadding / 2,
-                  ),
-                  child: Text(
-                    title,
-                    style: textTheme.labelLarge!.copyWith(
-                        fontSize: textTheme.labelLarge!.fontSize! - 2,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          blank == true
-              ? const SizedBox()
-              : Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(Constants.defaultRadius),
-                    bottomRight: Radius.circular(Constants.defaultRadius),
-                  )),
-                  margin: EdgeInsets.zero,
-                  // color: Color(0xffB0CAEC),
-                  color: widgetColor,
-                  child: InkWell(
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              IntrinsicWidth(
+                child: Container(
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(Constants.defaultRadius),
-                      bottomRight: Radius.circular(Constants.defaultRadius),
+                        topLeft: Radius.circular(Constants.defaultRadius),
+                        topRight: Radius.circular(Constants.defaultRadius)),
+                    gradient: LinearGradient(
+                      end: Alignment.bottomRight,
+                      colors: blank == true
+                          ? [
+                              Colors.transparent,
+                              Colors.transparent,
+                            ]
+                          : [
+                              // secondaryColor,
+                              primaryColor,
+                              forGradient,
+                            ],
                     ),
-                    splashColor: selectionColor,
-                    highlightColor: Colors.transparent,
-                    onTap: ontap,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Constants.defaultPadding * 2.2,
-                            vertical: Constants.defaultPadding,
-                          ),
-                          // .copyWith(
-                          //     top: Constants.defaultPadding / 2),
-                          child: ImageIcon(
-                            AssetImage(iconLocation),
-                            // size: Constants.iconSize,
-                            color: primaryColor,
-                          ),
-                        ),
-                      ],
+                  ),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Constants.defaultPadding - 2,
+                        vertical: Constants.defaultPadding / 2,
+                      ),
+                      child: Text(
+                        title,
+                        style: textTheme.labelLarge!.copyWith(
+                            fontSize: textTheme.labelLarge!.fontSize! - 2,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ),
+              ),
+              blank == true
+                  ? const SizedBox()
+                  : Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(Constants.defaultRadius),
+                        bottomRight: Radius.circular(Constants.defaultRadius),
+                      )),
+                      margin: EdgeInsets.zero,
+                      // color: Color(0xffB0CAEC),
+                      color: widgetColor,
+                      child: InkWell(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(Constants.defaultRadius),
+                          bottomRight: Radius.circular(Constants.defaultRadius),
+                        ),
+                        splashColor: selectionColor,
+                        highlightColor: Colors.transparent,
+                        onTap: ontap,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: Constants.defaultPadding * 2.2,
+                                vertical: Constants.defaultPadding,
+                              ),
+                              // .copyWith(
+                              //     top: Constants.defaultPadding / 2),
+                              child: ImageIcon(
+                                AssetImage(iconLocation),
+                                // size: Constants.iconSize,
+                                color: primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+            ],
+          ),
+          // upComing
+          //     ? const Positioned(
+          //         left: 0,
+          //         right: 0,
+          //         bottom: 0,
+          //         child: Banner(
+          //           layoutDirection: TextDirection.ltr,
+          //           message: 'Upcoming',
+          //           location: BannerLocation.bottomEnd,
+          //           // color: Colors.amber,
+          //           // child: const Text("Upcoming").paddingAll(2),
+          //         ))
+          //     : const SizedBox()
         ],
       ),
     ),

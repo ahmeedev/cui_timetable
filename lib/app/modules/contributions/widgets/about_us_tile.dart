@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../theme/app_colors.dart';
-import '../../../../theme/app_constants.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_constants.dart';
 
 class AboutUsTile extends StatelessWidget {
   final String pic;
