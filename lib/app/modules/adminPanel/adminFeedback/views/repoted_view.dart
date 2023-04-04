@@ -51,7 +51,7 @@ class AdminReportedView extends GetView<AdminFeedbackController> {
 
         return const Center(
             child: SpinKitFadingCube(
-              size: 30,
+          size: 30,
           color: primaryColor,
         ));
       },
@@ -67,9 +67,12 @@ class AdminReportedView extends GetView<AdminFeedbackController> {
             return Slidable(
               key: const ValueKey(0),
               startActionPane:
-                  const ActionPane(motion: ScrollMotion(), children: [
+                  ActionPane(motion: const ScrollMotion(), children: [
                 SlidableAction(
-                  onPressed: null,
+                  onPressed: (context) {
+                    log("Hello");
+                    // controller.
+                  },
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
                   icon: Icons.replay,

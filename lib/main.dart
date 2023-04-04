@@ -33,7 +33,6 @@ import 'app/utilities/location/loc_utilities.dart';
 import 'app/utilities/notifications/cloud_notifications.dart';
 import 'firebase_options.dart';
 
-
 @pragma(
     'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
 void callbackDispatcher() {
@@ -85,7 +84,9 @@ Future<void> main() async {
 
 Future<void> _initialized() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.preserve(
+    widgetsBinding: widgetsBinding,
+  );
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
