@@ -72,9 +72,9 @@ class AdminReportedView extends GetView<AdminFeedbackController> {
               groupTag: "feedbacks",
               key: const ValueKey(0),
               startActionPane:
-                  const ActionPane(motion: ScrollMotion(), children: [
+                  ActionPane(motion: ScrollMotion(), children: [
                 SlidableAction(
-                  onPressed: null,
+                  onPressed: controller.sendResponse(),
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
                   icon: Icons.reply,

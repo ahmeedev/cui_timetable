@@ -1,4 +1,5 @@
-import 'dart:math';
+
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class AdminFeedbackController extends GetxController {
 
  sendResponse()
  {
-  print("Inside response method");
+  log("Inside response method");
  }
 
 }
