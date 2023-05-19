@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cui_timetable/app/modules/reports/controllers/reports_controller.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:cui_timetable/app/widgets/get_widgets.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 

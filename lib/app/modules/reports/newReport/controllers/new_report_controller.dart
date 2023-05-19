@@ -12,7 +12,7 @@ class NewReportController extends GetxController {
   String? uid = FirebaseAuth.instance.currentUser?.uid;
 
   void uploadData(String title, String description, DateTime userTimestamp) {
-    final uid = FirebaseAuth.instance.currentUser!.uid;
+    // final uid = FirebaseAuth.instance.currentUser!.uid;
     FirebaseFirestore db = FirebaseFirestore.instance;
     final docRef = db.collection("report").doc(uid);
 
@@ -21,20 +21,26 @@ class NewReportController extends GetxController {
           "${DateTime.now()}": {
             "userTitle": titleControler.text,
             "userMsg": descripControler.text,
-            "adminTitle":"Response",
+            "adminTitle": "Response",
             "adminTime": "",
-            "adminMsg":""
+            "adminMsg": ""
           },
         }, SetOptions(merge: true))
         .onError((error, stackTrace) => GetXUtilities.snackbar(
             title: "Error", message: error.toString(), gradient: errorGradient))
-        .then((value) {
+        .then((value) async {
           GetXUtilities.snackbar(
               title: "Feedback Added",
               message: "Your feedback was added successfuly",
               gradient: primaryGradient);
-              titleControler.clear();
-              descripControler.clear();
+          titleControler.clear();
+          descripControler.clear();
+
+          // await sendCloudNotification(
+          //     topic: adminTopic,
+          //     title: "New Feedback",
+          //     description: "Someone Just posted a new feedback",
+          //     );
         });
   }
 }

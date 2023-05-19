@@ -1,4 +1,3 @@
-import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/main.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -8,7 +7,7 @@ class LocalNotifications {
       FlutterLocalNotificationsPlugin();
   static Future initialize() async {
     final DarwinInitializationSettings initializationSettingsDarwin =
-    DarwinInitializationSettings(
+    const DarwinInitializationSettings(
         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     var androidInitialize =
         const AndroidInitializationSettings('mipmap/ic_launcher');

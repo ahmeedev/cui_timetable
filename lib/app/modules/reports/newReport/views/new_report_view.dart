@@ -1,10 +1,9 @@
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import '../../../../theme/app_constants.dart';
 
+import '../../../../theme/app_constants.dart';
 import '../controllers/new_report_controller.dart';
 
 class NewReportView extends GetView<NewReportController> {
@@ -113,6 +112,7 @@ class NewReportView extends GetView<NewReportController> {
                 if (value!.isEmpty) {
                   return "Title can't be empty";
                 }
+                return null;
               },
               decoration: const InputDecoration(hintText: 'Enter title here'),
             ),
