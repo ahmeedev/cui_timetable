@@ -1,14 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cui_timetable/app/constants/notification_constants.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:cui_timetable/app/widgets/global_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -16,10 +11,7 @@ import 'package:get/get.dart';
 import 'package:cui_timetable/app/routes/app_pages.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/theme/app_constants.dart';
-import 'package:path_provider/path_provider.dart';
 
-import '../../../../data/services/local_notifications.dart';
-import '../../../../utilities/location/loc_utilities.dart';
 import '../../controllers/home_controller.dart';
 
 /// Header of the Drawer.
@@ -66,7 +58,8 @@ class Header extends GetView<HomeController> {
           forGradient,
         ],
       )),
-      height:  MediaQuery.of(context).size.height * 0.28 + Constants.defaultPadding,
+      height:
+          MediaQuery.of(context).size.height * 0.28 + Constants.defaultPadding,
       // height: MediaQuery.of(context).size.height < 600
       //     ? MediaQuery.of(context).size.height * 0.30 + Constants.defaultPadding
       //     : MediaQuery.of(context).size.height * 0.25 +
@@ -102,8 +95,8 @@ class Header extends GetView<HomeController> {
                                         : DecorationImage(
                                             // image:AssetImage(''),
                                             image: CachedNetworkImageProvider(
-                                              FirebaseAuth.instance
-                                                  .currentUser!.photoURL!,
+                                              FirebaseAuth.instance.currentUser!
+                                                  .photoURL!,
                                             ),
                                             fit: BoxFit.cover,
                                           )),
@@ -196,7 +189,10 @@ class ButtonList extends GetView<HomeController> {
           //     icon: const AssetImage('assets/drawer/bookings.png'),
           //     title: 'Bookings',
           //     onTap: () {}),
-          if (FirebaseAuth.instance.currentUser?.email == "inahmee77@gmail.com" || FirebaseAuth.instance.currentUser?.email == "mnawazshah49@gmail.com" )
+          if (FirebaseAuth.instance.currentUser?.email ==
+                  "inahmee77@gmail.com" ||
+              FirebaseAuth.instance.currentUser?.email ==
+                  "mnawazshah49@gmail.com")
             buildButton(context,
                 icon: const AssetImage('assets/drawer/developer.png'),
                 title: 'Admin Panel',
@@ -205,6 +201,12 @@ class ButtonList extends GetView<HomeController> {
               icon: const AssetImage('assets/drawer/sync.png'),
               title: 'Synchronize', onTap: () {
             Get.toNamed(Routes.SYNC);
+          }),
+
+          buildButton(context,
+              icon: const AssetImage('assets/drawer/remainder.png'),
+              title: 'Remainder', onTap: () {
+            Get.toNamed(Routes.REMAINDER);
           }),
 
           // buildButton(context,
@@ -280,28 +282,23 @@ class ButtonList extends GetView<HomeController> {
           //   Get.to(FirebaseUI());
           // }),
 
-          if (kDebugMode)
-            buildButton(context,
-                icon: const AssetImage('assets/drawer/vision.png'),
-                title: 'Testing', onTap: () async {
+//           if (kDebugMode)
+//             buildButton(context,
+//                 icon: const AssetImage('assets/drawer/vision.png'),
+//                 title: 'Testing', onTap: () async {
+// // final storageRef = FirebaseStorage.instance.ref();
 
-// final storageRef = FirebaseStorage.instance.ref();
+          // final storageRef = FirebaseStorage.instance
+          //     .refFromURL("gs://cui-timetable.appspot.com/timetable.json");
 
-
-final storageRef =
-    FirebaseStorage.instance.refFromURL("gs://cui-timetable.appspot.com/timetable.json");
-
-
-
-
-              // LocalNotifications.showBigTextNotification(
-              //   channelID: channelRemainderId,
-              //   channelName: channelRemainder,
-              //   title: 'This is a big title',
-              //   body:
-              //       "This is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThidyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThidyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a body",
-              // );
-            }),
+          // LocalNotifications.showBigTextNotification(
+          //   channelID: channelRemainderId,
+          //   channelName: channelRemainder,
+          //   title: 'This is a big title',
+          //   body:
+          //       "This is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThidyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThidyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a bodyThis is a body",
+          // );
+          // }),
         ],
       ),
     );

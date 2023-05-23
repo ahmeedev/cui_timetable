@@ -5,11 +5,13 @@ import 'package:cui_timetable/app/constants/firebase_constants.dart';
 import 'package:cui_timetable/app/theme/app_colors.dart';
 import 'package:cui_timetable/app/widgets/get_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../data/database/notification_topics.dart';
 import '../../../../utilities/notifications/cloud_notifications.dart';
+import '../../../../utilities/time/cloud_time.dart';
 
 class BookingDetailsController extends GetxController {
   final bookingBy = Get.arguments['bookingBy'];
@@ -34,24 +36,24 @@ class BookingDetailsController extends GetxController {
   final isBookingSuccessful = true.obs;
 
   var bookingDatePlaceholder = ''.obs;
-  // var selectedDate;
-  // selectDate(BuildContext context) async {
-  //   await currentTime().then((todayDate) async {
-  //     final DateTime? picked = await showDatePicker(
-  //       context: context,
-  //       initialDate: todayDate,
-  //       firstDate: todayDate,
-  //       lastDate: todayDate.add(const Duration(days: 14)),
-  //     );
-  //     if (picked != null && picked != todayDate) {
-  //       selectedDate = picked;
+  var selectedDate;
+  selectDate(BuildContext context) async {
+    await currentTime().then((todayDate) async {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: todayDate,
+        firstDate: todayDate,
+        lastDate: todayDate.add(const Duration(days: 14)),
+      );
+      if (picked != null && picked != todayDate) {
+        selectedDate = picked;
 
-  //       bookingDate = picked;
-  //       bookingDatePlaceholder.value =
-  //           DateFormat.MMMMEEEEd().format(picked).toString();
-  //     }
-  //   });
-  // }
+        bookingDate = picked;
+        bookingDatePlaceholder.value =
+            DateFormat.MMMMEEEEd().format(picked).toString();
+      }
+    });
+  }
 
   book(
       {required String section,

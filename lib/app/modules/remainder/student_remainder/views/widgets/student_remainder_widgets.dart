@@ -1,6 +1,5 @@
 import 'package:cui_timetable/app/modules/remainder/student_remainder/controllers/student_remainder_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_soul/flutter_soul.dart';
 import 'package:get/get.dart';
 
 import '../../../../../theme/app_colors.dart';
@@ -99,68 +98,69 @@ class LectureDetailsTile extends GetView<StudentRemainderController> {
                           const SizedBox(
                             height: 8,
                           ),
-                          isSet == false
-                              ? Obx(() => AbsorbPointer(
-                                    absorbing: controller.absorbing.value,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        // controller.setRemainder(
-                                        //     subject: subject,
-                                        //     index: counter - 1);
-                                        // controller.setRemainder(subject: subject);
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Schedule Remainder",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge,
-                                          ),
-                                          SizedBox(
-                                            width: Constants.defaultPadding / 2,
-                                          ),
-                                          const Icon(
-                                            Icons.notification_add_outlined,
-                                            color: widgetColor,
-                                          )
-                                        ],
-                                      ).paddingSymmetric(vertical: Constants.defaultPadding),
-                                    ),
-                                  ))
-                              : Obx(() => AbsorbPointer(
-                                    absorbing: controller.absorbing.value,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: errorColor1),
-                                      onPressed: () {
-                                        // controller.revokeRemainder(
-                                        //     subject: subject,
-                                        //     index: counter - 1);
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Revoke Remainder",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge,
-                                          ),
-                                          SizedBox(
-                                            width: Constants.defaultPadding / 2,
-                                          ),
-                                          const Icon(
-                                            Icons.notifications_off_outlined,
-                                            color: widgetColor,
-                                          )
-                                        ],
-                                      ).paddingSymmetric(vertical: Constants.defaultPadding)
-                                    ),
-                                  ))
+
+                          // isSet == false
+                          //     ? Obx(() => AbsorbPointer(
+                          //           absorbing: controller.absorbing.value,
+                          //           child: ElevatedButton(
+                          //             onPressed: () {
+                          //               // controller.setRemainder(
+                          //               //     subject: subject,
+                          //               //     index: counter - 1);
+                          //               // controller.setRemainder(subject: subject);
+                          //             },
+                          //             child: Row(
+                          //               mainAxisAlignment:
+                          //                   MainAxisAlignment.center,
+                          //               children: [
+                          //                 Text(
+                          //                   "Schedule Remainder",
+                          //                   style: Theme.of(context)
+                          //                       .textTheme
+                          //                       .labelLarge,
+                          //                 ),
+                          //                 SizedBox(
+                          //                   width: Constants.defaultPadding / 2,
+                          //                 ),
+                          //                 const Icon(
+                          //                   Icons.notification_add_outlined,
+                          //                   color: widgetColor,
+                          //                 )
+                          //               ],
+                          //             ).paddingSymmetric(vertical: Constants.defaultPadding),
+                          //           ),
+                          //         ))
+                          //     : Obx(() => AbsorbPointer(
+                          //           absorbing: controller.absorbing.value,
+                          //           child: ElevatedButton(
+                          //             style: ElevatedButton.styleFrom(
+                          //                 backgroundColor: errorColor1),
+                          //             onPressed: () {
+                          //               // controller.revokeRemainder(
+                          //               //     subject: subject,
+                          //               //     index: counter - 1);
+                          //             },
+                          //             child: Row(
+                          //               mainAxisAlignment:
+                          //                   MainAxisAlignment.center,
+                          //               children: [
+                          //                 Text(
+                          //                   "Revoke Remainder",
+                          //                   style: Theme.of(context)
+                          //                       .textTheme
+                          //                       .labelLarge,
+                          //                 ),
+                          //                 SizedBox(
+                          //                   width: Constants.defaultPadding / 2,
+                          //                 ),
+                          //                 const Icon(
+                          //                   Icons.notifications_off_outlined,
+                          //                   color: widgetColor,
+                          //                 )
+                          //               ],
+                          //             ).paddingSymmetric(vertical: Constants.defaultPadding)
+                          //           ),
+                          //         ))
                         ],
                       ),
                     ),

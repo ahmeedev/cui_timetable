@@ -21,44 +21,71 @@ class GetXUtilities {
       duration = 2}) {
     Get.closeAllSnackbars();
 
-   
+    if (Platform.isIOS) {
       Get.showSnackbar(GetSnackBar(
         // backgroundColor: primaryColor,
         // padding: EdgeInsets.all(Constants.defaultPadding),
 
-        margin: EdgeInsets.zero,
-        backgroundGradient:
-            LinearGradient(end: Alignment.bottomRight, colors: gradient),
-
+        margin: const EdgeInsets.all(16),
+        // backgroundGradient:
+        //     LinearGradient(end: Alignment.bottomRight, colors: gradient),
+        backgroundColor: scaffoldColor,
+        borderRadius: Constants.defaultRadius,
+        padding: const EdgeInsets.all(20),
         duration: Duration(seconds: duration),
         titleText: Text(title,
             style: const TextStyle(
                 fontSize: 18,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold)),
         messageText: Text(message,
-            style: const TextStyle(fontSize: 14, color: Colors.white)),
-        snackPosition: SnackPosition.BOTTOM,
-        snackStyle: SnackStyle.GROUNDED,
+            style: const TextStyle(fontSize: 14, color: Colors.black)),
+        snackPosition: SnackPosition.TOP,
+        snackStyle: SnackStyle.FLOATING,
         // backgroundColor: primaryColor,
       ));
-    
-    
-    // else if (Platform.isIOS) {
-    //   Get.snackbar(
-    //     "Default SnackBar",
-    //     "This is the Getx default SnackBar",
-    //     snackPosition: SnackPosition.BOTTOM,
-    //     duration: Duration(milliseconds: duration),
-    //     titleText: Text(title,
-    //         style: const TextStyle(
-    //             fontSize: 16,
-    //             color: Colors.black,
-    //             fontWeight: FontWeight.bold)),
-    //     messageText: Text(message,
-    //         style: const TextStyle(fontSize: 12, color: Colors.black)),
-    //   );
-    // }
+    } else if (Platform.isIOS) {
+      // Get.snackbar("Hello", "Message");
+      // Get.showSnackbar(GetSnackBar(
+      //   // backgroundColor: primaryColor,
+      //   // padding: EdgeInsets.all(Constants.defaultPadding),
+
+      //   margin: EdgeInsets.zero,
+      //   backgroundGradient:
+      //       LinearGradient(end: Alignment.bottomRight, colors: gradient),
+
+      //   duration: Duration(seconds: duration),
+      //   titleText: const Text("Hello",
+      //       style: TextStyle(
+      //           fontSize: 18,
+      //           color: Colors.white,
+      //           fontWeight: FontWeight.bold)),
+      //   messageText: Text(message,
+      //       style: const TextStyle(fontSize: 14, color: Colors.white)),
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   snackStyle: SnackStyle.GROUNDED,
+      //   // backgroundColor: primaryColor,
+      // ));
+
+      Get.snackbar(
+        "Default SnackBar",
+        "This is the Getx default SnackBar",
+
+        // snackPosition: SnackPosition.BOTTOM,
+        // duration: Duration(milliseconds: duration)
+        // ,
+        titleText: Text(title,
+            style: const TextStyle(
+                fontSize: 16,
+                // color: primaryColor,
+                fontWeight: FontWeight.bold)),
+        messageText: Text(message,
+            style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.black)),
+      );
+    }
   }
 
   //! Use Context for the automation of theme.
@@ -74,11 +101,11 @@ class GetXUtilities {
         backgroundColor: widgetColor,
         contentPadding: EdgeInsets.all(Constants.defaultPadding),
         radius: Constants.defaultRadius * 2,
-        content: AspectRatio(
+        content: const AspectRatio(
           aspectRatio: 8 / 3,
           child: (Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
+            children: [
               Text(
                 "Sync in Progress",
                 // style: Theme.of(context).textTheme.titleMedium!.copyWith(

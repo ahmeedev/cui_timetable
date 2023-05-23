@@ -20,21 +20,6 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
         appBar: AppBar(
           title: Text(Get.arguments["section"]),
           centerTitle: true,
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  // await AwesomeNotifications().cancelAllSchedules();
-                  // AwesomeNotifications().createNotification(
-                  //     content: NotificationContent(
-                  //   channelKey: channelRemainderKey,
-                  //   id: channelRemainderId,
-                  //   title: 'Testing Notification',
-                  //   body: "This is the body of the testing notification",
-                  //   color: Colors.red,
-                  // ));
-                },
-                icon: const Text("Click me"))
-          ],
         ),
         body: Padding(
           padding: EdgeInsets.all(Constants.defaultPadding),
@@ -68,7 +53,7 @@ class StudentRemainderView extends GetView<StudentRemainderController> {
                                         // log("${controller.sectionDetails.toList()}");
                                         controller.setAll();
                                       },
-                                      child: const Text('Set All')),
+                                      child: const Text('Set Remainder')),
                                 )
                               : AbsorbPointer(
                                   absorbing: controller.absorbing.value,
